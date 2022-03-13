@@ -90,6 +90,7 @@ Testing the httpd container:
 curl http://localhost:8080
 ```
 
+That should print the HTML page.  
 Finally you can remove the "last" container we used:
 
 ```bash
@@ -168,6 +169,7 @@ cd rust_dev_hello
 cargo run
 ```
 
+That should work fine!  
 We can exit the container now with the command  
 
 ```bash
@@ -218,7 +220,7 @@ podman cp ~/.ssh/cert_name.pub rust_dev1:/root/.ssh/cert_name.pub
 ```
 
 It is comfortable to use the ssh-agent to store the passphrase in memory, so we type it only once.  
-Again attention, that this container has secrets and must not be shared ! Never !
+Again attention, that this container has secrets and must not be shared ! Never !  
 Open VSCode, click on the `Remote Explorer` icon, choose `Containers`, right-click on `localhost/rust_development1 rust_dev1` and click `Attach in New Window`, then open the folder `rustprojects/rust_dev_hello`.  
 In the VsCode terminal (Ctrl+j) run:  
 
@@ -287,7 +289,7 @@ Then if needed, replace the old one inside `buildah_rust_development2.sh`.
 Build the new image:  
 
 ```bash
-sh buildah_rust_development1.sh
+sh buildah_rust_development2.sh
 ```
 
 Then create a container from that image:  
@@ -303,3 +305,4 @@ This time the extensions should be already installed inside the container:
 - Code Spell Checker from Street Side Software  
 - markdownlint from David Anson
 - Rainbow Brackets from 2gua
+
