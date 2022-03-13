@@ -154,15 +154,15 @@ Now we can start the container and interact with its bash terminal:
 podman start -ai rust_dev1
 ```
 
-We are now inside the container in the terminal and we can use `cargo`, `rustup` and other rust tools. The files we create will be inside the container. We are `root` inside this container, so we will put our projects in the `/root/projects` directory.  
+We are now inside the container in the terminal and we can use `cargo`, `rustup` and other rust tools. The files we create will be inside the container. We are `root` inside this container, so we will put our rustprojects in the `/root/rustprojects` directory.  
 This container is started from Podman without `root access` to the host system !  
 This is a small, but important difference between Docker and Podman.  
 Let create and run a small Rust program:  
 
 ```bash
 cd /root
-mkdir projects
-cd projects
+mkdir rustprojects
+cd rustprojects
 cargo new rust_dev_hello
 cd rust_dev_hello
 cargo run
@@ -182,6 +182,7 @@ Be careful that it is very easy to remove the container and loose the files insi
   
 I use VSCode as my primary code editor in Windows. It works fine remotely with WSL2 (Debian Linux) with the `Remote - WSL` extension.  
 There is also a `Remote - Containers` extension, that lets you use a Docker container as a full-featured development environment. First install this extension in VSCode.  
+There are a lot of `automagic easy to use` functions in this extension. But for some reason `automagic` never worked for me. I must always go painfully step-by-step and discover why the `automagic` does not work in my case. Always!  
 <https://www.jonathancreamer.com/setting-up-wsl2-and-the-vscode-containers-plugin/>  
 We need to change 2 settings because we want to use Podman instead of Docker and we want to execute all commands inside WSL2.  
 In VSCode open File-Preferences-Settings or Ctrl+,  
@@ -191,7 +192,7 @@ Search for `remote.containers.executeInWSL` and enable it.
 In VSCode click on the icon `Remote Explorer`. Up-right instead of `WSL Targets` choose `Containers`. There is a list of containers and among them our `localhost/rust_development1 rust_dev1`. Right click on it and choose `Attach in New Window`.  
 On first run, VSCode will `Start: Downloading VS Code Server` into the container. That can take some time.  
 VSCode is now working inside the container. In the left bottom corner there is the name of the container in green.  
-`File - Open Folder` and choose our existing project `/root/projects/rust_dev_hello`.  
+`File - Open Folder` and choose our existing project `/root/rustprojects/rust_dev_hello`.  
 The next time you can use `File-Open Recent` to open the project easily.  Or click on the `Remote explorer` icon and choose directly the `project/folder` inside the container, right-click and `Open Folder in Container`.  
 
 If the VSCode Terminal is not opened press `Ctrl+j` to open it. Then write:  
@@ -218,7 +219,7 @@ podman cp ~/.ssh/cert_name.pub rust_dev1:/root/.ssh/cert_name.pub
 
 It is comfortable to use the ssh-agent to store the passphrase in memory, so we type it only once.  
 Again attention, that this container has secrets and must not be shared ! Never !
-Open VSCode, click on the `Remote Explorer` icon, choose `Containers`, right-click on `localhost/rust_development1 rust_dev1` and click `Attach in New Window`, then open the folder `projects/rust_dev_hello`.  
+Open VSCode, click on the `Remote Explorer` icon, choose `Containers`, right-click on `localhost/rust_development1 rust_dev1` and click `Attach in New Window`, then open the folder `rustprojects/rust_dev_hello`.  
 In the VsCode terminal (Ctrl+j) run:  
 
 ```bash
@@ -264,14 +265,14 @@ ssh-add /root/.ssh/cert_name
 Then the commands to clone the repository from Github:
 
 ```bash
-cd root/projects/
+cd root/rustprojects/
 git clone git@github.com:LucianoBestia/reader_for_microxml.git
 cd reader_for_microxml
 ls
 ```
 
 Open VSCode, click on the `Remote Explorer` icon, choose `Containers`, right-click on `localhost/rust_development1 rust_dev1` and click `Attach in New Window`.  
-In the new VSCode Window `File-Open Folder` and choose `/root/projects/reader_for_microxml`.
+In the new VSCode Window `File-Open Folder` and choose `/root/rustprojects/reader_for_microxml`.
 We can now edit, compile and run the project. All sandboxed/isolated inside the container.  
 Always push the changes to Github. So you can delete this container and create a new one, pull the code and continue developing. Containers are the worst place to have persistent data stored. They can be deleted in a second.  
 
