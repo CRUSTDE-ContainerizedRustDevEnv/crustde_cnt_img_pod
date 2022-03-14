@@ -15,6 +15,7 @@ echo "Removing container and image if exists"
 set -e
 buildah rm rust_dev || :
 buildah rmi -f rust_development1 || :
+buildah rm rust_development1 || :
 
 echo ""
 echo "Create new container named rust_development1"
