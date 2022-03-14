@@ -137,9 +137,10 @@ Everybody uses `podman run`, but this is essentially 3 commands in one: `pull` f
 Create the container with a fixed name rust_dev1:  
 --name - the container name will be `rust_dev1`  
 -ti - we will use the container interactively in the terminal  
+-p 4000:4000 - port forwarding needed for one of te code examples
 
 ```bash
-podman create -ti --name rust_dev1 localhost/rust_development1
+podman create -ti --name rust_dev1 -p 4000:4000/tcp localhost/rust_development1
 ```
 
 We can list the existing containers with:
@@ -177,7 +178,7 @@ exit
 ```
 
 The container still exists, but is not started. Check with `podman ps -a`.  
-To start it again, repeat the previous command `podman start -ai rust_dev1`.  
+To start it again, repeat the previous command `podman start -ai rust_dev1`. But from here on we will use only the VSCode terminal. It "knows" how to start and attach to a container. It is `automagic`.  
 Be careful that it is very easy to remove the container and loose the files inside it with `podman rm rust_dev1 -f` or the dangerous `podman rm -a`. We will try to always use a Github remote repository to overcome this problem.  
 
 ## VSCode from Windows to WSL2 to container
@@ -196,15 +197,39 @@ On first run, VSCode will `Start: Downloading VS Code Server` into the container
 VSCode is now working inside the container. In the left bottom corner there is the name of the container in green.  
 `File - Open Folder` and choose our existing project `/root/rustprojects/rust_dev_hello`.  
 The next time you can use `File-Open Recent` to open the project easily.  Or click on the `Remote explorer` icon and choose directly the `project/folder` inside the container, right-click and `Open Folder in Container`.  
+We can now edit, compile and run our Rust project in VSCode inside the container.  
 
-If the VSCode Terminal is not opened press `Ctrl+j` to open it. Then write:  
+## VSCode terminal
+
+VSCode has an integrated terminal. It has some advantages for developers that the standard WSL2 terminal does not have.
+It is great to use it for everything around code in containers. You can open more then one terminal if you need to. For example if you run a web server.  
+If the VSCode Terminal is not opened simply press `Ctrl+j` to open it and the same to close it.  
+
+First thing you will do in the VSC Terminal is build and run your Rust project:  
 
 ```bash
 cargo run
 ```
 
 That should work!  
-We can now edit, compile and run our Rust project in VSCode inside the container.  
+
+If you write the file name, row and column in this format, you can `Ctrl+Click` on it and go-to position:  
+
+```bash
+echo "src/main.rs:2:10"
+```
+
+This is used extensively for compile errors to go-to the exact position of the error.
+
+I can use `cd` to go to another folder and open the folder in a new VSCode window from there with:
+
+```bash
+cd ~/rustprojects/rust_dev_hello; code .
+# or directly
+code ~/rustprojects/rust_dev_hello
+```
+
+You cannot do that anywhere else.  
 
 ## Push changes to Github
 
@@ -215,8 +240,8 @@ It means that this container I cannot share anymore with anybody. It is now my p
 From WSL2/Debian bash I can copy files with podman into the container:  
 
 ```bash
+# in WSL2, outside the container
 podman cp ~/.ssh/cert_name rust_dev1:/root/.ssh/cert_name
-podman cp ~/.ssh/cert_name.pub rust_dev1:/root/.ssh/cert_name.pub
 ```
 
 It is comfortable to use the ssh-agent to store the passphrase in memory, so we type it only once.  
@@ -244,39 +269,51 @@ git push -u origin main
 ```
 
 Done! Check your Github repository.
-
-Warning: The "ssh could not resolve hostname" is a common error. It is not that big of an issue. I closed everything and restart my computer and everything works fine now.  
+Always push the changes to Github. So you can delete this container and create a new empty one, then pull the code from Github and continue developing. Containers are the worst place to have persistent data stored. They can be deleted any second for any reason.
+Leave VSCode open because the next chapter will continue from here.  
 
 ## Existing Rust projects on Github
 
 You probably already have a Rust project on Github. You want to continue its development inside the container.  
-In Debian, open the bash terminal of the container:  
+For an example we will use my PWA+WebAssembly/WASM project `rust_wasm_pwa_minimal_clock`, that needs to forward the port 4000, because our project needs a web server. That is fairly common. We already prepared the forwarding earlier when creating the container with `-p 4000:4000`. I am not a fan of autoForward `automagic` in VSCode, so I disable it in `File-Preferences-Settings` search "remote.autoForwardPorts" and uncheck it to false.  
+We will continue to use the existing VSCode terminal, that is already opened on the folder `/root/rustprojects/rust_dev_hello`.
+Run the commands to clone the repository from Github and open a new VSCode window. We already have the SSH private key and `ssh-agent` running:
 
 ```bash
-podman start -ai rust_dev1
+cd /root/rustprojects/
+git clone git@github.com:LucianoBestia/rust_wasm_pwa_minimal_clock.git
+code rust_wasm_pwa_minimal_clock
 ```
 
-In the container bash you need this only once to remember your passphrase:  
+The `code` command will open a new VSCode window in the folder `rust_wasm_pwa_minimal_clock`. In it, we can now edit, compile and run the project. All sandboxed/isolated inside the container. We can now close the old window, we don't need it any more.  
+This example is somewhat more complex, because it is WebAssembly, but it is good for learning.  
+First, we need to install some Cargo tools. In the future we could add these to the Buildah image building process.  
+
+Type inside the container in VSCode terminal:  
 
 ```bash
-eval `ssh-agent`
-ssh-add /root/.ssh/cert_name
-# type your passphrase
+apt install -y rsync
+rustup component add rustfmt
+cargo install basic-http-server
+cargo install cargo-auto
 ```
 
-Then the commands to clone the repository from Github:
+Install the tool `wasm-pack`:
 
 ```bash
-cd root/rustprojects/
-git clone git@github.com:LucianoBestia/reader_for_microxml.git
-cd reader_for_microxml
-ls
+apt install -y curl
+curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
 ```
 
-Open VSCode, click on the `Remote Explorer` icon, choose `Containers`, right-click on `localhost/rust_development1 rust_dev1` and click `Attach in New Window`.  
-In the new VSCode Window `File-Open Folder` and choose `/root/rustprojects/reader_for_microxml`.
-We can now edit, compile and run the project. All sandboxed/isolated inside the container.  
-Always push the changes to Github. So you can delete this container and create a new one, pull the code and continue developing. Containers are the worst place to have persistent data stored. They can be deleted in a second.  
+Now we can build and run the project:  
+
+```bash
+cargo auto build_and_run
+```
+
+Open the browser in Windows: `http://localhost:4000/rust_wasm_pwa_minimal_clock/`  
+
+An example of Webassembly and PWA, directly from a docker container.  
 
 ## VSCode tools
 
@@ -306,3 +343,38 @@ This time the extensions should be already installed inside the container:
 - markdownlint from David Anson
 - Rainbow Brackets from 2gua
 
+## Quirks
+
+### error joining network
+
+After rebooting my system and trying `podman ps -a` I got this error:  
+`error joining network namespace for container ...`  
+This is because Podman was unable to detect that the system has rebooted in WSL2.  
+The solution is in WSL2/Debian:  
+
+```bash
+rm -rf /tmp/run-$(id -u)/libpod/tmp
+```
+
+### Annoying error sound on bash auto-completion
+
+In WSL2 and in containers I got this annoying error sound. I will disable this with:  
+
+```bash
+sudo nano /etc/inputrc
+```
+
+Uncomment this line:
+
+```text
+set bell-style none
+```
+
+### ssh could not resolve hostname
+
+Warning: The "ssh could not resolve hostname" is a common error. It is not that big of an issue. I closed everything and restart my computer and everything works fine now.  
+
+## TODO
+
+I would like to write code as a `user` and not as `root` inside the container. How to do that?  Maybe --userns keep-id ?
+Change cargo make to cargo auto

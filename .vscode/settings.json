@@ -6,6 +6,7 @@
         "cgroupfs",
         "crun",
         "daemonless",
+        "inputrc",
         "libpod",
         "matklad",
         "microxml",
@@ -13,8 +14,12 @@
         "runc",
         "runtimes",
         "runv",
+        "rustfmt",
         "rustprojects",
         "rustup",
-        "sandboxed"
+        "sandboxed",
+        "userns",
+        "Webassembly",
+        "zxvf"
     ]
 }
