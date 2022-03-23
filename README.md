@@ -23,8 +23,9 @@ I already wrote some information how to install and use the combination of Win10
 <https://github.com/LucianoBestia/win10_wsl2_debian11>  
 
 Podman is available from the Debian11 package manager.  
-Let's install it as rootless  
-<https://podman.io/getting-started/installation>:
+<https://podman.io/getting-started/installation>  
+Let's install it as rootless.  
+Open the `WSL2 terminal` and type:  
 
 ```bash
 sudo apt-get update
@@ -60,12 +61,13 @@ podman version
 
 Using the Podman CLI is just the same as using Docker CLI.  
 <https://podman.io/getting-started/>  
-We have no images for now:
+Inside the `WSL2 terminal` type:  
 
 ```bash
 podman images
 ```
 
+We have no images for now.
 The words "image" and "container" are somewhat confusing. Super simplifying: When it runs it is a "container". If it does not run it is an "image". The image is just an "installation file". The containers can be `started` and `stopped` or `attached` and `detached`, but they are "run" only one time.
 
 For test, run a sample container. It is a web server.  
@@ -75,7 +77,7 @@ For test, run a sample container. It is a web server.
 The run command will download/pull the image if needed.
 
 ```bash
-podman run -dt -p 8080:80/tcp docker.io/library/httpd
+podman run -dt -p 8001:80/tcp docker.io/library/httpd
 ```
 
 List all containers:
@@ -87,7 +89,7 @@ podman ps -a
 Testing the httpd container:
 
 ```bash
-curl http://localhost:8080
+curl http://localhost:8001
 ```
 
 That should print the HTML page.  
@@ -97,33 +99,35 @@ Finally you can remove the "last" container we used:
 podman rm -l 
 ```
 
-You can also remove the image, because this was just a test:
+You can also remove the image, because this was just practice for learning:
 
 ```bash
 podman rmi -l 
 ```
 
-## Buildah for our Rust development image
+## Buildah for our Rust development images
 
 Buildah is a replacement for the `docker build` command. It is easier to incorporate into scripts. It is pronounced exactly as Builder, but with a Bostonian accent ;-)  
+<https://opensource.com/article/18/6/getting-started-buildah>  
 The Rust official images are on Docker hub: <https://hub.docker.com/_/rust>  
-I was surprised by the size of the image. It is big from 200Mb compressed to 1.2Gb uncompressed. But this is mostly the size of rust files. I tried to build a different image, but the result was also so big.  
+I was surprised by the size of the image. It is big from 200Mb compressed to 1.2Gb uncompressed. But this is mostly the size of rust files.  
+I don't like that this images have only the `root` user. I will start from the Debian-11 image and install all I need as the `rustdevuser`.  
 Pull the image from Docker hub:
 
 ```bash
-podman pull docker.io/library/rust:slim
+podman pull docker.io/library/debian:bullseye-slim
 ```
 
-The official image of Rust is missing Git. This is a good excuse to learn a little about Buildah.  
-<https://opensource.com/article/18/6/getting-started-buildah>  
+I wrote the bash script `rust_dev_cargo_img.sh`  
+Run it with  
 
-I will write a simple bash script `buildah_rust_development1.sh`  
-Run it with `sh buildah_rust_development1.sh`  
-First, it will remove the image/container `rust_development1` if exists.  
-Then it will create a container from the official Rust image.  
-It will install git.  
-Finally it will commit this container and create the image `rust_development1`.  
-This is the image we will use for our containers.  
+```bash
+sh rust_dev_cargo_img.sh
+```  
+
+This will create the image `rust_dev_cargo_img`.  
+
+The scripts sre just bash scripts and are super easy to read, follow, learn and modify. Much easier than Dockerfile. You can even run the commands one by one in the `WSL2 terminal` and inspect the container to debug the building process.  
 
 ## Rust development in a Docker container
 
@@ -132,15 +136,15 @@ We want that everything is isolated/sandboxed and cannot affect our host system 
 We also don't want to make any changes to our system because of Rust tools or our project needs.  
 We can have simultaneously more containers, each with a different version of Rust or a different toolchain with all the necessary configuration and tools. We can easily transfer the container to another system and use it exactly as it is configured. Effortlessly.  
 
-Everybody uses `podman run`, but this is essentially 3 commands in one: `pull` from a repository, `create` the container and `start` or `attach` to the container. I would like to use it separately, because it makes more sense for learning.  
+Everybody uses `podman run`, but this is essentially 4 commands in one: `pull` from a repository, `create` the container, `start` or `attach` to the container and exec the bash in interactive mode. I like to use this commands separately, because it makes more sense for learning.  
 
-Create the container with a fixed name rust_dev1:  
---name - the container name will be `rust_dev1`  
+Create the container with a fixed name rust_dev_cnt:  
+--name - the container name will be `rust_dev_cnt`  
 -ti - we will use the container interactively in the terminal  
--p 4000:4000 - port forwarding needed for one of te code examples
+-p 8001:8001 - port forwarding needed for one of te code examples
 
 ```bash
-podman create -ti --name rust_dev1 -p 4000:4000/tcp localhost/rust_development1
+podman create -ti --name rust_dev_cnt localhost/rust_dev_cargo_img
 ```
 
 We can list the existing containers with:
@@ -149,22 +153,26 @@ We can list the existing containers with:
 podman ps -a
 ```
 
-Now we can start the container and interact with its bash terminal:
--ai - attach and interactively  
+Now we can start the container:
 
 ```bash
-podman start -ai rust_dev1
+podman start rust_dev_cnt
 ```
 
-We are now inside the container in the terminal and we can use `cargo`, `rustup` and other rust tools. The files we create will be inside the container. We are `root` inside this container, so we will put our rustprojects in the `/root/rustprojects` directory.  
+Open the bash to interact with the `container terminal`:
+-it - interactive terminal
+
+```bash
+podman exec -it rust_dev_cnt bash
+```
+
+We are now inside the `container terminal` and we can use `cargo`, `rustup` and other rust tools. The files we create will be inside the container. We are `rustdevuser` inside this container, so we will put our rustprojects in the `/home/rustdevuser/rustprojects` directory.  
 This container is started from Podman without `root access` to the host system !  
 This is a small, but important difference between Docker and Podman.  
 Let create and run a small Rust program:  
 
 ```bash
-cd /root
-mkdir rustprojects
-cd rustprojects
+cd ~/rustprojects
 cargo new rust_dev_hello
 cd rust_dev_hello
 cargo run
@@ -177,87 +185,111 @@ We can exit the container now with the command
 exit
 ```
 
-The container still exists, but is not started. Check with `podman ps -a`.  
-To start it again, repeat the previous command `podman start -ai rust_dev1`. But from here on we will use only the VSCode terminal. It "knows" how to start and attach to a container. It is `automagic`.  
-Be careful that it is very easy to remove the container and loose the files inside it with `podman rm rust_dev1 -f` or the dangerous `podman rm -a`. We will try to always use a Github remote repository to overcome this problem.  
+When we exited the container we returned to `WSL2 terminal`.  
+The container still exists and is still running. Check with `podman ps -a`.  
+To interact with it again, repeat the previous command `podman exec -it rust_dev_cnt bash`.  
+This container does not work with VSCode and we will not need it any more. If you use another editor, you can customize and use this image/container.  
+Remove the container with:
+
+```bash
+podman rm rust_dev_cnt -f
+```  
 
 ## VSCode from Windows to WSL2 to container
   
 I use VSCode as my primary code editor in Windows. It works fine remotely with WSL2 (Debian Linux) with the `Remote - WSL` extension.  
 There is also a `Remote - Containers` extension, that lets you use a Docker container as a full-featured development environment. First install this extension in VSCode.  
-There are a lot of `automagic easy to use` functions in this extension. But for some reason `automagic` never worked for me. I must always go painfully step-by-step and discover why the `automagic` does not work in my case. Always!  
 <https://www.jonathancreamer.com/setting-up-wsl2-and-the-vscode-containers-plugin/>  
+
 We need to change 2 settings because we want to use Podman instead of Docker and we want to execute all commands inside WSL2.  
 In VSCode open File-Preferences-Settings or Ctrl+,  
 Search for `remote.containers.dockerPath`. Type `/usr/bin/podman`.  
 Search for `remote.containers.executeInWSL` and enable it.
 
-In VSCode click on the icon `Remote Explorer`. Up-right instead of `WSL Targets` choose `Containers`. There is a list of containers and among them our `localhost/rust_development1 rust_dev1`. Right click on it and choose `Attach in New Window`.  
-On first run, VSCode will `Start: Downloading VS Code Server` into the container. That can take some time.  
-VSCode is now working inside the container. In the left bottom corner there is the name of the container in green.  
-`File - Open Folder` and choose our existing project `/root/rustprojects/rust_dev_hello`.  
-The next time you can use `File-Open Recent` to open the project easily.  Or click on the `Remote explorer` icon and choose directly the `project/folder` inside the container, right-click and `Open Folder in Container`.  
-We can now edit, compile and run our Rust project in VSCode inside the container.  
+There are a lot of `automagic easy to use` functions in this extension. But for some reason `automagic` never worked for me. I must always go painfully step-by-step and discover why the `automagic` does not work in my case. Always!  
+
+The bash script `rust_dev_vscode_img.sh` will create the image `rust_dev_vscode_img`.  
+Run it with:  
+
+```bash
+sh rust_dev_vscode_img.sh
+```
+
+This is based on the first image and adds the VSCode server and extensions.  
+
+I like to run the container in a terminal first and then attach to it from VSCode. Create and start the container in a `WSL2 terminal`:  
+
+```bash
+podman create -ti --name rust_dev_cnt rust_dev_vscode_img
+podman start rust_dev_cnt
+```
+
+In VSCode "Activity bar" click on the icon `Remote Explorer`. Up-right instead of `WSL Targets` choose `Containers`. There is a list of containers and among them our `localhost/rust_dev_vscode_img rust_dev_cnt`. Right click on it and choose `Attach in New Window`.  
+There is also the shorter way without mouse: Open VSCode, press `F1`, type `attach` and choose `Remote-Containers:Attach to Running container...` and type `rust_dev_cnt`.  
+This will open a new VSCode windows attached to the container. In the left bottom corner there is the green label with the container name.  
+We can now edit, compile and run Rust projects in VSCode inside the container.  
 
 ## VSCode terminal
 
-VSCode has an integrated terminal. It has some advantages for developers that the standard WSL2 terminal does not have.
-It is great to use it for everything around code in containers. You can open more then one terminal if you need to. For example if you run a web server.  
-If the VSCode Terminal is not opened simply press `Ctrl+j` to open it and the same to close it.  
+VSCode has an integrated `VSCode terminal`. It has some advantages for developers that the standard `WSL2 terminal` does not have.
+It is great to use it for everything around code in containers. You can open more then one `VSCode terminal` if you need to. For example if you run a web server.  
+If the `VSCode terminal` is not opened simply press `Ctrl+j` to open it and the same to close it.  
 
-First thing you will do in the VSC Terminal is build and run your Rust project:  
+Inside `VSCode terminal`, we will create a sample project:  
+
+```bash
+cd ~/rustprojects
+cargo new rust_dev_hello
+cd ~/rustprojects/rust_dev_hello
+```
+
+This easy command opens a new VSCode window exactly for this project/folder inside the container:  
+
+```bash
+code .
+```
+
+A new VSCode windows will open for the `rust_dev_hello` project. You can close now all other VSCode windows.  
+Build and run the project in the `VSCode terminal`:
 
 ```bash
 cargo run
 ```
 
 That should work!  
-
-If you write the file name, row and column in this format, you can `Ctrl+Click` on it and go-to position:  
-
-```bash
-echo "src/main.rs:2:10"
-```
-
-This is used extensively for compile errors to go-to the exact position of the error.
-
-I can use `cd` to go to another folder and open the folder in a new VSCode window from there with:
-
-```bash
-cd ~/rustprojects/rust_dev_hello; code .
-# or directly
-code ~/rustprojects/rust_dev_hello
-```
-
-You cannot do that anywhere else.  
+Leave VSCode open because the next chapter will continue from here.  
 
 ## Push changes to Github
 
 I like to work with Github over SSH and not over https.  
-To make SSH work I need the file with the private key for SSH connection. I already have this one in WSL2. I will copy it into the container.  
+To make SSH work I need the file with the private key for SSH connection. I already have this one in WSL2 in the file `~/.ssh/certssh1`. I will copy it into the container. If your file has a different name, first copy it to `~/.ssh/certssh1`, so you can follow the subsequent commands easily.  
 Be careful ! This is a secret !  
 It means that this container I cannot share anymore with anybody. It is now my private container. I must never make an image from it and share it. Never !  
-From WSL2/Debian bash I can copy files with podman into the container:  
+Open a new `WSL2 terminal` and copy the file with podman into the container:  
 
 ```bash
 # in WSL2, outside the container
-podman cp ~/.ssh/cert_name rust_dev1:/root/.ssh/cert_name
+podman cp ~/.ssh/certssh1 rust_dev_cnt:/home/rustdevuser/.ssh/certssh1
+podman cp ~/.ssh/certssh2 rust_dev_cnt:/home/rustdevuser/.ssh/certssh2
+# close the `WSL2 terminal`
 ```
 
-It is comfortable to use the ssh-agent to store the passphrase in memory, so we type it only once.  
+The `VSCode terminal` is still opened on the project `rust_dev_hello`.  
+It is comfortable to use the `ssh-agent` to store the passphrase in memory, so we type it only once.  
 Again attention, that this container has secrets and must not be shared ! Never !  
-Open VSCode, click on the `Remote Explorer` icon, choose `Containers`, right-click on `localhost/rust_development1 rust_dev1` and click `Attach in New Window`, then open the folder `rustprojects/rust_dev_hello`.  
-In the VsCode terminal (Ctrl+j) run:  
+In the `VSCode terminal` (Ctrl+j) run:  
 
 ```bash
-eval `ssh-agent`
-ssh-add /root/.ssh/cert_name
-# type your passphrase
+eval $(ssh-agent)
+ssh-add /home/rustdevuser/.ssh/certssh1
+ssh-add /home/rustdevuser/.ssh/certssh2
+# enter your passphrase
 ```
 
-Open github.com in the browser and sign in, click New and create a new repository named `rust_dev_hello`.  
+Open `github.com` in the browser and sign in, click `New` and create a new repository named `rust_dev_hello`.  
 Github is user friendly and shows the standard commands we need to run.  
-In the VsCode terminal run:  
+Modify the commands below to **your** Github repository.  
+In the `VSCode terminal` run:  
 
 ```bash
 git init
@@ -275,73 +307,151 @@ Leave VSCode open because the next chapter will continue from here.
 ## Existing Rust projects on Github
 
 You probably already have a Rust project on Github. You want to continue its development inside the container.  
-For an example we will use my PWA+WebAssembly/WASM project `rust_wasm_pwa_minimal_clock`, that needs to forward the port 4000, because our project needs a web server. That is fairly common. We already prepared the forwarding earlier when creating the container with `-p 4000:4000`. I am not a fan of autoForward `automagic` in VSCode, so I disable it in `File-Preferences-Settings` search "remote.autoForwardPorts" and uncheck it to false.  
-We will continue to use the existing VSCode terminal, that is already opened on the folder `/root/rustprojects/rust_dev_hello`.
+For an example we will use my PWA+WebAssembly/WASM project `rust_wasm_pwa_minimal_clock`, that needs to forward the port 8001, because our project needs a web server. That is fairly common. We already prepared the forwarding earlier when creating the container with `-p 8001:8001`. I am not a fan of autoForward `automagic` in VSCode, so I disable it in `File-Preferences-Settings` search `remote.autoForwardPorts` and uncheck it to false.  
+We will continue to use the existing `VSCode terminal`, that is already opened on the folder `/home/rustdevuser/rustprojects/rust_dev_hello`. Just to practice.  
 Run the commands to clone the repository from Github and open a new VSCode window. We already have the SSH private key and `ssh-agent` running:
 
 ```bash
-cd /root/rustprojects/
+cd /home/rustdevuser/rustprojects/
 git clone git@github.com:LucianoBestia/rust_wasm_pwa_minimal_clock.git
-code rust_wasm_pwa_minimal_clock
+cd rust_wasm_pwa_minimal_clock
+code .
 ```
 
-The `code` command will open a new VSCode window in the folder `rust_wasm_pwa_minimal_clock`. In it, we can now edit, compile and run the project. All sandboxed/isolated inside the container. We can now close the old window, we don't need it any more.  
-This example is somewhat more complex, because it is WebAssembly, but it is good for learning.  
-First, we need to install some Cargo tools. In the future we could add these to the Buildah image building process.  
-
-Type inside the container in VSCode terminal:  
-
-```bash
-apt install -y rsync
-rustup component add rustfmt
-cargo install basic-http-server
-cargo install cargo-auto
-```
-
-Install the tool `wasm-pack`:
-
-```bash
-apt install -y curl
-curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
-```
-
-Now we can build and run the project:  
+The `code .` command will open a new VSCode window in the folder `rust_wasm_pwa_minimal_clock`. In the new VSCode window, we can now edit, compile and run the project. All sandboxed/isolated inside the container. We can now close the old window, we don't need it any more.  
+This example is somewhat more complex, because it is WebAssembly, but it is good for learning. I used the automation tool `cargo-auto` to script a more complex building process. You can read the automation task code in `./automation_task_rs/src/main.rs`. On the first build it will download the wasm components and wasm-bindgen. That can take some time. Don't despair.  
+Now we can build and run the project in `VSCode terminal` (Ctrl+j):  
 
 ```bash
 cargo auto build_and_run
 ```
 
-Open the browser in Windows: `http://localhost:4000/rust_wasm_pwa_minimal_clock/`  
+Now in VSCode we need to forward the port `8001`. It is a tab near the `VSCode terminal`. It has a big button to forward the port. Just type 8001 and Enter. Done!  
+TODO: I already exposed the port 8001 in the docker image. I want it to be automatically forward here. I don't know why I don't see it in VSCode. Maybe it needs something more than expose :-(
 
-An example of Webassembly and PWA, directly from a docker container.  
+Open the browser in Windows:  
+`http://localhost:8001/rust_wasm_pwa_minimal_clock/`  
+
+This is an example of Webassembly and PWA, directly from a docker container. A good learning example.  
 
 ## VSCode tools
 
-VSCode is great because of its extensions. Most of these extensions need to be installed inside the container.  
-From VSCode is easy to manually install these extensions "inside the container", but it is not repeatable.  
-I found an unofficial way to do it when building the image. But it is fragile, this can change any time.  
-I made a script `buildah_rust_development2.sh` with the needed code.  
-First you need to know the exact `commit_sha` of your VSCode client. Click on `Help-About` and `Copy` it from there.  
-Then if needed, replace the old one inside `buildah_rust_development2.sh`.  
-Build the new image:  
+VSCode is great because of its extensions. Most of these extensions are already installed inside the image `rust_dev_vscode_img`:
+
+- streetsidesoftware.code-spell-checker
+- matklad.rust-analyzer
+- davidanson.vscode-markdownlint
+- 2gua.rainbow-brackets
+- dotjoshjohnson.xml
+- jebbs.plantuml
+- lonefy.vscode-js-css-html-formatter
+- serayuzgur.crates
+
+Other extensions you can add manually through VSCode, but then it is not repeatable. Better is to modify the script that creates the image `rust_dev_vscode_img.sh`.
+
+## Volumes or mount restrictions
+
+I don't want that the container can access any file on my local system.  
+This is a "standalone" development container and everything must run inside.  
+The files can be cloned/pulled from Github or copied manually with `podman cp`.
+
+## Network Inbound restrictions
+
+I would like to restrict the use of the network from/to the container.  
+When using Podman as a rootless user, the network is setup automatically. Only the `localhost` can be used. The container itself does not have an IP Address, because without root privileges, network association is not allowed. Port publishing as rootless containers can be done for "high ports" only. All ports below `1024` are privileged and cannot be used for publishing.  
+I hope/think that all inbound ports are closed by default and I need to explicitly expose them manually.  
+In `buildah` I exposed the ports from `8001` to `8009` for eventual use for various Rust development projects in the image `rust_dev_cargo_img`.  
+TODO: But I don't see these ports opened/forwarded in VSCode. Why?  
+
+## Network Outbound restrictions with Squid proxy in container
+
+I would like to limit the access to the internet only to whitelisted domains:  
+crates.io, github.com,...  
+Some malware could want to "call home" and I will try to disable this.  
+
+What I need is a "proxy" or "transparent proxy". I will use the leading open-source proxy `Squid`, but in a container.  
+It can restrict both HTTP and HTTPS outbound traffic to a given set of Internet domains, while being fully transparent for instances in the private subnet.  
+<https://aws.amazon.com/blogs/security/how-to-add-dns-filtering-to-your-nat-instance-with-squid/>  
+I want to use this proxy for the container `rust_dev_cnt`. Container-to-container networking can be complex.  
+Podman works with `pods`, that make networking easy. This is usually the simplest approach for two rootless containers to communicate. Putting them in a `pod` allows them to communicate directly over `localhost`.  
+First create a modified image for Squid with (run inside the rustprojects/docker_rust_development folder):
 
 ```bash
-sh buildah_rust_development2.sh
+sh rust_dev_squid_img.sh
 ```
 
-Then create a container from that image:  
+In `WSL2 terminal` create one `pod` with 2 containers and start them:  
 
 ```bash
-podman create -ti --name rust_dev2 localhost/rust_development2
+# Close VSCode if is open
+podman ps -a
+# remove the container if already exists: 
+podman rm rust_dev_cnt -f
+
+podman pod create --name rust_dev_pod
+podman pod ls
+podman create --name squid_cnt --pod=rust_dev_pod -ti --restart=always localhost/rust_dev_squid_img
+podman start squid_cnt
+podman create --name rust_dev_cnt --pod=rust_dev_pod -ti --env http_proxy=localhost:3128  rust_dev_vscode_img
+podman start rust_dev_cnt
 ```
 
-Open VSCode, click on the `Remote Explorer` icon, choose `Containers`, right-click on `localhost/rust_development2 rust_dev2` and click `Attach in New Window`.  
-This time the extensions should be already installed inside the container:  
+Open VSCode, press `F1`, type `attach` and choose `Remote-Containers:Attach to Running container...` and type `rust_dev_cnt`.  
+In `VSCode terminal` test the proxy:  
 
-- rust-analyzer by matklad for auto-completion
-- Code Spell Checker from Street Side Software  
-- markdownlint from David Anson
-- Rainbow Brackets from 2gua
+```bash
+# try curl with proxy for whitelisted domains
+curl --proxy "localhost:3128" "http://httpbin.org/ip"
+# it returns {"origin": "127.0.0.1, 46.123.250.35"}
+curl --proxy "localhost:3128" "http://crates.io"
+# works
+curl --proxy "localhost:3128" "https://github.com/"
+# works
+
+# try curl with proxy for all other restricted domains
+curl --proxy "localhost:3128" "http://google.com"
+# it returns "ERR_ACCESS_DENIED"
+curl --proxy "localhost:3128" "http://microsoft.com"
+# it returns "ERR_ACCESS_DENIED"
+```
+
+It works. Only the whitelisted domains are allowed.  
+If you need, you can change the `etc_squid_squid.conf` to add more domains. Then run `rust_dev_squid_img.sh` to build the modified image.  
+
+Now delete completely the `pod` before the next chapter.  
+
+```bash
+podman pod rm rust_dev_pod -f
+```
+
+## Env variables for proxy setting
+
+Inside the container `rust_dev_cnt` I want that everything goes through the proxy. This env variables should do that:  `http_proxy`, `https_proxy`,`all_proxy`.  
+I can add this env variables when creating the container. I don't want to build this in the image.  
+Run the bash script to create a new `rust_dev_pod` with proxy settings:  
+
+```bash
+sh rust_dev_pod.sh
+```
+
+Open VSCode, press `F1`, type `attach` and choose `Remote-Containers:Attach to Running container...` and type `rust_dev_cnt`.  
+In `VSCode terminal` test the proxy:  
+
+```bash
+# try curl with proxy for whitelisted domains
+curl "http://httpbin.org/ip"
+# it returns {"origin": "127.0.0.1, 46.123.250.35"}
+curl "http://crates.io"
+# works
+curl "https://github.com/"
+# works
+
+# try curl with proxy for all other restricted domains
+curl "http://google.com"
+# it returns "ERR_ACCESS_DENIED"
+curl "http://microsoft.com"
+# it returns "ERR_ACCESS_DENIED"
+```
 
 ## Quirks
 
@@ -356,25 +466,6 @@ The solution is in WSL2/Debian:
 rm -rf /tmp/run-$(id -u)/libpod/tmp
 ```
 
-### Annoying error sound on bash auto-completion
-
-In WSL2 and in containers I got this annoying error sound. I will disable this with:  
-
-```bash
-sudo nano /etc/inputrc
-```
-
-Uncomment this line:
-
-```text
-set bell-style none
-```
-
 ### ssh could not resolve hostname
 
 Warning: The "ssh could not resolve hostname" is a common error. It is not that big of an issue. I closed everything and restart my computer and everything works fine now.  
-
-## TODO
-
-I would like to write code as a `user` and not as `root` inside the container. How to do that?  Maybe --userns keep-id ?
-Change cargo make to cargo auto
