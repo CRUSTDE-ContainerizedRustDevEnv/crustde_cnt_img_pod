@@ -26,6 +26,13 @@ echo "Create new container named rust_dev_squid_img from sameersbn/squid:latest"
 set -o errexit
 buildah from --name rust_dev_squid_img docker.io/sameersbn/squid:latest
 
+buildah config \
+--author=github.com/LucianoBestia \
+--label name=rust_dev_squid_img \
+--label version=1.0 \
+--label source=github.com/LucianoBestia/docker_rust_development \
+rust_dev_squid_img
+
 echo " "
 echo "Copy squid.conf"
 buildah copy rust_dev_squid_img 'etc_squid_squid.conf' '/etc/squid/squid.conf'

@@ -25,6 +25,13 @@ echo "Create new container named rust_dev_vscode_img from rust_dev_cargo_img"
 set -o errexit
 buildah from --name rust_dev_vscode_img localhost/rust_dev_cargo_img
 
+buildah config \
+--author=github.com/LucianoBestia \
+--label name=rust_dev_vscode_img \
+--label version=1.0 \
+--label source=github.com/LucianoBestia/docker_rust_development \
+rust_dev_vscode_img
+
 echo " "
 echo "The subsequent commands are from user rustdevuser."
 echo "If I need, I can add '--user root' to run as root."

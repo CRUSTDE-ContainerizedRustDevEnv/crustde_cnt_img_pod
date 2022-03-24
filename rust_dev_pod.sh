@@ -11,7 +11,13 @@ echo " "
 echo "Create pod"
 # in a "pod" the "publish port" is tied to the pod and not containers.
 
-podman pod create -p 127.0.0.1:8001-8009:8001-8009/tcp --name rust_dev_pod
+podman pod create \
+-p 127.0.0.1:8001-8009:8001-8009/tcp \
+--label name=rust_dev_pod \
+--label version=1.0 \
+--label source=github.com/LucianoBestia/docker_rust_development \
+--label author=github.com/LucianoBestia \
+--name rust_dev_pod
 
 echo " "
 echo "Create container squid_cnt"

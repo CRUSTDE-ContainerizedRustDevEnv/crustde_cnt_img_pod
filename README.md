@@ -1,12 +1,15 @@
 # docker_rust_development
 
-A complete development environment for Rust with VSCode inside a docker container.
+**A complete development environment for Rust with VSCode inside a docker container.**  
+***[repository](https://github.com/lucianobestia/docker_rust_development); version: 2022.324.1258  date: 2022-03-24 authors: Luciano Bestia***
+
+[![Lines in md](https://img.shields.io/badge/Lines_in_markdown-659-green.svg)](https://github.com/LucianoBestia/docker_rust_development/)  [![Lines in bash scripts](https://img.shields.io/badge/Lines_in_bash_scripts-408-blue.svg)](https://github.com/LucianoBestia/docker_rust_development/)  [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/LucianoBestia/docker_rust_development/blob/master/LICENSE)
 
 ## Try it
 
 Super short instructions without explanation. For tl;dr; continue reading below.
 
-Prerequisites: Win10, WSL2.
+Prerequisites: Win10, WSL2, VSCode.
 
 Open VSCode and install extension `Remote - Containers`.
 
@@ -23,7 +26,6 @@ sudo apt-get update
 sudo apt-get install podman
 podman pull docker.io/lucianobestia/rust_dev_squid_img:version1.0
 podman pull docker.io/lucianobestia/rust_dev_vscode_img:version1.0
-
 
 podman pod create -p 127.0.0.1:8001-8009:8001-8009/tcp --name rust_dev_pod
 
@@ -324,6 +326,8 @@ podman start rust_dev_cnt
 
 In VSCode "Activity bar" click on the icon `Remote Explorer`. Up-right instead of `WSL Targets` choose `Containers`. There is a list of containers and among them our `localhost/rust_dev_vscode_img rust_dev_cnt`. Right click on it and choose `Attach in New Window`.
 
+![Remote Explorer](./remote_explorer.png)]
+
 There is also the shorter way without mouse: Open VSCode, press `F1`, type `attach` and choose `Remote-Containers:Attach to Running container...` and type `rust_dev_cnt`.
 
 This will open a new VSCode windows attached to the container. In the left bottom corner there is the green label with the container name.
@@ -612,24 +616,45 @@ It takes some time to upload more than 1.4 Gb.
 
 ## Quirks
 
-### error joining network
+It is a complex setting. There can be some quirks sometimes.
+
+## network namespace, user namespace
 
 After rebooting my system and trying `podman ps -a` I got this error:
 
-`error joining network namespace for container ...`
+`error joining network namespace for container ...` or `cannot set user namespace`
 
 This is because Podman was unable to detect that the system has rebooted in WSL2.
 
-The solution is in `WSL2 terminal`:
+The solution in `WSL2 terminal` is simple:
 
 ```bash
 rm -rf /tmp/run-$(id -u)/libpod/tmp
 ```
 
-### ssh could not resolve hostname
+## ssh could not resolve hostname
 
 Warning: The "ssh could not resolve hostname" is a common error. It is not that big of an issue. I closed everything and restart my computer and everything works fine now.
 
 ## TODO
 
 new image with cargo-crev and cargo_crev_reviews
+
+## cargo crev reviews and advisory
+
+We live in times of danger with [supply chain attacks](https://en.wikipedia.org/wiki/Supply_chain_attack).  
+It is recommended to always use [cargo-crev](https://github.com/crev-dev/cargo-crev)  
+to verify the trustworthiness of each of your dependencies.  
+Please, spread this info.  
+You can also read reviews quickly on the web:  
+<https://web.crev.dev/rust-reviews/crates/>  
+
+## open-source and free as a beer
+
+My open-source projects are free as a beer (MIT license).  
+I just love programming.  
+But I need also to drink. If you find my projects and tutorials helpful,  
+please buy me a beer donating on my [paypal](https://www.paypal.com/paypalme/LucianoBestia).  
+You know the price of a beer in your local bar ;-)  
+So I can drink a free beer for your health :-)  
+[Na zdravje!](https://translate.google.com/?hl=en&sl=sl&tl=en&text=Na%20zdravje&op=translate) [Alla salute!](https://dictionary.cambridge.org/dictionary/italian-english/alla-salute) [Prost!](https://dictionary.cambridge.org/dictionary/german-english/prost) [Nazdravlje!](https://matadornetwork.com/nights/how-to-say-cheers-in-50-languages/) 🍻

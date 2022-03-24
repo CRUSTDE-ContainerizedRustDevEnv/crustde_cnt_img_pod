@@ -30,6 +30,14 @@ echo "Create new container named rust_dev_cargo_img"
 set -o errexit
 buildah from --name rust_dev_cargo_img docker.io/library/debian:bullseye-slim
 
+
+buildah config \
+--author=github.com/LucianoBestia \
+--label name=rust_dev_cargo_img \
+--label version=1.0 \
+--label source=github.com/LucianoBestia/docker_rust_development \
+rust_dev_cargo_img
+
 echo " "
 echo "apk update"
 buildah run rust_dev_cargo_img    apt -y update

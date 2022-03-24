@@ -1,5 +1,6 @@
 {
     "cSpell.words": [
+        "Alla",
         "Anson",
         "automagic",
         "bindgen",
@@ -7,6 +8,7 @@
         "certssh",
         "cgroupfs",
         "clippy",
+        "crev",
         "crun",
         "daemonless",
         "davidanson",
@@ -27,6 +29,7 @@
         "microxml",
         "mkdir",
         "multiling",
+        "Nazdravlje",
         "OLDIMAGEPATH",
         "plantuml",
         "printenv",
@@ -46,6 +49,7 @@
         "wais",
         "Webassembly",
         "workingdir",
+        "zdravje",
         "zxvf"
     ],
     "cSpell.enableFiletypes": [
