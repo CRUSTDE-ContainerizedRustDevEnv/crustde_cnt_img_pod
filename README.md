@@ -1,6 +1,6 @@
 # docker_rust_development
 
-A complete developer environment for Rust inside a docker container.
+A complete development environment for Rust with VSCode inside a docker container.
 
 ## Try it
 
@@ -21,19 +21,20 @@ In `WSL2 terminal`:
 ```bash
 sudo apt-get update
 sudo apt-get install podman
-podman pull docker.io/lucianobestia/rust_dev_vscode_img
-podman pull docker.io/lucianobestia/rust_dev_squid_img
+podman pull docker.io/lucianobestia/rust_dev_squid_img:version1.0
+podman pull docker.io/lucianobestia/rust_dev_vscode_img:version1.0
+
 
 podman pod create -p 127.0.0.1:8001-8009:8001-8009/tcp --name rust_dev_pod
 
-podman create --name squid_cnt --pod=rust_dev_pod -ti localhost rust_dev_squid_img
+podman create --name squid_cnt --pod=rust_dev_pod -ti docker.io/lucianobestia/rust_dev_squid_img:version1.0
 podman start squid_cnt
 
 podman create --name rust_dev_cnt --pod=rust_dev_pod -ti \
 --env http_proxy=localhost:3128 \
 --env https_proxy=localhost:3128 \
 --env all_proxy=localhost:3128  \
-rust_dev_vscode_img
+docker.io/lucianobestia/rust_dev_vscode_img:version1.0
 
 podman start rust_dev_cnt
 
@@ -631,5 +632,4 @@ Warning: The "ssh could not resolve hostname" is a common error. It is not that 
 
 ## TODO
 
-image with cargo-crev and cargo_crev_reviews
-push images to docker.hub
+new image with cargo-crev and cargo_crev_reviews
