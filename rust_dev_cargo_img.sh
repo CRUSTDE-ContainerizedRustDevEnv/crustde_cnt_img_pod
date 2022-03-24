@@ -94,10 +94,6 @@ buildah run --user root rust_dev_cargo_img    apt -y autoremove
 buildah run --user root rust_dev_cargo_img    apt -y clean
 
 echo " "
-echo "Expose ports from 8001 to 8009"
-buildah config --port 8001 --port 8002 --port 8003 --port 8004 --port 8005 --port 8006 --port 8007 --port 8008 --port 8009 rust_dev_cargo_img
-
-echo " "
 echo "Finally save/commit the image named rust_dev_cargo_img"
 buildah commit rust_dev_cargo_img rust_dev_cargo_img
 

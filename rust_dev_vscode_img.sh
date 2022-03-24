@@ -5,6 +5,7 @@ echo "Bash script to build the docker image for development in Rust with VSCode.
 echo "Name of the image: rust_dev_vscode_img"
 echo "https://github.com/LucianoBestia/docker_rust_development"
 
+echo "Container image for complete Rust development environment with VSCode."
 echo "This is based on rust_dev_cargo_img and adds VSCode and extensions."
 
 echo "To build the image, run in bash with:"
