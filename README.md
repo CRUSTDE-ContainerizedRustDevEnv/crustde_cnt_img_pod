@@ -5,6 +5,8 @@
 
 [![Lines in md](https://img.shields.io/badge/Lines_in_markdown-659-green.svg)](https://github.com/LucianoBestia/docker_rust_development/)  [![Lines in bash scripts](https://img.shields.io/badge/Lines_in_bash_scripts-408-blue.svg)](https://github.com/LucianoBestia/docker_rust_development/)  [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/LucianoBestia/docker_rust_development/blob/master/LICENSE)
 
+![spiral_of_madness](./spiral_of_madness.png "spiral_of_madness")
+
 ## Try it
 
 Super short instructions without explanation. For tl;dr; continue reading below.
@@ -54,6 +56,7 @@ cargo run
 ```
 
 That should work!
+
 
 ## Motivation
 
@@ -305,6 +308,8 @@ Search for `remote.containers.dockerPath`. Type `/usr/bin/podman`.
 
 Search for `remote.containers.executeInWSL` and enable it.
 
+![settings_1](./settings_1.png "settings_1")
+
 There are a lot of `automagic easy to use` functions in this extension. But for some reason `automagic` never worked for me. I must always go painfully step-by-step and discover why the `automagic` does not work in my case. Always!
 
 The bash script `rust_dev_vscode_img.sh` will create the image `rust_dev_vscode_img`.
@@ -326,9 +331,10 @@ podman start rust_dev_cnt
 
 In VSCode "Activity bar" click on the icon `Remote Explorer`. Up-right instead of `WSL Targets` choose `Containers`. There is a list of containers and among them our `localhost/rust_dev_vscode_img rust_dev_cnt`. Right click on it and choose `Attach in New Window`.
 
-![Remote Explorer](./remote_explorer.png)]
+![Remote Explorer](./remote_explorer.png "remote_explorer")
 
 There is also the shorter way without mouse: Open VSCode, press `F1`, type `attach` and choose `Remote-Containers:Attach to Running container...` and type `rust_dev_cnt`.
+![attach_1](./attach_1.png "attach_1")  ![attach_2](./attach_2.png "attach_2")
 
 This will open a new VSCode windows attached to the container. In the left bottom corner there is the green label with the container name.
 
