@@ -5,7 +5,7 @@
 
 [![Lines in md](https://img.shields.io/badge/Lines_in_markdown-659-green.svg)](https://github.com/LucianoBestia/docker_rust_development/)  [![Lines in bash scripts](https://img.shields.io/badge/Lines_in_bash_scripts-408-blue.svg)](https://github.com/LucianoBestia/docker_rust_development/)  [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/LucianoBestia/docker_rust_development/blob/master/LICENSE)
 
-![spiral_of_madness](./images/spiral_of_madness.png "spiral_of_madness")
+![spiral_of_madness](https://github.com/LucianoBestia/docker_rust_development/raw/main/images/spiral_of_madness.png "spiral_of_madness")
 
 ## Try it
 
@@ -308,7 +308,7 @@ Search for `remote.containers.dockerPath`. Type `/usr/bin/podman`.
 
 Search for `remote.containers.executeInWSL` and enable it.
 
-![settings_1](./images/settings_1.png "settings_1")
+![settings_1](https://github.com/LucianoBestia/docker_rust_development/raw/main/images/settings_1.png "settings_1")
 
 There are a lot of `automagic easy to use` functions in this extension. But for some reason `automagic` never worked for me. I must always go painfully step-by-step and discover why the `automagic` does not work in my case. Always!
 
@@ -331,10 +331,10 @@ podman start rust_dev_cnt
 
 In VSCode "Activity bar" click on the icon `Remote Explorer`. Up-right instead of `WSL Targets` choose `Containers`. There is a list of containers and among them our `localhost/rust_dev_vscode_img rust_dev_cnt`. Right click on it and choose `Attach in New Window`.
 
-![Remote Explorer](./images/remote_explorer.png "remote_explorer")
+![Remote Explorer](https://github.com/LucianoBestia/docker_rust_development/raw/main/images/remote_explorer.png "remote_explorer")
 
 There is also the shorter way without mouse: Open VSCode, press `F1`, type `attach` and choose `Remote-Containers:Attach to Running container...` and type `rust_dev_cnt`.
-![attach_1](./images/attach_1.png "attach_1")  ![attach_2](./images/attach_2.png "attach_2")
+![attach_1](https://github.com/LucianoBestia/docker_rust_development/raw/main/images/attach_1.png "attach_1")  ![attach_2](https://github.com/LucianoBestia/docker_rust_development/raw/main/images/attach_2.png "attach_2")
 
 This will open a new VSCode windows attached to the container. In the left bottom corner there is the green label with the container name.
 
@@ -447,7 +447,7 @@ code .
 
 The `code .` command will open a new VSCode window in the folder `rust_wasm_pwa_minimal_clock`. In the new VSCode window, we can now edit, compile and run the project. All sandboxed/isolated inside the container. We can now close the old window, we don't need it any more.
 
-This example is somewhat more complex, because it is WebAssembly, but it is good for learning. I used the automation tool `cargo-auto` to script a more complex building process. You can read the automation task code in `./automation_task_rs/src/main.rs`. On the first build it will download the wasm components and wasm-bindgen. That can take some time. Don't despair.
+This example is somewhat more complex, because it is WebAssembly, but it is good for learning. I used the automation tool `cargo-auto` to script a more complex building process. You can read the automation task code in `automation_task_rs/src/main.rs`. On the first build it will download the wasm components and wasm-bindgen. That can take some time. Don't despair.
 
 Now we can build and run the project in `VSCode terminal` (Ctrl+j):
 
