@@ -1,5 +1,7 @@
-# docker_rust_development
 
+# Rust: Hack Without Fear!
+
+**docker_rust_development**
 **A complete development environment for Rust with VSCode inside a docker container.**  
 ***[repository](https://github.com/lucianobestia/docker_rust_development); version: 2022.324.1258  date: 2022-03-24 authors: Luciano Bestia***
 
