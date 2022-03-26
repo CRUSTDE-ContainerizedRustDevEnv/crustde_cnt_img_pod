@@ -1,9 +1,9 @@
 
-# Rust: Hack Without Fear!
+# Rust: Hack Without Fear !
 
 **docker_rust_development**  
 **A complete development environment for Rust with VSCode inside a docker container.**  
-***[repository](https://github.com/lucianobestia/docker_rust_development); version: 2022.324.1258  date: 2022-03-24 authors: Luciano Bestia***
+***version: 2022.324.1258  date: 2022-03-24 author: [Dev_Bestia](https://bestia.dev) repository: [GitHub](https://github.com/LucianoBestia/docker_rust_development)***  
 
 [![Lines in md](https://img.shields.io/badge/Lines_in_markdown-659-green.svg)](https://github.com/LucianoBestia/docker_rust_development/)  [![Lines in bash scripts](https://img.shields.io/badge/Lines_in_bash_scripts-408-blue.svg)](https://github.com/LucianoBestia/docker_rust_development/)  [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/LucianoBestia/docker_rust_development/blob/master/LICENSE)
 
@@ -58,7 +58,6 @@ cargo run
 ```
 
 That should work!
-
 
 ## Motivation
 
