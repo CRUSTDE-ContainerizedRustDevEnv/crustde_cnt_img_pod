@@ -3,7 +3,7 @@
 echo " "
 echo "Bash script to build the docker image for development in Rust."
 echo "Name of the image: rust_dev_cargo_img"
-echo "https://github.com/LucianoBestia/docker_rust_development"
+echo "https://github.com/bestia-dev/docker_rust_development"
 
 echo " "
 echo "I want a sandbox that cannot compromise my local system."
@@ -32,10 +32,10 @@ buildah from --name rust_dev_cargo_img docker.io/library/debian:bullseye-slim
 
 
 buildah config \
---author=github.com/LucianoBestia \
+--author=github.com/bestia-dev \
 --label name=rust_dev_cargo_img \
 --label version=1.0 \
---label source=github.com/LucianoBestia/docker_rust_development \
+--label source=github.com/bestia-dev/docker_rust_development \
 rust_dev_cargo_img
 
 echo " "

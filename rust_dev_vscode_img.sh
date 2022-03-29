@@ -3,7 +3,7 @@
 echo " "
 echo "Bash script to build the docker image for development in Rust with VSCode."
 echo "Name of the image: rust_dev_vscode_img"
-echo "https://github.com/LucianoBestia/docker_rust_development"
+echo "https://github.com/bestia-dev/docker_rust_development"
 
 echo "Container image for complete Rust development environment with VSCode."
 echo "This is based on rust_dev_cargo_img and adds VSCode and extensions."
@@ -26,10 +26,10 @@ set -o errexit
 buildah from --name rust_dev_vscode_img localhost/rust_dev_cargo_img
 
 buildah config \
---author=github.com/LucianoBestia \
+--author=github.com/bestia-dev \
 --label name=rust_dev_vscode_img \
 --label version=1.0 \
---label source=github.com/LucianoBestia/docker_rust_development \
+--label source=github.com/bestia-dev/docker_rust_development \
 rust_dev_vscode_img
 
 echo " "
@@ -54,7 +54,6 @@ buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/c722ca6c7eed3d7
 buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/c722ca6c7eed3d7987c0d5c3df5c45f6b15e77d1/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension davidanson.vscode-markdownlint'
 buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/c722ca6c7eed3d7987c0d5c3df5c45f6b15e77d1/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension 2gua.rainbow-brackets'
 buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/c722ca6c7eed3d7987c0d5c3df5c45f6b15e77d1/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension dotjoshjohnson.xml'
-buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/c722ca6c7eed3d7987c0d5c3df5c45f6b15e77d1/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension jebbs.plantuml'
 buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/c722ca6c7eed3d7987c0d5c3df5c45f6b15e77d1/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension lonefy.vscode-js-css-html-formatter'
 buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/c722ca6c7eed3d7987c0d5c3df5c45f6b15e77d1/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension serayuzgur.crates'
 

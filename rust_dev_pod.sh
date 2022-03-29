@@ -5,7 +5,7 @@ echo "Bash script to create and start the pod 'rust_dev_pod'"
 echo "This 'pod' is made of the containers 'rust_dev_squid_cnt' and 'rust_dev_vscode_cnt'"
 echo "All outbound network traffic from rust_dev_vscode_cnt goes through the proxy Squid."
 echo "Published inbound network ports are from 8001 to 8009 on 'localhost'"
-echo "https://github.com/LucianoBestia/docker_rust_development"
+echo "https://github.com/bestia-dev/docker_rust_development"
 
 echo " "
 echo "Create pod"
@@ -15,8 +15,8 @@ podman pod create \
 -p 127.0.0.1:8001-8009:8001-8009/tcp \
 --label name=rust_dev_pod \
 --label version=1.0 \
---label source=github.com/LucianoBestia/docker_rust_development \
---label author=github.com/LucianoBestia \
+--label source=github.com/bestia-dev/docker_rust_development \
+--label author=github.com/bestia-dev \
 --name rust_dev_pod
 
 echo " "

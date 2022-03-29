@@ -3,11 +3,11 @@
 
 **docker_rust_development**  
 **A complete development environment for Rust with VSCode inside a docker container.**  
-***version: 2022.324.1258  date: 2022-03-24 author: [Dev_Bestia](https://bestia.dev) repository: [GitHub](https://github.com/LucianoBestia/docker_rust_development)***  
+***version: 2022.324.1258  date: 2022-03-24 author: [bestia.dev](https://bestia.dev) repository: [GitHub](https://github.com/bestia-dev/docker_rust_development)***  
 
-[![Lines in md](https://img.shields.io/badge/Lines_in_markdown-659-green.svg)](https://github.com/LucianoBestia/docker_rust_development/)  [![Lines in bash scripts](https://img.shields.io/badge/Lines_in_bash_scripts-408-blue.svg)](https://github.com/LucianoBestia/docker_rust_development/)  [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/LucianoBestia/docker_rust_development/blob/master/LICENSE)
+[![Lines in md](https://img.shields.io/badge/Lines_in_markdown-659-green.svg)](https://github.com/bestia-dev/docker_rust_development/)  [![Lines in bash scripts](https://img.shields.io/badge/Lines_in_bash_scripts-408-blue.svg)](https://github.com/bestia-dev/docker_rust_development/)  [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/bestia-dev/docker_rust_development/blob/master/LICENSE)
 
-![spiral_of_madness](https://github.com/LucianoBestia/docker_rust_development/raw/main/images/spiral_of_madness.png "spiral_of_madness")
+![spiral_of_madness](https://github.com/bestia-dev/docker_rust_development/raw/main/images/spiral_of_madness.png "spiral_of_madness")
 
 ## Try it
 
@@ -28,19 +28,19 @@ In `WSL2 terminal`:
 ```bash
 sudo apt-get update
 sudo apt-get install podman
-podman pull docker.io/lucianobestia/rust_dev_squid_img:version1.0
-podman pull docker.io/lucianobestia/rust_dev_vscode_img:version1.0
+podman pull docker.io/bestiadev/rust_dev_squid_img:version1.0
+podman pull docker.io/bestiadev/rust_dev_vscode_img:version1.0
 
 podman pod create -p 127.0.0.1:8001-8009:8001-8009/tcp --name rust_dev_pod
 
-podman create --name squid_cnt --pod=rust_dev_pod -ti docker.io/lucianobestia/rust_dev_squid_img:version1.0
+podman create --name squid_cnt --pod=rust_dev_pod -ti docker.io/bestiadev/rust_dev_squid_img:version1.0
 podman start squid_cnt
 
 podman create --name rust_dev_cnt --pod=rust_dev_pod -ti \
 --env http_proxy=localhost:3128 \
 --env https_proxy=localhost:3128 \
 --env all_proxy=localhost:3128  \
-docker.io/lucianobestia/rust_dev_vscode_img:version1.0
+docker.io/bestiadev/rust_dev_vscode_img:version1.0
 
 podman start rust_dev_cnt
 
@@ -90,7 +90,7 @@ And there are alternatives to use Docker software that I will explore here.
 
 I already wrote some information how to install and use the combination of Win10 + WSL2 + Debian11(Bullseye):
 
-<https://github.com/LucianoBestia/win10_wsl2_debian11>
+<https://github.com/bestia-dev/win10_wsl2_debian11>
 
 Podman is available from the Debian11 package manager.
 
@@ -309,7 +309,7 @@ Search for `remote.containers.dockerPath`. Type `/usr/bin/podman`.
 
 Search for `remote.containers.executeInWSL` and enable it.
 
-![settings_1](https://github.com/LucianoBestia/docker_rust_development/raw/main/images/settings_1.png "settings_1")
+![settings_1](https://github.com/bestia-dev/docker_rust_development/raw/main/images/settings_1.png "settings_1")
 
 There are a lot of `automagic easy to use` functions in this extension. But for some reason `automagic` never worked for me. I must always go painfully step-by-step and discover why the `automagic` does not work in my case. Always!
 
@@ -332,10 +332,10 @@ podman start rust_dev_cnt
 
 In VSCode "Activity bar" click on the icon `Remote Explorer`. Up-right instead of `WSL Targets` choose `Containers`. There is a list of containers and among them our `localhost/rust_dev_vscode_img rust_dev_cnt`. Right click on it and choose `Attach in New Window`.
 
-![Remote Explorer](https://github.com/LucianoBestia/docker_rust_development/raw/main/images/remote_explorer.png "remote_explorer")
+![Remote Explorer](https://github.com/bestia-dev/docker_rust_development/raw/main/images/remote_explorer.png "remote_explorer")
 
 There is also the shorter way without mouse: Open VSCode, press `F1`, type `attach` and choose `Remote-Containers:Attach to Running container...` and type `rust_dev_cnt`.
-![attach_1](https://github.com/LucianoBestia/docker_rust_development/raw/main/images/attach_1.png "attach_1")  ![attach_2](https://github.com/LucianoBestia/docker_rust_development/raw/main/images/attach_2.png "attach_2")
+![attach_1](https://github.com/bestia-dev/docker_rust_development/raw/main/images/attach_1.png "attach_1")  ![attach_2](https://github.com/bestia-dev/docker_rust_development/raw/main/images/attach_2.png "attach_2")
 
 This will open a new VSCode windows attached to the container. In the left bottom corner there is the green label with the container name.
 
@@ -421,7 +421,7 @@ git init
 git add *
 git commit -m "first commit"
 git branch -M main
-git remote add origin git@github.com:LucianoBestia/rust_dev_hello.git
+git remote add origin git@github.com:bestia-dev/rust_dev_hello.git
 git push -u origin main
 ```
 
@@ -441,7 +441,7 @@ Run the commands to clone the repository from Github and open a new VSCode windo
 
 ```bash
 cd /home/rustdevuser/rustprojects/
-git clone git@github.com:LucianoBestia/rust_wasm_pwa_minimal_clock.git
+git clone git@github.com:bestia-dev/rust_wasm_pwa_minimal_clock.git
 cd rust_wasm_pwa_minimal_clock
 code .
 ```
@@ -471,7 +471,6 @@ VSCode is great because of its extensions. Most of these extensions are already 
 - davidanson.vscode-markdownlint
 - 2gua.rainbow-brackets
 - dotjoshjohnson.xml
-- jebbs.plantuml
 - lonefy.vscode-js-css-html-formatter
 - serayuzgur.crates
 
@@ -610,13 +609,13 @@ Then I created a new image repository with the name `rust_dev_vscode_img` and ta
 In `WSL2 terminal`:
 
 ```bash
-podman login --username lucianobestia docker.io
+podman login --username bestiadev docker.io
 # type access token
-podman image tag rust_dev_vscode_img docker.io/lucianobestia/rust_dev_vscode_img:version1.0
-podman push docker.io/lucianobestia/rust_dev_vscode_img:version1.0
+podman image tag rust_dev_vscode_img docker.io/bestiadev/rust_dev_vscode_img:version1.0
+podman push docker.io/bestiadev/rust_dev_vscode_img:version1.0
 
-podman image tag rust_dev_squid_img docker.io/lucianobestia/rust_dev_squid_img:version1.0
-podman push docker.io/lucianobestia/rust_dev_squid_img:version1.0
+podman image tag rust_dev_squid_img docker.io/bestiadev/rust_dev_squid_img:version1.0
+podman push docker.io/bestiadev/rust_dev_squid_img:version1.0
 ```
 
 It takes some time to upload more than 1.4 Gb.
@@ -661,7 +660,7 @@ You can also read reviews quickly on the web:
 My open-source projects are free as a beer (MIT license).  
 I just love programming.  
 But I need also to drink. If you find my projects and tutorials helpful,  
-please buy me a beer donating on my [paypal](https://www.paypal.com/paypalme/LucianoBestia).  
+please buy me a beer donating on my [paypal](https://paypal.me/LucianoBestia).  
 You know the price of a beer in your local bar ;-)  
 So I can drink a free beer for your health :-)  
 [Na zdravje!](https://translate.google.com/?hl=en&sl=sl&tl=en&text=Na%20zdravje&op=translate) [Alla salute!](https://dictionary.cambridge.org/dictionary/italian-english/alla-salute) [Prost!](https://dictionary.cambridge.org/dictionary/german-english/prost) [Nazdravlje!](https://matadornetwork.com/nights/how-to-say-cheers-in-50-languages/) 🍻
