@@ -675,7 +675,7 @@ podman exec rust_dev_squid_cnt tail -f /var/log/squid/access.log
 
 new image with cargo-crev and cargo_crev_reviews
 new image with windows cross compile
-scc chache for faster builds, when repeated.
+scchache for faster builds, when repeated? not really important for containers.
 
 ## cargo crev reviews and advisory
 

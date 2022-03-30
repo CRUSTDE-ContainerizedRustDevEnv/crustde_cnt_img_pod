@@ -5,6 +5,7 @@
         "automagic",
         "bestia-dev",
         "bestiadev",
+        "bierner",
         "bindgen",
         "Buildah",
         "certssh",
@@ -29,6 +30,7 @@
         "mgmt",
         "microxml",
         "mkdir",
+        "msecnd",
         "multiling",
         "Nazdravlje",
         "OLDIMAGEPATH",
@@ -40,10 +42,12 @@
         "rustc",
         "rustdevuser",
         "rustfmt",
+        "rustlib",
         "rustprojects",
         "rustup",
         "sameersbn",
         "sandboxed",
+        "scchache",
         "serayuzgur",
         "toolchains",
         "usermod",
@@ -55,6 +59,7 @@
         "zxvf"
     ],
     "cSpell.enableFiletypes": [
+        "properties",
         "shellscript"
     ]
 }
