@@ -27,19 +27,19 @@ In `WSL2 terminal`:
 ```bash
 sudo apt-get update
 sudo apt-get install podman
-podman pull docker.io/bestiadev/rust_dev_squid_img:version1.0
-podman pull docker.io/bestiadev/rust_dev_vscode_img:version1.0
+podman pull docker.io/bestiadev/rust_dev_squid_img:latest
+podman pull docker.io/bestiadev/rust_dev_vscode_img:latest
 
 podman pod create -p 127.0.0.1:8001:8001/tcp --name rust_dev_pod
 
-podman create --name rust_dev_squid_cnt --pod=rust_dev_pod -ti docker.io/bestiadev/rust_dev_squid_img:version1.0
+podman create --name rust_dev_squid_cnt --pod=rust_dev_pod -ti docker.io/bestiadev/rust_dev_squid_img:latest
 podman start rust_dev_squid_cnt
 
 podman create --name rust_dev_vscode_cnt --pod=rust_dev_pod -ti \
 --env http_proxy=http://localhost:3128 \
 --env https_proxy=http://localhost:3128 \
 --env all_proxy=http://localhost:3128  \
-docker.io/bestiadev/rust_dev_vscode_img:version1.0
+docker.io/bestiadev/rust_dev_vscode_img:latest
 
 podman start rust_dev_vscode_cnt
 
@@ -610,7 +610,7 @@ I signed in to hub.docker.com.
 
 In Account settings - Security I created an access token. This is the password for `podman login`. It is needed only once.
 
-Then I created a new image repository with the name `rust_dev_vscode_img` and tag `version1.0`. Docker is helping with the push command syntax. I use `podman`, so I just renamed `docker` to `podman`. The same for `rust_dev_squid_img`.
+Then I created a new image repository with the name `rust_dev_vscode_img` and tag `latest`. Docker is helping with the push command syntax. I use `podman`, so I just renamed `docker` to `podman`. The same for `rust_dev_squid_img`.
 
 In `WSL2 terminal`:
 
@@ -642,7 +642,7 @@ podman exec -it --user root rust_dev_vscode_cnt bash
 ## sizes
 
 docker.io/bestiadev/rust_dev_squid_img  squid3.5.27-2  168 MB
-docker.io/bestiadev/rust_dev_cargo_img  cargo-1.59.0  1.07 GB
+docker.io/bestiadev/rust_dev_cargo_img  cargo-1.59.0  1.08 GB
 docker.io/bestiadev/rust_dev_vscode_img cargo-1.59.0  1.32 GB
 
 ## Quirks
@@ -669,13 +669,13 @@ Warning: The "ssh could not resolve hostname" is a common error. It is not that 
 
 ## TODO
 
+Watch the log if the access is restricted to some domains:
 podman exec -it rust_dev_squid_cnt cat /var/log/squid/access.log
+podman exec rust_dev_squid_cnt tail -f /var/log/squid/access.log
 
 new image with cargo-crev and cargo_crev_reviews
 new image with windows cross compile
 scc chache for faster builds, when repeated.
-in the name or description write the exact versions of the tools inside.
-They change for the same image. So it must be somewhere in the tag
 
 ## cargo crev reviews and advisory
 

@@ -83,8 +83,10 @@ echo "Add the PATH to ~/.cargo/bin manually"
 OLDIMAGEPATH=$(buildah run rust_dev_cargo_img printenv PATH)
 buildah config --env PATH=/home/rustdevuser/.cargo/bin:$OLDIMAGEPATH rust_dev_cargo_img
 buildah run rust_dev_cargo_img /bin/sh -c 'echo $PATH'
-buildah config --env RUST_SRC_PATH=/home/rustdevuser/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library rust_dev_cargo_img
-buildah run rust_dev_cargo_img /bin/sh -c 'echo $RUST_SRC_PATH'
+
+# this probably is not necessary, if rust-analyzer can call rust-lang.org
+# buildah config --env RUST_SRC_PATH=/home/rustdevuser/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library rust_dev_cargo_img
+# buildah run rust_dev_cargo_img /bin/sh -c 'echo $RUST_SRC_PATH'
 
 buildah run rust_dev_cargo_img /bin/sh -c 'rustup component add rust-src'
 
@@ -117,36 +119,36 @@ buildah tag rust_dev_cargo_img docker.io/bestiadev/rust_dev_cargo_img:latest
 buildah tag docker.io/bestiadev/rust_dev_cargo_img:latest docker.io/bestiadev/rust_dev_cargo_img:cargo-1.59.0
 
 echo " "
-echo "To create the container 'rust_dev_cargo_cnt' use:"
-echo " podman create -ti --name rust_dev_cargo_cnt docker.io/bestiadev/rust_dev_cargo_img:latest"
+echo " To create the container 'rust_dev_cargo_cnt' use:"
+echo "podman create -ti --name rust_dev_cargo_cnt docker.io/bestiadev/rust_dev_cargo_img:latest"
 
 echo " "
-echo "Copy your ssh certificates for github and publish_to_web:"
-echo " podman cp ~/.ssh/certssh1 rust_dev_cargo_cnt:/home/rustdevuser/.ssh/certssh1"
-echo " podman cp ~/.ssh/certssh2 rust_dev_cargo_cnt:/home/rustdevuser/.ssh/certssh2"
+echo " Copy your ssh certificates for github and publish_to_web:"
+echo "podman cp ~/.ssh/certssh1 rust_dev_cargo_cnt:/home/rustdevuser/.ssh/certssh1"
+echo "podman cp ~/.ssh/certssh2 rust_dev_cargo_cnt:/home/rustdevuser/.ssh/certssh2"
 
 echo " "
-echo "To start the container use and then interact with bash:"
-echo " podman start rust_dev_cargo_cnt"
-echo " podman exec -it rust_dev_cargo_cnt bash"
+echo " To start the container use and then interact with bash:"
+echo "podman start rust_dev_cargo_cnt"
+echo "podman exec -it rust_dev_cargo_cnt bash"
 
 echo " "
-echo "Inside the container run the ssh-agent to store your ssh passphrase for git and publish_to_web:"
-echo " cd /home/rustdevuser"
-echo " eval $(ssh-agent) "
-echo " ssh-add /home/rustdevuser/.ssh/certssh1"
-echo " ssh-add /home/rustdevuser/.ssh/certssh2"
-echo " cd rustprojects"
+echo " Inside the container run the ssh-agent to store your ssh passphrase for git and publish_to_web:"
+echo "cd /home/rustdevuser"
+echo "eval $(ssh-agent) "
+echo "ssh-add /home/rustdevuser/.ssh/certssh1"
+echo "ssh-add /home/rustdevuser/.ssh/certssh2"
+echo "cd rustprojects"
 
 echo " "
-echo "Try to build and run a sample Rust project:"
-echo " cargo new rust_dev_hello"
-echo " cd rust_dev_hello"
-echo " cargo run"
+echo " Try to build and run a sample Rust project:"
+echo "cargo new rust_dev_hello"
+echo "cd rust_dev_hello"
+echo "cargo run"
 
 echo " "
-echo "Detach container (it will remain 'started') with:"
-echo " Ctrl+P, Ctrl+Q"
+echo " Detach container (it will remain 'started') with:"
+echo "Ctrl+P, Ctrl+Q"
 
 echo " "
 echo "To Exit/Stop the container type:"
