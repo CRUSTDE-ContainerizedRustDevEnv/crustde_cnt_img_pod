@@ -22,8 +22,10 @@ echo "Removing container and image if exists"
 # the '|| :' in combination with 'set -e' means that 
 # the error is ignored if the container does not exist.
 set -e
-buildah rmi -f rust_dev_cargo_img || :
+podman rm rust_dev_cargo_cnt || :
 buildah rm rust_dev_cargo_img || :
+buildah rmi -f docker.io/bestiadev/rust_dev_cargo_img || :
+
 
 echo " "
 echo "Create new container named rust_dev_cargo_img"
@@ -41,19 +43,19 @@ rust_dev_cargo_img
 echo " "
 echo "apk update"
 buildah run rust_dev_cargo_img    apt -y update
-buildah run rust_dev_cargo_img    apt -y install sudo
+buildah run rust_dev_cargo_img    apt -y upgrade
 
 echo " "
 echo "Install curl, git, rsync and build-essential with root user"
 buildah run rust_dev_cargo_img    apt -y install curl
-buildah run rust_dev_cargo_img    apt -y install git
-buildah run rust_dev_cargo_img    apt -y install rsync
-buildah run rust_dev_cargo_img    apt -y install build-essential
+buildah run rust_dev_cargo_img    apt -y --no-install-recommends install git
+buildah run rust_dev_cargo_img    apt -y --no-install-recommends install rsync
+buildah run rust_dev_cargo_img    apt -y --no-install-recommends install build-essential
+buildah run rust_dev_cargo_img    apt -y --no-install-recommends install nano
 
 echo " "
 echo "Create non-root user 'rustdevuser' and home folder."
 buildah run rust_dev_cargo_img    useradd -ms /bin/bash rustdevuser
-buildah run rust_dev_cargo_img    usermod -aG sudo rustdevuser
 
 echo " "
 echo "Use rustdevuser for all subsequent commands."
@@ -61,7 +63,7 @@ buildah config --user rustdevuser rust_dev_cargo_img
 buildah config --workingdir /home/rustdevuser rust_dev_cargo_img
 
 # If needed, the user can be forced for a buildah command:
-# buildah run  --user root rust_dev_cargo_img    apt -y install build-essential
+# buildah run  --user root rust_dev_cargo_img    apt -y --no-install-recommends install build-essential
 
 echo " "
 echo "Configure rustdevuser things"
@@ -76,12 +78,14 @@ echo " "
 echo "Install rustup and default x86_64-unknown-linux-gnu, cargo, std, rustfmt, clippy, docs, rustc,... "
 buildah run rust_dev_cargo_img /bin/sh -c 'curl https://sh.rustup.rs -sSf | sh -s -- -yq'
 
-echo " "
 echo "Rustup wants to add the ~/.cargo/bin to PATH. But it needs to force bash reboot and that does not work in buildah."
 echo "Add the PATH to ~/.cargo/bin manually"
 OLDIMAGEPATH=$(buildah run rust_dev_cargo_img printenv PATH)
 buildah config --env PATH=/home/rustdevuser/.cargo/bin:$OLDIMAGEPATH rust_dev_cargo_img
 buildah run rust_dev_cargo_img /bin/sh -c 'echo $PATH'
+
+echo "remove the toolchain docs, because they are 610MB big"
+buildah run rust_dev_cargo_img /bin/sh -c 'rustup component remove --toolchain stable-x86_64-unknown-linux-gnu rust-docs'
 
 echo " "
 echo "Install cargo-auto. It will pull the cargo-index registry. The first pull can take some time."
@@ -105,19 +109,23 @@ echo " "
 echo "Finally save/commit the image named rust_dev_cargo_img"
 buildah commit rust_dev_cargo_img rust_dev_cargo_img
 
+buildah tag rust_dev_cargo_img docker.io/bestiadev/rust_dev_cargo_img:latest
+# TODO: dinamically ask ` cargo --version` and write the answer in the tag:
+buildah tag docker.io/bestiadev/rust_dev_cargo_img:latest docker.io/bestiadev/rust_dev_cargo_img:cargo-1.59.0
+
 echo " "
-echo "To create the container 'rust_dev_cnt' use:"
-echo " podman create -ti --name rust_dev_cnt localhost/rust_dev_cargo_img"
+echo "To create the container 'rust_dev_cargo_cnt' use:"
+echo " podman create -ti --name rust_dev_cargo_cnt docker.io/bestiadev/rust_dev_cargo_img:latest"
 
 echo " "
 echo "Copy your ssh certificates for github and publish_to_web:"
-echo " podman cp ~/.ssh/certssh1 rust_dev_cnt:/home/rustdevuser/.ssh/certssh1"
-echo " podman cp ~/.ssh/certssh2 rust_dev_cnt:/home/rustdevuser/.ssh/certssh2"
+echo " podman cp ~/.ssh/certssh1 rust_dev_cargo_cnt:/home/rustdevuser/.ssh/certssh1"
+echo " podman cp ~/.ssh/certssh2 rust_dev_cargo_cnt:/home/rustdevuser/.ssh/certssh2"
 
 echo " "
 echo "To start the container use and then interact with bash:"
-echo " podman start rust_dev_cnt"
-echo " podman exec -it rust_dev_cnt bash"
+echo " podman start rust_dev_cargo_cnt"
+echo " podman exec -it rust_dev_cargo_cnt bash"
 
 echo " "
 echo "Inside the container run the ssh-agent to store your ssh passphrase for git and publish_to_web:"

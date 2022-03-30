@@ -18,13 +18,16 @@ echo "removing container and image if exists"
 # the '|| :' in combination with 'set -e' means that 
 # the error is ignored if the container does not exist.
 set -e
-buildah rmi -f rust_dev_squid_img || :
+podman rm -f rust_dev_squid_cnt || :
 buildah rm rust_dev_squid_img || :
+buildah rmi -f docker.io/bestiadev/rust_dev_squid_img || :
 
 echo " "
 echo "Create new container named rust_dev_squid_img from sameersbn/squid:latest"
 set -o errexit
-buildah from --name rust_dev_squid_img docker.io/sameersbn/squid:latest
+buildah from \
+--name rust_dev_squid_img \
+docker.io/sameersbn/squid:3.5.27-2
 
 buildah config \
 --author=github.com/bestia-dev \
@@ -44,20 +47,22 @@ buildah run --user root rust_dev_squid_img    apt -y clean
 
 echo " "
 echo "Finally save/commit the image named rust_dev_squid_img"
-buildah commit rust_dev_squid_img rust_dev_squid_img
+buildah commit rust_dev_squid_img docker.io/bestiadev/rust_dev_squid_img:latest
+
+buildah tag docker.io/bestiadev/rust_dev_squid_img:latest docker.io/bestiadev/rust_dev_squid_img:squid-3.5.27-2
 
 echo " "
-echo "To create the 'pod' with 'squid_cnt' and 'rust_dev_cnt' use:"
+echo "To create the 'pod' with 'rust_dev_squid_cnt' and 'rust_dev_vscode_cnt' use:"
 echo " podman pod create --name rust_dev_pod"
 echo " podman pod ls"
-echo " podman create --name squid_cnt --pod=rust_dev_pod -ti --restart=always localhost/rust_dev_squid_img"
-echo " podman start squid_cnt"
-echo " podman create --name rust_dev_cnt --pod=rust_dev_pod -ti rust_dev_vscode_img"
-echo " podman start rust_dev_cnt"
+echo " podman create --name rust_dev_squid_cnt --pod=rust_dev_pod -ti --restart=always docker.io/bestiadev/rust_dev_squid_img:latest"
+echo " podman start rust_dev_squid_cnt"
+echo " podman create --name rust_dev_vscode_cnt --pod=rust_dev_pod -ti rust_dev_vscode_img"
+echo " podman start rust_dev_vscode_cnt"
 
 echo " "
 echo "Firstly: attach VSCode to the running container."
-echo "Open VSCode, press F1, type 'attach' and choose 'Remote-Containers:Attach to Running container...' and type rust_dev_cnt" 
+echo "Open VSCode, press F1, type 'attach' and choose 'Remote-Containers:Attach to Running container...' and type rust_dev_vscode_cnt" 
 echo "This will open a new VSCode windows attached to the container."
 echo "If needed Open VSCode terminal with Ctrl+J"
 echo "Inside VSCode terminal, try the if the proxy restrictions work:"

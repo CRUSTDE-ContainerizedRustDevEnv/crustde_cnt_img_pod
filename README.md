@@ -16,7 +16,7 @@ Prerequisites: Win10, WSL2, VSCode.
 
 Open VSCode and install extension `Remote - Containers`.
 
-In VSCode open File-Preferences-Settings or Ctrl+,  
+In VSCode open File-Preferences-Settings or Ctr-l+,  
 
 Search for `remote.containers.dockerPath`. Type `/usr/bin/podman`.
 
@@ -30,22 +30,22 @@ sudo apt-get install podman
 podman pull docker.io/bestiadev/rust_dev_squid_img:version1.0
 podman pull docker.io/bestiadev/rust_dev_vscode_img:version1.0
 
-podman pod create -p 127.0.0.1:8001-8009:8001-8009/tcp --name rust_dev_pod
+podman pod create -p 127.0.0.1:8001:8001/tcp --name rust_dev_pod
 
-podman create --name squid_cnt --pod=rust_dev_pod -ti docker.io/bestiadev/rust_dev_squid_img:version1.0
-podman start squid_cnt
+podman create --name rust_dev_squid_cnt --pod=rust_dev_pod -ti docker.io/bestiadev/rust_dev_squid_img:version1.0
+podman start rust_dev_squid_cnt
 
-podman create --name rust_dev_cnt --pod=rust_dev_pod -ti \
---env http_proxy=localhost:3128 \
---env https_proxy=localhost:3128 \
---env all_proxy=localhost:3128  \
+podman create --name rust_dev_vscode_cnt --pod=rust_dev_pod -ti \
+--env http_proxy=http://localhost:3128 \
+--env https_proxy=http://localhost:3128 \
+--env all_proxy=http://localhost:3128  \
 docker.io/bestiadev/rust_dev_vscode_img:version1.0
 
-podman start rust_dev_cnt
+podman start rust_dev_vscode_cnt
 
 ```
 
-In VSCode, press `F1`, type `attach` and choose `Remote-Containers:Attach to Running container...` and type `rust_dev_cnt`.
+In VSCode, press `F1`, type `attach` and choose `Remote-Containers:Attach to Running container...` and type `rust_dev_vscode_cnt`.
 
 In `VSCode terminal`:
 
@@ -227,13 +227,13 @@ We can have simultaneously more containers, each with a different version of Rus
 
 Everybody uses `podman run`, but this is essentially 4 commands in one: `pull` from a repository, `create` the container, `start` or `attach` to the container and exec the bash in interactive mode. I like to use this commands separately, because it makes more sense for learning.
 
-Create the container with a fixed name rust_dev_cnt:
+Create the container with a fixed name rust_dev_cargo_cnt:
 
---name - the container name will be `rust_dev_cnt`  
+--name - the container name will be `rust_dev_cargo_cnt`  
 -ti - we will use the container interactively in the terminal  
 
 ```bash
-podman create -ti --name rust_dev_cnt localhost/rust_dev_cargo_img
+podman create -ti --name rust_dev_cargo_cnt docker.io/bestiadev/rust_dev_cargo_img:latest/
 ```
 
 We can list the existing containers with:
@@ -245,14 +245,14 @@ podman ps -a
 Now we can start the container:
 
 ```bash
-podman start rust_dev_cnt
+podman start rust_dev_cargo_cnt
 ```
 
 Open the bash to interact with the `container terminal`:
 -it - interactive terminal
 
 ```bash
-podman exec -it rust_dev_cnt bash
+podman exec -it rust_dev_cargo_cnt bash
 ```
 
 We are now inside the `container terminal` and we can use `cargo`, `rustup` and other rust tools. The files we create will be inside the container. We are `rustdevuser` inside this container, so we will put our rustprojects in the `/home/rustdevuser/rustprojects` directory.
@@ -260,6 +260,13 @@ We are now inside the `container terminal` and we can use `cargo`, `rustup` and 
 This container is started from Podman without `root access` to the host system !
 
 This is a small, but important difference between Docker and Podman.
+
+First let find the rustc version:
+
+```bash
+cargo --version
+  cargo 1.59.0 (49d8809dc 2022-02-10)
+```
 
 Let create and run a small Rust program:
 
@@ -282,14 +289,14 @@ When we exited the container we returned to `WSL2 terminal`.
 
 The container still exists and is still running. Check with `podman ps -a`.
 
-To interact with it again, repeat the previous command `podman exec -it rust_dev_cnt bash`.
+To interact with it again, repeat the previous command `podman exec -it rust_dev_cargo_cnt bash`.
 
 This container does not work with VSCode and we will not need it any more. If you use another editor, you can customize and use this image/container.
 
 Remove the container with:
 
 ```bash
-podman rm rust_dev_cnt -f
+podman rm rust_dev_cargo_cnt -f
 ```
 
 ## VSCode from Windows to WSL2 to container
@@ -325,15 +332,15 @@ This is based on the first image and adds the VSCode server and extensions.
 I like to run the container in a terminal first and then attach to it from VSCode. Create and start the container in a `WSL2 terminal`:
 
 ```bash
-podman create -ti -p 127.0.0.1:8001:8001/tcp --name rust_dev_cnt rust_dev_vscode_img
-podman start rust_dev_cnt
+podman create -ti -p 127.0.0.1:8001:8001/tcp --name rust_dev_vscode_cnt rust_dev_vscode_img
+podman start rust_dev_vscode_cnt
 ```
 
-In VSCode "Activity bar" click on the icon `Remote Explorer`. Up-right instead of `WSL Targets` choose `Containers`. There is a list of containers and among them our `localhost/rust_dev_vscode_img rust_dev_cnt`. Right click on it and choose `Attach in New Window`.
+In VSCode "Activity bar" click on the icon `Remote Explorer`. Up-right instead of `WSL Targets` choose `Containers`. There is a list of containers and among them our `localhost/rust_dev_vscode_img rust_dev_vscode_cnt`. Right click on it and choose `Attach in New Window`.
 
 ![Remote Explorer](https://github.com/bestia-dev/docker_rust_development/raw/main/images/remote_explorer.png "remote_explorer")
 
-There is also the shorter way without mouse: Open VSCode, press `F1`, type `attach` and choose `Remote-Containers:Attach to Running container...` and type `rust_dev_cnt`.
+There is also the shorter way without mouse: Open VSCode, press `F1`, type `attach` and choose `Remote-Containers:Attach to Running container...` and type `rust_dev_vscode_cnt`.
 ![attach_1](https://github.com/bestia-dev/docker_rust_development/raw/main/images/attach_1.png "attach_1")  ![attach_2](https://github.com/bestia-dev/docker_rust_development/raw/main/images/attach_2.png "attach_2")
 
 This will open a new VSCode windows attached to the container. In the left bottom corner there is the green label with the container name.
@@ -387,8 +394,8 @@ Open a new `WSL2 terminal` and copy the file with podman into the container:
 
 ```bash
 # in WSL2, outside the container
-podman cp ~/.ssh/certssh1 rust_dev_cnt:/home/rustdevuser/.ssh/certssh1
-podman cp ~/.ssh/certssh2 rust_dev_cnt:/home/rustdevuser/.ssh/certssh2
+podman cp ~/.ssh/certssh1 rust_dev_vscode_cnt:/home/rustdevuser/.ssh/certssh1
+podman cp ~/.ssh/certssh2 rust_dev_vscode_cnt:/home/rustdevuser/.ssh/certssh2
 # close the `WSL2 terminal`
 ```
 
@@ -505,7 +512,7 @@ It can restrict both HTTP and HTTPS outbound traffic to a given set of Internet 
 
 <https://aws.amazon.com/blogs/security/how-to-add-dns-filtering-to-your-nat-instance-with-squid/>
 
-I want to use this proxy for the container `rust_dev_cnt`. Container-to-container networking can be complex.
+I want to use this proxy for the container `rust_dev_vscode_cnt`. Container-to-container networking can be complex.
 
 Podman works with `pods`, that make networking easy. This is usually the simplest approach for two rootless containers to communicate. Putting them in a `pod` allows them to communicate directly over `localhost`.
 
@@ -521,19 +528,19 @@ In `WSL2 terminal` create one `pod` with 2 containers and start them:
 # Close VSCode if is open
 podman ps -a
 # remove the container if already exists: 
-podman rm rust_dev_cnt -f
+podman rm rust_dev_vscode_cnt -f
 
 podman pod create --name rust_dev_pod
 podman pod ls
-podman create --name squid_cnt --pod=rust_dev_pod -ti --restart=always localhost/rust_dev_squid_img
-podman start squid_cnt
-podman create --name rust_dev_cnt --pod=rust_dev_pod -ti --env http_proxy=localhost:3128
+podman create --name rust_dev_squid_cnt --pod=rust_dev_pod -ti --restart=always docker.io/bestiadev/rust_dev_squid_img:latest
+podman start rust_dev_squid_cnt
+podman create --name rust_dev_vscode_cnt --pod=rust_dev_pod -ti --env http_proxy=localhost:3128
 
 rust_dev_vscode_img
-podman start rust_dev_cnt
+podman start rust_dev_vscode_cnt
 ```
 
-Open VSCode, press `F1`, type `attach` and choose `Remote-Containers:Attach to Running container...` and type `rust_dev_cnt`.
+Open VSCode, press `F1`, type `attach` and choose `Remote-Containers:Attach to Running container...` and type `rust_dev_vscode_cnt`.
 
 In `VSCode terminal` test the proxy:
 
@@ -555,7 +562,7 @@ curl --proxy "localhost:3128" "http://microsoft.com"
 
 It works. Only the whitelisted domains are allowed.
 
-If you need, you can change the `etc_squid_squid.conf` to add more domains. Then run `rust_dev_squid_img.sh` to build the modified image.
+If you need, you can change the `etc_squid_squid.conf` to add more domains. Then run `sh rust_dev_squid_img.sh` to build the modified image.
 
 Now delete completely the `pod` before the next chapter.
 
@@ -565,7 +572,7 @@ podman pod rm rust_dev_pod -f
 
 ## Env variables for proxy setting
 
-Inside the container `rust_dev_cnt` I want that everything goes through the proxy. This env variables should do that:
+Inside the container `rust_dev_vscode_cnt` I want that everything goes through the proxy. This env variables should do that:
 
 `http_proxy`, `https_proxy`,`all_proxy`.
 
@@ -577,7 +584,7 @@ Run the bash script to create a new `rust_dev_pod` with proxy settings:
 sh rust_dev_pod.sh
 ```
 
-Open VSCode, press `F1`, type `attach` and choose `Remote-Containers:Attach to Running container...` and type `rust_dev_cnt`.
+Open VSCode, press `F1`, type `attach` and choose `Remote-Containers:Attach to Running container...` and type `rust_dev_vscode_cnt`.
 
 In `VSCode terminal` test the proxy:
 
@@ -610,14 +617,29 @@ In `WSL2 terminal`:
 ```bash
 podman login --username bestiadev docker.io
 # type access token
-podman image tag rust_dev_vscode_img docker.io/bestiadev/rust_dev_vscode_img:version1.0
-podman push docker.io/bestiadev/rust_dev_vscode_img:version1.0
+podman push docker.io/bestiadev/rust_dev_vscode_img:latest
+podman push docker.io/bestiadev/rust_dev_vscode_img:vscode-c722ca6c7eed3d7987c0d5c3df5c45f6b15e77d1
+podman push docker.io/bestiadev/rust_dev_vscode_img:cargo-1.59.0
 
-podman image tag rust_dev_squid_img docker.io/bestiadev/rust_dev_squid_img:version1.0
-podman push docker.io/bestiadev/rust_dev_squid_img:version1.0
+podman push docker.io/bestiadev/rust_dev_squid_img:latest
+podman push docker.io/bestiadev/rust_dev_squid_img:squid-3.5.27-2
 ```
 
 It takes some time to upload more than 1.4 Gb.
+
+## enter the container as root
+
+Sometimes you need to enter the container as root:
+
+```bash
+podman exec -it --user root rust_dev_vscode_cnt bash
+```
+
+## sizes
+
+docker.io/bestiadev/rust_dev_squid_img  squid3.5.27-2  168 MB
+docker.io/bestiadev/rust_dev_cargo_img  cargo-1.59.0  1.07 GB
+docker.io/bestiadev/rust_dev_vscode_img cargo-1.59.0  1.32 GB
 
 ## Quirks
 
@@ -644,6 +666,10 @@ Warning: The "ssh could not resolve hostname" is a common error. It is not that 
 ## TODO
 
 new image with cargo-crev and cargo_crev_reviews
+new image with windows cross compile
+scc chache for faster builds, when repeated.
+in the name or description write the exact versions of the tools inside.
+They change for the same image. So it must be somewhere in the tag
 
 ## cargo crev reviews and advisory
 
