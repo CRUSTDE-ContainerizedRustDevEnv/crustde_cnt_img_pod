@@ -617,8 +617,11 @@ In `WSL2 terminal`:
 ```bash
 podman login --username bestiadev docker.io
 # type access token
+podman push docker.io/bestiadev/rust_dev_cargo_img:latest
+podman push docker.io/bestiadev/rust_dev_cargo_img:cargo-1.59.0
+
 podman push docker.io/bestiadev/rust_dev_vscode_img:latest
-podman push docker.io/bestiadev/rust_dev_vscode_img:vscode-c722ca6c7eed3d7987c0d5c3df5c45f6b15e77d1
+podman push docker.io/bestiadev/rust_dev_vscode_img:vscode-1.65.2
 podman push docker.io/bestiadev/rust_dev_vscode_img:cargo-1.59.0
 
 podman push docker.io/bestiadev/rust_dev_squid_img:latest
@@ -629,7 +632,8 @@ It takes some time to upload more than 1.4 Gb.
 
 ## enter the container as root
 
-Sometimes you need to enter the container as root:
+Sometimes you need to do something as `root`.  
+You don't need to use `sudo`. Just open the container as `root` user.  
 
 ```bash
 podman exec -it --user root rust_dev_vscode_cnt bash
@@ -664,6 +668,8 @@ rm -rf /tmp/run-$(id -u)/libpod/tmp
 Warning: The "ssh could not resolve hostname" is a common error. It is not that big of an issue. I closed everything and restart my computer and everything works fine now.
 
 ## TODO
+
+podman exec -it rust_dev_squid_cnt cat /var/log/squid/access.log
 
 new image with cargo-crev and cargo_crev_reviews
 new image with windows cross compile

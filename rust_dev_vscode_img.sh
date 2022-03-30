@@ -45,7 +45,7 @@ buildah run --user root rust_dev_vscode_img    apt -y upgrade
 
 echo " "
 echo "Download vscode-server. Be sure the commit_sha of the server and client is the same:"
-echo "In VSCode client open Help-About."
+echo "In VSCode client open Help-About. version 1.65.2"
 echo "c722ca6c7eed3d7987c0d5c3df5c45f6b15e77d1"
 buildah run rust_dev_vscode_img /bin/sh -c 'mkdir -vp ~/.vscode-server/bin/c722ca6c7eed3d7987c0d5c3df5c45f6b15e77d1'
 buildah run rust_dev_vscode_img /bin/sh -c 'mkdir -vp ~/.vscode-server/extensions'
@@ -69,7 +69,7 @@ echo " "
 echo "Finally save/commit the image named rust_dev_vscode_img"
 buildah commit rust_dev_vscode_img docker.io/bestiadev/rust_dev_vscode_img:latest
 
-buildah tag docker.io/bestiadev/rust_dev_vscode_img:latest docker.io/bestiadev/rust_dev_vscode_img:vscode-c722ca6c7eed3d7987c0d5c3df5c45f6b15e77d1
+buildah tag docker.io/bestiadev/rust_dev_vscode_img:latest docker.io/bestiadev/rust_dev_vscode_img:vscode-1.65.2
 buildah tag docker.io/bestiadev/rust_dev_vscode_img:latest docker.io/bestiadev/rust_dev_vscode_img:cargo-1.59.0
 
 echo " "

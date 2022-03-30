@@ -48,10 +48,10 @@ buildah run rust_dev_cargo_img    apt -y upgrade
 echo " "
 echo "Install curl, git, rsync and build-essential with root user"
 buildah run rust_dev_cargo_img    apt -y install curl
-buildah run rust_dev_cargo_img    apt -y --no-install-recommends install git
-buildah run rust_dev_cargo_img    apt -y --no-install-recommends install rsync
-buildah run rust_dev_cargo_img    apt -y --no-install-recommends install build-essential
-buildah run rust_dev_cargo_img    apt -y --no-install-recommends install nano
+buildah run rust_dev_cargo_img    apt -y install git
+buildah run rust_dev_cargo_img    apt -y install rsync
+buildah run rust_dev_cargo_img    apt -y install build-essential
+buildah run rust_dev_cargo_img    apt -y install nano
 
 echo " "
 echo "Create non-root user 'rustdevuser' and home folder."
@@ -83,15 +83,18 @@ echo "Add the PATH to ~/.cargo/bin manually"
 OLDIMAGEPATH=$(buildah run rust_dev_cargo_img printenv PATH)
 buildah config --env PATH=/home/rustdevuser/.cargo/bin:$OLDIMAGEPATH rust_dev_cargo_img
 buildah run rust_dev_cargo_img /bin/sh -c 'echo $PATH'
+buildah config --env RUST_SRC_PATH=/home/rustdevuser/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library rust_dev_cargo_img
+buildah run rust_dev_cargo_img /bin/sh -c 'echo $RUST_SRC_PATH'
+
+buildah run rust_dev_cargo_img /bin/sh -c 'rustup component add rust-src'
 
 echo "remove the toolchain docs, because they are 610MB big"
-buildah run rust_dev_cargo_img /bin/sh -c 'rustup component remove --toolchain stable-x86_64-unknown-linux-gnu rust-docs'
+buildah run rust_dev_cargo_img /bin/sh -c 'rm -rf /home/rustdevuser/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/share/doc'
 
 echo " "
 echo "Install cargo-auto. It will pull the cargo-index registry. The first pull can take some time."
 buildah run rust_dev_cargo_img /bin/sh -c 'cargo install cargo-auto'
 buildah run rust_dev_cargo_img /bin/sh -c 'curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh'
-buildah run rust_dev_cargo_img /bin/sh -c 'cargo install basic-http-server'
 buildah run rust_dev_cargo_img /bin/sh -c 'cargo install dev_bestia_cargo_completion'
 
 echo " "
@@ -110,7 +113,7 @@ echo "Finally save/commit the image named rust_dev_cargo_img"
 buildah commit rust_dev_cargo_img rust_dev_cargo_img
 
 buildah tag rust_dev_cargo_img docker.io/bestiadev/rust_dev_cargo_img:latest
-# TODO: dinamically ask ` cargo --version` and write the answer in the tag:
+# TODO: dynamically ask ` cargo --version` and write the answer in the tag:
 buildah tag docker.io/bestiadev/rust_dev_cargo_img:latest docker.io/bestiadev/rust_dev_cargo_img:cargo-1.59.0
 
 echo " "
