@@ -680,7 +680,7 @@ PermitRootLogin no
 ```
 
 We also add `certssh2.pub` the public key of authorized user in `authorized_keys`.  
-I generated the key pair for the Host: files `rust_dev_pod_key` and `rust_dev_pod_key.pub`. And copy them too.
+I generated the key pair for the Host: files `~/.ssh/rust_dev_pod_key` and `~/.ssh/rust_dev_pod_key.pub`. And copy them to the container.  
 
 
 In `WSL2 terminal`: 
@@ -695,8 +695,9 @@ podman cp etc_ssh_sshd_config.conf rust_dev_vscode_cnt:/etc/ssh/sshd_config
 # copy the public certificate of authorized users
 podman cp ~/.ssh/certssh2.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/authorized_keys
 # copy the Host key pair
-podman cp /etc/ssh/rust_dev_opd_key rust_dev_vscode_cnt:./rust_dev_pod_key
-podman cp /etc/ssh/rust_dev_opd_key.pub rust_dev_vscode_cnt:./rust_dev_pod_key.pub
+podman cp ~/.ssh/rust_dev_pod_key.pub rust_dev_vscode_cnt:/etc/ssh/rust_dev_pod_key.pub
+podman cp ~/.ssh/rust_dev_pod_key rust_dev_vscode_cnt:/etc/ssh/rust_dev_pod_key
+
 # start it
 podman start rust_dev_vscode_cnt
 # @link https://unix.stackexchange.com/a/193131/311426
@@ -708,7 +709,7 @@ podman exec -it --user=root  rust_dev_vscode_cnt usermod -aG sudo rustdevuser
 podman exec -it --user=root  rust_dev_vscode_cnt service ssh restart
 
 # this now works from WSL2:
-ssh -i /home/luciano/.ssh/certssh2 -p 2201 rustdevuser@localhost
+ssh -i ~/.ssh/certssh2 -p 2201 rustdevuser@localhost
 # exit
 ```
 
@@ -725,7 +726,7 @@ copy "\\wsl$\Debian\home\luciano\.ssh\certssh2" "c:\Users\Luciano\.ssh\certssh2"
 # exit
 ```
 
-We must write the SSH configuration in the file `C:\Users\Luciano\.ssh\config`.
+We must write the SSH configuration to the file `C:\Users\Luciano\.ssh\config`.
 VSCode reads this file to work properly for `Remote - SSH`.  
 Add this to the file content:  
 
@@ -781,7 +782,7 @@ exit
 To see the verbose log of the `SSH client` add `-v` like this:  
 
 ```bash
-ssh -i /home/luciano/.ssh/certssh2 -p 2201 rustdevuser@localhost -v
+ssh -i ~/.ssh/certssh2 -p 2201 rustdevuser@localhost -v
 ```
 
 ## Quirks

@@ -43,8 +43,9 @@ docker.io/bestiadev/rust_dev_vscode_img:latest
 
 podman cp etc_ssh_sshd_config.conf rust_dev_vscode_cnt:/etc/ssh/sshd_config
 podman cp ~/.ssh/certssh2.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/authorized_keys
-podman cp rust_dev_pod_key rust_dev_vscode_cnt:/etc/ssh/rust_dev_opd_key
-podman cp rust_dev_pod_key.pub rust_dev_vscode_cnt:/etc/ssh/rust_dev_opd_key.pub
+podman cp ~/.ssh/rust_dev_pod_key.pub rust_dev_vscode_cnt:/etc/ssh/rust_dev_pod_key.pub
+podman cp ~/.ssh/rust_dev_pod_key rust_dev_vscode_cnt:/etc/ssh/rust_dev_pod_key
+
 podman start rust_dev_vscode_cnt
 podman exec -it --user=root  rust_dev_vscode_cnt usermod -p '*' rustdevuser
 podman exec -it --user=root  rust_dev_vscode_cnt usermod -aG sudo rustdevuser
