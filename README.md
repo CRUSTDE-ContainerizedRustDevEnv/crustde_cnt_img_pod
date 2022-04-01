@@ -30,7 +30,7 @@ sudo apt-get install podman
 podman pull docker.io/bestiadev/rust_dev_squid_img:latest
 podman pull docker.io/bestiadev/rust_dev_vscode_img:latest
 
-podman pod create -p 127.0.0.1:80001:80001/tcp --name rust_dev_pod
+podman pod create -p 127.0.0.1:8001:8001/tcp --name rust_dev_pod
 
 podman create --name rust_dev_squid_cnt --pod=rust_dev_pod -ti docker.io/bestiadev/rust_dev_squid_img:latest
 podman start rust_dev_squid_cnt
@@ -160,7 +160,7 @@ For test, run a sample container. It is a web server.
 The run command will download/pull the image if needed.
 
 ```bash
-podman run -dt -p 80001:80/tcp docker.io/library/httpd
+podman run -dt -p 8001:80/tcp docker.io/library/httpd
 ```
 
 List all containers:
@@ -172,7 +172,7 @@ podman ps -a
 Testing the httpd container:
 
 ```bash
-curl http://localhost:80001
+curl http://localhost:8001
 ```
 
 That should print the HTML page.
@@ -336,7 +336,7 @@ This is based on the first image and adds the VSCode server and extensions.
 I like to run the container in a terminal first and then attach to it from VSCode. Create and start the container in a `WSL2 terminal`:
 
 ```bash
-podman create -ti -p 127.0.0.1:80001:80001/tcp --name rust_dev_vscode_cnt docker.io/bestiadev/rust_dev_vscode_img:latest
+podman create -ti -p 127.0.0.1:8001:8001/tcp --name rust_dev_vscode_cnt docker.io/bestiadev/rust_dev_vscode_img:latest
 podman start rust_dev_vscode_cnt
 ```
 
@@ -443,7 +443,7 @@ Leave VSCode open because the next chapter will continue from here.
 
 You probably already have a Rust project on Github. You want to continue its development inside the container.
 
-For an example we will use my PWA+WebAssembly/WASM project `rust_wasm_pwa_minimal_clock`, that needs to forward the port 80001, because our project needs a web server. That is fairly common. I am not a fan of autoForward `automagic` in VSCode, so I disable it in `File-Preferences-Settings` search `remote.autoForwardPorts` and uncheck it to false.
+For an example we will use my PWA+WebAssembly/WASM project `rust_wasm_pwa_minimal_clock`, that needs to forward the port 8001, because our project needs a web server. That is fairly common. I am not a fan of autoForward `automagic` in VSCode, so I disable it in `File-Preferences-Settings` search `remote.autoForwardPorts` and uncheck it to false.
 
 We will continue to use the existing `VSCode terminal`, that is already opened on the folder `/home/rustdevuser/rustprojects/rust_dev_hello`. Just to practice.
 
@@ -468,7 +468,7 @@ cargo auto build_and_run
 
 Open the browser in Windows:
 
-`http://localhost:80001/rust_wasm_pwa_minimal_clock/`
+`http://localhost:8001/rust_wasm_pwa_minimal_clock/`
 
 This is an example of Webassembly and PWA, directly from a docker container. A good learning example.
 
@@ -667,7 +667,7 @@ I choose this configuration, maybe it can be improved:
 
 AllowUsers rustdevuser
 
-Port 22001
+Port 2201
 
 AuthenticationMethods publickey
 PubkeyAuthentication yes
@@ -680,17 +680,23 @@ PermitRootLogin no
 ```
 
 We also add `certssh2.pub` the public key of authorized user in `authorized_keys`.  
+I generated the key pair for the Host: files `rust_dev_pod_key` and `rust_dev_pod_key.pub`. And copy them too.
+
+
 In `WSL2 terminal`: 
 
 ```bash
 # remove the old container if is stuck. This will erase all the data.
 podman rm rust_dev_vscode_cnt -f
 # create the container
-podman create -ti -p 127.0.0.1:22001:22001/tcp --name rust_dev_vscode_cnt docker.io/bestiadev/rust_dev_vscode_img:latest
-# copy the sshd_config where the port 22001 is configured
+podman create -ti -p 127.0.0.1:2201:2201/tcp --name rust_dev_vscode_cnt docker.io/bestiadev/rust_dev_vscode_img:latest
+# copy the sshd_config where the port 2201 is configured
 podman cp etc_ssh_sshd_config.conf rust_dev_vscode_cnt:/etc/ssh/sshd_config
 # copy the public certificate of authorized users
 podman cp ~/.ssh/certssh2.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/authorized_keys
+# copy the Host key pair
+podman cp /etc/ssh/rust_dev_opd_key rust_dev_vscode_cnt:./rust_dev_pod_key
+podman cp /etc/ssh/rust_dev_opd_key.pub rust_dev_vscode_cnt:./rust_dev_pod_key.pub
 # start it
 podman start rust_dev_vscode_cnt
 # @link https://unix.stackexchange.com/a/193131/311426
@@ -698,11 +704,11 @@ podman start rust_dev_vscode_cnt
 # SSH access (with some other authentication method, typically a key pair) with:
 podman exec -it --user=root  rust_dev_vscode_cnt usermod -p '*' rustdevuser
 podman exec -it --user=root  rust_dev_vscode_cnt usermod -aG sudo rustdevuser
-podman exec -it --user=root  rust_dev_vscode_cnt /usr/bin/ssh-keygen -A
+# restart the service
 podman exec -it --user=root  rust_dev_vscode_cnt service ssh restart
 
 # this now works from WSL2:
-ssh -i /home/luciano/.ssh/certssh2 -p 22001 rustdevuser@localhost
+ssh -i /home/luciano/.ssh/certssh2 -p 2201 rustdevuser@localhost
 # exit
 ```
 
@@ -714,7 +720,7 @@ Type in `windows cmd prompt terminal`:
 ```bash
 copy "\\wsl$\Debian\home\luciano\.ssh\certssh2" "c:\Users\Luciano\.ssh\certssh2"
 # now I can connect to SSH from Windows
-"C:\WINDOWS\System32\OpenSSH\ssh.exe" -i c:\Users\Luciano\.ssh\certssh2 -p 22001 rustdevuser@localhost
+"C:\WINDOWS\System32\OpenSSH\ssh.exe" -i c:\Users\Luciano\.ssh\certssh2 -p 2201 rustdevuser@localhost
 # it works
 # exit
 ```
@@ -724,9 +730,9 @@ VSCode reads this file to work properly for `Remote - SSH`.
 Add this to the file content:  
 
 ```txt
-Host cnt22001
+Host cnt2201
   HostName localhost
-  Port 22001
+  Port 2201
   User rustdevuser
   IdentityFile c:\Users\Luciano\.ssh\certssh2
   IdentitiesOnly yes
@@ -735,7 +741,7 @@ Now we can open the SSH connection with this short command.
 Type in `windows cmd prompt terminal`:  
 
 ```bash
-"C:\WINDOWS\System32\OpenSSH\ssh.exe" cnt22001
+"C:\WINDOWS\System32\OpenSSH\ssh.exe" cnt2201
 # it works
 # exit
 ```
@@ -744,7 +750,7 @@ Finally we can open VSCode, press `F1` for `Command palette`, type `ssh` and cho
 
 ![connect_to_host](./images/connect_to_host.png "connect_to_host")  
 
-Then choose `cnt22001`. It will open a new VSCode window. Enter your passphrase.  
+Then choose `cnt2201`. It will open a new VSCode window. Enter your passphrase.  
 It works. We are now in VSCode inside the container over SSH.  
 I will add the podman commands to the `rust_dev_pod.sh`. So only this will be enough to start the container and pod:  
 
@@ -765,7 +771,7 @@ In `container terminal`:
 
 ```bash
 service ssh stop
-/usr/sbin/sshd -ddd -p 22001
+/usr/sbin/sshd -ddd -p 2201
 # now we can see the verbose log when we attach an SSH client to this server. And we can see where is the problem.
 # after debug, start the service, before exit
 service ssh start
@@ -775,7 +781,7 @@ exit
 To see the verbose log of the `SSH client` add `-v` like this:  
 
 ```bash
-ssh -i /home/luciano/.ssh/certssh2 -p 22001 rustdevuser@localhost -v
+ssh -i /home/luciano/.ssh/certssh2 -p 2201 rustdevuser@localhost -v
 ```
 
 ## Quirks
