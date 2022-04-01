@@ -621,7 +621,7 @@ podman push docker.io/bestiadev/rust_dev_cargo_img:latest
 podman push docker.io/bestiadev/rust_dev_cargo_img:cargo-1.59.0
 
 podman push docker.io/bestiadev/rust_dev_vscode_img:latest
-podman push docker.io/bestiadev/rust_dev_vscode_img:vscode-1.65.2
+podman push docker.io/bestiadev/rust_dev_vscode_img:vscode-1.66.0
 podman push docker.io/bestiadev/rust_dev_vscode_img:cargo-1.59.0
 
 podman push docker.io/bestiadev/rust_dev_squid_img:latest

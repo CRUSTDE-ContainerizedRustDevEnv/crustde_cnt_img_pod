@@ -45,20 +45,20 @@ buildah run --user root rust_dev_vscode_img    apt -y upgrade
 
 echo " "
 echo "Download vscode-server. Be sure the commit_sha of the server and client is the same:"
-echo "In VSCode client open Help-About. version 1.65.2"
-echo "c722ca6c7eed3d7987c0d5c3df5c45f6b15e77d1"
-buildah run rust_dev_vscode_img /bin/sh -c 'mkdir -vp ~/.vscode-server/bin/c722ca6c7eed3d7987c0d5c3df5c45f6b15e77d1'
+echo "In VSCode client open Help-About. version 1.66.0"
+echo "e18005f0f1b33c29e81d732535d8c0e47cafb0b5"
+buildah run rust_dev_vscode_img /bin/sh -c 'mkdir -vp ~/.vscode-server/bin/e18005f0f1b33c29e81d732535d8c0e47cafb0b5'
 buildah run rust_dev_vscode_img /bin/sh -c 'mkdir -vp ~/.vscode-server/extensions'
-buildah run rust_dev_vscode_img /bin/sh -c 'curl -L https://update.code.visualstudio.com/commit:c722ca6c7eed3d7987c0d5c3df5c45f6b15e77d1/server-linux-x64/stable --output /tmp/vscode-server-linux-x64.tar.gz'
-buildah run rust_dev_vscode_img /bin/sh -c 'tar --no-same-owner -xzv --strip-components=1 -C ~/.vscode-server/bin/c722ca6c7eed3d7987c0d5c3df5c45f6b15e77d1 -f /tmp/vscode-server-linux-x64.tar.gz'
+buildah run rust_dev_vscode_img /bin/sh -c 'curl -L https://update.code.visualstudio.com/commit:e18005f0f1b33c29e81d732535d8c0e47cafb0b5/server-linux-x64/stable --output /tmp/vscode-server-linux-x64.tar.gz'
+buildah run rust_dev_vscode_img /bin/sh -c 'tar --no-same-owner -xzv --strip-components=1 -C ~/.vscode-server/bin/e18005f0f1b33c29e81d732535d8c0e47cafb0b5 -f /tmp/vscode-server-linux-x64.tar.gz'
 buildah run rust_dev_vscode_img /bin/sh -c 'rm /tmp/vscode-server-linux-x64.tar.gz'
-buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/c722ca6c7eed3d7987c0d5c3df5c45f6b15e77d1/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension streetsidesoftware.code-spell-checker'
-buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/c722ca6c7eed3d7987c0d5c3df5c45f6b15e77d1/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension matklad.rust-analyzer'
-buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/c722ca6c7eed3d7987c0d5c3df5c45f6b15e77d1/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension davidanson.vscode-markdownlint'
-buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/c722ca6c7eed3d7987c0d5c3df5c45f6b15e77d1/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension 2gua.rainbow-brackets'
-buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/c722ca6c7eed3d7987c0d5c3df5c45f6b15e77d1/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension dotjoshjohnson.xml'
-buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/c722ca6c7eed3d7987c0d5c3df5c45f6b15e77d1/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension serayuzgur.crates'
-buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/c722ca6c7eed3d7987c0d5c3df5c45f6b15e77d1/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension bierner.markdown-mermaid'
+buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/e18005f0f1b33c29e81d732535d8c0e47cafb0b5/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension streetsidesoftware.code-spell-checker'
+buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/e18005f0f1b33c29e81d732535d8c0e47cafb0b5/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension matklad.rust-analyzer'
+buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/e18005f0f1b33c29e81d732535d8c0e47cafb0b5/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension davidanson.vscode-markdownlint'
+buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/e18005f0f1b33c29e81d732535d8c0e47cafb0b5/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension 2gua.rainbow-brackets'
+buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/e18005f0f1b33c29e81d732535d8c0e47cafb0b5/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension dotjoshjohnson.xml'
+buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/e18005f0f1b33c29e81d732535d8c0e47cafb0b5/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension serayuzgur.crates'
+buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/e18005f0f1b33c29e81d732535d8c0e47cafb0b5/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension bierner.markdown-mermaid'
 
 echo " "
 echo "Remove unwanted files"
@@ -69,7 +69,7 @@ echo " "
 echo "Finally save/commit the image named rust_dev_vscode_img"
 buildah commit rust_dev_vscode_img docker.io/bestiadev/rust_dev_vscode_img:latest
 
-buildah tag docker.io/bestiadev/rust_dev_vscode_img:latest docker.io/bestiadev/rust_dev_vscode_img:vscode-1.65.2
+buildah tag docker.io/bestiadev/rust_dev_vscode_img:latest docker.io/bestiadev/rust_dev_vscode_img:vscode-1.66.0
 buildah tag docker.io/bestiadev/rust_dev_vscode_img:latest docker.io/bestiadev/rust_dev_vscode_img:cargo-1.59.0
 
 echo " "
