@@ -30,7 +30,7 @@ sudo apt-get install podman
 podman pull docker.io/bestiadev/rust_dev_squid_img:latest
 podman pull docker.io/bestiadev/rust_dev_vscode_img:latest
 
-podman pod create -p 127.0.0.1:8001:8001/tcp --name rust_dev_pod
+podman pod create -p 127.0.0.1:80001:80001/tcp --name rust_dev_pod
 
 podman create --name rust_dev_squid_cnt --pod=rust_dev_pod -ti docker.io/bestiadev/rust_dev_squid_img:latest
 podman start rust_dev_squid_cnt
@@ -68,11 +68,15 @@ But Rust can do anything also in the compile-time using `build.rs` and `procedur
 
 Even if you are very careful and avoid `build.rs` and `procedural macros`, your Rust project will have a lot of crates in the dependency tree. Any of those can surprise you with some "malware". This is called a "supply chain attack".
 
-It is very hard to avoid "supply chain attacks" in Rust as things are today. We are just lucky, that the ecosystem is young and small and the malevolent players are waiting for Rust to become more popular. Then they will strike and strike hard.
+It is very hard to avoid "supply chain attacks" in Rust as things are today. We are just lucky, that the ecosystem is young and small and the malevolent players are waiting for Rust to become more popular. Then they will strike and strike hard. We need to be skeptical about anything that comes from the internet. We need to isolate/sandbox it so it cannot harm our system.  
 
-We need to be skeptical about anything that comes from the internet. We need to isolate/sandbox it so it cannot harm our system. Docker containers are good for isolation/sandbox. They are not perfect, but they are very good and probably they will get better with time.
+Let learn to develope "everything" inside a Docker container and to isolate/sandbox it as much as possible from the underlying system.
 
-Let learn to do "everything" inside a Docker container and to isolate/sandbox it as much as possible from the underlying system.
+I have to acknowledge that Docker Linux Containers are not the perfect sandboxing solution. But I believe that for my "Rust development environment", it is "good enough". I expect that container isolation will get better with time (google, amazon, Intel, OpenStack and IBM are working on it). My main system is Win10. Inside that, I have WSL2, which is a Linux virtual machine. And inside that, I have Docker Linux Containers.
+No files/volumes are shared with the host.
+The outbound network is restricted to whitelisted domains by a Squid proxy server.
+The inbound network is allowed only to "published/exposed" ports.
+Yes, there exists the possibility of abusing a kernel vulnerability, but I believe it is hard and they will get patched.
 
 ## Docker and OCI
 
@@ -156,7 +160,7 @@ For test, run a sample container. It is a web server.
 The run command will download/pull the image if needed.
 
 ```bash
-podman run -dt -p 8001:80/tcp docker.io/library/httpd
+podman run -dt -p 80001:80/tcp docker.io/library/httpd
 ```
 
 List all containers:
@@ -168,7 +172,7 @@ podman ps -a
 Testing the httpd container:
 
 ```bash
-curl http://localhost:8001
+curl http://localhost:80001
 ```
 
 That should print the HTML page.
@@ -332,7 +336,7 @@ This is based on the first image and adds the VSCode server and extensions.
 I like to run the container in a terminal first and then attach to it from VSCode. Create and start the container in a `WSL2 terminal`:
 
 ```bash
-podman create -ti -p 127.0.0.1:8001:8001/tcp --name rust_dev_vscode_cnt rust_dev_vscode_img
+podman create -ti -p 127.0.0.1:80001:80001/tcp --name rust_dev_vscode_cnt docker.io/bestiadev/rust_dev_vscode_img:latest
 podman start rust_dev_vscode_cnt
 ```
 
@@ -439,7 +443,7 @@ Leave VSCode open because the next chapter will continue from here.
 
 You probably already have a Rust project on Github. You want to continue its development inside the container.
 
-For an example we will use my PWA+WebAssembly/WASM project `rust_wasm_pwa_minimal_clock`, that needs to forward the port 8001, because our project needs a web server. That is fairly common. I am not a fan of autoForward `automagic` in VSCode, so I disable it in `File-Preferences-Settings` search `remote.autoForwardPorts` and uncheck it to false.
+For an example we will use my PWA+WebAssembly/WASM project `rust_wasm_pwa_minimal_clock`, that needs to forward the port 80001, because our project needs a web server. That is fairly common. I am not a fan of autoForward `automagic` in VSCode, so I disable it in `File-Preferences-Settings` search `remote.autoForwardPorts` and uncheck it to false.
 
 We will continue to use the existing `VSCode terminal`, that is already opened on the folder `/home/rustdevuser/rustprojects/rust_dev_hello`. Just to practice.
 
@@ -464,7 +468,7 @@ cargo auto build_and_run
 
 Open the browser in Windows:
 
-`http://localhost:8001/rust_wasm_pwa_minimal_clock/`
+`http://localhost:80001/rust_wasm_pwa_minimal_clock/`
 
 This is an example of Webassembly and PWA, directly from a docker container. A good learning example.
 
@@ -641,9 +645,138 @@ podman exec -it --user root rust_dev_vscode_cnt bash
 
 ## sizes
 
+Rust is not so small. I saved some 600MB of space just deleting the docs folder, that actually noone needs.  
 docker.io/bestiadev/rust_dev_squid_img  squid3.5.27-2  168 MB
 docker.io/bestiadev/rust_dev_cargo_img  cargo-1.59.0  1.08 GB
 docker.io/bestiadev/rust_dev_vscode_img cargo-1.59.0  1.32 GB
+
+## Tragedy struck! MUST change VSCode to SSH communication
+
+Today I cannot attach VSCode to the containers anymore. Neither can I get a list or running containers.
+Things just stop working. Oh, too much automagic for me. I have to do stuff manually, remember.  
+I will try to connect VSCode to container with SSH. That was also my first idea, but it was not recommended for containers. There are different types of container defined by the content: system containers, application containers and developer containers. Here we have a development container that really acts like a lightweight virtual machine. Here it makes sense to have SSH installed. With it, it is also possible to access the container wherever it is. Just FYI `application containers` are not like VM, they are more like a complex executable. There makes not sense to SSH into container of that type.
+
+First I install the `Remote - SSH` extension to VSCode.
+
+Then I modified the `rust_dev_vscode_img` to have sshd server installed.
+After creating the container we must modify the file `ssh_config`.  
+I choose this configuration, maybe it can be improved:  
+
+```bash
+#sshd_config for rust_dev_vscode_cnt
+
+AllowUsers rustdevuser
+
+Port 22001
+
+AuthenticationMethods publickey
+PubkeyAuthentication yes
+
+PasswordAuthentication no
+ChallengeResponseAuthentication no
+UsePAM no
+PermitEmptyPasswords no
+PermitRootLogin no
+```
+
+We also add `certssh2.pub` the public key of authorized user in `authorized_keys`.  
+In `WSL2 terminal`: 
+
+```bash
+# remove the old container if is stuck. This will erase all the data.
+podman rm rust_dev_vscode_cnt -f
+# create the container
+podman create -ti -p 127.0.0.1:22001:22001/tcp --name rust_dev_vscode_cnt docker.io/bestiadev/rust_dev_vscode_img:latest
+# copy the sshd_config where the port 22001 is configured
+podman cp etc_ssh_sshd_config.conf rust_dev_vscode_cnt:/etc/ssh/sshd_config
+# copy the public certificate of authorized users
+podman cp ~/.ssh/certssh2.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/authorized_keys
+# start it
+podman start rust_dev_vscode_cnt
+# @link https://unix.stackexchange.com/a/193131/311426
+# On Linux, you can disable password-based access to an account while allowing
+# SSH access (with some other authentication method, typically a key pair) with:
+podman exec -it --user=root  rust_dev_vscode_cnt usermod -p '*' rustdevuser
+podman exec -it --user=root  rust_dev_vscode_cnt usermod -aG sudo rustdevuser
+podman exec -it --user=root  rust_dev_vscode_cnt /usr/bin/ssh-keygen -A
+podman exec -it --user=root  rust_dev_vscode_cnt service ssh restart
+
+# this now works from WSL2:
+ssh -i /home/luciano/.ssh/certssh2 -p 22001 rustdevuser@localhost
+# exit
+```
+
+VSCode runs in windows and it uses `C:\WINDOWS\System32\OpenSSH\ssh.exe`.  
+I must use the windows path and NOT the linux path for the SSH keys.  
+I copied the SSH key `certssh2` from Linux to Windows.  
+Type in `windows cmd prompt terminal`:
+
+```bash
+copy "\\wsl$\Debian\home\luciano\.ssh\certssh2" "c:\Users\Luciano\.ssh\certssh2"
+# now I can connect to SSH from Windows
+"C:\WINDOWS\System32\OpenSSH\ssh.exe" -i c:\Users\Luciano\.ssh\certssh2 -p 22001 rustdevuser@localhost
+# it works
+# exit
+```
+
+We must write the SSH configuration in the file `C:\Users\Luciano\.ssh\config`.
+VSCode reads this file to work properly for `Remote - SSH`.  
+Add this to the file content:  
+
+```txt
+Host cnt22001
+  HostName localhost
+  Port 22001
+  User rustdevuser
+  IdentityFile c:\Users\Luciano\.ssh\certssh2
+  IdentitiesOnly yes
+```
+Now we can open the SSH connection with this short command.  
+Type in `windows cmd prompt terminal`:  
+
+```bash
+"C:\WINDOWS\System32\OpenSSH\ssh.exe" cnt22001
+# it works
+# exit
+```
+
+Finally we can open VSCode, press `F1` for `Command palette`, type `ssh` and choose `Remote-SSH: Connect to Host...`:  
+
+![connect_to_host](./images/connect_to_host.png "connect_to_host")  
+
+Then choose `cnt22001`. It will open a new VSCode window. Enter your passphrase.  
+It works. We are now in VSCode inside the container over SSH.  
+I will add the podman commands to the `rust_dev_pod.sh`. So only this will be enough to start the container and pod:  
+
+```bash
+sh rust_dev_pod.sh
+```
+
+## debug SSH connection
+
+I needed to debug the connection to the `ssh server`, because the normal error messages are completely useless.  
+From `WSL2 terminal` I enter the `container terminal` as `root`:  
+
+```bash
+podman exec -it --user=root  rust_dev_vscode_cnt bash
+```
+
+In `container terminal`:
+
+```bash
+service ssh stop
+/usr/sbin/sshd -ddd -p 22001
+# now we can see the verbose log when we attach an SSH client to this server. And we can see where is the problem.
+# after debug, start the service, before exit
+service ssh start
+exit
+```
+
+To see the verbose log of the `SSH client` add `-v` like this:  
+
+```bash
+ssh -i /home/luciano/.ssh/certssh2 -p 22001 rustdevuser@localhost -v
+```
 
 ## Quirks
 

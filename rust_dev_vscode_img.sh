@@ -42,6 +42,12 @@ echo " "
 echo "apk update"
 buildah run --user root rust_dev_vscode_img    apt -y update
 buildah run --user root rust_dev_vscode_img    apt -y upgrade
+buildah run --user root rust_dev_vscode_img    apt -y install openssh-server
+# prepare directory for public certificates. This is not a secret.
+buildah run --user root rust_dev_vscode_img    mkdir -p /home/user_name/.ssh
+buildah run --user root rust_dev_vscode_img    chmod 700 /home/rustdevuser/.ssh && chmod 600 /home/rustdevuser/.ssh/
+chown -R rustdevuser:rustdevuser /home/rustdevuser/.ssh
+
 
 echo " "
 echo "Download vscode-server. Be sure the commit_sha of the server and client is the same:"
