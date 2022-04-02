@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 echo " "
-echo "Bash script to create and start the pod 'rust_dev_pod'"
+echo "Bash script to create the pod 'rust_dev_pod'"
 echo "This 'pod' is made of the containers 'rust_dev_squid_cnt' and 'rust_dev_vscode_cnt'"
 echo "All outbound network traffic from rust_dev_vscode_cnt goes through the proxy Squid."
-echo "Published inbound network ports are 80001 on 'localhost'"
+echo "Published inbound network ports are 8001 on 'localhost'"
 echo "https://github.com/bestia-dev/docker_rust_development"
 
 echo " "
@@ -12,8 +12,8 @@ echo "Create pod"
 # in a "pod" the "publish port" is tied to the pod and not containers.
 
 podman pod create \
--p 127.0.0.1:80001:80001/tcp \
--p 127.0.0.1:22001:22001/tcp \
+-p 127.0.0.1:8001:8001/tcp \
+-p 127.0.0.1:2201:2201/tcp \
 --label name=rust_dev_pod \
 --label version=1.0 \
 --label source=github.com/bestia-dev/docker_rust_development \
@@ -42,7 +42,6 @@ podman start rust_dev_vscode_cnt
 podman exec -it --user=root  rust_dev_vscode_cnt usermod -p '*' rustdevuser
 podman exec -it --user=root  rust_dev_vscode_cnt usermod -aG sudo rustdevuser
 podman exec -it --user=root  rust_dev_vscode_cnt /usr/bin/ssh-keygen -A
-podman exec -it --user=root  rust_dev_vscode_cnt service ssh restart
 
 echo " "
 echo "To start this 'pod' after a reboot, just type: "

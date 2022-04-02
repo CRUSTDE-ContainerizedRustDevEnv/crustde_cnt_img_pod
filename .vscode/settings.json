@@ -11,6 +11,7 @@
         "certssh",
         "cgroupfs",
         "clippy",
+        "cntssh",
         "crev",
         "crun",
         "daemonless",
