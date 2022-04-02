@@ -65,6 +65,7 @@ buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/e18005f0f1b33c2
 buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/e18005f0f1b33c29e81d732535d8c0e47cafb0b5/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension dotjoshjohnson.xml'
 buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/e18005f0f1b33c29e81d732535d8c0e47cafb0b5/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension serayuzgur.crates'
 buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/e18005f0f1b33c29e81d732535d8c0e47cafb0b5/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension bierner.markdown-mermaid'
+buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/e18005f0f1b33c29e81d732535d8c0e47cafb0b5/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension ms-vscode.live-server'
 
 echo " "
 echo "Remove unwanted files"

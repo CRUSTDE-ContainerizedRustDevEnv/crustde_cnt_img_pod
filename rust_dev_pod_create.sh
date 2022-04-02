@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+
+# TODO: check if it is executed from /docker_rust_development/
+# because there are stored the Host SSH keys and config file
+# TODO: check if pod exists.
+
 echo " "
 echo "Bash script to create the pod 'rust_dev_pod'"
 echo "This 'pod' is made of the containers 'rust_dev_squid_cnt' and 'rust_dev_vscode_cnt'"
@@ -38,10 +43,17 @@ docker.io/bestiadev/rust_dev_vscode_img:latest
 
 podman cp etc_ssh_sshd_config.conf rust_dev_vscode_cnt:/etc/ssh/sshd_config
 podman cp ~/.ssh/certssh2.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/authorized_keys
+podman cp ~/.ssh/rust_dev_pod_key.pub rust_dev_vscode_cnt:/etc/ssh/rust_dev_pod_key.pub
+podman cp ~/.ssh/rust_dev_pod_key rust_dev_vscode_cnt:/etc/ssh/rust_dev_pod_key
+
 podman start rust_dev_vscode_cnt
 podman exec -it --user=root  rust_dev_vscode_cnt usermod -p '*' rustdevuser
 podman exec -it --user=root  rust_dev_vscode_cnt usermod -aG sudo rustdevuser
 podman exec -it --user=root  rust_dev_vscode_cnt /usr/bin/ssh-keygen -A
+
+podman exec -it rust_dev_vscode_cnt git config --global pull.rebase false
+podman exec -it rust_dev_vscode_cnt git config --global user.email "info@bestia.dev"
+podman exec -it rust_dev_vscode_cnt git config --global user.name "bestia.dev"
 
 echo " "
 echo "To start this 'pod' after a reboot, just type: "

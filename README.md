@@ -701,7 +701,7 @@ podman start rust_dev_vscode_cnt
 # SSH access (with some other authentication method, typically a key pair) with:
 podman exec -it --user=root  rust_dev_vscode_cnt usermod -p '*' rustdevuser
 podman exec -it --user=root  rust_dev_vscode_cnt usermod -aG sudo rustdevuser
-podman exec -it --user=root  rust_dev_vscode_cnt /usr/bin/ssh-keygen -A
+# restart the service
 podman exec -it --user=root  rust_dev_vscode_cnt service ssh restart
 
 # this now works from WSL2:
@@ -722,7 +722,7 @@ copy "\\wsl$\Debian\home\luciano\.ssh\certssh1" "c:\Users\Luciano\.ssh\certssh1"
 # exit
 ```
 
-We must write the SSH configuration in the file `C:\Users\Luciano\.ssh\config`.
+We must write the SSH configuration to the file `C:\Users\Luciano\.ssh\config`.
 VSCode reads this file to work properly for `Remote - SSH`.  
 Add this to the file content:  
 
