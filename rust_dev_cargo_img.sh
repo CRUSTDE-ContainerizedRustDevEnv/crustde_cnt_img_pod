@@ -123,8 +123,7 @@ echo "podman create -ti --name rust_dev_cargo_cnt docker.io/bestiadev/rust_dev_c
 
 echo " "
 echo " Copy your ssh certificates for github and publish_to_web:"
-echo "podman cp ~/.ssh/certssh1 rust_dev_cargo_cnt:/home/rustdevuser/.ssh/certssh1"
-echo "podman cp ~/.ssh/certssh2 rust_dev_cargo_cnt:/home/rustdevuser/.ssh/certssh2"
+echo "podman cp ~/.ssh/githubssh1 rust_dev_cargo_cnt:/home/rustdevuser/.ssh/githubssh1"
 
 echo " "
 echo " To start the container use and then interact with bash:"
@@ -135,8 +134,7 @@ echo " "
 echo " Inside the container run the ssh-agent to store your ssh passphrase for git and publish_to_web:"
 echo "cd /home/rustdevuser"
 echo "eval $(ssh-agent) "
-echo "ssh-add /home/rustdevuser/.ssh/certssh1"
-echo "ssh-add /home/rustdevuser/.ssh/certssh2"
+echo "ssh-add /home/rustdevuser/.ssh/githubssh1"
 echo "cd rustprojects"
 
 echo " "

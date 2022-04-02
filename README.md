@@ -23,7 +23,7 @@ In `WSL2 terminal`:
 ```bash
 git clone https://github.com/bestia-dev/docker_rust_development.git
 cd docker_rust_development
-# create new SSH keys with name certssh1
+# create new SSH keys with name githubssh1
 ssh-keygen -f ~/.ssh/cntssh1 -t ecdsa -b 521
 # give it a passphrase and remember it, you will need it
 sudo apt-get update
@@ -42,7 +42,7 @@ Host cnt2201
   HostName localhost
   Port 2201
   User rustdevuser
-  IdentityFile c:\Users\Luciano\.ssh\certssh1
+  IdentityFile c:\Users\Luciano\.ssh\githubssh1
   IdentitiesOnly yes
   
 ```
@@ -393,7 +393,7 @@ Leave VSCode open because the next chapter will continue from here.
 
 I like to work with Github over SSH and not over https.
 
-To make SSH work I need the file with the private key for SSH connection. I already have this one in WSL2 in the file `~/.ssh/certssh1`. I will copy it into the container. If your file has a different name, first copy it to `~/.ssh/certssh1`, so you can follow the subsequent commands easily.
+To make SSH work I need the file with the private key for SSH connection. I already have this one in WSL2 in the file `~/.ssh/githubssh1`. I will copy it into the container. If your file has a different name, first copy it to `~/.ssh/githubssh1`, so you can follow the subsequent commands easily.
 
 Be careful ! This is a secret !
 
@@ -403,7 +403,7 @@ Open a new `WSL2 terminal` and copy the file with podman into the container:
 
 ```bash
 # in WSL2, outside the container
-podman cp ~/.ssh/certssh1 rust_dev_vscode_cnt:/home/rustdevuser/.ssh/certssh1
+podman cp ~/.ssh/githubssh1 rust_dev_vscode_cnt:/home/rustdevuser/.ssh/githubssh1
 # close the `WSL2 terminal`
 ```
 
@@ -417,7 +417,7 @@ In the `VSCode terminal` (Ctrl+j) run:
 
 ```bash
 eval $(ssh-agent)
-ssh-add /home/rustdevuser/.ssh/certssh1
+ssh-add /home/rustdevuser/.ssh/githubssh1
 # enter your passphrase
 ```
 
@@ -682,7 +682,7 @@ PermitEmptyPasswords no
 PermitRootLogin no
 ```
 
-We also add `certssh1.pub` the public key of authorized user in `authorized_keys`.  
+We also add `githubssh1.pub` the public key of authorized user in `authorized_keys`.  
 In `WSL2 terminal`:
 
 ```bash
@@ -693,7 +693,7 @@ podman create -ti -p 127.0.0.1:2201:2201/tcp --name rust_dev_vscode_cnt docker.i
 # copy the sshd_config where the port 2201 is configured
 podman cp etc_ssh_sshd_config.conf rust_dev_vscode_cnt:/etc/ssh/sshd_config
 # copy the public certificate of authorized users
-podman cp ~/.ssh/certssh1.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/authorized_keys
+podman cp ~/.ssh/githubssh1.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/authorized_keys
 # start it
 podman start rust_dev_vscode_cnt
 # @link https://unix.stackexchange.com/a/193131/311426
@@ -705,19 +705,19 @@ podman exec -it --user=root  rust_dev_vscode_cnt usermod -aG sudo rustdevuser
 podman exec -it --user=root  rust_dev_vscode_cnt service ssh restart
 
 # this now works from WSL2:
-ssh -i /home/luciano/.ssh/certssh1 -p 2201 rustdevuser@localhost
+ssh -i /home/luciano/.ssh/githubssh1 -p 2201 rustdevuser@localhost
 # exit
 ```
 
 VSCode runs in windows and it uses `C:\WINDOWS\System32\OpenSSH\ssh.exe`.  
 I must use the windows path and NOT the linux path for the SSH keys.  
-I copied the SSH key `certssh1` from Linux to Windows.  
+I copied the SSH key `githubssh1` from Linux to Windows.  
 Type in `windows cmd prompt terminal`:
 
 ```bash
-copy "\\wsl$\Debian\home\luciano\.ssh\certssh1" "c:\Users\Luciano\.ssh\certssh1"
+copy "\\wsl$\Debian\home\luciano\.ssh\githubssh1" "c:\Users\Luciano\.ssh\githubssh1"
 # now I can connect to SSH from Windows
-"C:\WINDOWS\System32\OpenSSH\ssh.exe" -i c:\Users\Luciano\.ssh\certssh1 -p 2201 rustdevuser@localhost
+"C:\WINDOWS\System32\OpenSSH\ssh.exe" -i c:\Users\Luciano\.ssh\githubssh1 -p 2201 rustdevuser@localhost
 # it works
 # exit
 ```
@@ -731,7 +731,7 @@ Host cnt2201
   HostName localhost
   Port 2201
   User rustdevuser
-  IdentityFile c:\Users\Luciano\.ssh\certssh1
+  IdentityFile c:\Users\Luciano\.ssh\githubssh1
   IdentitiesOnly yes
 ```
 
@@ -779,7 +779,7 @@ exit
 To see the verbose log of the `SSH client` add `-v` like this:  
 
 ```bash
-ssh -i /home/luciano/.ssh/certssh1 -p 2201 rustdevuser@localhost -v
+ssh -i /home/luciano/.ssh/githubssh1 -p 2201 rustdevuser@localhost -v
 ```
 
 ## Quirks
