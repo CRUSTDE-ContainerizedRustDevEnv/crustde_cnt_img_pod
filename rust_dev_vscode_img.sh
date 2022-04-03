@@ -48,7 +48,7 @@ buildah run --user root rust_dev_vscode_img    mkdir -p /home/rustdevuser/.ssh
 buildah run --user root rust_dev_vscode_img    chmod 700 /home/rustdevuser/.ssh
 buildah run --user root rust_dev_vscode_img    chmod 600 /home/rustdevuser/.ssh
 buildah run --user root rust_dev_vscode_img    chown -R rustdevuser:rustdevuser /home/rustdevuser/.ssh
-buildah run --user root rust_dev_vscode_img    /usr/bin/ssh-keygen -A
+buildah run --user root rust_dev_vscode_img    mkdir /etc/ssh/
 
 echo " "
 echo "Download vscode-server. Be sure the commit_sha of the server and client is the same:"
