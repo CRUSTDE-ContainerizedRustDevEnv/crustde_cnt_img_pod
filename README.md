@@ -14,41 +14,76 @@ Super short instructions without explanation. For tl;dr; continue reading below.
 
 Prerequisites: Win10, WSL2, VSCode.
 
-Open VSCode and install extension `Remote - SSH`.
-
-Clone this repository to get the bash scripts, then install `podman`, pull the docker images and run the bash scripts.
-In the code below change my `Luciano` with your username.  
-In `WSL2 terminal`:
+1\. Create 2 SSH keys, one for the `SSH server` identity `host key` of the container and the other for the identity of `rustdevuser`. In `WSL2 terminal`:
 
 ```bash
-git clone https://github.com/bestia-dev/docker_rust_development.git
-cd docker_rust_development
-# create new SSH keys with name githubssh1
-ssh-keygen -f ~/.ssh/cntssh1 -t ecdsa -b 521
+# generate user key
+ssh-keygen -f ~/.ssh/rustdevuser_key -C "info@bestia.dev"
 # give it a passphrase and remember it, you will need it
-sudo apt-get update
-sudo apt-get install podman
-podman pull docker.io/bestiadev/rust_dev_squid_img:latest
-podman pull docker.io/bestiadev/rust_dev_vscode_img:latest
-sh rust_dev_pod_create.sh
-sh rust_dev_pod_start.sh
+# generate host key
+mkdir  -p ~/.ssh/rust_dev_pod_keys/etc/ssh
+ssh-keygen -A -f ~/.ssh/rust_dev_pod_keys
+
+# list user keys
+ls -l ~/.ssh | grep "rustdevuser"
+# -rw------- 1 luciano luciano  2655 Apr  3 12:03 rustdevuser_key
+# -rw-r--r-- 1 luciano luciano   569 Apr  3 12:03 rustdevuser_key.pub
+
+# list host keys
+ls -l ~/.ssh/rust_dev_pod_keys/etc/ssh
+# -rw------- 1 luciano luciano 1381 Apr  3 12:05 ssh_host_dsa_key
+# -rw-r--r-- 1 luciano luciano  603 Apr  3 12:05 ssh_host_dsa_key.pub
+# -rw------- 1 luciano luciano  505 Apr  3 12:05 ssh_host_ecdsa_key
+# -rw-r--r-- 1 luciano luciano  175 Apr  3 12:05 ssh_host_ecdsa_key.pub
+# -rw------- 1 luciano luciano  399 Apr  3 12:05 ssh_host_ed25519_key
+# -rw-r--r-- 1 luciano luciano   95 Apr  3 12:05 ssh_host_ed25519_key.pub
+# -rw------- 1 luciano luciano 2602 Apr  3 12:05 ssh_host_rsa_key
+# -rw-r--r-- 1 luciano luciano  567 Apr  3 12:05 ssh_host_rsa_key.pub
 ```
 
-In VSCode, press `F1`, type `ssh` and choose `Remote-SSH: Open SSH configuration File...` choose `c:\Users\Luciano\.ssh\config`.
+2\. install Podman in `WSL2 terminal`:
+
+```bash
+sudo apt-get update
+sudo apt-get install podman
+```
+
+3\. Pull the docker images (around 2GB) in `WSL2 terminal`:
+
+```bash
+podman pull docker.io/bestiadev/rust_dev_squid_img:latest
+podman pull docker.io/bestiadev/rust_dev_vscode_img:latest
+```
+
+4.\ Download bash script and config files:
+
+```bash
+mkdir -p ~/rustprojects/docker_rust_development
+cd ~/rustprojects/docker_rust_development
+curl -L https://github.com/bestia-dev/docker_rust_development/raw/main/rust_dev_pod_create.sh --output rust_dev_pod_create.sh
+curl -L https://github.com/bestia-dev/docker_rust_development/raw/main/etc_ssh_sshd_config.conf --output etc_ssh_sshd_config.conf
+ls -l
+# -rw-r--r-- 1 luciano luciano  337 Apr  3 12:37 etc_ssh_sshd_config.conf
+# -rw-r--r-- 1 luciano luciano 3278 Apr  3 12:37 rust_dev_pod_create.sh
+# run the script
+sh rust_dev_pod_create.sh
+```
+
+5\. Open VSCode and install extension `Remote - SSH`.
+
+6.\ In VSCode, press `F1`, type `ssh` and choose `Remote-SSH: Open SSH configuration File...` choose `c:\Users\myUserName\.ssh\config`.
 Add to this file:
 
 ```bash
-Host cnt2201
+Host rust_dev_pod
   HostName localhost
   Port 2201
   User rustdevuser
-  IdentityFile c:\Users\Luciano\.ssh\githubssh1
-  IdentitiesOnly yes
-  
+  IdentityFile ~\.ssh\rustdevuser_key
 ```
 
 Save it and close it.  
-Then `F1`, type `ssh` and choose `Remote-SSH: Connect to Host...` and choose `cnt2201`.
+Then `F1`, type `ssh` and choose `Remote-SSH: Connect to Host...` and choose `rust_dev_pod`.
 Choose `Linux` if asked and type your passphrase.  
 If we are lucky, everything works and you are over SSH inside the container now.
 
@@ -705,13 +740,13 @@ podman exec -it --user=root  rust_dev_vscode_cnt usermod -aG sudo rustdevuser
 podman exec -it --user=root  rust_dev_vscode_cnt service ssh restart
 
 # this now works from WSL2:
-ssh -i /home/luciano/.ssh/githubssh1 -p 2201 rustdevuser@localhost
+ssh -i /home/luciano/.ssh/cntssh1 -p 2201 rustdevuser@localhost
 # exit
 ```
 
 VSCode runs in windows and it uses `C:\WINDOWS\System32\OpenSSH\ssh.exe`.  
 I must use the windows path and NOT the linux path for the SSH keys.  
-I copied the SSH key `githubssh1` from Linux to Windows.  
+I copied the SSH key `cntssh1` from Linux to Windows.  
 Type in `windows cmd prompt terminal`:
 
 ```bash

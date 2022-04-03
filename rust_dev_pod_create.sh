@@ -26,41 +26,48 @@ podman pod create \
 --name rust_dev_pod
 
 echo " "
-echo "Create container rust_dev_squid_cnt"
+echo "Create container rust_dev_squid_cnt in the pod"
 # why is here --restart=always
 podman create --name rust_dev_squid_cnt --pod=rust_dev_pod -ti \
 docker.io/bestiadev/rust_dev_squid_img:latest
 
-podman start rust_dev_squid_cnt
-
 echo " "
-echo "Create container rust_dev_vscode_cnt"
+echo "Create container rust_dev_vscode_cnt in the pod"
 podman create --name rust_dev_vscode_cnt --pod=rust_dev_pod -ti \
 --env http_proxy=http://localhost:3128 \
 --env https_proxy=http://localhost:3128 \
 --env all_proxy=http://localhost:3128  \
 docker.io/bestiadev/rust_dev_vscode_img:latest
 
-podman cp etc_ssh_sshd_config.conf rust_dev_vscode_cnt:/etc/ssh/sshd_config
-podman cp ~/.ssh/cntssh1.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/authorized_keys
-podman cp ~/.ssh/rust_dev_pod_key.pub rust_dev_vscode_cnt:/etc/ssh/rust_dev_pod_key.pub
-podman cp ~/.ssh/rust_dev_pod_key rust_dev_vscode_cnt:/etc/ssh/rust_dev_pod_key
+echo "copy SSH server config"
+podman cp ./etc_ssh_sshd_config.conf rust_dev_vscode_cnt:/etc/ssh/sshd_config
+echo "copy the host keys for SSH server in rust_dev_pod"
+podman cp ~/.ssh/rust_dev_pod_keys/etc/ssh/*.*  rust_dev_vscode_cnt:/etc/ssh/
+echo "copy the public key of rustdevuser"
+podman cp ~/.ssh/rustdevuser_key.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/authorized_keys
 
-podman start rust_dev_vscode_cnt
+echo "podman pod start"
+podman pod start rust_dev_pod
+echo "user permissions"
+#TODO: maybe this is not needed?
 podman exec -it --user=root  rust_dev_vscode_cnt usermod -p '*' rustdevuser
 podman exec -it --user=root  rust_dev_vscode_cnt usermod -aG sudo rustdevuser
 
+echo "git global config"
 podman exec -it rust_dev_vscode_cnt git config --global pull.rebase false
 podman exec -it rust_dev_vscode_cnt git config --global user.email "info@bestia.dev"
 podman exec -it rust_dev_vscode_cnt git config --global user.name "bestia.dev"
 
-echo " "
-echo "To start this 'pod' after a reboot, just type: "
-echo " podman pod start rust_dev_pod"
+echo "start the SSH server"
+podman exec -it --user=root  rust_dev_vscode_cnt service ssh restart
 
 echo " "
-echo " Firstly: attach VSCode to the running container."
-echo "Open VSCode, press F1, type 'attach' and choose 'Remote-Containers:Attach to Running container...' and type rust_dev_vscode_cnt" 
+echo " To start this 'pod' after a reboot type: "
+echo "podman pod restart rust_dev_pod"
+echo "podman exec -it --user=root rust_dev_vscode_cnt service ssh restart"
+
+echo " "
+echo "Open VSCode, press F1, type 'ssh' and choose 'Remote-SSH: Connect to Host...' and choose `rust_dev_pod`" 
 echo " This will open a new VSCode windows attached to the container."
 echo " If needed Open VSCode terminal with Ctrl+J"
 echo " Inside VSCode terminal, go to the project folder. Here we will create a sample project:"
