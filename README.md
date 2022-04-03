@@ -65,6 +65,8 @@ curl -L https://github.com/bestia-dev/docker_rust_development/raw/main/etc_ssh_s
 ls -l
 # -rw-r--r-- 1 luciano luciano  337 Apr  3 12:37 etc_ssh_sshd_config.conf
 # -rw-r--r-- 1 luciano luciano 3278 Apr  3 12:37 rust_dev_pod_create.sh
+cat etc_ssh_sshd_config.conf
+cat rust_dev_pod_create.sh
 # run the script
 sh rust_dev_pod_create.sh
 ```
@@ -97,6 +99,11 @@ cargo run
 ```
 
 That should work!
+If you eventually want to remove the entire pod, this will erase all the data that is inside the pod, run:
+
+```bash
+podman pod rm rust_dev_pod -f
+```
 
 ## Motivation
 

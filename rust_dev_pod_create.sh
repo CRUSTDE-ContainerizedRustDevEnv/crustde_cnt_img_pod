@@ -41,8 +41,8 @@ docker.io/bestiadev/rust_dev_vscode_img:latest
 
 echo "copy SSH server config"
 podman cp ./etc_ssh_sshd_config.conf rust_dev_vscode_cnt:/etc/ssh/sshd_config
-echo "copy the host keys for SSH server in rust_dev_pod"
-podman cp ~/.ssh/rust_dev_pod_keys/etc/ssh/*.*  rust_dev_vscode_cnt:/etc/ssh/
+echo "copy the directory for host keys for SSH server in rust_dev_pod"
+podman cp ~/.ssh/rust_dev_pod_keys/etc/ssh/  rust_dev_vscode_cnt:/etc/ssh/
 echo "copy the public key of rustdevuser"
 podman cp ~/.ssh/rustdevuser_key.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/authorized_keys
 
