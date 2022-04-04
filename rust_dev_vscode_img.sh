@@ -39,16 +39,17 @@ echo "The subsequent commands are from user rustdevuser."
 echo "If I need, I can add '--user root' to run as root."
 
 echo " "
+echo "Prepare directory for public certificates. This is not a secret."
+buildah run --user root rust_dev_vscode_img    mkdir -p /home/rustdevuser/.ssh
+buildah run --user root rust_dev_vscode_img    chmod 700 /home/rustdevuser/.ssh
+buildah run --user root rust_dev_vscode_img    chown -R rustdevuser:rustdevuser /home/rustdevuser/.ssh
+
+echo " "
 echo "apk update"
 buildah run --user root rust_dev_vscode_img    apt -y update
 buildah run --user root rust_dev_vscode_img    apt -y upgrade
 buildah run --user root rust_dev_vscode_img    apt -y install openssh-server
-# prepare directory for public certificates. This is not a secret.
-buildah run --user root rust_dev_vscode_img    mkdir -p /home/rustdevuser/.ssh
-buildah run --user root rust_dev_vscode_img    chmod 700 /home/rustdevuser/.ssh
-buildah run --user root rust_dev_vscode_img    chmod 600 /home/rustdevuser/.ssh
-buildah run --user root rust_dev_vscode_img    chown -R rustdevuser:rustdevuser /home/rustdevuser/.ssh
-buildah run --user root rust_dev_vscode_img    mkdir /etc/ssh/
+
 
 echo " "
 echo "Download vscode-server. Be sure the commit_sha of the server and client is the same:"
@@ -113,5 +114,5 @@ echo "cargo run"
 
 echo " "
 echo " If you need ssh for git or publish_to_web, inside the VSCode terminal run the ssh-agent:"
-echo "eval $(ssh-agent) "
+echo "eval \$(ssh-agent) "
 echo "ssh-add /home/rustdevuser/.ssh/githubssh1"

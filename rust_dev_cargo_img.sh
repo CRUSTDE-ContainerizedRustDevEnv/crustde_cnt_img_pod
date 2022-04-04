@@ -68,7 +68,8 @@ buildah config --workingdir /home/rustdevuser rust_dev_cargo_img
 echo " "
 echo "Configure rustdevuser things"
 buildah run rust_dev_cargo_img /bin/sh -c 'mkdir -vp ~/rustprojects'
-buildah run rust_dev_cargo_img /bin/sh -c 'mkdir -vp ~/.ssh; chmod 700 ~/.ssh'
+buildah run rust_dev_cargo_img /bin/sh -c 'mkdir -vp ~/.ssh'
+buildah run rust_dev_cargo_img /bin/sh -c 'chmod 700 ~/.ssh'
 
 echo " "
 echo "Kill auto-completion horrible sound"
@@ -133,7 +134,7 @@ echo "podman exec -it rust_dev_cargo_cnt bash"
 echo " "
 echo " Inside the container run the ssh-agent to store your ssh passphrase for git and publish_to_web:"
 echo "cd /home/rustdevuser"
-echo "eval $(ssh-agent) "
+echo "eval \$(ssh-agent) "
 echo "ssh-add /home/rustdevuser/.ssh/githubssh1"
 echo "cd rustprojects"
 

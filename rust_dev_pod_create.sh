@@ -27,8 +27,9 @@ podman pod create \
 
 echo " "
 echo "Create container rust_dev_squid_cnt in the pod"
-# why is here --restart=always
-podman create --name rust_dev_squid_cnt --pod=rust_dev_pod -ti \
+# why this: --restart=always \
+podman create --name rust_dev_squid_cnt \
+--pod=rust_dev_pod -ti \
 docker.io/bestiadev/rust_dev_squid_img:latest
 
 echo " "
@@ -41,30 +42,53 @@ docker.io/bestiadev/rust_dev_vscode_img:latest
 
 echo "copy SSH server config"
 podman cp ./etc_ssh_sshd_config.conf rust_dev_vscode_cnt:/etc/ssh/sshd_config
-echo "copy the directory for host keys for SSH server in rust_dev_pod"
-podman cp ~/.ssh/rust_dev_pod_keys/etc/ssh/  rust_dev_vscode_cnt:/etc/ssh/
+echo "copy the files for host keys ed25519 for SSH server in rust_dev_pod"
+podman cp ~/.ssh/rust_dev_pod_keys/etc/ssh/ssh_host_ed25519_key  rust_dev_vscode_cnt:/etc/ssh/ssh_host_ed25519_key
+podman cp ~/.ssh/rust_dev_pod_keys/etc/ssh/ssh_host_ed25519_key.pub  rust_dev_vscode_cnt:/etc/ssh/ssh_host_ed25519_key.pub
 echo "copy the public key of rustdevuser"
-podman cp ~/.ssh/rustdevuser_key.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/authorized_keys
+podman cp ~/.ssh/rustdevuser_key.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/rustdevuser_key.pub
 
 echo "podman pod start"
 podman pod start rust_dev_pod
 echo "user permissions"
-#TODO: maybe this is not needed?
-podman exec -it --user=root  rust_dev_vscode_cnt usermod -p '*' rustdevuser
-podman exec -it --user=root  rust_dev_vscode_cnt usermod -aG sudo rustdevuser
+
+# check the copied files
+# TODO: this commands return a WARN[0000] Error resizing exec session 
+# that looks like a bug in podman
+podman exec --user=rustdevuser rust_dev_vscode_cnt cat /etc/ssh/sshd_config
+podman exec --user=rustdevuser rust_dev_vscode_cnt cat /etc/ssh/ssh_host_ed25519_key
+podman exec --user=rustdevuser rust_dev_vscode_cnt cat /etc/ssh/ssh_host_ed25519_key.pub
+# always is the problem in permissions
+# Chmod 700 (chmod a+rwx,g-rwx,o-rwx) sets permissions so that, 
+# (U)ser / owner can read, can write and can execute. 
+# (G)roup can't read, can't write and can't execute. 
+# (O)thers can't read, can't write and can't execute.
+podman exec --user=rustdevuser rust_dev_vscode_cnt chmod 700 /home/rustdevuser/.ssh
+podman exec --user=rustdevuser rust_dev_vscode_cnt cat /home/rustdevuser/.ssh/rustdevuser_key.pub
+
+echo "add rustdevuser_key to authorized_keys"
+podman exec --user=rustdevuser rust_dev_vscode_cnt touch /home/rustdevuser/.ssh/authorized_keys
+# Chmod 600 (chmod a+rwx,u-x,g-rwx,o-rwx) sets permissions so that, 
+# (U)ser / owner can read, can write and can't execute. 
+# (G)roup can't read, can't write and can't execute. 
+# (O)thers can't read, can't write and can't execute.
+podman exec --user=rustdevuser rust_dev_vscode_cnt chmod 600 /home/rustdevuser/.ssh/authorized_keys
+podman exec --user=rustdevuser rust_dev_vscode_cnt /bin/sh -c 'cat /home/rustdevuser/.ssh/rustdevuser_key.pub >> /home/rustdevuser/.ssh/authorized_keys'
+podman exec --user=rustdevuser rust_dev_vscode_cnt cat /home/rustdevuser/.ssh/authorized_keys
+
+echo "I have to disable the password for rustdevuser to enable SSH access with public key? Why?"
+podman exec --user=root rust_dev_vscode_cnt usermod --password '*' rustdevuser
 
 echo "git global config"
-podman exec -it rust_dev_vscode_cnt git config --global pull.rebase false
-podman exec -it rust_dev_vscode_cnt git config --global user.email "info@bestia.dev"
-podman exec -it rust_dev_vscode_cnt git config --global user.name "bestia.dev"
+podman exec --user=rustdevuser rust_dev_vscode_cnt git config --global pull.rebase false
 
 echo "start the SSH server"
-podman exec -it --user=root  rust_dev_vscode_cnt service ssh restart
+podman exec --user=root  rust_dev_vscode_cnt service ssh restart
 
 echo " "
 echo " To start this 'pod' after a reboot type: "
 echo "podman pod restart rust_dev_pod"
-echo "podman exec -it --user=root rust_dev_vscode_cnt service ssh restart"
+echo "podman exec --user=root rust_dev_vscode_cnt service ssh restart"
 
 echo " "
 echo "Open VSCode, press F1, type 'ssh' and choose 'Remote-SSH: Connect to Host...' and choose `rust_dev_pod`" 
@@ -86,6 +110,6 @@ echo "cargo run"
 
 echo " "
 echo " If you need ssh for git or publish_to_web, inside the VSCode terminal run the ssh-agent:"
-echo "eval $(ssh-agent) "
+echo "eval \$(ssh-agent) "
 echo "ssh-add /home/rustdevuser/.ssh/githubssh1"
 

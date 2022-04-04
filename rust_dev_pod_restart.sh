@@ -6,4 +6,4 @@ echo "https://github.com/bestia-dev/docker_rust_development"
 
 
 podman pod restart rust_dev_pod
-podman exec -it --user=root  rust_dev_vscode_cnt service ssh restart
+podman exec --user=root  rust_dev_vscode_cnt service ssh restart
