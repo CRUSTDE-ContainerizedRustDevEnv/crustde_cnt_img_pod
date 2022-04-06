@@ -56,7 +56,7 @@ echo "user permissions"
 # TODO: this commands return a WARN[0000] Error resizing exec session 
 # that looks like a bug in podman
 podman exec --user=rustdevuser rust_dev_vscode_cnt cat /etc/ssh/sshd_config
-podman exec --user=rustdevuser rust_dev_vscode_cnt cat /etc/ssh/ssh_host_ed25519_key
+# podman exec --user=rustdevuser rust_dev_vscode_cnt cat /etc/ssh/ssh_host_ed25519_key
 podman exec --user=rustdevuser rust_dev_vscode_cnt cat /etc/ssh/ssh_host_ed25519_key.pub
 # always is the problem in permissions
 # Chmod 700 (chmod a+rwx,g-rwx,o-rwx) sets permissions so that, 
