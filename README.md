@@ -13,12 +13,16 @@ Super short instructions without explanation just in 14 easy steps. For tl;dr; c
 
 Prerequisites: Win10, WSL2, VSCode.
 
+TODO: all this can be in one bash script.
+
 1\. Create 2 SSH keys, one for the `SSH server` identity `host key` of the container and the other for the identity of `rustdevuser`. This is done only once. To avoid old algorithms I will force the new `ed25519`. Don't delete these keys, you will need it if you destroy the container and create it again.  
 In `WSL2 terminal`:
 
 ```bash
+sudo apt update
+sudo apt install openssh-client
 # generate user key
-ssh-keygen -f ~/.ssh/rustdevuser_key -t ed25519 -C "info@my.domain"
+ssh-keygen -f ~/.ssh/rustdevuser_key -t ed25519 -C "info@bestia.dev"
 # give it a passphrase and remember it, you will need it
 # generate host key
 mkdir  -p ~/.ssh/rust_dev_pod_keys/etc/ssh
@@ -45,7 +49,6 @@ ls -l ~/.ssh/rust_dev_pod_keys/etc/ssh
 2\. Install Podman in `WSL2 terminal`:
 
 ```bash
-sudo apt-get update
 sudo apt-get install podman
 podman --version
 # podman 3.0.1
@@ -69,6 +72,25 @@ sudo nano /etc/apt/sources.list
 # remove the line deb http://http.us.debian.org/debian/ testing non-free contrib main
 Ctrl-o, enter, Ctrl-x
 sudo apt-get update
+```
+
+4\. Podman needs a slight adjustment because it is inside WSL2.
+
+```bash
+mkdir $HOME/.config/containers
+nano $HOME/.config/containers/containers.conf
+```
+
+In this empty new file `containers.conf` write just this 3 lines and save:
+
+```conf
+[engine]
+cgroup_manager = "cgroupfs"
+events_logger = "file"
+```
+
+```bash
+podman --version
 ```
 
 4\. Docker hub uses https with TLS/SSL encryption. The server certificate cannot be recognized by podman. We will add it to the local system simply by using curl once.  
@@ -125,11 +147,18 @@ exit
 Run in `WSL2 terminal`:  
 
 ```bash
-export WINHOME=$(wslpath $(cmd.exe /C "echo %USERPROFILE%"))
-cp ~/.ssh/rustdevuser_key "$WINHOME"/.ssh/rustdevuser_key
-copy \\wsl$\Debian\home\%USERNAME%\.ssh\rustdevuser_key.pub c:\Users\%USERNAME%\.ssh\rustdevuser_key.pub
+setx.exe WSLENV "USERPROFILE/p"
+echo $USERPROFILE/.ssh/rustdevuser_key
+cp ~/.ssh/rustdevuser_key $USERPROFILE/.ssh/rustdevuser_key
+cp ~/.ssh/rustdevuser_key.pub $USERPROFILE/.ssh/rustdevuser_key.pub
+cat $USERPROFILE/.ssh/rustdevuser_key.pub
+```
+
+Run in `windows cmd prompt` to access the container over SSH from windows:
+
+```bash
 # test the ssh connection from Windows cmd prompt
-"C:\WINDOWS\System32\OpenSSH\ssh.exe" -i c:\Users\%USERNAME%\.ssh\rustdevuser_key -p 2201 rustdevuser@localhost
+"C:\WINDOWS\System32\OpenSSH\ssh.exe" -i ~\.ssh\rustdevuser_key -p 2201 rustdevuser@localhost
 # Choose `y` to save fingerprint if asked, just the first time.
 # type passphrase
 # should work !

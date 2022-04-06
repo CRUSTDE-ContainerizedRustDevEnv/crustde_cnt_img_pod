@@ -58,6 +58,7 @@
         "sandboxing",
         "scchache",
         "serayuzgur",
+        "setx",
         "thers",
         "toolchains",
         "usermod",
@@ -67,6 +68,7 @@
         "Webassembly",
         "WINHOME",
         "workingdir",
+        "WSLENV",
         "wslpath",
         "zdravje",
         "zxvf"
