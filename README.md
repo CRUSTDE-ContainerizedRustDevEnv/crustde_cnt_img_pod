@@ -490,6 +490,9 @@ ls -l ~/.ssh/rust_dev_pod_keys/etc/ssh
 In `WSL2 terminal` copy the SSH keys you use for Github with new simple names.
 So the bash scripts can use fixed name for files and avoid modifying the scripts.  
 
+TODO: this will be run manually and not in the bash script. So the names can be whatever.
+
+
 ```bash
 cp ~/.ssh/my_old_key ~/.ssh/github_key
 cp ~/.ssh/my_old_key.pub ~/.ssh/github_key.pub
