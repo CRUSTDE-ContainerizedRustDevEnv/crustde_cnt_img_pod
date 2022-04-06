@@ -62,9 +62,12 @@
         "toolchains",
         "usermod",
         "userns",
+        "USERPROFILE",
         "wais",
         "Webassembly",
+        "WINHOME",
         "workingdir",
+        "wslpath",
         "zdravje",
         "zxvf"
     ],

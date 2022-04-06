@@ -1,4 +1,3 @@
-
 # Rust: Hack Without Fear ! (docker_rust_development)
 
 **A complete development environment for Rust with VSCode inside a docker container.**  
@@ -7,6 +6,13 @@
 [![Lines in md](https://img.shields.io/badge/Lines_in_markdown-659-green.svg)](https://github.com/bestia-dev/docker_rust_development/)  [![Lines in bash scripts](https://img.shields.io/badge/Lines_in_bash_scripts-408-blue.svg)](https://github.com/bestia-dev/docker_rust_development/)  [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/bestia-dev/docker_rust_development/blob/master/LICENSE)
 
 ![spiral_of_madness](https://github.com/bestia-dev/docker_rust_development/raw/main/images/spiral_of_madness.png "spiral_of_madness")
+
+## podman 3.4.2
+
+The Debian 11 package version of Podman is 3.0.1. 
+It does not work well.
+I will use the compiled binaries from https://github.com/mgoltzsche/podman-static.
+
 
 ## Try it
 
@@ -27,19 +33,19 @@ ssh-keygen -A -f ~/.ssh/rust_dev_pod_keys
 # check the new files
 # list user keys
 ls -l ~/.ssh | grep "rustdevuser"
-# -rw------- 1 luciano luciano  2655 Apr  3 12:03 rustdevuser_key
-# -rw-r--r-- 1 luciano luciano   569 Apr  3 12:03 rustdevuser_key.pub
+# -rw------- 1 username username  2655 Apr  3 12:03 rustdevuser_key
+# -rw-r--r-- 1 username username   569 Apr  3 12:03 rustdevuser_key.pub
 
 # list host keys
 ls -l ~/.ssh/rust_dev_pod_keys/etc/ssh
-# -rw------- 1 luciano luciano 1381 Apr  4 10:44 ssh_host_dsa_key
-# -rw-r--r-- 1 luciano luciano  603 Apr  4 10:44 ssh_host_dsa_key.pub
-# -rw------- 1 luciano luciano  505 Apr  4 10:44 ssh_host_ecdsa_key
-# -rw-r--r-- 1 luciano luciano  175 Apr  4 10:44 ssh_host_ecdsa_key.pub
-# -rw------- 1 luciano luciano  399 Apr  4 10:44 ssh_host_ed25519_key
-# -rw-r--r-- 1 luciano luciano   95 Apr  4 10:44 ssh_host_ed25519_key.pub
-# -rw------- 1 luciano luciano 2602 Apr  4 10:44 ssh_host_rsa_key
-# -rw-r--r-- 1 luciano luciano  567 Apr  4 10:44 ssh_host_rsa_key.pub
+# -rw------- 1 username username 1381 Apr  4 10:44 ssh_host_dsa_key
+# -rw-r--r-- 1 username username  603 Apr  4 10:44 ssh_host_dsa_key.pub
+# -rw------- 1 username username  505 Apr  4 10:44 ssh_host_ecdsa_key
+# -rw-r--r-- 1 username username  175 Apr  4 10:44 ssh_host_ecdsa_key.pub
+# -rw------- 1 username username  399 Apr  4 10:44 ssh_host_ed25519_key
+# -rw-r--r-- 1 username username   95 Apr  4 10:44 ssh_host_ed25519_key.pub
+# -rw------- 1 username username 2602 Apr  4 10:44 ssh_host_rsa_key
+# -rw-r--r-- 1 username username  567 Apr  4 10:44 ssh_host_rsa_key.pub
 ```
 
 2\. install Podman in `WSL2 terminal`:
@@ -56,7 +62,7 @@ podman pull docker.io/bestiadev/rust_dev_squid_img:latest
 podman pull docker.io/bestiadev/rust_dev_vscode_img:latest
 ```
 
-4.\ Download bash script and config files:
+4\. Download bash script and config files:
 
 ```bash
 mkdir -p ~/rustprojects/docker_rust_development
@@ -66,8 +72,8 @@ curl -L https://github.com/bestia-dev/docker_rust_development/raw/main/etc_ssh_s
 
 # check the downloaded files
 ls -l ~/rustprojects/docker_rust_development
-# -rw-r--r-- 1 luciano luciano  337 Apr  3 12:37 etc_ssh_sshd_config.conf
-# -rw-r--r-- 1 luciano luciano 3278 Apr  3 12:37 rust_dev_pod_create.sh
+# -rw-r--r-- 1 username username  337 Apr  3 12:37 etc_ssh_sshd_config.conf
+# -rw-r--r-- 1 username username 3278 Apr  3 12:37 rust_dev_pod_create.sh
 cat etc_ssh_sshd_config.conf
 cat rust_dev_pod_create.sh
 ```
@@ -91,13 +97,14 @@ ls
 exit
 ```
 7\. VSCode client runs in Windows. There we need to copy the SSH keys for `rustdevuser` from WSL2 to Windows:
-Run in `Windows cmd prompt`:  
+Run in `WSL2 terminal`:  
 
 ```bash
-copy \\wsl$\Debian\home\luciano\.ssh\rustdevuser_key c:\Users\Luciano\.ssh\rustdevuser_key
-copy \\wsl$\Debian\home\luciano\.ssh\rustdevuser_key.pub c:\Users\Luciano\.ssh\rustdevuser_key.pub
+export WINHOME=$(wslpath $(cmd.exe /C "echo %USERPROFILE%"))
+cp ~/.ssh/rustdevuser_key "$WINHOME"/.ssh/rustdevuser_key
+copy \\wsl$\Debian\home\%USERNAME%\.ssh\rustdevuser_key.pub c:\Users\%USERNAME%\.ssh\rustdevuser_key.pub
 # test the ssh connection from Windows cmd prompt
-"C:\WINDOWS\System32\OpenSSH\ssh.exe" -i c:\Users\Luciano\.ssh\rustdevuser_key -p 2201 rustdevuser@localhost
+"C:\WINDOWS\System32\OpenSSH\ssh.exe" -i c:\Users\%USERNAME%\.ssh\rustdevuser_key -p 2201 rustdevuser@localhost
 # Choose `y` to save fingerprint if asked, just the first time.
 # type passphrase
 # should work !
@@ -106,9 +113,9 @@ ls
 #finally
 exit
 ```
-7\. Open VSCode and install extension `Remote - SSH`.
+8\. Open VSCode and install extension `Remote - SSH`.
 
-8\. In VSCode, press `F1`, type `ssh` and choose `Remote-SSH: Open SSH configuration File...` choose `c:\Users\myUserName\.ssh\config`.
+9\. In VSCode, press `F1`, type `ssh` and choose `Remote-SSH: Open SSH configuration File...` choose `c:\Users\myUserName\.ssh\config`.
 Add to this file:
 
 ```bash
@@ -122,12 +129,12 @@ Host rust_dev_pod
 
 Save it (Ctrl+s) and close it (Ctrl+w).  
 
-9\. Then in VSCode `F1`, type `ssh` and choose `Remote-SSH: Connect to Host...` and choose `rust_dev_pod`.  
+10\. Then in VSCode `F1`, type `ssh` and choose `Remote-SSH: Connect to Host...` and choose `rust_dev_pod`.  
 Choose `Linux` if asked, just the first time.  
 Type your passphrase.  
 If we are lucky, everything works and you are now inside the container over SSH.
 
-In `VSCode terminal`:
+11\. In `VSCode terminal`:
 
 ```bash
 cd ~/rustprojects
@@ -138,9 +145,9 @@ cargo run
 
 That should work!
 
-10\. Eventually you will want to remove the entire pod. Docker containers and pods are ephemeral, it means just temporary. But your code and data must persist. Before removing, push your changes to github, because removing the pod/container will erase all the data that is inside.  
+12\. Eventually you will want to remove the entire pod. Docker containers and pods are ephemeral, it means just temporary. But your code and data must persist. Before removing, push your changes to github, because removing the pod/container will erase all the data that is inside.  
 Be careful !  
-In `WSL terminal`:
+In `WSL2 terminal`:
 
 ```bash
 podman pod rm rust_dev_pod -f
@@ -893,6 +900,18 @@ netstat -tan
 ## Quirks
 
 It is a complex setting. There can be some quirks sometimes.
+
+## after reboot
+
+Sometimes after reboot things don't work. There are errors like "improper state", "bind already in use" and stuff.
+I tried many solutions, but no-one worked. So I brutally remove the pod and recreate it. But this means all my data is gone.
+So before closing my projects I always push to Github, because there is a real danger of loosing all the changes because of podman non-solved instability.
+I hope this will be solved eventually.
+
+```bash
+podman pod rm rust_dev_pod -f
+sh rust_dev_pod_create.sh
+```
 
 ## network namespace, user namespace
 
