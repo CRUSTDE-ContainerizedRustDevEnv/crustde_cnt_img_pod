@@ -85,8 +85,8 @@ fi
 # Then run 
 echo "  sudo apt install podman"
 sudo apt install podman
-echo "  podman --version"
-podman --version
+echo "  podman info"
+podman info
 # podman 3.4.4
 echo "  Now remove the temporary added line"
 echo "  sudo sed -i.bak '/deb http:\/\/http.us.debian.org\/debian\/ testing non-free contrib main/d' /etc/apt/sources.list"
@@ -116,8 +116,8 @@ echo " "
 echo "  6. Docker hub uses https with TLS/SSL encryption. The server certificate cannot be recognized by podman. We will add it to the local system simply by using curl once."
 echo "  sudo apt install curl"
 sudo apt install curl
-echo "  curl -v https://registry-1.docker.io/v2/"
-curl -v https://registry-1.docker.io/v2/
+echo "  curl -v -s https://registry-1.docker.io/v2/"
+curl -v -s https://registry-1.docker.io/v2/
 echo "  That's it. The server certificate is now locally recognized."
 
 echo " "
@@ -159,4 +159,6 @@ echo 'Host rust_dev_pod
   IdentitiesOnly yes' | sudo tee -a $USERPROFILE/.ssh/config
 fi
 
-
+echo " "
+echo "  Install and setup finished."
+echo "  Follow the instructions to create the pod and connect to it over SSH."

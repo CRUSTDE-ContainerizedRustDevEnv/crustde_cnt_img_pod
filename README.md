@@ -13,9 +13,7 @@ Super short instructions without explanation just in 14 easy steps. For tl;dr; c
 
 Prerequisites: Win10, WSL2, VSCode.
 
-TODO: all this can be in one bash script.
-
-1\. Download the install and setup bash script:
+1\. Download the install and setup bash script. This can take 10 minutes to setup and download about 1.5 GB from docker hub:
 
 ```bash
 sudo apt update
@@ -28,7 +26,7 @@ cat podman_install_and_setup.sh
 sh podman_install_and_setup.sh
 ```
 
-2\. Run the script to create and start the pod
+2\. Run the script to create and start the pod - just once:
 
 ```bash
 sh rust_dev_pod_create.sh
@@ -43,7 +41,8 @@ ssh -i ~/.ssh/rustdevuser_key -p 2201 rustdevuser@localhost
 # should work !
 # try for example
 ls
-#finally
+# ls result: rustprojects
+# to exit the container
 exit
 ```
 
@@ -57,7 +56,8 @@ exit
 # should work !
 # try for example
 ls
-#finally
+# ls result: rustprojects
+# to exit the container
 exit
 ```
 
@@ -77,7 +77,7 @@ cd rust_dev_hello
 cargo run
 ```
 
-That should work!
+That should work and greet you with "Hello, world!"
 
 8\. Eventually you will want to remove the entire pod. Docker containers and pods are ephemeral, it means just temporary. But your code and data must persist. Before removing, push your changes to github, because removing the pod/container will erase all the data that is inside.  
 Be careful !  
