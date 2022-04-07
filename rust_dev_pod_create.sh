@@ -27,7 +27,6 @@ podman pod create \
 
 echo " "
 echo "Create container rust_dev_squid_cnt in the pod"
-# why this: --restart=always \
 podman create --name rust_dev_squid_cnt \
 --pod=rust_dev_pod_create -ti \
 docker.io/bestiadev/rust_dev_squid_img:latest

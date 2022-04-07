@@ -9,7 +9,7 @@
 
 ## Try it
 
-Super short instructions without explanation just in 8 easy steps. For tl;dr; continue reading below.
+Super short instructions without explanation just in 9 easy steps. For tl;dr; continue reading below.
 
 Prerequisites: Win10, WSL2, VSCode.  
 I tested the script on a completely fresh installation of Debian on WSL2.  
@@ -86,7 +86,28 @@ cargo run
 
 That should work and greet you with "Hello, world!"
 
-8\. Eventually you will want to remove the entire pod. Docker containers and pods are ephemeral, it means just temporary. But your code and data must persist. Before destroying the pod/containers, push your changes to github, because it will destroy also all the data that is inside.  
+8\. After reboot WSL2 can create some network problems for podman. Before entering any podman command we need first to clean some temporary files, restart the pod and restart the SSh server.
+
+We can simulate the WSL2 reboot in powershell in windows:
+
+```powershell
+Get-Service LxssManager | Restart-Service
+```
+
+```bash
+rm -rf /tmp/podman-run-$(id -u)/libpod/tmp
+# if repeated 3 times, the problems vanishes. Maybe because we have 3 containers in the pod.
+podman pod restart rust_dev_pod
+podman pod restart rust_dev_pod
+podman pod restart rust_dev_pod
+podman exec --user=root  rust_dev_vscode_cnt service ssh restart
+podman pod list
+podman ps -a
+# test the SSH connection
+ssh -i ~/.ssh/rustdevuser_key -p 2201 rustdevuser@localhost
+```
+
+9\. Eventually you will want to remove the entire pod. Docker containers and pods are ephemeral, it means just temporary. But your code and data must persist. Before destroying the pod/containers, push your changes to github, because it will destroy also all the data that is inside.  
 Be careful !  
 In `WSL2 terminal`:
 
@@ -759,6 +780,29 @@ Open the browser in Windows:
 This is an example of Webassembly and PWA, directly from a docker container.
 
 A good learning example.
+
+## After reboot
+
+After reboot WSL2 can create some network problems for podman. Before entering any podman command we need first to clean some temporary files, restart the pod and restart the SSh server.
+
+We can simulate the WSL2 reboot in powershell in windows:
+
+```powershell
+Get-Service LxssManager | Restart-Service
+```
+
+```bash
+rm -rf /tmp/podman-run-$(id -u)/libpod/tmp
+# if repeated 3 times, the problems vanishes. Maybe because we have 3 containers in the pod.
+podman pod restart rust_dev_pod
+podman pod restart rust_dev_pod
+podman pod restart rust_dev_pod
+podman exec --user=root  rust_dev_vscode_cnt service ssh restart
+podman pod list
+podman ps -a
+# test the SSH connection
+ssh -i ~/.ssh/rustdevuser_key -p 2201 rustdevuser@localhost
+```
 
 ## Quirks
 
