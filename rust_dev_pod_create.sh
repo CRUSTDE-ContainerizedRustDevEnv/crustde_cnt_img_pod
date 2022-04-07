@@ -6,7 +6,7 @@
 # TODO: check if pod exists.
 
 echo " "
-echo "Bash script to create the pod 'rust_dev_pod'"
+echo "Bash script to create the pod 'rust_dev_pod_create'"
 echo "This 'pod' is made of the containers 'rust_dev_squid_cnt' and 'rust_dev_vscode_cnt'"
 echo "All outbound network traffic from rust_dev_vscode_cnt goes through the proxy Squid."
 echo "Published inbound network ports are 8001 on 'localhost'"
@@ -19,22 +19,22 @@ echo "Create pod"
 podman pod create \
 -p 127.0.0.1:8001:8001/tcp \
 -p 127.0.0.1:2201:2201/tcp \
---label name=rust_dev_pod \
+--label name=rust_dev_pod_create \
 --label version=1.0 \
 --label source=github.com/bestia-dev/docker_rust_development \
 --label author=github.com/bestia-dev \
---name rust_dev_pod
+--name rust_dev_pod_create
 
 echo " "
 echo "Create container rust_dev_squid_cnt in the pod"
 # why this: --restart=always \
 podman create --name rust_dev_squid_cnt \
---pod=rust_dev_pod -ti \
+--pod=rust_dev_pod_create -ti \
 docker.io/bestiadev/rust_dev_squid_img:latest
 
 echo " "
 echo "Create container rust_dev_vscode_cnt in the pod"
-podman create --name rust_dev_vscode_cnt --pod=rust_dev_pod -ti \
+podman create --name rust_dev_vscode_cnt --pod=rust_dev_pod_create -ti \
 --env http_proxy=http://localhost:3128 \
 --env https_proxy=http://localhost:3128 \
 --env all_proxy=http://localhost:3128  \
@@ -42,14 +42,14 @@ docker.io/bestiadev/rust_dev_vscode_img:latest
 
 echo "copy SSH server config"
 podman cp ./etc_ssh_sshd_config.conf rust_dev_vscode_cnt:/etc/ssh/sshd_config
-echo "copy the files for host keys ed25519 for SSH server in rust_dev_pod"
+echo "copy the files for host keys ed25519 for SSH server in rust_dev_pod_create"
 podman cp ~/.ssh/rust_dev_pod_keys/etc/ssh/ssh_host_ed25519_key  rust_dev_vscode_cnt:/etc/ssh/ssh_host_ed25519_key
 podman cp ~/.ssh/rust_dev_pod_keys/etc/ssh/ssh_host_ed25519_key.pub  rust_dev_vscode_cnt:/etc/ssh/ssh_host_ed25519_key.pub
 echo "copy the public key of rustdevuser"
 podman cp ~/.ssh/rustdevuser_key.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/rustdevuser_key.pub
 
 echo "podman pod start"
-podman pod start rust_dev_pod
+podman pod start rust_dev_pod_create
 echo "user permissions"
 
 # check the copied files
@@ -87,11 +87,11 @@ podman exec --user=root  rust_dev_vscode_cnt service ssh restart
 
 echo " "
 echo " To start this 'pod' after a reboot type: "
-echo "podman pod restart rust_dev_pod"
+echo "podman pod restart rust_dev_pod_create"
 echo "podman exec --user=root rust_dev_vscode_cnt service ssh restart"
 
 echo " "
-echo "Open VSCode, press F1, type 'ssh' and choose 'Remote-SSH: Connect to Host...' and choose `rust_dev_pod`" 
+echo "Open VSCode, press F1, type 'ssh' and choose 'Remote-SSH: Connect to Host...' and choose 'rust_dev_pod_create'" 
 echo " This will open a new VSCode windows attached to the container."
 echo " If needed Open VSCode terminal with Ctrl+J"
 echo " Inside VSCode terminal, go to the project folder. Here we will create a sample project:"

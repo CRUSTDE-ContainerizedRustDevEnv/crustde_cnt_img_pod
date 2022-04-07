@@ -115,7 +115,7 @@ echo " "
 echo "Finally save/commit the image named rust_dev_cargo_img"
 buildah commit rust_dev_cargo_img docker.io/bestiadev/rust_dev_cargo_img:latest
 
-# TODO: dynamically ask ` cargo --version` and write the answer in the tag:
+# TODO: dynamically ask ' cargo --version' and write the answer in the tag:
 buildah tag docker.io/bestiadev/rust_dev_cargo_img:latest docker.io/bestiadev/rust_dev_cargo_img:cargo-1.59.0
 
 echo " "

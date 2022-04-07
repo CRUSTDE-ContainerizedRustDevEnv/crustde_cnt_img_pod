@@ -57,7 +57,7 @@ echo "In VSCode client open Help-About. version 1.66.0"
 echo "e18005f0f1b33c29e81d732535d8c0e47cafb0b5"
 buildah run rust_dev_vscode_img /bin/sh -c 'mkdir -vp ~/.vscode-server/bin/e18005f0f1b33c29e81d732535d8c0e47cafb0b5'
 buildah run rust_dev_vscode_img /bin/sh -c 'mkdir -vp ~/.vscode-server/extensions'
-buildah run rust_dev_vscode_img /bin/sh -c 'curl -L https://update.code.visualstudio.com/commit:e18005f0f1b33c29e81d732535d8c0e47cafb0b5/server-linux-x64/stable --output /tmp/vscode-server-linux-x64.tar.gz'
+buildah run rust_dev_vscode_img /bin/sh -c 'curl -L -s https://update.code.visualstudio.com/commit:e18005f0f1b33c29e81d732535d8c0e47cafb0b5/server-linux-x64/stable --output /tmp/vscode-server-linux-x64.tar.gz'
 buildah run rust_dev_vscode_img /bin/sh -c 'tar --no-same-owner -xzv --strip-components=1 -C ~/.vscode-server/bin/e18005f0f1b33c29e81d732535d8c0e47cafb0b5 -f /tmp/vscode-server-linux-x64.tar.gz'
 buildah run rust_dev_vscode_img /bin/sh -c 'rm /tmp/vscode-server-linux-x64.tar.gz'
 buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/e18005f0f1b33c29e81d732535d8c0e47cafb0b5/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension streetsidesoftware.code-spell-checker'

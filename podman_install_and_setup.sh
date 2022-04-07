@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 echo " "
-echo "  Bash script to install Podman and setup for rust_dev_pod for development in Rust with VSCode."
+echo "  Bash script to install Podman and setup for rust_dev_pod_create for development in Rust with VSCode."
 echo "  repository: https://github.com/bestia-dev/docker_rust_development"
 echo " " 
 echo "  Prerequisites: Win10, WSL2, VSCode."
@@ -14,8 +14,8 @@ sudo cat /etc/apt/sources.list
 echo "  sudo apt update"
 sudo apt update
 echo "  Install openssh-client."
-echo "  sudo apt install openssh-client"
-sudo apt install openssh-client
+echo "  sudo apt install -y openssh-client"
+sudo apt install -y openssh-client
 
 echo " " 
 echo "  1. Create 2 SSH keys, one for the 'SSH server' identity 'host key' of the container and the other for the identity of 'rustdevuser'. This is done only once. To avoid old algorithms I will force the new 'ed25519'. Don't delete these keys, you will need it if you destroy the container and create it again."
@@ -43,7 +43,7 @@ echo "  ls -l ~/.ssh/rust_dev_pod_keys/etc/ssh"
 ls -l ~/.ssh/rust_dev_pod_keys/etc/ssh
 
 echo " " 
-echo "  2. VSCode client runs in Windows. We need to copy the SSH keys for `rustdevuser` from WSL2 to Windows"
+echo "  2. VSCode client runs in Windows. We need to copy the SSH keys for 'rustdevuser' from WSL2 to Windows"
 echo "  setx.exe WSLENV 'USERPROFILE/p'"
 setx.exe WSLENV "USERPROFILE/p"
 echo $USERPROFILE/.ssh/rustdevuser_key
@@ -61,8 +61,8 @@ ls -l $USERPROFILE/.ssh/rust_dev_pod_keys/etc/ssh
 
 echo " " 
 echo "  3. Install Podman in 'WSL2 terminal':"
-echo "  sudo apt install podman"
-sudo apt install podman
+echo "  sudo apt install -y podman"
+sudo apt install -y podman
 echo "  podman --version"
 podman --version
 # podman 3.0.1
@@ -83,8 +83,8 @@ echo "  sudo apt update"
 sudo apt update
 fi
 # Then run 
-echo "  sudo apt install podman"
-sudo apt install podman
+echo "  sudo apt install -y podman"
+sudo apt install -y podman
 echo "  podman info"
 podman info
 # podman 3.4.4
@@ -114,14 +114,14 @@ fi
 
 echo " "
 echo "  6. Docker hub uses https with TLS/SSL encryption. The server certificate cannot be recognized by podman. We will add it to the local system simply by using curl once."
-echo "  sudo apt install curl"
-sudo apt install curl
-echo "  curl -v -s https://registry-1.docker.io/v2/"
-curl -v -s https://registry-1.docker.io/v2/
+echo "  sudo apt install -y curl"
+sudo apt install -y curl
+echo "  curl -s -v https://registry-1.docker.io/v2/ -o /dev/null"
+curl -s -v https://registry-1.docker.io/v2/ -o /dev/null
 echo "  That's it. The server certificate is now locally recognized."
 
 echo " "
-echo "  7. Pull the docker images (around 2GB) in `WSL2 terminal`:"
+echo "  7. Pull the docker images (around 2GB) in 'WSL2 terminal':"
 echo "  podman pull docker.io/bestiadev/rust_dev_squid_img:latest"
 podman pull docker.io/bestiadev/rust_dev_squid_img:latest
 echo "  podman pull docker.io/bestiadev/rust_dev_vscode_img:latest"
@@ -133,10 +133,10 @@ echo "  mkdir -p ~/rustprojects/docker_rust_development"
 mkdir -p ~/rustprojects/docker_rust_development
 echo "  cd ~/rustprojects/docker_rust_development"
 cd ~/rustprojects/docker_rust_development
-echo "  curl -L https://github.com/bestia-dev/docker_rust_development/raw/main/rust_dev_pod_create.sh --output rust_dev_pod_create.sh"
-curl -L https://github.com/bestia-dev/docker_rust_development/raw/main/rust_dev_pod_create.sh --output rust_dev_pod_create.sh
-echo "  curl -L https://github.com/bestia-dev/docker_rust_development/raw/main/etc_ssh_sshd_config.conf --output etc_ssh_sshd_config.conf"
-curl -L https://github.com/bestia-dev/docker_rust_development/raw/main/etc_ssh_sshd_config.conf --output etc_ssh_sshd_config.conf
+echo "  curl -L -s https://github.com/bestia-dev/docker_rust_development/raw/main/rust_dev_pod_create.sh --output rust_dev_pod_create.sh"
+curl -L -s https://github.com/bestia-dev/docker_rust_development/raw/main/rust_dev_pod_create.sh --output rust_dev_pod_create.sh
+echo "  curl -L -s https://github.com/bestia-dev/docker_rust_development/raw/main/etc_ssh_sshd_config.conf --output etc_ssh_sshd_config.conf"
+curl -L -s https://github.com/bestia-dev/docker_rust_development/raw/main/etc_ssh_sshd_config.conf --output etc_ssh_sshd_config.conf
 echo "  check the downloaded files"
 echo "  ls -l ~/rustprojects/docker_rust_development"
 ls -l ~/rustprojects/docker_rust_development
@@ -147,18 +147,18 @@ cat rust_dev_pod_create.sh
 
 echo " "
 echo "  9. Prepare the config file for VSCode SSH:"
-if grep -q "Host rust_dev_pod" "$USERPROFILE/.ssh/config"; then
+if grep -q "Host rust_dev_pod_create" "$USERPROFILE/.ssh/config"; then
 echo "  VSCode config for SSH already exists."
 else
-echo "  Add Host rust_dev_pod to $USERPROFILE/.ssh/config"
-echo 'Host rust_dev_pod
+echo "  Add Host rust_dev_pod_create to $USERPROFILE/.ssh/config"
+echo 'Host rust_dev_pod_create
   HostName localhost
   Port 2201
   User rustdevuser
-  IdentityFile ~\.ssh\rustdevuser_key
+  IdentityFile ~\\.ssh\\rustdevuser_key
   IdentitiesOnly yes' | sudo tee -a $USERPROFILE/.ssh/config
 fi
 
 echo " "
 echo "  Install and setup finished."
-echo "  Follow the instructions to create the pod and connect to it over SSH."
+echo "  Follow the instructions from README.md to create the pod and connect to it over SSH."

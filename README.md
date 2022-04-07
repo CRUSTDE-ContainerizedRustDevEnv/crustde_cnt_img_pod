@@ -9,21 +9,28 @@
 
 ## Try it
 
-Super short instructions without explanation just in 14 easy steps. For tl;dr; continue reading below.
+Super short instructions without explanation just in 8 easy steps. For tl;dr; continue reading below.
 
-Prerequisites: Win10, WSL2, VSCode.
+Prerequisites: Win10, WSL2, VSCode.  
+I tested the script on a completely fresh installation of Debian on WSL2.  
 
-1\. Download the install and setup bash script. This can take 10 minutes to setup and download about 1.5 GB from docker hub:
+1\. Download the podman_install_and_setup bash script and run it. This can take 10 minutes to setup because it downloads about 1.5 GB from docker hub.  
+In `WSL2 terminal`:
 
 ```bash
 sudo apt update
-sudo apt install curl
+sudo apt full-upgrade
+sudo apt install -y curl
 mkdir -p ~/rustprojects/docker_rust_development
 cd ~/rustprojects/docker_rust_development
-curl -L https://github.com/bestia-dev/docker_rust_development/raw/main/podman_install_and_setup.sh --output podman_install_and_setup.sh
+# Download the bash script
+curl -L -s https://github.com/bestia-dev/docker_rust_development/raw/main/podman_install_and_setup.sh --output podman_install_and_setup.sh
+# You can check the content of the bash script
 cat podman_install_and_setup.sh
 # then run
 sh podman_install_and_setup.sh
+# This can take 10 minutes because it needs to download around 1.5 GB from docker hub.
+# You will be asked to create a new passphrase for the SSh key. Remember it, you will need it.
 ```
 
 2\. Run the script to create and start the pod - just once:
@@ -63,7 +70,7 @@ exit
 
 5\. Open VSCode and install extension `Remote - SSH`.
 
-6\. Then in VSCode `F1`, type `ssh` and choose `Remote-SSH: Connect to Host...` and choose `rust_dev_pod`.  
+6\. Then in VSCode `F1`, type `ssh` and choose `Remote-SSH: Connect to Host...` and choose `rust_dev_pod_create`.  
 Choose `Linux` if asked, just the first time.  
 Type your passphrase.  
 If we are lucky, everything works and you are now inside the container over SSH.
@@ -79,12 +86,12 @@ cargo run
 
 That should work and greet you with "Hello, world!"
 
-8\. Eventually you will want to remove the entire pod. Docker containers and pods are ephemeral, it means just temporary. But your code and data must persist. Before removing, push your changes to github, because removing the pod/container will erase all the data that is inside.  
+8\. Eventually you will want to remove the entire pod. Docker containers and pods are ephemeral, it means just temporary. But your code and data must persist. Before destroying the pod/containers, push your changes to github, because it will destroy also all the data that is inside.  
 Be careful !  
 In `WSL2 terminal`:
 
 ```bash
-podman pod rm rust_dev_pod -f
+podman pod rm rust_dev_pod_create -f
 ```
 
 ## Motivation
@@ -134,7 +141,7 @@ Let's install it. Open the `WSL2 terminal` and type:
 
 ```bash
 sudo apt update
-sudo apt install podman
+sudo apt install -y podman
 podman version
 ```
 
@@ -163,6 +170,27 @@ Now you can command again and the result has no errors:
 
 ```bash
 podman version
+# 3.0.1
+```
+
+Sadly, the version on Debian 11 stable is 3.0.1, that is buggy and does not work properly. I will install the version 3.4.4 from the `testing` Debian 12.
+In `WSL2 terminal`:
+
+```bash
+sudo nano /etc/apt/sources.list
+# add the line for `testing` repository
+deb http://http.us.debian.org/debian/ testing non-free contrib main
+# Ctrl-o, enter, Ctrl-x
+sudo apt update
+# Then run 
+sudo apt install -y podman
+podman info
+# podman 3.4.4
+# Very important: Remove the temporary added line and run apt update
+sudo nano /etc/apt/sources.list
+# delete: deb http://http.us.debian.org/debian/ testing non-free contrib main 
+# Ctrl-o, enter, Ctrl-x
+sudo apt update
 ```
 
 ## Using Podman
@@ -312,7 +340,7 @@ cd rust_dev_hello
 cargo run
 ```
 
-That should work fine!
+That should work fine and greet you with "Hello, world!"
 
 We can exit the container now with the command
 
@@ -326,7 +354,7 @@ The container still exists and is still running. Check with `podman ps -a`.
 
 To interact with it again, repeat the previous command `podman exec -it rust_dev_cargo_cnt bash`.
 
-This container does not work with VSCode and we will not need it any more. If you use another editor, you can use this image/container as base for your image/container.
+This container does not work with VSCode and we will not need it any more. If you use another editor, you can use this image/container as base for your image/container for your editor.
 
 Remove the container with:
 
@@ -334,13 +362,13 @@ Remove the container with:
 podman rm rust_dev_cargo_cnt -f
 ```
 
-## VSCode from Windows over SSH to container
+## Docker image with VSCode server and extensions
 
 I use VSCode as my primary code editor in Windows. It works fine remotely with WSL2 (Debian Linux) with the `Remote - WSL` extension.
 
-There is also a `Remote - Containers` extension, that lets you use a Docker container as a full-featured development environment. I tried it. There are a lot of `automagic easy to use` functions in this extension. But for some reason `automagic` never worked for me. I must always go painfully step-by-step and discover why the `automagic` does not work in my case. Always!
+There exists a `Remote - Containers` extension, that lets you use a Docker container as a full-featured development environment. I tried it. There are a lot of `automagic` functions in this extension. But for some reason `automagic` never worked for me. I must always go painfully step-by-step and discover why the `automagic` does not work in my case. Always!
 
-I decided to go with the extension `Remote - SSH`. That is more broadly usable. Install it.
+I decided to go with the `SSH` communication for remote developing. That is more broadly usable. We need to create an image that contains the VSCode server and extensions.
 
 In `WSL2 terminal` run the bash script `rust_dev_vscode_img.sh` will create the image `rust_dev_vscode_img`.
 
@@ -350,7 +378,7 @@ Run it with:
 sh rust_dev_vscode_img.sh
 ```
 
-This is based on the first image and adds the VSCode server and extensions.
+This is based on the image `rust_dev_cargo_img` and adds the VSCode server and extensions.
 VSCode is great because of its extensions. Most of these extensions are installed inside the image `rust_dev_vscode_img`:
 
 - streetsidesoftware.code-spell-checker
@@ -361,11 +389,12 @@ VSCode is great because of its extensions. Most of these extensions are installe
 - lonefy.vscode-js-css-html-formatter
 - serayuzgur.crates
 
-Other extensions you can add manually through VSCode, but then it is not repeatable. Better is to modify the script that creates the image `rust_dev_vscode_img.sh`.
+Other extensions you can add manually through VSCode, but then it is not repeatable. Better is to modify the script and recreate the image `rust_dev_vscode_img.sh`.
 
-## Users and permission for SSH
+## Users keys for SSH
 
-We need to create 2 SSH keys, one for the `SSH server` identity `host key` of the container and the other for the identity of `rustdevuser`. This is done only once. To avoid old algorithms I will force the new `ed25519`. In `WSL2 terminal`:
+We need to create 2 SSH keys, one for the `SSH server` identity `host key` of the container and the other for the identity of `rustdevuser`. This is done only once. To avoid old cryptographic algorithms I will force the new `ed25519`.  
+In `WSL2 terminal`:
 
 ```bash
 # generate user key
@@ -393,17 +422,18 @@ ls -l ~/.ssh/rust_dev_pod_keys/etc/ssh
 # -rw-r--r-- 1 luciano luciano  567 Apr  4 10:44 ssh_host_rsa_key.pub
 ```
 
-## SSh keys for Github
-
-In `WSL2 terminal` copy the SSH keys you use for Github with new simple names.
-So the bash scripts can use fixed name for files and avoid modifying the scripts.  
-
-TODO: this will be run manually and not in the bash script. So the names can be whatever.
-
+The same keys we will need in Windows, because the VSCode client works in windows. We will copy them:
+In `WSL2 terminal`:
 
 ```bash
-cp ~/.ssh/my_old_key ~/.ssh/github_key
-cp ~/.ssh/my_old_key.pub ~/.ssh/github_key.pub
+setx.exe WSLENV "USERPROFILE/p"
+echo $USERPROFILE/.ssh/rustdevuser_key
+cp ~/.ssh/rustdevuser_key $USERPROFILE/.ssh/rustdevuser_key
+cp ~/.ssh/rustdevuser_key.pub $USERPROFILE/.ssh/rustdevuser_key.pub
+cp -r ~/.ssh/rust_dev_pod_keys $USERPROFILE/.ssh/rust_dev_pod_keys
+# check
+ls -l $USERPROFILE/.ssh | grep "rustdevuser"
+ls -l $USERPROFILE/.ssh/rust_dev_pod_keys/etc/ssh
 ```
 
 ## Volumes or mount restrictions
@@ -446,92 +476,82 @@ First create a modified image for Squid with (run inside the rustprojects/docker
 sh rust_dev_squid_img.sh
 ```
 
+If you need, you can modify the file `etc_squid_squid.conf` to add more whitelisted domains. Then run `sh rust_dev_squid_img.sh` to build the modified image.
 
+## One pod with 2 containers
 
-
-
-To create and start the pod I created the bash script `rust_dev_pod_create.sh`.
-
-
-
-
-
-In `WSL2 terminal` create one `pod` with 2 containers and start them:
-
-
-Open VSCode, press `F1`, type `attach` and choose `Remote-Containers:Attach to Running container...` and type `rust_dev_vscode_cnt`.
-
-In `VSCode terminal` test the proxy:
-
-```bash
-# try curl with proxy for whitelisted domains
-curl --proxy "localhost:3128" "http://httpbin.org/ip"
-# it returns {"origin": "127.0.0.1, 46.123.250.35"}
-curl --proxy "localhost:3128" "http://crates.io"
-# works
-curl --proxy "localhost:3128" "https://github.com/"
-# works
-
-# try curl with proxy for all other restricted domains
-curl --proxy "localhost:3128" "http://google.com"
-# it returns "ERR_ACCESS_DENIED"
-curl --proxy "localhost:3128" "http://microsoft.com"
-# it returns "ERR_ACCESS_DENIED"
-```
-
-It works. Only the whitelisted domains are allowed.
-
-If you need, you can change the `etc_squid_squid.conf` to add more domains. Then run `sh rust_dev_squid_img.sh` to build the modified image.
-
-Now delete completely the `pod` before the next chapter.
-
-```bash
-podman pod rm rust_dev_pod -f
-```
-
-## Env variables for proxy setting
+Podman and Kubernetes have the concept of pods, where more containers are tightly coupled. Here we will have the `rust_dev_vscode_cnt` that will use `rust_dev_squid_cnt` as a proxy. From outside the pod is like one entity with one address. All the network communication goes over the pod. Inside the pod everything is in the `localhost` address. That makes it easy to configure.
 
 Inside the container `rust_dev_vscode_cnt` I want that everything goes through the proxy. This env variables should do that:
 
 `http_proxy`, `https_proxy`,`all_proxy`.
 
-I can add this env variables when creating the container. I don't want to build this in the image.
-
-Run the bash script to create a new `rust_dev_pod` with proxy settings:
+Run the bash script to create a new pod `rust_dev_pod` with proxy settings:
 
 ```bash
 sh rust_dev_pod_create.sh
 ```
 
-Open VSCode, press `F1`, type `attach` and choose `Remote-Containers:Attach to Running container...` and type `rust_dev_vscode_cnt`.
-
-In `VSCode terminal` test the proxy:
+The pod is now running:
 
 ```bash
-# try curl with proxy for whitelisted domains
-curl "http://httpbin.org/ip"
-# it returns {"origin": "127.0.0.1, 46.123.250.35"}
-curl "http://crates.io"
-# works
-curl "https://github.com/"
-# works
-
-# try curl with proxy for all other restricted domains
-curl "http://google.com"
-# it returns "ERR_ACCESS_DENIED"
-curl "http://microsoft.com"
-# it returns "ERR_ACCESS_DENIED"
+podman pod list
+podman ps -a 
 ```
 
+## SSH from WSL2 Debian
 
+Try the SSH connection from WSL2 to the container:
 
+```bash
+ssh -i ~/.ssh/rustdevuser_key -p 2201 rustdevuser@localhost
+# Choose `yes` to save fingerprint if asked, just the first time.
+# type passphrase
+# should work !
+# try for example
+ls
+# ls result: rustprojects
+# to exit the container
+exit
+```
 
+## SSH from windows
 
+Run in `windows cmd prompt` to access the container over SSH from windows:
 
+```bash
+# test the ssh connection from Windows cmd prompt
+"C:\WINDOWS\System32\OpenSSH\ssh.exe" -i ~\.ssh\rustdevuser_key -p 2201 rustdevuser@localhost
+# Choose `y` to save fingerprint if asked, just the first time.
+# type passphrase
+# should work !
+# try for example
+ls
+# ls result: rustprojects
+# to exit the container
+exit
+```
 
-This will open a new VSCode windows attached to the container. In the left bottom corner there is the green label with the container name.
+## VSCode
 
-We can now edit, compile and run Rust projects in VSCode inside the container.
+Open VSCode and install the extension `Remote - SSH`.
+In VSCode `F1`, type `ssh` and choose `Remote-SSH: Open SSh configuration File...`, choose  `c:\users\user_name\ssh\config` and type (if is missing):
+
+```bash
+Host rust_dev_pod
+  HostName localhost
+  Port 2201
+  User rustdevuser
+  IdentityFile ~\.ssh\rustdevuser_key
+  IdentitiesOnly yes
+```
+
+Save and close.
+
+Then in VSCode `F1`, type `ssh` and choose `Remote-SSH: Connect to Host...` and choose `rust_dev_pod`.  
+Choose `Linux` if asked, just the first time.  
+Type your passphrase.  
+If we are lucky, everything works and VSCode is now inside the container over SSH.  
 
 ## VSCode terminal
 
@@ -554,7 +574,7 @@ This easy command opens a new VSCode window exactly for this project/folder insi
 code .
 ```
 
-A new VSCode windows will open for the `rust_dev_hello` project. You can close now all other VSCode windows.
+A new VSCode windows will open for the `rust_dev_hello` project. Because of the SSH communication it asks for the passphrase. You can close now all other VSCode windows.
 
 Build and run the project in the `VSCode terminal`:
 
@@ -562,15 +582,29 @@ Build and run the project in the `VSCode terminal`:
 cargo run
 ```
 
-That should work!
+That should work and greet you with "Hello, world!".
 
 Leave VSCode open because the next chapter will continue from here.
 
 ## Push changes to Github
 
-I like to work with Github over SSH and not over https.
 
-To make SSH work I need the file with the private key for SSH connection. I already have this one in WSL2 in the file `~/.ssh/githubssh1`. I will copy it into the container. If your file has a different name, first copy it to `~/.ssh/githubssh1`, so you can follow the subsequent commands easily.
+I like to work with Github over SSH and not over https. I think it is the natural thing for Linux.
+
+To make SSH client work in the container I need the file with the private key for SSH connection to Github. I already have this in the file `~/.ssh/githubssh1`. I will copy it into the container. If your file has a different name, first copy it to `~/.ssh/githubssh1`, so you can follow the subsequent commands easily.
+
+## SSh keys for Github
+
+In `WSL2 terminal` copy the SSH keys you use for Github with new simple names.
+So the bash scripts can use fixed name for files and avoid modifying the scripts.  
+
+TODO: this will be run manually and not in the bash script. So the names can be whatever.
+
+
+```bash
+cp ~/.ssh/my_old_key ~/.ssh/github_key
+cp ~/.ssh/my_old_key.pub ~/.ssh/github_key.pub
+```
 
 Be careful ! This is a secret !
 
@@ -701,110 +735,9 @@ docker.io/bestiadev/rust_dev_vscode_img cargo-1.59.0  1.32 GB
 
 ## Tragedy struck! MUST change VSCode to SSH communication
 
-Today I cannot attach VSCode to the containers anymore. Neither can I get a list or running containers.
-Things just stop working. Oh, too much automagic for me. I have to do stuff manually, remember.  
-I will try to connect VSCode to container with SSH. That was also my first idea, but it was not recommended for containers. There are different types of container defined by the content: system containers, application containers and developer containers. Here we have a development container that really acts like a lightweight virtual machine. Here it makes sense to have SSH installed. With it, it is also possible to access the container wherever it is. Just FYI `application containers` are not like VM, they are more like a complex executable. There makes not sense to SSH into container of that type.
-
-First I install the `Remote - SSH` extension to VSCode.
-
-Then I modified the `rust_dev_vscode_img` to have sshd server installed.
-After creating the container we must modify the file `ssh_config`.  
-I choose this configuration, maybe it can be improved:  
-
-```bash
-#sshd_config for rust_dev_vscode_cnt
-
-AllowUsers rustdevuser
-
-Port 2201
-
-AuthenticationMethods publickey
-PubkeyAuthentication yes
-
-PasswordAuthentication no
-ChallengeResponseAuthentication no
-UsePAM no
-PermitEmptyPasswords no
-PermitRootLogin no
-```
-
-We also add `githubssh1.pub` the public key of authorized user in `authorized_keys`.  
-In `WSL2 terminal`:
-
-```bash
-# remove the old container if is stuck. This will erase all the data.
-podman rm rust_dev_vscode_cnt -f
-# create the container
-podman create -ti -p 127.0.0.1:2201:2201/tcp --name rust_dev_vscode_cnt docker.io/bestiadev/rust_dev_vscode_img:latest
-# copy the sshd_config where the port 2201 is configured
-podman cp etc_ssh_sshd_config.conf rust_dev_vscode_cnt:/etc/ssh/sshd_config
-# copy the public certificate of authorized users
-podman cp ~/.ssh/githubssh1.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/authorized_keys
-# start it
-podman start rust_dev_vscode_cnt
-# @link https://unix.stackexchange.com/a/193131/311426
-# On Linux, you can disable password-based access to an account while allowing
-# SSH access (with some other authentication method, typically a key pair) with:
-podman exec --user=root  rust_dev_vscode_cnt usermod -p '*' rustdevuser
-podman exec --user=root  rust_dev_vscode_cnt usermod -aG sudo rustdevuser
-# restart the service
-podman exec --user=root  rust_dev_vscode_cnt service ssh restart
-
-# this now works from WSL2:
-ssh -i ~/.ssh/rustdevuser_key -p 2201 rustdevuser@localhost
-# exit
-```
-
-VSCode runs in windows and it uses `C:\WINDOWS\System32\OpenSSH\ssh.exe`.  
-I must use the windows path and NOT the linux path for the SSH keys.  
-I copied the SSH key `rustdevuser_key` from Linux to Windows.  
-Type in `windows cmd prompt terminal`:
-
-```bash
-copy "\\wsl$\Debian\home\luciano\.ssh\githubssh1" "c:\Users\Luciano\.ssh\githubssh1"
-# now I can connect to SSH from Windows
-"C:\WINDOWS\System32\OpenSSH\ssh.exe" -i c:\Users\Luciano\.ssh\githubssh1 -p 2201 rustdevuser@localhost
-# it works
-# exit
-```
-
-We must write the SSH configuration to the file `C:\Users\Luciano\.ssh\config`.
-VSCode reads this file to work properly for `Remote - SSH`.  
-Add this to the file content:  
-
-```txt
-Host cnt2201
-  HostName localhost
-  Port 2201
-  User rustdevuser
-  IdentityFile c:\Users\Luciano\.ssh\githubssh1
-  IdentitiesOnly yes
-```
-
-Now we can open the SSH connection with this short command.  
-Type in `windows cmd prompt terminal`:  
-
-```bash
-"C:\WINDOWS\System32\OpenSSH\ssh.exe" cnt2201
-# it works
-# exit
-```
-
-Finally we can open VSCode, press `F1` for `Command palette`, type `ssh` and choose `Remote-SSH: Connect to Host...`:  
-
-![connect_to_host](./images/connect_to_host.png "connect_to_host")  
-
-Then choose `cnt2201`. It will open a new VSCode window. Enter your passphrase.  
-It works. We are now in VSCode inside the container over SSH.  
-I will add the podman commands to the `rust_dev_pod_create.sh`. So only this will be enough to create the containers and pod:  
-
-```bash
-sh rust_dev_pod_create.sh
-```
-
 ## debug SSH connection
 
-I needed to debug the connection to the `ssh server`, because the normal error messages are completely useless.  
+Sometimes it is needed to debug the connection to the `ssh server`, because the normal error messages are completely useless.  
 From `WSL2 terminal` I enter the `container terminal` as `root`:  
 
 ```bash
@@ -846,7 +779,7 @@ So before closing my projects I always push to Github, because there is a real d
 I hope this will be solved eventually.
 
 ```bash
-podman pod rm rust_dev_pod -f
+podman pod rm rust_dev_pod_create -f
 sh rust_dev_pod_create.sh
 ```
 
