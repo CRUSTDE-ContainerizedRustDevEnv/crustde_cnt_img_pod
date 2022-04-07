@@ -137,6 +137,8 @@ echo "  curl -L -s https://github.com/bestia-dev/docker_rust_development/raw/mai
 curl -L -s https://github.com/bestia-dev/docker_rust_development/raw/main/rust_dev_pod_create.sh --output rust_dev_pod_create.sh
 echo "  curl -L -s https://github.com/bestia-dev/docker_rust_development/raw/main/etc_ssh_sshd_config.conf --output etc_ssh_sshd_config.conf"
 curl -L -s https://github.com/bestia-dev/docker_rust_development/raw/main/etc_ssh_sshd_config.conf --output etc_ssh_sshd_config.conf
+echo "  curl -L -s https://github.com/bestia-dev/docker_rust_development/raw/main/rust_dev_pod_after_reboot.sh --output rust_dev_pod_after_reboot.sh"
+curl -L -s https://github.com/bestia-dev/docker_rust_development/raw/main/rust_dev_pod_after_reboot.sh --output rust_dev_pod_after_reboot.sh
 echo "  check the downloaded files"
 echo "  ls -l ~/rustprojects/docker_rust_development"
 ls -l ~/rustprojects/docker_rust_development
@@ -144,6 +146,8 @@ echo "  cat etc_ssh_sshd_config.conf"
 cat etc_ssh_sshd_config.conf
 echo "  cat rust_dev_pod_create.sh"
 cat rust_dev_pod_create.sh
+echo "  cat rust_dev_pod_after_reboot.sh"
+cat rust_dev_pod_after_reboot.sh
 
 echo " "
 echo "  9. Prepare the config file for VSCode SSH:"

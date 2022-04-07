@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 echo " "
-echo "Bash script to restart the pod rust_dev_pod_create after reboot"
+echo "Bash script to restart the pod rust_dev_pod_after_reboot"
 echo "repository: https://github.com/bestia-dev/docker_rust_development"
 
 rm -rf /tmp/podman-run-$(id -u)/libpod/tmp

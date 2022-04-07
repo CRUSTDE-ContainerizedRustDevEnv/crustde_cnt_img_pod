@@ -86,8 +86,7 @@ cargo run
 
 That should work and greet you with "Hello, world!"
 
-8\. After reboot WSL2 can create some network problems for podman. Before entering any podman command we need first to clean some temporary files, restart the pod and restart the SSh server.
-
+8\. After reboot WSL2 can create some network problems for podman. Before entering any podman command we need first to clean some temporary files, restart the pod and restart the SSh server.  
 We can simulate the WSL2 reboot in powershell in windows:
 
 ```powershell
@@ -95,14 +94,8 @@ Get-Service LxssManager | Restart-Service
 ```
 
 ```bash
-rm -rf /tmp/podman-run-$(id -u)/libpod/tmp
-# if repeated 3 times, the problems vanishes. Maybe because we have 3 containers in the pod.
-podman pod restart rust_dev_pod
-podman pod restart rust_dev_pod
-podman pod restart rust_dev_pod
-podman exec --user=root  rust_dev_vscode_cnt service ssh restart
-podman pod list
-podman ps -a
+# restart the pod after reboot
+sh rust_dev_pod_after_reboot.sh
 # test the SSH connection
 ssh -i ~/.ssh/rustdevuser_key -p 2201 rustdevuser@localhost
 ```
@@ -792,14 +785,7 @@ Get-Service LxssManager | Restart-Service
 ```
 
 ```bash
-rm -rf /tmp/podman-run-$(id -u)/libpod/tmp
-# if repeated 3 times, the problems vanishes. Maybe because we have 3 containers in the pod.
-podman pod restart rust_dev_pod
-podman pod restart rust_dev_pod
-podman pod restart rust_dev_pod
-podman exec --user=root  rust_dev_vscode_cnt service ssh restart
-podman pod list
-podman ps -a
+sh rust_dev_pod_after_reboot.sh
 # test the SSH connection
 ssh -i ~/.ssh/rustdevuser_key -p 2201 rustdevuser@localhost
 ```
