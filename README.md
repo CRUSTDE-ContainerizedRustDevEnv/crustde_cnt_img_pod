@@ -94,6 +94,8 @@ In `WSL2 terminal`:
 podman pod rm rust_dev_pod_create -f
 ```
 
+You can jump over the long explanation directly to "Github in the container" and continue there.
+
 ## Motivation
 
 Rust is a fantastic young language that empowers everyone to build reliable and efficient software. It enables simultaneously low-level control without giving up high-level conveniences. But with great power comes great responsibility !
@@ -391,6 +393,48 @@ VSCode is great because of its extensions. Most of these extensions are installe
 
 Other extensions you can add manually through VSCode, but then it is not repeatable. Better is to modify the script and recreate the image `rust_dev_vscode_img.sh`.
 
+## Push image to docker hub
+
+I signed in to hub.docker.com.
+
+In Account settings - Security I created an access token. This is the password for `podman login`. It is needed only once.
+
+Then I created a new image repository with the name `rust_dev_vscode_img` and tag `latest`. Docker is helping with the push command syntax. I use `podman`, so I just renamed `docker` to `podman`. The same for `rust_dev_squid_img`.
+
+In `WSL2 terminal`:
+
+```bash
+podman login --username bestiadev docker.io
+# type access token
+podman push docker.io/bestiadev/rust_dev_cargo_img:latest
+podman push docker.io/bestiadev/rust_dev_cargo_img:cargo-1.59.0
+
+podman push docker.io/bestiadev/rust_dev_vscode_img:latest
+podman push docker.io/bestiadev/rust_dev_vscode_img:vscode-1.66.0
+podman push docker.io/bestiadev/rust_dev_vscode_img:cargo-1.59.0
+
+podman push docker.io/bestiadev/rust_dev_squid_img:latest
+podman push docker.io/bestiadev/rust_dev_squid_img:squid-3.5.27-2
+```
+
+It takes some time to upload more than 1.4 Gb.
+
+## enter the container as root
+
+Sometimes you need to do something as `root`.  
+You don't need to use `sudo`. Just open the container as `root` user.  
+
+```bash
+podman exec -it --user root rust_dev_vscode_cnt bash
+```
+
+## sizes
+
+Rust is not so small. I saved some 600MB of space just deleting the docs folder, that actually noone needs.  
+docker.io/bestiadev/rust_dev_squid_img  squid3.5.27-2  168 MB
+docker.io/bestiadev/rust_dev_cargo_img  cargo-1.59.0  1.08 GB
+docker.io/bestiadev/rust_dev_vscode_img cargo-1.59.0  1.32 GB
+
 ## Users keys for SSH
 
 We need to create 2 SSH keys, one for the `SSH server` identity `host key` of the container and the other for the identity of `rustdevuser`. This is done only once. To avoid old cryptographic algorithms I will force the new `ed25519`.  
@@ -532,6 +576,38 @@ ls
 exit
 ```
 
+## debug SSH connection
+
+Sometimes it is needed to debug the connection to the `ssh server`, because the normal error messages are completely useless.  
+From `WSL2 terminal` I enter the `container terminal` as `root`:  
+
+```bash
+podman exec -it --user=root  rust_dev_vscode_cnt bash
+```
+
+In `container terminal`:
+
+```bash
+service ssh stop
+/usr/sbin/sshd -ddd -p 2201
+# now we can see the verbose log when we attach an SSH client to this server. And we can see where is the problem.
+# after debug, start the service, before exit
+service ssh start
+exit
+```
+
+To see the verbose log of the `SSH client` add `-v` like this:  
+
+```bash
+ssh -i ~/.ssh/githubssh1 -p 2201 rustdevuser@localhost -v
+```
+
+To see the listening ports:
+
+```bash
+netstat -tan 
+```
+
 ## VSCode
 
 Open VSCode and install the extension `Remote - SSH`.
@@ -586,36 +662,30 @@ That should work and greet you with "Hello, world!".
 
 Leave VSCode open because the next chapter will continue from here.
 
-## Push changes to Github
+## Github in the container
 
-
-I like to work with Github over SSH and not over https. I think it is the natural thing for Linux.
-
-To make SSH client work in the container I need the file with the private key for SSH connection to Github. I already have this in the file `~/.ssh/githubssh1`. I will copy it into the container. If your file has a different name, first copy it to `~/.ssh/githubssh1`, so you can follow the subsequent commands easily.
-
-## SSh keys for Github
-
-In `WSL2 terminal` copy the SSH keys you use for Github with new simple names.
-So the bash scripts can use fixed name for files and avoid modifying the scripts.  
-
-TODO: this will be run manually and not in the bash script. So the names can be whatever.
-
+Git inside the container does not yet have your information, that it needs:
+In `WSL2 terminal`:
 
 ```bash
-cp ~/.ssh/my_old_key ~/.ssh/github_key
-cp ~/.ssh/my_old_key.pub ~/.ssh/github_key.pub
+podman exec --user=rustdevuser rust_dev_vscode_cnt git config --global user.email "info@your.mail"
+podman exec --user=rustdevuser rust_dev_vscode_cnt git config --global user.name "your_name"
+podman exec --user=rustdevuser rust_dev_vscode_cnt git config --global -l
 ```
 
+I like to work with Github over SSH and not over https. I think it is the natural thing for Linux.  
+To make SSH client work in the container I need the file with the private key for SSH connection to Github. I already have this in the file `~/.ssh/githubssh1`. I will copy it into the container with `podman cp`.  
 Be careful ! This is a secret !
-
 It means that this container I cannot share anymore with anybody. It is now my private container. I must never make an image from it and share it. Never !
 
-Open a new `WSL2 terminal` and copy the file with podman into the container:
+In `WSL2 terminal`:
 
 ```bash
-# in WSL2, outside the container
+podman exec --user=rustdevuser rust_dev_vscode_cnt ls -l /home/rustdevuser/.ssh
 podman cp ~/.ssh/githubssh1 rust_dev_vscode_cnt:/home/rustdevuser/.ssh/githubssh1
-# close the `WSL2 terminal`
+podman exec --user=rustdevuser rust_dev_vscode_cnt chmod 600 /home/rustdevuser/.ssh/githubssh1
+podman cp ~/.ssh/githubssh1.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/githubssh1.pub
+podman exec --user=rustdevuser rust_dev_vscode_cnt ls -l /home/rustdevuser/.ssh
 ```
 
 The `VSCode terminal` is still opened on the project `rust_dev_hello`.
@@ -650,7 +720,7 @@ git push -u origin main
 ```
 
 Done! Check your Github repository.
-Always push the changes to Github. So you can delete this container and create a new empty one, then pull the code from Github and continue developing. Containers are the worst place to have persistent data stored. They can be deleted any second for any reason.
+Always push the changes to Github. So you can destroy this pod/container and create a new empty one, then pull the code from Github and continue developing. Containers are the worst place to have persistent data stored. They can be deleted any second for any reason.
 Leave VSCode open because the next chapter will continue from here.
 
 ## Existing Rust projects on Github
@@ -670,7 +740,7 @@ cd rust_wasm_pwa_minimal_clock
 code .
 ```
 
-The `code .` command will open a new VSCode window in the folder `rust_wasm_pwa_minimal_clock`. In the new VSCode window, we can now edit, compile and run the project. All sandboxed/isolated inside the container. We can now close the old window, we don't need it any more.
+The `code .` command will open a new VSCode window in the folder `rust_wasm_pwa_minimal_clock`. Enter the SSH passphrase if asked. In the new VSCode window, we can now edit, compile and run the project. All sandboxed/isolated inside the container. We can now close the other VSCode windows, we don't need it any more.
 
 This example is somewhat more complex, because it is WebAssembly, but it is good for learning. I used the automation tool `cargo-auto` to script a more complex building process. You can read the automation task code in `automation_task_rs/src/main.rs`. On the first build it will download the wasm components and wasm-bindgen. That can take some time. Don't despair.
 
@@ -680,122 +750,19 @@ Now we can build and run the project in `VSCode terminal` (Ctrl+j):
 cargo auto build_and_run
 ```
 
+In VSCode go to Ports and add the port `4000`.  
+
 Open the browser in Windows:
 
-`http://localhost:8001/rust_wasm_pwa_minimal_clock/`
+`http://localhost:4000/rust_wasm_pwa_minimal_clock/`
 
-This is an example of Webassembly and PWA, directly from a docker container. A good learning example.
+This is an example of Webassembly and PWA, directly from a docker container.
 
-
-
-
-
-
-## Push image to docker hub
-
-I signed in to hub.docker.com.
-
-In Account settings - Security I created an access token. This is the password for `podman login`. It is needed only once.
-
-Then I created a new image repository with the name `rust_dev_vscode_img` and tag `latest`. Docker is helping with the push command syntax. I use `podman`, so I just renamed `docker` to `podman`. The same for `rust_dev_squid_img`.
-
-In `WSL2 terminal`:
-
-```bash
-podman login --username bestiadev docker.io
-# type access token
-podman push docker.io/bestiadev/rust_dev_cargo_img:latest
-podman push docker.io/bestiadev/rust_dev_cargo_img:cargo-1.59.0
-
-podman push docker.io/bestiadev/rust_dev_vscode_img:latest
-podman push docker.io/bestiadev/rust_dev_vscode_img:vscode-1.66.0
-podman push docker.io/bestiadev/rust_dev_vscode_img:cargo-1.59.0
-
-podman push docker.io/bestiadev/rust_dev_squid_img:latest
-podman push docker.io/bestiadev/rust_dev_squid_img:squid-3.5.27-2
-```
-
-It takes some time to upload more than 1.4 Gb.
-
-## enter the container as root
-
-Sometimes you need to do something as `root`.  
-You don't need to use `sudo`. Just open the container as `root` user.  
-
-```bash
-podman exec -it --user root rust_dev_vscode_cnt bash
-```
-
-## sizes
-
-Rust is not so small. I saved some 600MB of space just deleting the docs folder, that actually noone needs.  
-docker.io/bestiadev/rust_dev_squid_img  squid3.5.27-2  168 MB
-docker.io/bestiadev/rust_dev_cargo_img  cargo-1.59.0  1.08 GB
-docker.io/bestiadev/rust_dev_vscode_img cargo-1.59.0  1.32 GB
-
-## Tragedy struck! MUST change VSCode to SSH communication
-
-## debug SSH connection
-
-Sometimes it is needed to debug the connection to the `ssh server`, because the normal error messages are completely useless.  
-From `WSL2 terminal` I enter the `container terminal` as `root`:  
-
-```bash
-podman exec -it --user=root  rust_dev_vscode_cnt bash
-```
-
-In `container terminal`:
-
-```bash
-service ssh stop
-/usr/sbin/sshd -ddd -p 2201
-# now we can see the verbose log when we attach an SSH client to this server. And we can see where is the problem.
-# after debug, start the service, before exit
-service ssh start
-exit
-```
-
-To see the verbose log of the `SSH client` add `-v` like this:  
-
-```bash
-ssh -i ~/.ssh/githubssh1 -p 2201 rustdevuser@localhost -v
-```
-
-To see the listening ports:
-
-```bash
-netstat -tan 
-```
+A good learning example.
 
 ## Quirks
 
 It is a complex setting. There can be some quirks sometimes.
-
-## after reboot
-
-Sometimes after reboot things don't work. There are errors like "improper state", "bind already in use" and stuff.
-I tried many solutions, but no-one worked. So I brutally remove the pod and recreate it. But this means all my data is gone.
-So before closing my projects I always push to Github, because there is a real danger of loosing all the changes because of podman non-solved instability.
-I hope this will be solved eventually.
-
-```bash
-podman pod rm rust_dev_pod_create -f
-sh rust_dev_pod_create.sh
-```
-
-## network namespace, user namespace
-
-After rebooting my system and trying `podman ps -a` I got this error:
-
-`error joining network namespace for container ...` or `cannot set user namespace`
-
-This is because Podman was unable to detect that the system has rebooted in WSL2.
-
-The solution in `WSL2 terminal` is simple:
-
-```bash
-rm -rf /tmp/run-$(id -u)/libpod/tmp
-```
 
 ## ssh could not resolve hostname
 
@@ -809,7 +776,6 @@ podman exec rust_dev_squid_cnt tail -f /var/log/squid/access.log
 
 new image with cargo-crev and cargo_crev_reviews
 new image with windows cross compile
-scchache for faster builds, when repeated? not really important for containers.
 
 ## cargo crev reviews and advisory
 
