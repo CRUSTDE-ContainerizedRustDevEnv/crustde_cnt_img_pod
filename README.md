@@ -15,122 +15,26 @@ Prerequisites: Win10, WSL2, VSCode.
 
 TODO: all this can be in one bash script.
 
-1\. Create 2 SSH keys, one for the `SSH server` identity `host key` of the container and the other for the identity of `rustdevuser`. This is done only once. To avoid old algorithms I will force the new `ed25519`. Don't delete these keys, you will need it if you destroy the container and create it again.  
-In `WSL2 terminal`:
+1\. Download the install and setup bash script:
 
 ```bash
 sudo apt update
-sudo apt install openssh-client
-# generate user key
-ssh-keygen -f ~/.ssh/rustdevuser_key -t ed25519 -C "info@bestia.dev"
-# give it a passphrase and remember it, you will need it
-# generate host key
-mkdir  -p ~/.ssh/rust_dev_pod_keys/etc/ssh
-ssh-keygen -A -f ~/.ssh/rust_dev_pod_keys
-
-# check the new files
-# list user keys
-ls -l ~/.ssh | grep "rustdevuser"
-# -rw------- 1 username username  2655 Apr  3 12:03 rustdevuser_key
-# -rw-r--r-- 1 username username   569 Apr  3 12:03 rustdevuser_key.pub
-
-# list host keys
-ls -l ~/.ssh/rust_dev_pod_keys/etc/ssh
-# -rw------- 1 username username 1381 Apr  4 10:44 ssh_host_dsa_key
-# -rw-r--r-- 1 username username  603 Apr  4 10:44 ssh_host_dsa_key.pub
-# -rw------- 1 username username  505 Apr  4 10:44 ssh_host_ecdsa_key
-# -rw-r--r-- 1 username username  175 Apr  4 10:44 ssh_host_ecdsa_key.pub
-# -rw------- 1 username username  399 Apr  4 10:44 ssh_host_ed25519_key
-# -rw-r--r-- 1 username username   95 Apr  4 10:44 ssh_host_ed25519_key.pub
-# -rw------- 1 username username 2602 Apr  4 10:44 ssh_host_rsa_key
-# -rw-r--r-- 1 username username  567 Apr  4 10:44 ssh_host_rsa_key.pub
-```
-
-2\. Install Podman in `WSL2 terminal`:
-
-```bash
-sudo apt-get install podman
-podman --version
-# podman 3.0.1
-```
-
-3\. The version 3.0.1 of Podman in the stable Debian 11 repository is old and buggy. It does not work well. We need a newer version. I will get the `testing` version from Debian 12. This is a fairly stable version. `Testing` is the last stage before `stable` and it has successfully passed most of the tests.
-Temporarily I will add the `testing` repository to install this package. And after that remove it.
-
-```bash
-sudo nano /etc/apt/sources.list
-# add this line
-deb http://http.us.debian.org/debian/ testing non-free contrib main
-Ctrl-o, enter, Ctrl-x
-# Then run 
-sudo apt-get update
-sudo apt-get install podman
-podman --version
-# podman 3.4.4
-# Now remove the temporary added line 
-sudo nano /etc/apt/sources.list
-# remove the line deb http://http.us.debian.org/debian/ testing non-free contrib main
-Ctrl-o, enter, Ctrl-x
-sudo apt-get update
-```
-
-4\. Podman needs a slight adjustment because it is inside WSL2.
-
-```bash
-mkdir $HOME/.config/containers
-nano $HOME/.config/containers/containers.conf
-```
-
-In this empty new file `containers.conf` write just this 3 lines and save:
-
-```conf
-[engine]
-cgroup_manager = "cgroupfs"
-events_logger = "file"
-```
-
-```bash
-podman --version
-```
-
-4\. Docker hub uses https with TLS/SSL encryption. The server certificate cannot be recognized by podman. We will add it to the local system simply by using curl once.  
-
-```bash
 sudo apt install curl
-curl -v https://registry-1.docker.io/v2/
-# that's it. The server certificate is now locally recognized.
-```
-
-5\. Pull the docker images (around 2GB) in `WSL2 terminal`:
-
-```bash
-podman pull docker.io/bestiadev/rust_dev_squid_img:latest
-podman pull docker.io/bestiadev/rust_dev_vscode_img:latest
-```
-
-6\. Download bash script and config files:
-
-```bash
 mkdir -p ~/rustprojects/docker_rust_development
 cd ~/rustprojects/docker_rust_development
-curl -L https://github.com/bestia-dev/docker_rust_development/raw/main/rust_dev_pod_create.sh --output rust_dev_pod_create.sh
-curl -L https://github.com/bestia-dev/docker_rust_development/raw/main/etc_ssh_sshd_config.conf --output etc_ssh_sshd_config.conf
-
-# check the downloaded files
-ls -l ~/rustprojects/docker_rust_development
-# -rw-r--r-- 1 username username  337 Apr  3 12:37 etc_ssh_sshd_config.conf
-# -rw-r--r-- 1 username username 3278 Apr  3 12:37 rust_dev_pod_create.sh
-cat etc_ssh_sshd_config.conf
-cat rust_dev_pod_create.sh
+curl -L https://github.com/bestia-dev/docker_rust_development/raw/main/podman_install_and_setup.sh --output podman_install_and_setup.sh
+cat podman_install_and_setup.sh
+# then run
+sh podman_install_and_setup.sh
 ```
 
-7\. Run the script to create and start the pod
+2\. Run the script to create and start the pod
 
 ```bash
 sh rust_dev_pod_create.sh
 ```
 
-8\. Try the SSH connection from WSL2:
+3\. Try the SSH connection from WSL2:
 
 ```bash
 ssh -i ~/.ssh/rustdevuser_key -p 2201 rustdevuser@localhost
@@ -143,18 +47,7 @@ ls
 exit
 ```
 
-9\. VSCode client runs in Windows. There we need to copy the SSH keys for `rustdevuser` from WSL2 to Windows:
-Run in `WSL2 terminal`:  
-
-```bash
-setx.exe WSLENV "USERPROFILE/p"
-echo $USERPROFILE/.ssh/rustdevuser_key
-cp ~/.ssh/rustdevuser_key $USERPROFILE/.ssh/rustdevuser_key
-cp ~/.ssh/rustdevuser_key.pub $USERPROFILE/.ssh/rustdevuser_key.pub
-cat $USERPROFILE/.ssh/rustdevuser_key.pub
-```
-
-Run in `windows cmd prompt` to access the container over SSH from windows:
+4\. Run in `windows cmd prompt` to access the container over SSH from windows:
 
 ```bash
 # test the ssh connection from Windows cmd prompt
@@ -168,28 +61,14 @@ ls
 exit
 ```
 
-10\. Open VSCode and install extension `Remote - SSH`.
+5\. Open VSCode and install extension `Remote - SSH`.
 
-11\. In VSCode, press `F1`, type `ssh` and choose `Remote-SSH: Open SSH configuration File...` choose `c:\Users\myUserName\.ssh\config`.
-Add to this file:
-
-```bash
-Host rust_dev_pod
-  HostName localhost
-  Port 2201
-  User rustdevuser
-  IdentityFile ~\.ssh\rustdevuser_key
-  IdentitiesOnly yes
-```
-
-Save it (Ctrl+s) and close it (Ctrl+w).  
-
-12\. Then in VSCode `F1`, type `ssh` and choose `Remote-SSH: Connect to Host...` and choose `rust_dev_pod`.  
+6\. Then in VSCode `F1`, type `ssh` and choose `Remote-SSH: Connect to Host...` and choose `rust_dev_pod`.  
 Choose `Linux` if asked, just the first time.  
 Type your passphrase.  
 If we are lucky, everything works and you are now inside the container over SSH.
 
-13\. In `VSCode terminal`:
+7\. In `VSCode terminal`:
 
 ```bash
 cd ~/rustprojects
@@ -200,7 +79,7 @@ cargo run
 
 That should work!
 
-14\. Eventually you will want to remove the entire pod. Docker containers and pods are ephemeral, it means just temporary. But your code and data must persist. Before removing, push your changes to github, because removing the pod/container will erase all the data that is inside.  
+8\. Eventually you will want to remove the entire pod. Docker containers and pods are ephemeral, it means just temporary. But your code and data must persist. Before removing, push your changes to github, because removing the pod/container will erase all the data that is inside.  
 Be careful !  
 In `WSL2 terminal`:
 

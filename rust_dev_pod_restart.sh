@@ -2,7 +2,7 @@
 
 echo " "
 echo "Bash script to restart the pod rust_dev_pod after reboot"
-echo "https://github.com/bestia-dev/docker_rust_development"
+echo "repository: https://github.com/bestia-dev/docker_rust_development"
 
 
 podman pod restart rust_dev_pod
