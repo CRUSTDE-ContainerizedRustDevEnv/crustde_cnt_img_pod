@@ -87,17 +87,17 @@ cargo run
 That should work and greet you with "Hello, world!"
 
 8\. After reboot WSL2 can create some network problems for podman. Before entering any podman command we need first to clean some temporary files, restart the pod and restart the SSh server.  
-We can simulate the WSL2 reboot in powershell in windows:
+We can simulate the WSL2 reboot in `powershell in windows`:
 
 ```powershell
 Get-Service LxssManager | Restart-Service
 ```
 
+In `WSL2 terminal`:
+
 ```bash
 # restart the pod after reboot
 sh rust_dev_pod_after_reboot.sh
-# test the SSH connection
-ssh -i ~/.ssh/rustdevuser_key -p 2201 rustdevuser@localhost
 ```
 
 9\. Eventually you will want to remove the entire pod. Docker containers and pods are ephemeral, it means just temporary. But your code and data must persist. Before destroying the pod/containers, push your changes to github, because it will destroy also all the data that is inside.  
@@ -778,16 +778,16 @@ A good learning example.
 
 After reboot WSL2 can create some network problems for podman. Before entering any podman command we need first to clean some temporary files, restart the pod and restart the SSh server.
 
-We can simulate the WSL2 reboot in powershell in windows:
+We can simulate the WSL2 reboot in `powershell in windows`:
 
 ```powershell
 Get-Service LxssManager | Restart-Service
 ```
 
+In `WSL2 terminal`:
+
 ```bash
 sh rust_dev_pod_after_reboot.sh
-# test the SSH connection
-ssh -i ~/.ssh/rustdevuser_key -p 2201 rustdevuser@localhost
 ```
 
 ## Quirks

@@ -12,3 +12,8 @@ podman pod restart rust_dev_pod
 podman exec --user=root  rust_dev_vscode_cnt service ssh restart
 podman pod list
 podman ps -a
+
+echo " "
+echo "Test the SSH connection from WSL2 terminal:"
+echo "ssh -i ~/.ssh/rustdevuser_key -p 2201 rustdevuser@localhost"
+echo " "
