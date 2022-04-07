@@ -61,8 +61,8 @@ ls -l $USERPROFILE/.ssh/rust_dev_pod_keys/etc/ssh
 
 echo " " 
 echo "  3. Install Podman in 'WSL2 terminal':"
-echo "  sudo apt-get install podman"
-sudo apt-get install podman
+echo "  sudo apt install podman"
+sudo apt install podman
 echo "  podman --version"
 podman --version
 # podman 3.0.1
@@ -79,12 +79,12 @@ echo "  echo 'deb http://http.us.debian.org/debian/ testing non-free contrib mai
 echo 'deb http://http.us.debian.org/debian/ testing non-free contrib main' | sudo tee -a /etc/apt/sources.list
 echo "  sudo cat /etc/apt/sources.list"
 sudo cat /etc/apt/sources.list
-echo "  sudo apt-get update"
-sudo apt-get update
+echo "  sudo apt update"
+sudo apt update
 fi
 # Then run 
-echo "  sudo apt-get install podman"
-sudo apt-get install podman
+echo "  sudo apt install podman"
+sudo apt install podman
 echo "  podman --version"
 podman --version
 # podman 3.4.4
@@ -93,8 +93,8 @@ echo "  sudo sed -i.bak '/deb http:\/\/http.us.debian.org\/debian\/ testing non-
 sudo sed -i.bak '/deb http:\/\/http.us.debian.org\/debian\/ testing non-free contrib main/d' /etc/apt/sources.list
 echo "  sudo cat /etc/apt/sources.list"
 sudo cat /etc/apt/sources.list
-echo "  sudo apt-get update"
-sudo apt-get update
+echo "  sudo apt update"
+sudo apt update
 
 echo " "
 echo "  5. Podman needs a slight adjustment because it is inside WSL2."

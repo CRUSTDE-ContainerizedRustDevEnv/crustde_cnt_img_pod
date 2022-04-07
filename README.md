@@ -133,8 +133,8 @@ Podman is available from the Debian11 package manager.
 Let's install it. Open the `WSL2 terminal` and type:
 
 ```bash
-sudo apt-get update
-sudo apt-get install podman
+sudo apt update
+sudo apt install podman
 podman version
 ```
 
