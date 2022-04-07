@@ -3,6 +3,12 @@
 echo " "
 echo "Bash script to restart the pod rust_dev_pod_after_reboot"
 echo "repository: https://github.com/bestia-dev/docker_rust_development"
+echo " "
+echo "Warning: Use this only once after reboot!"
+echo "You can simulate a reboot in windows powershell with:"
+echo "Get-Service LxssManager | Restart-Service"
+echo "and then run this bash script again."
+echo " "
 
 rm -rf /tmp/podman-run-$(id -u)/libpod/tmp
 # if repeated 3 times, the problems vanishes. Maybe because we have 3 containers in the pod.
