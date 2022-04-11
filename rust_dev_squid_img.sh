@@ -53,11 +53,11 @@ buildah tag docker.io/bestiadev/rust_dev_squid_img:latest docker.io/bestiadev/ru
 
 echo " "
 echo " To create the 'pod' with 'rust_dev_squid_cnt' and 'rust_dev_vscode_cnt' use:"
-echo "podman pod create --name rust_dev_pod_create"
+echo "podman pod create --name rust_dev_pod"
 echo "podman pod ls"
-echo "podman create --name rust_dev_squid_cnt --pod=rust_dev_pod_create -ti docker.io/bestiadev/rust_dev_squid_img:latest"
+echo "podman create --name rust_dev_squid_cnt --pod=rust_dev_pod -ti docker.io/bestiadev/rust_dev_squid_img:latest"
 echo "podman start rust_dev_squid_cnt"
-echo "podman create --name rust_dev_vscode_cnt --pod=rust_dev_pod_create -ti rust_dev_vscode_img"
+echo "podman create --name rust_dev_vscode_cnt --pod=rust_dev_pod -ti rust_dev_vscode_img"
 echo "podman start rust_dev_vscode_cnt"
 
 echo " "

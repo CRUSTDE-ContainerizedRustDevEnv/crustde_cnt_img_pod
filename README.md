@@ -70,7 +70,7 @@ exit
 
 5\. Open VSCode and install extension `Remote - SSH`.
 
-6\. Then in VSCode `F1`, type `ssh` and choose `Remote-SSH: Connect to Host...` and choose `rust_dev_pod_create`.  
+6\. Then in VSCode `F1`, type `ssh` and choose `Remote-SSH: Connect to Host...` and choose `rust_dev_pod`.  
 Choose `Linux` if asked, just the first time.  
 Type your passphrase.  
 If we are lucky, everything works and you are now inside the container over SSH.
@@ -789,6 +789,10 @@ In `WSL2 terminal`:
 ```bash
 sh rust_dev_pod_after_reboot.sh
 ```
+
+## VSCode and file copying from win10
+
+It is easy to copy files from Win10 to the VSCode project within the container just with drag&drop.
 
 ## Quirks
 

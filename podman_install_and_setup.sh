@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 echo " "
-echo "  Bash script to install Podman and setup for rust_dev_pod_create for development in Rust with VSCode."
+echo "  Bash script to install Podman and setup for rust_dev_pod for development in Rust with VSCode."
 echo "  repository: https://github.com/bestia-dev/docker_rust_development"
 echo " " 
 echo "  Prerequisites: Win10, WSL2, VSCode."
@@ -151,11 +151,11 @@ cat rust_dev_pod_after_reboot.sh
 
 echo " "
 echo "  9. Prepare the config file for VSCode SSH:"
-if grep -q "Host rust_dev_pod_create" "$USERPROFILE/.ssh/config"; then
+if grep -q "Host rust_dev_pod" "$USERPROFILE/.ssh/config"; then
 echo "  VSCode config for SSH already exists."
 else
-echo "  Add Host rust_dev_pod_create to $USERPROFILE/.ssh/config"
-echo 'Host rust_dev_pod_create
+echo "  Add Host rust_dev_pod to $USERPROFILE/.ssh/config"
+echo 'Host rust_dev_pod
   HostName localhost
   Port 2201
   User rustdevuser
