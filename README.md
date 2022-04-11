@@ -3,11 +3,13 @@
 **A complete development environment for Rust with VSCode inside a docker container.**  
 ***version: 2022.324.1258  date: 2022-03-24 author: [bestia.dev](https://bestia.dev) repository: [GitHub](https://github.com/bestia-dev/docker_rust_development)***  
 
-[![Lines in md](https://img.shields.io/badge/Lines_in_markdown-659-green.svg)](https://github.com/bestia-dev/docker_rust_development/)  [![Lines in bash scripts](https://img.shields.io/badge/Lines_in_bash_scripts-408-blue.svg)](https://github.com/bestia-dev/docker_rust_development/)  [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/bestia-dev/docker_rust_development/blob/master/LICENSE)
+[![Lines in md](https://img.shields.io/badge/Lines_in_markdown-832-green.svg)](https://github.com/bestia-dev/docker_rust_development/)  [![Lines in bash scripts](https://img.shields.io/badge/Lines_in_bash_scripts-722-blue.svg)](https://github.com/bestia-dev/docker_rust_development/)  [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/bestia-dev/docker_rust_development/blob/master/LICENSE)
 
 ![spiral_of_madness](https://github.com/bestia-dev/docker_rust_development/raw/main/images/spiral_of_madness.png "spiral_of_madness")
 
 ## Try it
+
+Video tutorial on youtube: https://www.youtube.com/watch?v=r2hbFQpc8Ok
 
 Super short instructions without explanation just in 9 easy steps. For tl;dr; continue reading below.
 
