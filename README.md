@@ -9,7 +9,7 @@
 
 ## Try it
 
-Video tutorial on youtube: <https://youtu.be/ORN0_HQrpS4>
+Video tutorial on youtube: <https://bestia.dev/youtube/docker_rust_development.html>
 
 Super short instructions without explanation just in 9 easy steps. For tl;dr; continue reading below.
 
