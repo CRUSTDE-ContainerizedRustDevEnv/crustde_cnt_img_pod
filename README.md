@@ -9,7 +9,7 @@
 
 ## Try it
 
-Video tutorial on youtube: https://www.youtube.com/watch?v=r2hbFQpc8Ok
+Video tutorial on youtube: <https://youtu.be/ORN0_HQrpS4>
 
 Super short instructions without explanation just in 9 easy steps. For tl;dr; continue reading below.
 
@@ -21,7 +21,7 @@ In `WSL2 terminal`:
 
 ```bash
 sudo apt update
-sudo apt full-upgrade
+sudo apt -y full-upgrade
 sudo apt install -y curl
 mkdir -p ~/rustprojects/docker_rust_development
 cd ~/rustprojects/docker_rust_development
