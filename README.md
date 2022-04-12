@@ -99,7 +99,7 @@ In `WSL2 terminal`:
 
 ```bash
 # restart the pod after reboot
-sh rust_dev_pod_after_reboot.sh
+sh ~/rustprojects/docker_rust_development/rust_dev_pod_after_reboot.sh
 ```
 
 9\. Eventually you will want to remove the entire pod. Docker containers and pods are ephemeral, it means just temporary. But your code and data must persist. Before destroying the pod/containers, push your changes to github, because it will destroy also all the data that is inside.  
