@@ -434,7 +434,7 @@ podman push docker.io/bestiadev/rust_dev_squid_img:latest
 podman push docker.io/bestiadev/rust_dev_squid_img:squid-3.5.27-2
 ```
 
-It takes some time to upload more than 1.4 Gb.
+It takes some time to upload more than 2 Gb.
 
 ## enter the container as root
 
@@ -449,7 +449,7 @@ podman exec -it --user root rust_dev_vscode_cnt bash
 
 Rust is not so small. I saved some 600MB of space just deleting the docs folder, that actually noone needs.  
 docker.io/bestiadev/rust_dev_squid_img  squid3.5.27-2  168 MB
-docker.io/bestiadev/rust_dev_cargo_img  cargo-1.60.0  1.08 GB
+docker.io/bestiadev/rust_dev_cargo_img  cargo-1.60.0  1.11 GB
 docker.io/bestiadev/rust_dev_vscode_img cargo-1.60.0  1.32 GB
 
 ## Users keys for SSH
@@ -720,14 +720,13 @@ The `VSCode terminal` is still opened on the project `rust_dev_hello`.
 
 ## SSH Agent
 
-It is comfortable to use the `ssh-agent` to store the passphrase in memory, so we type it only once.
+It is comfortable to use the `ssh-agent` to store the passphrase in memory, so we type it only once. The ssh-agent is already started on login in the `~/.bash_profile` script.  
 
 Again attention, that this container has secrets and must not be shared ! Never !
 
 In the `VSCode terminal` (Ctrl+j) run:
 
 ```bash
-eval $(ssh-agent)
 ssh-add /home/rustdevuser/.ssh/githubssh1
 # enter your passphrase
 ```

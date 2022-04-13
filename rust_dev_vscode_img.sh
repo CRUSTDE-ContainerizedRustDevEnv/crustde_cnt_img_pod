@@ -36,10 +36,6 @@ buildah config \
 rust_dev_vscode_img
 
 echo " "
-echo "Add ~/.bash_profile with ssh agent"
-buildah copy rust_dev_cargo_img 'bash_profile.conf' '/home/rustdevuser/.bash_profile'
-
-echo " "
 echo "The subsequent commands are from user rustdevuser."
 echo "If I need, I can add '--user root' to run as root."
 
@@ -58,7 +54,7 @@ buildah run --user root rust_dev_vscode_img    apt -y install openssh-server
 
 echo " "
 echo "Download vscode-server. Be sure the commit_sha of the server and client is the same:"
-echo "In VSCode client open Help-About or in the terminal `code --version`" 
+echo "In VSCode client open Help-About or in the terminal 'code --version'" 
 echo "version 1.66.2"
 echo "dfd34e8260c270da74b5c2d86d61aee4b6d56977"
 buildah run rust_dev_vscode_img /bin/sh -c 'mkdir -vp ~/.vscode-server/bin/dfd34e8260c270da74b5c2d86d61aee4b6d56977'
@@ -88,37 +84,5 @@ buildah tag docker.io/bestiadev/rust_dev_vscode_img:latest docker.io/bestiadev/r
 buildah tag docker.io/bestiadev/rust_dev_vscode_img:latest docker.io/bestiadev/rust_dev_vscode_img:cargo-1.60.0
 
 echo " "
-echo " To create the container 'rust_dev_vscode_cnt' use:"
-echo "podman create -ti --name rust_dev_vscode_cnt docker.io/bestiadev/rust_dev_vscode_img:latest"
-
-echo " "
-echo " Copy your ssh certificates for github and publish_to_web:"
-echo "podman cp ~/.ssh/githubssh1 rust_dev_vscode_cnt:/home/rustdevuser/.ssh/githubssh1"
-
-echo " "
-echo " Start the container:"
-echo "podman start rust_dev_vscode_cnt"
-
-echo " "
-echo " Firstly: attach VSCode to the running container."
-echo "Open VSCode, press F1, type 'attach' and choose 'Remote-Containers:Attach to Running container...' and type rust_dev_vscode_cnt" 
-echo " This will open a new VSCode windows attached to the container."
-echo " If needed Open VSCode terminal with Ctrl+J"
-echo " Inside VSCode terminal, go to the project folder. Here we will create a sample project:"
-echo "cd ~/rustprojects"
-echo "cargo new rust_dev_hello"
-echo "cd ~/rustprojects/rust_dev_hello"
-
-echo " "
-echo " Secondly: open a new VSCode window exactly for this project/folder."
-echo "code ."
-echo " A new VSCode windows will open for the 'rust_dev_hello' project. You can close now all other VSCode windows."
-
-echo " "
-echo " Build and run the project in the VSCode terminal:"
-echo "cargo run"
-
-echo " "
-echo " If you need ssh for git or publish_to_web, inside the VSCode terminal run the ssh-agent:"
-echo "eval \$(ssh-agent) "
-echo "ssh-add /home/rustdevuser/.ssh/githubssh1"
+echo "  This image is used solely inside the pod 'rust_dev_pod'."
+echo "  The command 'sh rust_dev_pod_create.sh' inside the directory '~/rustprojects/docker_rust_development' creates the pod."
