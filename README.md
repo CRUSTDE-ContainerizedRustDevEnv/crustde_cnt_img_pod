@@ -680,8 +680,15 @@ Leave VSCode open because the next chapter will continue from here.
 
 ## Github in the container
 
-I created the template for bash script `personal_keys_and_settings.sh` that contains all the steps from below.
-You need to personalize it first. Read the instructions inside the `personal_keys_and_settings.sh` file.  
+Shortcut: Copy the template for bash script from here: [personal_keys_and_settings.sh](https://github.com/bestia-dev/docker_rust_development/blob/main/personal_keys_and_settings.sh). It contains all the steps from below. You need to personalize it first and save it into Win10 folder `~\.ssh`.  
+Then copy it manually into WSL2. Run in `WSL Terminal`:
+
+```bash
+setx.exe WSLENV "USERPROFILE/p"
+cp -v $USERPROFILE/.ssh/personal_keys_and_settings.sh ~/.ssh/personal_keys_and_settings.sh
+# and then run
+sh ~/.ssh/personal_keys_and_settings.sh
+```
 
 Git inside the container does not yet have your information, that it needs:
 In `WSL2 terminal`:
@@ -709,6 +716,8 @@ podman exec --user=rustdevuser rust_dev_vscode_cnt ls -l /home/rustdevuser/.ssh
 
 The `VSCode terminal` is still opened on the project `rust_dev_hello`.
 
+## SSH Agent
+
 It is comfortable to use the `ssh-agent` to store the passphrase in memory, so we type it only once.
 
 Again attention, that this container has secrets and must not be shared ! Never !
@@ -721,19 +730,34 @@ ssh-add /home/rustdevuser/.ssh/githubssh1
 # enter your passphrase
 ```
 
+You can copy the template [sshadd.sh](https://github.com/bestia-dev/docker_rust_development/blob/main/sshadd.sh) from Github and personalize it with you SSH keys file names. Copy the personalized file in win10 folder `~\.ssh`.
+Then copy it manually into WSL2 and the container. Run in `WSL Terminal`:
+
+```bash
+setx.exe WSLENV "USERPROFILE/p"
+echo $USERPROFILE
+cp -v $USERPROFILE/.ssh/sshadd.sh ~/.ssh/sshadd.sh  
+podman cp ~/.ssh/sshadd.sh rust_dev_vscode_cnt:/home/rustdevuser/.ssh/sshadd.sh  
+```
+
+You will then run inside the `VSCode terminal` for each window/project separately:
+
+```bash
+sh ~/.ssh/sshadd.sh
+```
+
+## Github push
+
 Open `github.com` in the browser and sign in, click `New` and create a new repository named `rust_dev_hello`.
 
 Github is user friendly and shows the standard commands we need to run.
 
 Modify the commands below to **your** Github repository.
 
-In the `VSCode terminal` run:
+In VSCode click on the `Source control` and click `Initialize` and type the commit msg `init`.
+Then in `VSCode terminal` run:
 
 ```bash
-git init
-git add *
-git commit -m "first commit"
-git branch -M main
 git remote add origin git@github.com:bestia-dev/rust_dev_hello.git
 git push -u origin main
 ```

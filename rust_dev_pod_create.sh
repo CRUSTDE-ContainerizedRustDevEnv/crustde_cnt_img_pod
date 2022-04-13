@@ -12,6 +12,9 @@ echo "All outbound network traffic from rust_dev_vscode_cnt goes through the pro
 echo "Published inbound network ports are 8001 on 'localhost'"
 echo "repository: https://github.com/bestia-dev/docker_rust_development"
 
+echo "  setx.exe WSLENV 'USERPROFILE/p'"
+setx.exe WSLENV "USERPROFILE/p"
+
 echo " "
 echo "Create pod"
 # in a "pod" the "publish port" is tied to the pod and not containers.
@@ -46,6 +49,9 @@ podman cp ~/.ssh/rust_dev_pod_keys/etc/ssh/ssh_host_ed25519_key  rust_dev_vscode
 podman cp ~/.ssh/rust_dev_pod_keys/etc/ssh/ssh_host_ed25519_key.pub  rust_dev_vscode_cnt:/etc/ssh/ssh_host_ed25519_key.pub
 echo "copy the public key of rustdevuser"
 podman cp ~/.ssh/rustdevuser_key.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/rustdevuser_key.pub
+echo "copy the 'sshadd.sh' from Win10 to WSL and then into the container"
+cp -v $USERPROFILE/.ssh/sshadd.sh ~/.ssh/sshadd.sh
+podman cp ~/.ssh/sshadd.sh rust_dev_vscode_cnt:/home/rustdevuser/.ssh/sshadd.sh
 
 echo "podman pod start"
 podman pod start rust_dev_pod
