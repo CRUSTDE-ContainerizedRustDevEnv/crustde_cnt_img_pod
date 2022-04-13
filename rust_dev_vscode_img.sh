@@ -25,7 +25,8 @@ buildah rmi -f docker.io/bestiadev/rust_dev_vscode_img || :
 echo " "
 echo "Create new container named rust_dev_vscode_img from rust_dev_cargo_img"
 set -o errexit
-buildah from --name rust_dev_vscode_img docker.io/bestiadev/rust_dev_vscode_img:cargo-1.60.0
+
+buildah from --name rust_dev_vscode_img docker.io/bestiadev/rust_dev_cargo_img:cargo-1.60.0
 
 buildah config \
 --author=github.com/bestia-dev \

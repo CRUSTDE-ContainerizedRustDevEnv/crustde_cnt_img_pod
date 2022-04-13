@@ -52,6 +52,8 @@ podman cp ~/.ssh/rustdevuser_key.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/
 echo "copy the 'sshadd.sh' from Win10 to WSL and then into the container"
 cp -v $USERPROFILE/.ssh/sshadd.sh ~/.ssh/sshadd.sh
 podman cp ~/.ssh/sshadd.sh rust_dev_vscode_cnt:/home/rustdevuser/.ssh/sshadd.sh
+echo "  Copy the personalized 'personal_keys_and_settings.sh' from win10 persistent folder to WSL2."
+cp -v $USERPROFILE/.ssh/personal_keys_and_settings.sh ~/.ssh/personal_keys_and_settings.sh
 
 echo "podman pod start"
 podman pod start rust_dev_pod

@@ -28,8 +28,6 @@ mkdir  -p ~/.ssh/rust_dev_pod_keys/etc/ssh
 
 echo "  setx.exe WSLENV 'USERPROFILE/p'"
 setx.exe WSLENV "USERPROFILE/p"
-echo "  Copy the personalized 'personal_keys_and_settings.sh' from win10 persistent folder to WSL2.'
-cp -v $USERPROFILE/.ssh/personal_keys_and_settings.sh ~/.ssh/personal_keys_and_settings.sh
 
 echo "  First check in the Win10 folder 'c:\Users\my_user_name\.ssh' if there are some file already persistently stored."
 if [ -f $USERPROFILE/.ssh/rustdevuser_key ]; then 

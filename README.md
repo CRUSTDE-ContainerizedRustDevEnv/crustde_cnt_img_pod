@@ -421,7 +421,8 @@ In `WSL2 terminal`:
 
 ```bash
 podman login --username bestiadev docker.io
-# type access token
+# type docker access token
+
 podman push docker.io/bestiadev/rust_dev_cargo_img:latest
 podman push docker.io/bestiadev/rust_dev_cargo_img:cargo-1.60.0
 
@@ -681,7 +682,7 @@ Leave VSCode open because the next chapter will continue from here.
 ## Github in the container
 
 Shortcut: Copy the template for bash script from here: [personal_keys_and_settings.sh](https://github.com/bestia-dev/docker_rust_development/blob/main/personal_keys_and_settings.sh). It contains all the steps from below. You need to personalize it first and save it into Win10 folder `~\.ssh`.  
-Then copy it manually into WSL2. Run in `WSL Terminal`:
+Then copy it manually into WSL2 - just once. Run in `WSL Terminal`:
 
 ```bash
 setx.exe WSLENV "USERPROFILE/p"
@@ -690,6 +691,7 @@ cp -v $USERPROFILE/.ssh/personal_keys_and_settings.sh ~/.ssh/personal_keys_and_s
 sh ~/.ssh/personal_keys_and_settings.sh
 ```
 
+Manually step by step instructions that are inside the `personal_keys_and_settings.sh`.  
 Git inside the container does not yet have your information, that it needs:
 In `WSL2 terminal`:
 
@@ -731,7 +733,7 @@ ssh-add /home/rustdevuser/.ssh/githubssh1
 ```
 
 You can copy the template [sshadd.sh](https://github.com/bestia-dev/docker_rust_development/blob/main/sshadd.sh) from Github and personalize it with you SSH keys file names. Copy the personalized file in win10 folder `~\.ssh`.
-Then copy it manually into WSL2 and the container. Run in `WSL Terminal`:
+Then copy it manually into WSL2 and the container - just once. Run in `WSL Terminal`:
 
 ```bash
 setx.exe WSLENV "USERPROFILE/p"
@@ -745,6 +747,9 @@ You will then run inside the `VSCode terminal` for each window/project separatel
 ```bash
 sh ~/.ssh/sshadd.sh
 ```
+
+After you enter the passphrase, it will remember it until the terminal is open.  
+When you open the terminal again, you will have to run the script again and enter the passphrase again.
 
 ## Github push
 
@@ -830,6 +835,19 @@ It is a complex setting. There can be some quirks sometimes.
 ## ssh could not resolve hostname
 
 Warning: The "ssh could not resolve hostname" is a common error. It is not that big of an issue. I closed everything and restart my computer and everything works fine now.
+
+## WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED
+
+SSH client remembers the key of the servers in the file `~/.ssh/known_hosts`.  
+If we created a new key for the ephemeral container, we can get the error `REMOTE HOST IDENTIFICATION HAS CHANGED`.
+It is enough to open the file `~/.ssh/known_hosts` and delete the offending line.
+In `WSL2 terminal` we can use:
+
+```bash
+ssh-keygen -f ~/.ssh/known_hosts -R "[localhost]:2201";
+setx.exe WSLENV "USERPROFILE/p";
+ssh-keygen -f $USERPROFILE/.ssh/known_hosts -R "[localhost]:2201";
+```
 
 ## Read more
 
