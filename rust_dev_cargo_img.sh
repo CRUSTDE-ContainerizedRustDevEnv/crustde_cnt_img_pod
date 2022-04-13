@@ -43,7 +43,7 @@ rust_dev_cargo_img
 echo " "
 echo "apk update"
 buildah run rust_dev_cargo_img    apt -y update
-buildah run rust_dev_cargo_img    apt -y upgrade
+buildah run rust_dev_cargo_img    apt -y full-upgrade
 
 echo " "
 echo "Install curl, git, rsync and build-essential with root user"
@@ -85,6 +85,9 @@ OLDIMAGEPATH=$(buildah run rust_dev_cargo_img printenv PATH)
 buildah config --env PATH=/home/rustdevuser/.cargo/bin:$OLDIMAGEPATH rust_dev_cargo_img
 buildah run rust_dev_cargo_img /bin/sh -c 'echo $PATH'
 
+buildah run rust_dev_cargo_img /bin/sh -c '/home/rustdevuser/.cargo/bin/rustc --version'
+# rustc 1.60.0 (7737e0b5c 2022-04-04)
+
 # this probably is not necessary, if rust-analyzer can call rust-lang.org
 # buildah config --env RUST_SRC_PATH=/home/rustdevuser/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library rust_dev_cargo_img
 # buildah run rust_dev_cargo_img /bin/sh -c 'echo $RUST_SRC_PATH'
@@ -115,8 +118,8 @@ echo " "
 echo "Finally save/commit the image named rust_dev_cargo_img"
 buildah commit rust_dev_cargo_img docker.io/bestiadev/rust_dev_cargo_img:latest
 
-# TODO: dynamically ask ' cargo --version' and write the answer in the tag:
-buildah tag docker.io/bestiadev/rust_dev_cargo_img:latest docker.io/bestiadev/rust_dev_cargo_img:cargo-1.59.0
+# TODO: dynamically ask ' rustc --version' and write the answer in the tag:
+buildah tag docker.io/bestiadev/rust_dev_cargo_img:latest docker.io/bestiadev/rust_dev_cargo_img:cargo-1.60.0
 
 echo " "
 echo " To create the container 'rust_dev_cargo_cnt' use:"
