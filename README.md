@@ -11,7 +11,7 @@
 
 Video tutorial on youtube: <https://bestia.dev/youtube/docker_rust_development.html>
 
-Super short instructions without explanation just in 9 easy steps. For tl;dr; continue reading below.
+Super short instructions without explanation just in 3 easy steps. For tl;dr; continue reading below.
 
 Prerequisites: Win10, WSL2, VSCode.  
 I tested the script on a completely fresh installation of Debian on WSL2.  
@@ -35,13 +35,31 @@ sh podman_install_and_setup.sh
 # You will be asked to create a new passphrase for the SSh key. Remember it, you will need it.
 ```
 
-2\. Run the script to create and start the pod - just once:
+2\. Prepare your existing SSH keys for github and publish-to-web, so you can use them from inside the container. Here we use the Win10 folder `~\.ssh` because we want this data to be persistent and can survive the destruction of the container or even WSL2.  
+
+Download the templates for bash scripts `personal_keys_and_settings.sh` and `sshadd.sh`. Then modify the scripts: replace the placeholders with your own data and file_names.  
+
+```bash
+setx.exe WSLENV "USERPROFILE/p"
+
+curl -L -s https://github.com/bestia-dev/docker_rust_development/raw/main/personal_keys_and_settings.sh --output $USERPROFILE/.ssh/personal_keys_and_settings.sh
+
+curl -L -s https://github.com/bestia-dev/docker_rust_development/raw/main/sshadd.sh --output $USERPROFILE/.ssh/sshadd.sh
+
+# edit and save the files: replace the words 'info@your.mail', 'your_name', 'githubssh1' and 'webserverssh1' with your own data and file names
+nano $USERPROFILE/.ssh/personal_keys_and_settings.sh
+nano $USERPROFILE/.ssh/sshadd.sh
+```
+
+3\. Run the script to create and start the pod - just once:
 
 ```bash
 sh rust_dev_pod_create.sh
 ```
 
-3\. Try the SSH connection from WSL2:
+That's it. Now we can test the connection from various locations.  
+
+1\. Try the SSH connection from WSL2:
 
 ```bash
 ssh -i ~/.ssh/rustdevuser_key -p 2201 rustdevuser@localhost
@@ -55,7 +73,7 @@ ls
 exit
 ```
 
-4\. Run in `windows cmd prompt` to access the container over SSH from windows:
+2\. Try the SSH connection from `windows command prompt` or `windows powershell terminal`:
 
 ```bash
 # test the ssh connection from Windows cmd prompt
@@ -70,14 +88,14 @@ ls
 exit
 ```
 
-5\. Open VSCode and install extension `Remote - SSH`.
+3\. Open VSCode and install extension `Remote - SSH`.
 
-6\. Then in VSCode `F1`, type `ssh` and choose `Remote-SSH: Connect to Host...` and choose `rust_dev_pod`.  
+4\. Then in VSCode `F1`, type `ssh` and choose `Remote-SSH: Connect to Host...` and choose `rust_dev_pod`.  
 Choose `Linux` if asked, just the first time.  
 Type your passphrase.  
 If we are lucky, everything works and you are now inside the container over SSH.
 
-7\. In `VSCode terminal`:
+5\. In `VSCode terminal` create a simple Rust project and run it:
 
 ```bash
 cd ~/rustprojects
@@ -88,29 +106,27 @@ cargo run
 
 That should work and greet you with "Hello, world!"
 
-8\. After reboot WSL2 can create some network problems for podman. Before entering any podman command we need first to clean some temporary files, restart the pod and restart the SSh server.  
+6\. After reboot WSL2 can create some network problems for podman.   
 We can simulate the WSL2 reboot in `powershell in windows`:
 
 ```powershell
 Get-Service LxssManager | Restart-Service
 ```
 
-In `WSL2 terminal`:
+Before entering any podman command we need first to clean some temporary files, restart the pod and restart the SSh server.  
+In `WSL2 terminal` restart the pod after reboot:
 
 ```bash
-# restart the pod after reboot
 sh ~/rustprojects/docker_rust_development/rust_dev_pod_after_reboot.sh
 ```
 
-9\. Eventually you will want to remove the entire pod. Docker containers and pods are ephemeral, it means just temporary. But your code and data must persist. Before destroying the pod/containers, push your changes to github, because it will destroy also all the data that is inside.  
+7\. Eventually you will want to remove the entire pod. Docker containers and pods are ephemeral, it means just temporary. But your code and data must persist. Before destroying the pod/containers, push your changes to github, because it will destroy also all the data that is inside.  
 Be careful !  
 In `WSL2 terminal`:
 
 ```bash
 podman pod rm rust_dev_pod_create -f
 ```
-
-You can jump over the long explanation directly to "Github in the container" and continue there with some personalization with SSH keys for github and publish-to-web.  
 
 ## Motivation
 
