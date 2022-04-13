@@ -488,9 +488,9 @@ In `WSL2 terminal`:
 ```bash
 setx.exe WSLENV "USERPROFILE/p"
 echo $USERPROFILE/.ssh/rustdevuser_key
-cp ~/.ssh/rustdevuser_key $USERPROFILE/.ssh/rustdevuser_key
-cp ~/.ssh/rustdevuser_key.pub $USERPROFILE/.ssh/rustdevuser_key.pub
-cp -r ~/.ssh/rust_dev_pod_keys $USERPROFILE/.ssh/rust_dev_pod_keys
+cp -v ~/.ssh/rustdevuser_key $USERPROFILE/.ssh/rustdevuser_key
+cp -v ~/.ssh/rustdevuser_key.pub $USERPROFILE/.ssh/rustdevuser_key.pub
+cp -v -r ~/.ssh/rust_dev_pod_keys $USERPROFILE/.ssh/rust_dev_pod_keys
 # check
 ls -l $USERPROFILE/.ssh | grep "rustdevuser"
 ls -l $USERPROFILE/.ssh/rust_dev_pod_keys/etc/ssh
@@ -680,6 +680,9 @@ Leave VSCode open because the next chapter will continue from here.
 
 ## Github in the container
 
+I created the template for bash script `personal_keys_and_settings.sh` that contains all the steps from below.
+You need to personalize it first. Read the instructions inside the `personal_keys_and_settings.sh` file.  
+
 Git inside the container does not yet have your information, that it needs:
 In `WSL2 terminal`:
 
@@ -778,14 +781,14 @@ A good learning example.
 
 ## After reboot
 
-After reboot WSL2 can create some network problems for podman. Before entering any podman command we need first to clean some temporary files, restart the pod and restart the SSh server.
-
+After reboot WSL2 can create some network problems for podman.  
 We can simulate the WSL2 reboot in `powershell in windows`:
 
 ```powershell
 Get-Service LxssManager | Restart-Service
 ```
 
+Before entering any podman command we need first to clean some temporary files, restart the pod and restart the SSh server.  
 In `WSL2 terminal`:
 
 ```bash
@@ -803,6 +806,10 @@ It is a complex setting. There can be some quirks sometimes.
 ## ssh could not resolve hostname
 
 Warning: The "ssh could not resolve hostname" is a common error. It is not that big of an issue. I closed everything and restart my computer and everything works fine now.
+
+## Read more
+
+Read more how I use my [Development environment](https://github.com/bestia-dev/development_environment).  
 
 ## TODO
 

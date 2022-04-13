@@ -6,7 +6,7 @@
 # TODO: check if pod exists.
 
 echo " "
-echo "Bash script to create the pod 'rust_dev_pod'"
+echo "Bash script to create the pod 'rust_dev_pod': 'rust_dev_pod_create.sh'"
 echo "This 'pod' is made of the containers 'rust_dev_squid_cnt' and 'rust_dev_vscode_cnt'"
 echo "All outbound network traffic from rust_dev_vscode_cnt goes through the proxy Squid."
 echo "Published inbound network ports are 8001 on 'localhost'"

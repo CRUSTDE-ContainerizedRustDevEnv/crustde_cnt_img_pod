@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 echo " "
-echo "Bash script to restart the pod rust_dev_pod_after_reboot"
+echo "Bash script to restart the pod 'rust_dev_pod_after_reboot.sh'"
 echo "repository: https://github.com/bestia-dev/docker_rust_development"
 echo " "
 echo "Warning: Use this only once after reboot!"
