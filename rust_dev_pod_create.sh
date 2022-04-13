@@ -6,17 +6,17 @@
 # TODO: check if pod exists.
 
 echo " "
-echo "Bash script to create the pod 'rust_dev_pod': 'rust_dev_pod_create.sh'"
-echo "This 'pod' is made of the containers 'rust_dev_squid_cnt' and 'rust_dev_vscode_cnt'"
-echo "All outbound network traffic from rust_dev_vscode_cnt goes through the proxy Squid."
-echo "Published inbound network ports are 8001 on 'localhost'"
-echo "repository: https://github.com/bestia-dev/docker_rust_development"
+echo "  Bash script to create the pod 'rust_dev_pod': 'rust_dev_pod_create.sh'"
+echo "  This 'pod' is made of the containers 'rust_dev_squid_cnt' and 'rust_dev_vscode_cnt'"
+echo "  All outbound network traffic from rust_dev_vscode_cnt goes through the proxy Squid."
+echo "  Published inbound network ports are 8001 on 'localhost'"
+echo "  repository: https://github.com/bestia-dev/docker_rust_development"
 
 echo "  setx.exe WSLENV 'USERPROFILE/p'"
 setx.exe WSLENV "USERPROFILE/p"
 
 echo " "
-echo "Create pod"
+echo "  Create pod"
 # in a "pod" the "publish port" is tied to the pod and not containers.
 
 podman pod create \
@@ -29,35 +29,35 @@ podman pod create \
 --name rust_dev_pod
 
 echo " "
-echo "Create container rust_dev_squid_cnt in the pod"
+echo "  Create container rust_dev_squid_cnt in the pod"
 podman create --name rust_dev_squid_cnt \
 --pod=rust_dev_pod -ti \
 docker.io/bestiadev/rust_dev_squid_img:latest
 
 echo " "
-echo "Create container rust_dev_vscode_cnt in the pod"
+echo "  Create container rust_dev_vscode_cnt in the pod"
 podman create --name rust_dev_vscode_cnt --pod=rust_dev_pod -ti \
 --env http_proxy=http://localhost:3128 \
 --env https_proxy=http://localhost:3128 \
 --env all_proxy=http://localhost:3128  \
 docker.io/bestiadev/rust_dev_vscode_img:latest
 
-echo "copy SSH server config"
+echo "  Copy SSH server config"
 podman cp ./etc_ssh_sshd_config.conf rust_dev_vscode_cnt:/etc/ssh/sshd_config
-echo "copy the files for host keys ed25519 for SSH server in rust_dev_pod"
+echo "  Copy the files for host keys ed25519 for SSH server in rust_dev_pod"
 podman cp ~/.ssh/rust_dev_pod_keys/etc/ssh/ssh_host_ed25519_key  rust_dev_vscode_cnt:/etc/ssh/ssh_host_ed25519_key
 podman cp ~/.ssh/rust_dev_pod_keys/etc/ssh/ssh_host_ed25519_key.pub  rust_dev_vscode_cnt:/etc/ssh/ssh_host_ed25519_key.pub
-echo "copy the public key of rustdevuser"
+echo "  Copy the public key of rustdevuser"
 podman cp ~/.ssh/rustdevuser_key.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/rustdevuser_key.pub
-echo "copy the 'sshadd.sh' from Win10 to WSL and then into the container"
+echo "  Copy the 'sshadd.sh' from Win10 to WSL and then into the container"
 cp -v $USERPROFILE/.ssh/sshadd.sh ~/.ssh/sshadd.sh
 podman cp ~/.ssh/sshadd.sh rust_dev_vscode_cnt:/home/rustdevuser/.ssh/sshadd.sh
 echo "  Copy the personalized 'personal_keys_and_settings.sh' from win10 persistent folder to WSL2."
 cp -v $USERPROFILE/.ssh/personal_keys_and_settings.sh ~/.ssh/personal_keys_and_settings.sh
 
-echo "podman pod start"
+echo "  podman pod start"
 podman pod start rust_dev_pod
-echo "user permissions"
+echo "  User permissions:"
 
 # check the copied files
 # TODO: this commands return a WARN[0000] Error resizing exec session 
@@ -83,40 +83,44 @@ podman exec --user=rustdevuser rust_dev_vscode_cnt chmod 600 /home/rustdevuser/.
 podman exec --user=rustdevuser rust_dev_vscode_cnt /bin/sh -c 'cat /home/rustdevuser/.ssh/rustdevuser_key.pub >> /home/rustdevuser/.ssh/authorized_keys'
 podman exec --user=rustdevuser rust_dev_vscode_cnt cat /home/rustdevuser/.ssh/authorized_keys
 
-echo "I have to disable the password for rustdevuser to enable SSH access with public key? Why?"
+echo "  I have to disable the password for rustdevuser to enable SSH access with public key? Why?"
 podman exec --user=root rust_dev_vscode_cnt usermod --password '*' rustdevuser
 
-echo "git global config"
+echo "  Git global config"
 podman exec --user=rustdevuser rust_dev_vscode_cnt git config --global pull.rebase false
 
-echo "start the SSH server"
+echo "  Start the SSH server"
 podman exec --user=root  rust_dev_vscode_cnt service ssh restart
 
+echo " Copy the personal files, SSH keys for github or publish-to-web,..."
+sh ~/.ssh/personal_keys_and_settings.sh
+
+
 echo " "
-echo " To start this 'pod' after a reboot type: "
+echo "  To start this 'pod' after a reboot type: "
 echo "podman pod restart rust_dev_pod"
 echo "podman exec --user=root rust_dev_vscode_cnt service ssh restart"
 
 echo " "
 echo "Open VSCode, press F1, type 'ssh' and choose 'Remote-SSH: Connect to Host...' and choose 'rust_dev_pod'" 
-echo " This will open a new VSCode windows attached to the container."
-echo " If needed Open VSCode terminal with Ctrl+J"
-echo " Inside VSCode terminal, go to the project folder. Here we will create a sample project:"
+echo "  This will open a new VSCode windows attached to the container."
+echo "  If needed Open VSCode terminal with Ctrl+J"
+echo "  Inside VSCode terminal, go to the project folder. Here we will create a sample project:"
 echo "cd ~/rustprojects"
 echo "cargo new rust_dev_hello"
 echo "cd ~/rustprojects/rust_dev_hello"
 
 echo " "
-echo " Secondly: open a new VSCode window exactly for this project/folder."
+echo "  Secondly: open a new VSCode window exactly for this project/folder."
 echo "code ."
-echo " A new VSCode windows will open for the 'rust_dev_hello' project. You can close now all other VSCode windows."
+echo "  A new VSCode windows will open for the 'rust_dev_hello' project. You can close now all other VSCode windows."
 
 echo " "
-echo " Build and run the project in the VSCode terminal:"
+echo "  Build and run the project in the VSCode terminal:"
 echo "cargo run"
 
 echo " "
-echo " If you need ssh for git or publish_to_web, inside the VSCode terminal run the ssh-agent:"
+echo "  If you need ssh for git or publish_to_web, inside the VSCode terminal run the ssh-agent:"
 echo "eval \$(ssh-agent) "
 echo "ssh-add /home/rustdevuser/.ssh/githubssh1"
 
