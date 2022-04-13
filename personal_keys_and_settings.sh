@@ -76,3 +76,7 @@ podman cp ~/.ssh/webserverssh1.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/we
 
 echo "  podman exec --user=rustdevuser rust_dev_vscode_cnt ls -l /home/rustdevuser/.ssh"
 podman exec --user=rustdevuser rust_dev_vscode_cnt ls -l /home/rustdevuser/.ssh
+
+echo "  Copy the 'sshadd.sh' from Win10 to WSL and then into the container"
+cp -v $USERPROFILE/.ssh/sshadd.sh ~/.ssh/sshadd.sh
+podman cp ~/.ssh/sshadd.sh rust_dev_vscode_cnt:/home/rustdevuser/.ssh/sshadd.sh

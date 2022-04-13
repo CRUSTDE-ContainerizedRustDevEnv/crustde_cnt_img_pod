@@ -16,11 +16,14 @@ echo "  cp -v \$USERPROFILE/.ssh/sshadd.sh ~/.ssh/sshadd.sh"
 echo "  podman cp ~/.ssh/sshadd.sh rust_dev_vscode_cnt:/home/rustdevuser/.ssh/sshadd.sh"
 
 echo "  "
-echo "eval \$(ssh-agent)"
+echo "  eval \$(ssh-agent)"
 eval $(ssh-agent)
 
-echo "ssh-add ~/.ssh/githubssh1"
+echo "  ssh-add ~/.ssh/githubssh1"
 ssh-add ~/.ssh/githubssh1
 
-echo "ssh-add ~/.ssh/webserverssh1"
+echo "  ssh-add ~/.ssh/webserverssh1"
 ssh-add ~/.ssh/webserverssh1
+
+echo "  ssh-add list"
+ssh-add list

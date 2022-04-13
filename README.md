@@ -110,7 +110,7 @@ In `WSL2 terminal`:
 podman pod rm rust_dev_pod_create -f
 ```
 
-You can jump over the long explanation directly to "Github in the container" and continue there.
+You can jump over the long explanation directly to "Github in the container" and continue there with some personalization with SSH keys for github and publish-to-web.  
 
 ## Motivation
 
@@ -681,7 +681,7 @@ Leave VSCode open because the next chapter will continue from here.
 
 ## Github in the container
 
-Shortcut: Copy the template for bash script from here: [personal_keys_and_settings.sh](https://github.com/bestia-dev/docker_rust_development/blob/main/personal_keys_and_settings.sh). It contains all the steps from below. You need to personalize it first and save it into Win10 folder `~\.ssh`.  
+Shortcut: Download the template for bash script from here: [personal_keys_and_settings.sh](https://github.com/bestia-dev/docker_rust_development/blob/main/personal_keys_and_settings.sh) into Win10 folder `~\.ssh`. It contains all the steps from below. You need to personalize it.  
 Then copy it manually into WSL2 - just once. Run in `WSL Terminal`:
 
 ```bash
@@ -732,7 +732,7 @@ ssh-add /home/rustdevuser/.ssh/githubssh1
 # enter your passphrase
 ```
 
-You can copy the template [sshadd.sh](https://github.com/bestia-dev/docker_rust_development/blob/main/sshadd.sh) from Github and personalize it with you SSH keys file names. Copy the personalized file in win10 folder `~\.ssh`.
+You can download the template [sshadd.sh](https://github.com/bestia-dev/docker_rust_development/blob/main/sshadd.sh) from Github and save it into win10 folder `~\.ssh`. There, personalize it with you SSH keys file names.
 Then copy it manually into WSL2 and the container - just once. Run in `WSL Terminal`:
 
 ```bash
