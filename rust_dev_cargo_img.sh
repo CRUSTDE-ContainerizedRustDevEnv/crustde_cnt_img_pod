@@ -36,7 +36,7 @@ buildah from --name rust_dev_cargo_img docker.io/library/debian:bullseye-slim
 buildah config \
 --author=github.com/bestia-dev \
 --label name=rust_dev_cargo_img \
---label version=1.0 \
+--label version=cargo-1.60.0 \
 --label source=github.com/bestia-dev/docker_rust_development \
 rust_dev_cargo_img
 

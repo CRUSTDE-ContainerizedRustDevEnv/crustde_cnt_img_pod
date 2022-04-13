@@ -31,7 +31,7 @@ buildah from --name rust_dev_vscode_img docker.io/bestiadev/rust_dev_cargo_img:c
 buildah config \
 --author=github.com/bestia-dev \
 --label name=rust_dev_vscode_img \
---label version=1.0 \
+--label version=vscode-1.66.2 \
 --label source=github.com/bestia-dev/docker_rust_development \
 rust_dev_vscode_img
 
@@ -54,7 +54,8 @@ buildah run --user root rust_dev_vscode_img    apt -y install openssh-server
 
 echo " "
 echo "Download vscode-server. Be sure the commit_sha of the server and client is the same:"
-echo "In VSCode client open Help-About. version 1.66.2"
+echo "In VSCode client open Help-About or in the terminal `code --version`" 
+echo "version 1.66.2"
 echo "dfd34e8260c270da74b5c2d86d61aee4b6d56977"
 buildah run rust_dev_vscode_img /bin/sh -c 'mkdir -vp ~/.vscode-server/bin/dfd34e8260c270da74b5c2d86d61aee4b6d56977'
 buildah run rust_dev_vscode_img /bin/sh -c 'mkdir -vp ~/.vscode-server/extensions'

@@ -32,7 +32,7 @@ docker.io/sameersbn/squid:3.5.27-2
 buildah config \
 --author=github.com/bestia-dev \
 --label name=rust_dev_squid_img \
---label version=1.0 \
+--label version=squid-3.5.27-2 \
 --label source=github.com/bestia-dev/docker_rust_development \
 rust_dev_squid_img
 
