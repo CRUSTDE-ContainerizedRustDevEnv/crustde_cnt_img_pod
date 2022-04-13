@@ -52,6 +52,7 @@ buildah run rust_dev_cargo_img    apt -y install git
 buildah run rust_dev_cargo_img    apt -y install rsync
 buildah run rust_dev_cargo_img    apt -y install build-essential
 buildah run rust_dev_cargo_img    apt -y install nano
+buildah run rust_dev_cargo_img    apt -y install procps
 
 echo " "
 echo "  Create non-root user 'rustdevuser' and home folder."
@@ -107,11 +108,9 @@ echo " "
 echo "  Add line dev_bestia_cargo_completion to .bashrc"
 buildah run rust_dev_cargo_img /bin/sh -c 'echo "# dev_bestia_cargo_completion" >> ~/.bashrc'
 buildah run rust_dev_cargo_img /bin/sh -c 'echo "complete -C dev_bestia_cargo_completion cargo" >> ~/.bashrc'
-# buildah run rust_dev_cargo_img /bin/sh -c 'cat ~/.bashrc'
-
-echo " "
-echo "  Add ~/.bash_profile with ssh agent"
-buildah copy rust_dev_cargo_img 'bash_profile.conf' '/home/rustdevuser/.bash_profile'
+echo "  Add ssh-agent to .bashrc, because it does not work in .bash_profile"
+buildah copy rust_dev_cargo_img 'bash_profile.conf' '/home/rustdevuser/.ssh/bash_profile.conf'
+buildah run rust_dev_cargo_img /bin/sh -c 'cat /home/rustdevuser/.ssh/bash_profile.conf >> ~/.bashrc'
 
 echo " "
 echo "  Remove unwanted files"
@@ -128,6 +127,8 @@ buildah tag docker.io/bestiadev/rust_dev_cargo_img:latest docker.io/bestiadev/ru
 echo " "
 echo "  To create the container 'rust_dev_cargo_cnt' use:"
 echo "podman create -ti --name rust_dev_cargo_cnt docker.io/bestiadev/rust_dev_cargo_img:latest"
+echo "podman restart rust_dev_cargo_cnt"
+echo "podman exec -it rust_dev_cargo_cnt bash"
 
 echo " "
 echo "  Try to build and run a sample Rust project:"

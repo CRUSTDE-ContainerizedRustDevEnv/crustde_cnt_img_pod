@@ -89,6 +89,11 @@ podman exec --user=rustdevuser rust_dev_vscode_cnt git config --global pull.reba
 echo "  Start the SSH server"
 podman exec --user=root  rust_dev_vscode_cnt service ssh restart
 
+echo "  Remove the known_hosts for this pod/container."
+ssh-keygen -f ~/.ssh/known_hosts -R "[localhost]:2201";
+setx.exe WSLENV "USERPROFILE/p";
+ssh-keygen -f $USERPROFILE/.ssh/known_hosts -R "[localhost]:2201";
+
 echo " Copy the personal files, SSH keys for github or publish-to-web,..."
 sh ~/.ssh/personal_keys_and_settings.sh
 
@@ -100,7 +105,7 @@ echo "podman exec --user=root rust_dev_vscode_cnt service ssh restart"
 
 echo " "
 echo "Open VSCode, press F1, type 'ssh' and choose 'Remote-SSH: Connect to Host...' and choose 'rust_dev_pod'" 
-echo "  This will open a new VSCode windows attached to the container."
+echo "  This will open a new VSCode windows attached to the container. Type the passphrase."
 echo "  If needed Open VSCode terminal with Ctrl+J"
 echo "  Inside VSCode terminal, go to the project folder. Here we will create a sample project:"
 echo "cd ~/rustprojects"
@@ -110,14 +115,9 @@ echo "cd ~/rustprojects/rust_dev_hello"
 echo " "
 echo "  Secondly: open a new VSCode window exactly for this project/folder."
 echo "code ."
-echo "  A new VSCode windows will open for the 'rust_dev_hello' project. You can close now all other VSCode windows."
+echo "  A new VSCode windows will open for the 'rust_dev_hello' project. Retype the passphrase."
+echo "  You can close now all other VSCode windows."
 
 echo " "
 echo "  Build and run the project in the VSCode terminal:"
 echo "cargo run"
-
-echo " "
-echo "  If you need ssh for git or publish_to_web, inside the VSCode terminal run the ssh-agent:"
-echo "eval \$(ssh-agent) "
-echo "ssh-add /home/rustdevuser/.ssh/githubssh1"
-

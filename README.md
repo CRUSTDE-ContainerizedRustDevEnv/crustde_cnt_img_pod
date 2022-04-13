@@ -314,7 +314,7 @@ Create the container with a fixed name rust_dev_cargo_cnt:
 -ti - we will use the container interactively in the terminal  
 
 ```bash
-podman create -ti --name rust_dev_cargo_cnt docker.io/bestiadev/rust_dev_cargo_img:latest/
+podman create -ti --name rust_dev_cargo_cnt docker.io/bestiadev/rust_dev_cargo_img:latest
 ```
 
 We can list the existing containers with:
@@ -450,7 +450,7 @@ podman exec -it --user root rust_dev_vscode_cnt bash
 Rust is not so small. I saved some 600MB of space just deleting the docs folder, that actually noone needs.  
 docker.io/bestiadev/rust_dev_squid_img  squid3.5.27-2  168 MB
 docker.io/bestiadev/rust_dev_cargo_img  cargo-1.60.0  1.11 GB
-docker.io/bestiadev/rust_dev_vscode_img cargo-1.60.0  1.32 GB
+docker.io/bestiadev/rust_dev_vscode_img cargo-1.60.0  1.40 GB
 
 ## Users keys for SSH
 
@@ -864,8 +864,6 @@ new image with windows cross compile
 Add this following to your ~/.bash_profile
 
 SSH_ENV="$HOME/.ssh/agent-environment"
-
-
 
 ## cargo crev reviews and advisory
 

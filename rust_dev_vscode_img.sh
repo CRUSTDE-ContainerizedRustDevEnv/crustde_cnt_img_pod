@@ -51,7 +51,6 @@ buildah run --user root rust_dev_vscode_img    apt -y update
 buildah run --user root rust_dev_vscode_img    apt -y upgrade
 buildah run --user root rust_dev_vscode_img    apt -y install openssh-server
 
-
 echo " "
 echo "Download vscode-server. Be sure the commit_sha of the server and client is the same:"
 echo "In VSCode client open Help-About or in the terminal 'code --version'" 
