@@ -36,6 +36,10 @@ buildah config \
 rust_dev_vscode_img
 
 echo " "
+echo "Add ~/.bash_profile with ssh agent"
+buildah copy rust_dev_cargo_img 'bash_profile.conf' '/home/rustdevuser/.bash_profile'
+
+echo " "
 echo "The subsequent commands are from user rustdevuser."
 echo "If I need, I can add '--user root' to run as root."
 

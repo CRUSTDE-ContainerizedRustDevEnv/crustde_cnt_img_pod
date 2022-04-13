@@ -110,6 +110,10 @@ buildah run rust_dev_cargo_img /bin/sh -c 'echo "complete -C dev_bestia_cargo_co
 # buildah run rust_dev_cargo_img /bin/sh -c 'cat ~/.bashrc'
 
 echo " "
+echo "Add ~/.bash_profile with ssh agent"
+buildah copy rust_dev_cargo_img 'bash_profile.conf' '/home/rustdevuser/.bash_profile'
+
+echo " "
 echo "Remove unwanted files"
 buildah run --user root rust_dev_cargo_img    apt -y autoremove
 buildah run --user root rust_dev_cargo_img    apt -y clean

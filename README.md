@@ -862,6 +862,12 @@ podman exec rust_dev_squid_cnt tail -f /var/log/squid/access.log
 new image with cargo-crev and cargo_crev_reviews
 new image with windows cross compile
 
+Add this following to your ~/.bash_profile
+
+SSH_ENV="$HOME/.ssh/agent-environment"
+
+
+
 ## cargo crev reviews and advisory
 
 We live in times of danger with [supply chain attacks](https://en.wikipedia.org/wiki/Supply_chain_attack).  

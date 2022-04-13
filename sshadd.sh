@@ -16,8 +16,10 @@ echo "  cp -v \$USERPROFILE/.ssh/sshadd.sh ~/.ssh/sshadd.sh"
 echo "  podman cp ~/.ssh/sshadd.sh rust_dev_vscode_cnt:/home/rustdevuser/.ssh/sshadd.sh"
 
 echo "  "
-echo "  eval \$(ssh-agent)"
-eval $(ssh-agent)
+echo " Everything after 'eval' is in the same session, including ssh-add and the terminal after that."
+echo " TODO: maybe that will not work perfectly with VSCode git, because it is one terminal 'behind'."
+echo "eval \$(ssh-agent -s)"
+eval $(ssh-agent -s)
 
 echo "  ssh-add ~/.ssh/githubssh1"
 ssh-add ~/.ssh/githubssh1
@@ -25,5 +27,8 @@ ssh-add ~/.ssh/githubssh1
 echo "  ssh-add ~/.ssh/webserverssh1"
 ssh-add ~/.ssh/webserverssh1
 
-echo "  ssh-add list"
-ssh-add list
+echo "  ssh-add -L"
+ssh-add -L
+
+echo " to persist the agent after the script"
+bash -i
