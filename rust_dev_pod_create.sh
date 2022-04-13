@@ -10,7 +10,7 @@ echo "  Bash script to create the pod 'rust_dev_pod': 'rust_dev_pod_create.sh'"
 echo "  This 'pod' is made of the containers 'rust_dev_squid_cnt' and 'rust_dev_vscode_cnt'"
 echo "  All outbound network traffic from rust_dev_vscode_cnt goes through the proxy Squid."
 echo "  Published inbound network ports are 8001 on 'localhost'"
-echo "  repository: https://github.com/bestia-dev/docker_rust_development"
+# repository: https://github.com/bestia-dev/docker_rust_development"
 
 echo "  setx.exe WSLENV 'USERPROFILE/p'"
 setx.exe WSLENV "USERPROFILE/p"

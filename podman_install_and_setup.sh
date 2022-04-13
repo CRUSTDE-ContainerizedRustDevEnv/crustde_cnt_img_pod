@@ -2,7 +2,7 @@
 
 echo " "
 echo "  Bash script to install Podman and setup for rust_dev_pod for development in Rust with VSCode."
-echo "  repository: https://github.com/bestia-dev/docker_rust_development"
+# repository: https://github.com/bestia-dev/docker_rust_development"
 echo " " 
 echo "  Prerequisites: Win10, WSL2, VSCode."
 echo " " 

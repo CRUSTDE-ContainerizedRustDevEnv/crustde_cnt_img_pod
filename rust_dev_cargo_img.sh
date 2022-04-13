@@ -3,7 +3,7 @@
 echo " "
 echo "  Bash script to build the docker image for development in Rust."
 echo "  Name of the image: rust_dev_cargo_img"
-echo "  repository: https://github.com/bestia-dev/docker_rust_development"
+# repository: https://github.com/bestia-dev/docker_rust_development"
 
 echo " "
 echo "  I want a sandbox that cannot compromise my local system."

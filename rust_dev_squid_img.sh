@@ -3,7 +3,7 @@
 echo " "
 echo "Bash script to build the docker image for the Squid proxy server"
 echo "Name of the image: rust_dev_squid_img"
-echo "repository: https://github.com/bestia-dev/docker_rust_development"
+# repository: https://github.com/bestia-dev/docker_rust_development"
 
 echo "Squid proxy for restricting outbound network access of containers in the same 'pod'."
 echo "Modifies the squid.conf file of the official Squid image."

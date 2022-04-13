@@ -2,7 +2,7 @@
 
 echo " "
 echo "Bash script to restart the pod 'rust_dev_pod_after_reboot.sh'"
-echo "repository: https://github.com/bestia-dev/docker_rust_development"
+# repository: https://github.com/bestia-dev/docker_rust_development"
 echo " "
 echo "Warning: Use this only once after reboot!"
 echo "You can simulate a reboot in windows powershell with:"
