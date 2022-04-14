@@ -843,6 +843,29 @@ sh rust_dev_pod_after_reboot.sh
 
 It is easy to copy files from Win10 to the VSCode project within the container just with drag&drop.
 
+## Protect the SSH private key in Windows
+
+In Linux the private keys inside `~/.ssh` are protected with `chmod 600`.
+We need to do similarly for the private keys inside Win10 folder `~\.ssh`
+Run in `powershell terminal` with the standard user:
+
+```PowerShell
+cd ~/.ssh
+ls
+# Set Key File Variable:
+  New-Variable -Name Key -Value "$env:UserProfile\.ssh\id_rsa"
+# Remove Inheritance:
+  Icacls $Key /c /t /Inheritance:d
+# Set Ownership to Owner:
+  Icacls $Key /c /t /grant ${env:UserName}:F
+# Remove All Users, except for Owner:
+  Icacls $Key  /c /t /Remove Administrator BUILTIN\Administrators BUILTIN Everyone System Users
+# Verify:
+  Icacls $Key
+# Remove Variable:
+  Remove-Variable -Name Key
+```
+
 ## Quirks
 
 It is a complex setting. There can be some quirks sometimes.
