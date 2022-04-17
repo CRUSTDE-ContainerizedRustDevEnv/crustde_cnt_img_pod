@@ -11,18 +11,42 @@
 
 Video tutorial on youtube: <https://bestia.dev/youtube/docker_rust_development.html>
 
-Super short instructions without explanation just in 3 easy steps. For tl;dr; continue reading below.
-
-Prerequisites: Win10, WSL2, VSCode.  
+Super short instructions without explanation just in 2 easy steps. For tl;dr; continue reading below.
 I tested the script on a completely fresh installation of Debian on WSL2.  
-
-1\. Download the podman_install_and_setup bash script and run it. This can take 10 minutes to setup because it downloads about 1.5 GB from docker hub.  
-In `WSL2 terminal`:
+Prerequisites: Win10, WSL2, VSCode and curl:  
 
 ```bash
 sudo apt update
 sudo apt -y full-upgrade
 sudo apt install -y curl
+```
+
+1\. Prepare your existing SSH keys for github and publish-to-web, so you can use them from inside the container. Here we use the Win10 folder `~\.ssh` because we want this data to be persistent and can survive the destruction of the container or even WSL2.  
+
+Download the templates for bash scripts `personal_keys_and_settings.sh` and `sshadd.sh`. Then modify the scripts: replace the placeholders with your own data and file_names.  
+In `WSL2 terminal`:
+
+```bash
+setx.exe WSLENV "USERPROFILE/p"
+mkdir $USERPROFILE/.ssh
+
+curl -L -s https://github.com/bestia-dev/docker_rust_development/raw/main/personal_keys_and_settings.sh --output $USERPROFILE/.ssh/personal_keys_and_settings.sh
+
+curl -L -s https://github.com/bestia-dev/docker_rust_development/raw/main/sshadd.sh --output $USERPROFILE/.ssh/sshadd.sh
+
+# edit and save the files: 
+# replace the words 
+# 'info@your.mail', 'your_name', 'githubssh1' and 'webserverssh1' 
+# with your own data and file names
+nano $USERPROFILE/.ssh/personal_keys_and_settings.sh
+nano $USERPROFILE/.ssh/sshadd.sh
+```
+
+2\. Download the podman_install_and_setup bash script and run it.  
+This can take 10 minutes to setup because it downloads 2 GB from docker hub.  
+In `WSL2 terminal`:
+
+```bash
 mkdir -p ~/rustprojects/docker_rust_development
 cd ~/rustprojects/docker_rust_development
 # Download the bash script
@@ -31,30 +55,8 @@ curl -L -s https://github.com/bestia-dev/docker_rust_development/raw/main/podman
 cat podman_install_and_setup.sh
 # then run
 sh podman_install_and_setup.sh
-# This can take 10 minutes because it needs to download around 1.5 GB from docker hub.
-# You will be asked to create a new passphrase for the SSh key. Remember it, you will need it.
-```
-
-2\. Prepare your existing SSH keys for github and publish-to-web, so you can use them from inside the container. Here we use the Win10 folder `~\.ssh` because we want this data to be persistent and can survive the destruction of the container or even WSL2.  
-
-Download the templates for bash scripts `personal_keys_and_settings.sh` and `sshadd.sh`. Then modify the scripts: replace the placeholders with your own data and file_names.  
-
-```bash
-setx.exe WSLENV "USERPROFILE/p"
-
-curl -L -s https://github.com/bestia-dev/docker_rust_development/raw/main/personal_keys_and_settings.sh --output $USERPROFILE/.ssh/personal_keys_and_settings.sh
-
-curl -L -s https://github.com/bestia-dev/docker_rust_development/raw/main/sshadd.sh --output $USERPROFILE/.ssh/sshadd.sh
-
-# edit and save the files: replace the words 'info@your.mail', 'your_name', 'githubssh1' and 'webserverssh1' with your own data and file names
-nano $USERPROFILE/.ssh/personal_keys_and_settings.sh
-nano $USERPROFILE/.ssh/sshadd.sh
-```
-
-3\. Run the script to create and start the pod - just once:
-
-```bash
-sh rust_dev_pod_create.sh
+# You will be asked to create a new passphrase for the SSh key. 
+# Remember it, you will need it later.
 ```
 
 That's it. Now we can test the connection from various locations.  
@@ -106,7 +108,7 @@ cargo run
 
 That should work and greet you with "Hello, world!"
 
-6\. After reboot WSL2 can create some network problems for podman.   
+6\. After reboot, WSL2 can create some network problems for podman.  
 We can simulate the WSL2 reboot in `powershell in windows`:
 
 ```powershell

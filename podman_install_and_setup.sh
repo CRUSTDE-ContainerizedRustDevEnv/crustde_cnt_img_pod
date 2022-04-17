@@ -183,6 +183,8 @@ else
   IdentitiesOnly yes' | sudo tee -a $USERPROFILE/.ssh/config
 fi
 
+sh rust_dev_pod_create.sh
+
 echo " "
 echo "  Install and setup finished."
 echo "  Follow the instructions from README.md to create the pod and connect to it over SSH."
