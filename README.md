@@ -1,4 +1,4 @@
-# Rust: Hack Without Fear ! (docker_rust_development)
+# Rust: Hack Without Fear and Trust ! (docker_rust_development)
 
 **A complete development environment for Rust with VSCode inside a docker container.**  
 ***version: 2.0  date: 2022-04-13 author: [bestia.dev](https://bestia.dev) repository: [GitHub](https://github.com/bestia-dev/docker_rust_development)***  
@@ -6,6 +6,14 @@
 [![Lines in md](https://img.shields.io/badge/Lines_in_markdown-832-green.svg)](https://github.com/bestia-dev/docker_rust_development/)  [![Lines in bash scripts](https://img.shields.io/badge/Lines_in_bash_scripts-722-blue.svg)](https://github.com/bestia-dev/docker_rust_development/)  [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/bestia-dev/docker_rust_development/blob/master/LICENSE)
 
 ![spiral_of_madness](https://github.com/bestia-dev/docker_rust_development/raw/main/images/spiral_of_madness.png "spiral_of_madness")
+
+## Trust in Rust open-source 2022
+
+First I have to talk about TRUST. This is the whole point of this entire project.
+
+We live in dangerous times for "supply chain attacks" in open-source and it is getting worse. This is a problem we need to address!  
+In this project, you don't need to TRUST ME! You can run all the bash commands inside bash scripts line-by-line. My emphasis is to thoroughly comment and describe what is my intention for every single command. You can follow and observe exactly what is going on. This is the beauty of open-source. But this is realistic only for very simple projects.  
+To be meticulously precise, you still have to trust the Windows code, Linux, GNU tools, drivers, Podman, Buildah, VSCode, extensions, the microprocessor, memory, disc and many other projects. There is no system without an inherent minimal level of TRUST.
 
 ## Try it
 
@@ -150,6 +158,9 @@ Even if you are very careful and avoid `build.rs` and `procedural macros`, your 
 
 It is very hard to avoid "supply chain attacks" in Rust as things are today. We are just lucky, that the ecosystem is young and small and the malevolent players are waiting for Rust to become more popular. Then they will strike and strike hard. We need to be skeptical about anything that comes from the internet. We need to isolate/sandbox it so it cannot harm our system.  
 
+For big open-source project you will not read and understand every line of code. It is impossible because of the sheer size of projects and it is impossible to gain deep understanding of all the underlying principles, rules and exceptions of everything. And everything is moving and changing fast and continuously. It is impossible to follow all the changes.  
+We need to have layered protection between our computer system and some unknown code. In this project I propose a containerized development environment that will allow some degree of isolation. And in the same time easy of installation, transfer and repeatability.  
+
 Let learn to develope "everything" inside a Docker container and to isolate/sandbox it as much as possible from the underlying system.
 
 I have to acknowledge that Docker Linux Containers are not the perfect sandboxing solution. But I believe that for my "Rust development environment", it is "good enough". I expect that container isolation will get better with time (google, amazon, Intel, OpenStack and IBM are working on it). My main system is Win10. Inside that, I have WSL2, which is a Linux virtual machine. And inside that, I have Docker Linux Containers.  
@@ -158,7 +169,8 @@ I have to acknowledge that Docker Linux Containers are not the perfect sandboxin
 - The outbound network is restricted to whitelisted domains by a Squid proxy server.  
 - The inbound network is allowed only to "published/exposed" ports.  
 
-Yes, there exists the possibility of abusing a kernel vulnerability, but I believe it is hard and they will get patched.
+Yes, there exists the possibility of abusing a kernel vulnerability, but I believe it is hard and they will get patched.  
+I didn't choose a true virtualization approach, but it is easy to run the container inside a virtual machine. More layers, more protection.
 
 ## Docker and OCI
 
