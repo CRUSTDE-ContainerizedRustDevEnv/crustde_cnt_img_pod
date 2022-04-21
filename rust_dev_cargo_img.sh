@@ -47,12 +47,22 @@ buildah run rust_dev_cargo_img    apt -y full-upgrade
 
 echo " "
 echo "  Install curl, git, rsync and build-essential with root user"
-buildah run rust_dev_cargo_img    apt -y install curl
-buildah run rust_dev_cargo_img    apt -y install git
-buildah run rust_dev_cargo_img    apt -y install rsync
-buildah run rust_dev_cargo_img    apt -y install build-essential
-buildah run rust_dev_cargo_img    apt -y install nano
-buildah run rust_dev_cargo_img    apt -y install procps
+# curl is the most used CLI for getting stuff from internet
+buildah run rust_dev_cargo_img    apt install -y curl
+# git is the legendary version control system
+buildah run rust_dev_cargo_img    apt install -y git
+# rsync is great for copying files and folders
+buildah run rust_dev_cargo_img    apt install -y rsync
+# rust needs the C stuff that comes with build-essential
+buildah run rust_dev_cargo_img    apt install -y build-essential
+# nano is the default easy to use text editor in Debian
+buildah run rust_dev_cargo_img    apt install -y nano
+# ps displays information about a selection of the active processes
+# concretely it is used to run the ssh-agent
+buildah run rust_dev_cargo_img    apt install -y procps
+# pkg-config and libssl-dev are needed by the crate reqwest to work with TLS/SSL
+buildah run rust_dev_cargo_img    apt install -y pkg-config
+buildah run rust_dev_cargo_img    apt install -y libssl-dev
 
 echo " "
 echo "  Create non-root user 'rustdevuser' and home folder."
@@ -64,7 +74,7 @@ buildah config --user rustdevuser rust_dev_cargo_img
 buildah config --workingdir /home/rustdevuser rust_dev_cargo_img
 
 # If needed, the user can be forced for a buildah command:
-# buildah run  --user root rust_dev_cargo_img    apt -y --no-install-recommends install build-essential
+# buildah run  --user root rust_dev_cargo_img    apt install -y --no-install-recommends build-essential
 
 echo " "
 echo "  Configure rustdevuser things"
