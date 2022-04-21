@@ -52,6 +52,10 @@ buildah run --user root rust_dev_vscode_img    apt -y upgrade
 buildah run --user root rust_dev_vscode_img    apt install -y openssh-server
 
 echo " "
+echo "  Install cargo-auto. It will pull the cargo-index registry. The first pull can take some time."
+buildah run rust_dev_cargo_img /bin/sh -c 'cargo install cargo-auto'
+
+echo " "
 echo "Download vscode-server. Be sure the commit_sha of the server and client is the same:"
 echo "In VSCode client open Help-About or in the terminal 'code --version'" 
 echo "version 1.66.2"
@@ -67,7 +71,7 @@ buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/dfd34e8260c270d
 buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/dfd34e8260c270da74b5c2d86d61aee4b6d56977/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension 2gua.rainbow-brackets'
 buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/dfd34e8260c270da74b5c2d86d61aee4b6d56977/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension dotjoshjohnson.xml'
 buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/dfd34e8260c270da74b5c2d86d61aee4b6d56977/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension serayuzgur.crates'
-buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/dfd34e8260c270da74b5c2d86d61aee4b6d56977/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension bierner.markdown-mermaid'
+buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/dfd34e8260c270da74b5c2d86d61aee4b6d56977/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension jebbs.plantuml'
 buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/dfd34e8260c270da74b5c2d86d61aee4b6d56977/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension ms-vscode.live-server'
 
 echo " "
