@@ -17,7 +17,10 @@ To be meticulously precise, you still have to trust the Windows code, Linux, GNU
 
 ## Try it
 
-Video tutorial on youtube: <https://bestia.dev/youtube/docker_rust_development.html>
+Video tutorial on youtube:
+<!-- markdownlint-disable MD033 -->
+[<img src="https://github.com/bestia-dev/docker_rust_development/raw/main/images/thumbnail.png" width="400px">](https://bestia.dev/youtube/docker_rust_development.html)
+<!-- markdownlint-enable MD033 -->
 
 Super short instructions without explanation just in 2 easy steps. For tl;dr; continue reading below.
 I tested the script on a completely fresh installation of Debian on WSL2.  
