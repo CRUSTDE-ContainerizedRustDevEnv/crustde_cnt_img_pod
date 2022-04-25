@@ -46,8 +46,8 @@ echo "  If keys do not exist then generate them."
 if [ ! -f ~/.ssh/rustdevuser_key ]; then
   echo "  generate user key"
   echo "  give it a passphrase and remember it, you will need it"
-  echo "  ssh-keygen -f ~/.ssh/rustdevuser_key -t ed25519 -C 'info@bestia.dev'"
-  ssh-keygen -f ~/.ssh/rustdevuser_key -t ed25519 -C "info@bestia.dev"
+  echo "  ssh-keygen -f ~/.ssh/rustdevuser_key -t ed25519 -C 'rustdevuser@rust_dev_pod'"
+  ssh-keygen -f ~/.ssh/rustdevuser_key -t ed25519 -C "rustdevuser@rust_dev_pod"
   echo " Copy files to persist in Windows folder."
   echo "  cp -v ~/.ssh/rustdevuser_key $USERPROFILE/.ssh/rustdevuser_key"
   cp -v ~/.ssh/rustdevuser_key $USERPROFILE/.ssh/rustdevuser_key
