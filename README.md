@@ -3,7 +3,11 @@
 **A complete development environment for Rust with VSCode inside a docker container.**  
 ***version: 2.0  date: 2022-04-13 author: [bestia.dev](https://bestia.dev) repository: [GitHub](https://github.com/bestia-dev/docker_rust_development)***  
 
-[![Lines in md](https://img.shields.io/badge/Lines_in_markdown-832-green.svg)](https://github.com/bestia-dev/docker_rust_development/)  [![Lines in bash scripts](https://img.shields.io/badge/Lines_in_bash_scripts-722-blue.svg)](https://github.com/bestia-dev/docker_rust_development/)  [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/bestia-dev/docker_rust_development/blob/master/LICENSE)
+[![Lines in md](https://img.shields.io/badge/Lines_in_markdown-832-green.svg)](https://github.com/bestia-dev/docker_rust_development/)
+[![Lines in bash scripts](https://img.shields.io/badge/Lines_in_bash_scripts-722-blue.svg)](https://github.com/bestia-dev/docker_rust_development/)
+
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/bestia-dev/docker_rust_development/blob/master/LICENSE)
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fbestia-dev%2Fdocker_rust_development&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 
 ![spiral_of_madness](https://github.com/bestia-dev/docker_rust_development/raw/main/images/spiral_of_madness.png "spiral_of_madness")
 
