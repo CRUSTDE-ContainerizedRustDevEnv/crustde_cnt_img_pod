@@ -40,7 +40,7 @@ podman create --name rust_dev_vscode_cnt --pod=rust_dev_pod -ti \
 --env http_proxy=http://localhost:3128 \
 --env https_proxy=http://localhost:3128 \
 --env all_proxy=http://localhost:3128  \
-docker.io/bestiadev/rust_dev_vscode_img:latest
+docker.io/bestiadev/rust_dev_typescript_img:latest
 
 echo "  Copy SSH server config"
 podman cp ./etc_ssh_sshd_config.conf rust_dev_vscode_cnt:/etc/ssh/sshd_config
