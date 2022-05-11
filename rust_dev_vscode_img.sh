@@ -31,7 +31,7 @@ buildah from --name rust_dev_vscode_img docker.io/bestiadev/rust_dev_cargo_img:c
 buildah config \
 --author=github.com/bestia-dev \
 --label name=rust_dev_vscode_img \
---label version=vscode-1.66.2 \
+--label version=vscode-1.67.1 \
 --label source=github.com/bestia-dev/docker_rust_development \
 rust_dev_vscode_img
 
@@ -53,26 +53,26 @@ buildah run --user root rust_dev_vscode_img    apt install -y openssh-server
 
 echo " "
 echo "  Install cargo-auto. It will pull the cargo-index registry. The first pull can take some time."
-buildah run rust_dev_cargo_img /bin/sh -c 'cargo install cargo-auto'
+buildah run rust_dev_vscode_img /bin/sh -c 'cargo install cargo-auto'
 
 echo " "
 echo "Download vscode-server. Be sure the commit_sha of the server and client is the same:"
 echo "In VSCode client open Help-About or in the terminal 'code --version'" 
-echo "version 1.66.2"
-echo "dfd34e8260c270da74b5c2d86d61aee4b6d56977"
-buildah run rust_dev_vscode_img /bin/sh -c 'mkdir -vp ~/.vscode-server/bin/dfd34e8260c270da74b5c2d86d61aee4b6d56977'
+echo "version 1.67.1"
+echo "da15b6fd3ef856477bf6f4fb29ba1b7af717770d"
+buildah run rust_dev_vscode_img /bin/sh -c 'mkdir -vp ~/.vscode-server/bin/da15b6fd3ef856477bf6f4fb29ba1b7af717770d'
 buildah run rust_dev_vscode_img /bin/sh -c 'mkdir -vp ~/.vscode-server/extensions'
-buildah run rust_dev_vscode_img /bin/sh -c 'curl -L -s https://update.code.visualstudio.com/commit:dfd34e8260c270da74b5c2d86d61aee4b6d56977/server-linux-x64/stable --output /tmp/vscode-server-linux-x64.tar.gz'
-buildah run rust_dev_vscode_img /bin/sh -c 'tar --no-same-owner -xzv --strip-components=1 -C ~/.vscode-server/bin/dfd34e8260c270da74b5c2d86d61aee4b6d56977 -f /tmp/vscode-server-linux-x64.tar.gz'
+buildah run rust_dev_vscode_img /bin/sh -c 'curl -L -s https://update.code.visualstudio.com/commit:da15b6fd3ef856477bf6f4fb29ba1b7af717770d/server-linux-x64/stable --output /tmp/vscode-server-linux-x64.tar.gz'
+buildah run rust_dev_vscode_img /bin/sh -c 'tar --no-same-owner -xzv --strip-components=1 -C ~/.vscode-server/bin/da15b6fd3ef856477bf6f4fb29ba1b7af717770d -f /tmp/vscode-server-linux-x64.tar.gz'
 buildah run rust_dev_vscode_img /bin/sh -c 'rm /tmp/vscode-server-linux-x64.tar.gz'
-buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/dfd34e8260c270da74b5c2d86d61aee4b6d56977/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension streetsidesoftware.code-spell-checker'
-buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/dfd34e8260c270da74b5c2d86d61aee4b6d56977/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension matklad.rust-analyzer'
-buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/dfd34e8260c270da74b5c2d86d61aee4b6d56977/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension davidanson.vscode-markdownlint'
-buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/dfd34e8260c270da74b5c2d86d61aee4b6d56977/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension 2gua.rainbow-brackets'
-buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/dfd34e8260c270da74b5c2d86d61aee4b6d56977/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension dotjoshjohnson.xml'
-buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/dfd34e8260c270da74b5c2d86d61aee4b6d56977/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension serayuzgur.crates'
-buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/dfd34e8260c270da74b5c2d86d61aee4b6d56977/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension jebbs.plantuml'
-buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/dfd34e8260c270da74b5c2d86d61aee4b6d56977/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension ms-vscode.live-server'
+buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/da15b6fd3ef856477bf6f4fb29ba1b7af717770d/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension streetsidesoftware.code-spell-checker'
+buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/da15b6fd3ef856477bf6f4fb29ba1b7af717770d/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension matklad.rust-analyzer'
+buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/da15b6fd3ef856477bf6f4fb29ba1b7af717770d/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension davidanson.vscode-markdownlint'
+buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/da15b6fd3ef856477bf6f4fb29ba1b7af717770d/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension 2gua.rainbow-brackets'
+buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/da15b6fd3ef856477bf6f4fb29ba1b7af717770d/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension dotjoshjohnson.xml'
+buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/da15b6fd3ef856477bf6f4fb29ba1b7af717770d/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension serayuzgur.crates'
+buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/da15b6fd3ef856477bf6f4fb29ba1b7af717770d/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension jebbs.plantuml'
+buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/da15b6fd3ef856477bf6f4fb29ba1b7af717770d/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension ms-vscode.live-server'
 
 echo " "
 echo "Remove unwanted files"
@@ -83,7 +83,7 @@ echo " "
 echo "Finally save/commit the image named rust_dev_vscode_img"
 buildah commit rust_dev_vscode_img docker.io/bestiadev/rust_dev_vscode_img:latest
 
-buildah tag docker.io/bestiadev/rust_dev_vscode_img:latest docker.io/bestiadev/rust_dev_vscode_img:vscode-1.66.2
+buildah tag docker.io/bestiadev/rust_dev_vscode_img:latest docker.io/bestiadev/rust_dev_vscode_img:vscode-1.67.1
 buildah tag docker.io/bestiadev/rust_dev_vscode_img:latest docker.io/bestiadev/rust_dev_vscode_img:cargo-1.60.0
 
 echo " "

@@ -456,6 +456,11 @@ VSCode is great because of its extensions. Most of these extensions are installe
 
 Other extensions you can add manually through VSCode, but then it is not repeatable. Better is to modify the script and recreate the image `rust_dev_vscode_img.sh`.
 
+## Typescript compiler
+
+Some projects need the typescript compiler `tsc`. First we need to install nodejs with npm to install typescript.  
+The bash script `rust_dev_typescript_image.sh` will create a new image with typescript.  
+
 ## Push image to docker hub
 
 I signed in to hub.docker.com.
@@ -474,11 +479,16 @@ podman push docker.io/bestiadev/rust_dev_cargo_img:latest
 podman push docker.io/bestiadev/rust_dev_cargo_img:cargo-1.60.0
 
 podman push docker.io/bestiadev/rust_dev_vscode_img:latest
-podman push docker.io/bestiadev/rust_dev_vscode_img:vscode-1.66.2
+podman push docker.io/bestiadev/rust_dev_vscode_img:vscode-1.67.1
 podman push docker.io/bestiadev/rust_dev_vscode_img:cargo-1.60.0
 
 podman push docker.io/bestiadev/rust_dev_squid_img:latest
 podman push docker.io/bestiadev/rust_dev_squid_img:squid-3.5.27-2
+
+podman push docker.io/bestiadev/rust_dev_typescript_img:latest
+podman push docker.io/bestiadev/rust_dev_typescript_img:typescript-4.6.4
+podman push docker.io/bestiadev/rust_dev_typescript_img:vscode-1.67.1
+podman push docker.io/bestiadev/rust_dev_typescript_img:cargo-1.60.0
 ```
 
 It takes some time to upload more than 2 Gb.
