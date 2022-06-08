@@ -1,23 +1,23 @@
 #!/usr/bin/env bash
 
 echo " "
-echo "  Bash script to build the docker image for development in Rust."
-echo "  Name of the image: rust_dev_cargo_img"
-# repository: https://github.com/bestia-dev/docker_rust_development"
+echo "\033[0;33m    Bash script to build the docker image for development in Rust. \033[0m"
+echo "\033[0;33m    Name of the image: rust_dev_cargo_img \033[0m"
+# repository: https://github.com/bestia-dev/docker_rust_development
 
 echo " "
-echo "  I want a sandbox that cannot compromise my local system."
-echo "  No shared volumes. All the files and folders will be inside the container. "
-echo "  The original source code files will be cloned from github or copied from the local system."
-echo "  The final source code files will be pushed to github or copied to the local system."
-echo "  I want also to limit the network ports and addresses inbound and outbound."
+echo "\033[0;33m    I want a sandbox that cannot compromise my local system. \033[0m"
+echo "\033[0;33m    No shared volumes. All the files and folders will be inside the container.  \033[0m"
+echo "\033[0;33m    The original source code files will be cloned from github or copied from the local system. \033[0m"
+echo "\033[0;33m    The final source code files will be pushed to github or copied to the local system. \033[0m"
+echo "\033[0;33m    I want also to limit the network ports and addresses inbound and outbound. \033[0m"
 
 echo " "
-echo "  To build the image, run in bash with:"
-echo "sh rust_dev_cargo_img.sh"
+echo "\033[0;33m    To build the image, run in bash with: \033[0m"
+echo "\033[0;33m sh rust_dev_cargo_img.sh \033[0m"
 
 echo " "
-echo "  Removing container and image if exists"
+echo "\033[0;33m    Removing container and image if exists \033[0m"
 # Be careful, this container is not meant to have persistent data.
 # the '|| :' in combination with 'set -e' means that 
 # the error is ignored if the container does not exist.
@@ -28,7 +28,7 @@ buildah rmi -f docker.io/bestiadev/rust_dev_cargo_img || :
 
 
 echo " "
-echo "  Create new container named rust_dev_cargo_img"
+echo "\033[0;33m    Create new 'buildah container' named rust_dev_cargo_img \033[0m"
 set -o errexit
 buildah from --name rust_dev_cargo_img docker.io/library/debian:bullseye-slim
 
@@ -36,17 +36,17 @@ buildah from --name rust_dev_cargo_img docker.io/library/debian:bullseye-slim
 buildah config \
 --author=github.com/bestia-dev \
 --label name=rust_dev_cargo_img \
---label version=cargo-1.60.0 \
+--label version=cargo-1.61.0 \
 --label source=github.com/bestia-dev/docker_rust_development \
 rust_dev_cargo_img
 
 echo " "
-echo "  apk update"
+echo "\033[0;33m    apk update \033[0m"
 buildah run rust_dev_cargo_img    apt -y update
 buildah run rust_dev_cargo_img    apt -y full-upgrade
 
 echo " "
-echo "  Install curl, git, rsync and build-essential with root user"
+echo "\033[0;33m    Install curl, git, rsync and build-essential with root user \033[0m"
 # curl is the most used CLI for getting stuff from internet
 buildah run rust_dev_cargo_img    apt install -y curl
 # git is the legendary version control system
@@ -65,11 +65,11 @@ buildah run rust_dev_cargo_img    apt install -y pkg-config
 buildah run rust_dev_cargo_img    apt install -y libssl-dev
 
 echo " "
-echo "  Create non-root user 'rustdevuser' and home folder."
+echo "\033[0;33m    Create non-root user 'rustdevuser' and home folder. \033[0m"
 buildah run rust_dev_cargo_img    useradd -ms /bin/bash rustdevuser
 
 echo " "
-echo "  Use rustdevuser for all subsequent commands."
+echo "\033[0;33m    Use rustdevuser for all subsequent commands. \033[0m"
 buildah config --user rustdevuser rust_dev_cargo_img
 buildah config --workingdir /home/rustdevuser rust_dev_cargo_img
 
@@ -77,27 +77,27 @@ buildah config --workingdir /home/rustdevuser rust_dev_cargo_img
 # buildah run  --user root rust_dev_cargo_img    apt install -y --no-install-recommends build-essential
 
 echo " "
-echo "  Configure rustdevuser things"
+echo "\033[0;33m    Configure rustdevuser things \033[0m"
 buildah run rust_dev_cargo_img /bin/sh -c 'mkdir -vp ~/rustprojects'
 buildah run rust_dev_cargo_img /bin/sh -c 'mkdir -vp ~/.ssh'
 buildah run rust_dev_cargo_img /bin/sh -c 'chmod 700 ~/.ssh'
 
 echo " "
-echo "  Kill auto-completion horrible sound"
+echo "\033[0;33m    Kill auto-completion horrible sound \033[0m"
 buildah run rust_dev_cargo_img /bin/sh -c 'echo "set bell-style none" >> ~/.inputrc'
 
 echo " "
-echo "  Install rustup and default x86_64-unknown-linux-gnu, cargo, std, rustfmt, clippy, docs, rustc,... "
+echo "\033[0;33m    Install rustup and default x86_64-unknown-linux-gnu, cargo, std, rustfmt, clippy, docs, rustc,...  \033[0m"
 buildah run rust_dev_cargo_img /bin/sh -c 'curl https://sh.rustup.rs -sSf | sh -s -- -yq'
 
-echo "  Rustup wants to add the ~/.cargo/bin to PATH. But it needs to force bash reboot and that does not work in buildah."
-echo "  Add the PATH to ~/.cargo/bin manually"
+echo "\033[0;33m    Rustup wants to add the ~/.cargo/bin to PATH. But it needs to force bash reboot and that does not work in buildah. \033[0m"
+echo "\033[0;33m    Add the PATH to ~/.cargo/bin manually \033[0m"
 OLDIMAGEPATH=$(buildah run rust_dev_cargo_img printenv PATH)
 buildah config --env PATH=/home/rustdevuser/.cargo/bin:$OLDIMAGEPATH rust_dev_cargo_img
 buildah run rust_dev_cargo_img /bin/sh -c 'echo $PATH'
 
 buildah run rust_dev_cargo_img /bin/sh -c '/home/rustdevuser/.cargo/bin/rustc --version'
-# rustc 1.60.0 (7737e0b5c 2022-04-04)
+# rustc 1.61.0 (7737e0b5c 2022-04-04)
 
 # this probably is not necessary, if rust-analyzer can call rust-lang.org
 # buildah config --env RUST_SRC_PATH=/home/rustdevuser/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library rust_dev_cargo_img
@@ -105,51 +105,51 @@ buildah run rust_dev_cargo_img /bin/sh -c '/home/rustdevuser/.cargo/bin/rustc --
 
 buildah run rust_dev_cargo_img /bin/sh -c 'rustup component add rust-src'
 
-echo "  remove the toolchain docs, because they are 610MB big"
+echo "\033[0;33m    remove the toolchain docs, because they are 610MB big \033[0m"
 buildah run rust_dev_cargo_img /bin/sh -c 'rm -rf /home/rustdevuser/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/share/doc'
 
 echo " "
-echo "  Install cargo-auto. It will pull the cargo-index registry. The first pull can take some time."
+echo "\033[0;33m    Install cargo-auto. It will pull the cargo-index registry. The first pull can take some time. \033[0m"
 buildah run rust_dev_cargo_img /bin/sh -c 'cargo install cargo-auto'
 buildah run rust_dev_cargo_img /bin/sh -c 'curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh'
 buildah run rust_dev_cargo_img /bin/sh -c 'cargo install dev_bestia_cargo_completion'
 
 echo " "
-echo "  Add line dev_bestia_cargo_completion to .bashrc"
+echo "\033[0;33m    Add line dev_bestia_cargo_completion to .bashrc \033[0m"
 buildah run rust_dev_cargo_img /bin/sh -c 'echo "# dev_bestia_cargo_completion" >> ~/.bashrc'
 buildah run rust_dev_cargo_img /bin/sh -c 'echo "complete -C dev_bestia_cargo_completion cargo" >> ~/.bashrc'
-echo "  Add ssh-agent to .bashrc, because it does not work in .bash_profile"
+echo "\033[0;33m    Add ssh-agent to .bashrc, because it does not work in .bash_profile \033[0m"
 buildah copy rust_dev_cargo_img 'bash_profile.conf' '/home/rustdevuser/.ssh/bash_profile.conf'
 buildah run rust_dev_cargo_img /bin/sh -c 'cat /home/rustdevuser/.ssh/bash_profile.conf >> ~/.bashrc'
 
 echo " "
-echo "  Remove unwanted files"
+echo "\033[0;33m    Remove unwanted files \033[0m"
 buildah run --user root rust_dev_cargo_img    apt -y autoremove
 buildah run --user root rust_dev_cargo_img    apt -y clean
 
 echo " "
-echo "  Finally save/commit the image named rust_dev_cargo_img"
+echo "\033[0;33m    Finally save/commit the image named rust_dev_cargo_img \033[0m"
 buildah commit rust_dev_cargo_img docker.io/bestiadev/rust_dev_cargo_img:latest
 
 # TODO: dynamically ask ' rustc --version' and write the answer in the tag:
-buildah tag docker.io/bestiadev/rust_dev_cargo_img:latest docker.io/bestiadev/rust_dev_cargo_img:cargo-1.60.0
+buildah tag docker.io/bestiadev/rust_dev_cargo_img:latest docker.io/bestiadev/rust_dev_cargo_img:cargo-1.61.0
 
 echo " "
-echo "  To create the container 'rust_dev_cargo_cnt' use:"
-echo "podman create -ti --name rust_dev_cargo_cnt docker.io/bestiadev/rust_dev_cargo_img:latest"
-echo "podman restart rust_dev_cargo_cnt"
-echo "podman exec -it rust_dev_cargo_cnt bash"
+echo "\033[0;33m    To create the container 'rust_dev_cargo_cnt' use: \033[0m"
+echo "\033[0;33m podman create -ti --name rust_dev_cargo_cnt docker.io/bestiadev/rust_dev_cargo_img:latest \033[0m"
+echo "\033[0;33m podman restart rust_dev_cargo_cnt \033[0m"
+echo "\033[0;33m podman exec -it rust_dev_cargo_cnt bash \033[0m"
 
 echo " "
-echo "  Try to build and run a sample Rust project:"
-echo "cargo new rust_dev_hello"
-echo "cd rust_dev_hello"
-echo "cargo run"
+echo "\033[0;33m    Try to build and run a sample Rust project: \033[0m"
+echo "\033[0;33m cargo new rust_dev_hello \033[0m"
+echo "\033[0;33m cd rust_dev_hello \033[0m"
+echo "\033[0;33m cargo run \033[0m"
 
 echo " "
-echo "  Detach container (it will remain 'started') with:"
-echo "Ctrl+P, Ctrl+Q"
+echo "\033[0;33m    Detach container (it will remain 'started') with: \033[0m"
+echo "\033[0;33m Ctrl+P, Ctrl+Q \033[0m"
 
 echo " "
-echo "  To Exit/Stop the container type:"
-echo "exit"
+echo "\033[0;33m    To Exit/Stop the container type: \033[0m"
+echo "\033[0;33m exit \033[0m"

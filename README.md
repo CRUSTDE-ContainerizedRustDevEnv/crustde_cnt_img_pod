@@ -393,7 +393,7 @@ First let find the rustc version:
 
 ```bash
 rustc --version
-  rustc 1.60.0 (7737e0b5c 2022-04-04)
+  rustc 1.61.0 (7737e0b5c 2022-04-04)
 ```
 
 Let create and run a small Rust program:
@@ -476,11 +476,11 @@ podman login --username bestiadev docker.io
 # type docker access token
 
 podman push docker.io/bestiadev/rust_dev_cargo_img:latest
-podman push docker.io/bestiadev/rust_dev_cargo_img:cargo-1.60.0
+podman push docker.io/bestiadev/rust_dev_cargo_img:cargo-1.61.0
 
 podman push docker.io/bestiadev/rust_dev_vscode_img:latest
 podman push docker.io/bestiadev/rust_dev_vscode_img:vscode-1.67.1
-podman push docker.io/bestiadev/rust_dev_vscode_img:cargo-1.60.0
+podman push docker.io/bestiadev/rust_dev_vscode_img:cargo-1.61.0
 
 podman push docker.io/bestiadev/rust_dev_squid_img:latest
 podman push docker.io/bestiadev/rust_dev_squid_img:squid-3.5.27-2
@@ -488,7 +488,7 @@ podman push docker.io/bestiadev/rust_dev_squid_img:squid-3.5.27-2
 podman push docker.io/bestiadev/rust_dev_typescript_img:latest
 podman push docker.io/bestiadev/rust_dev_typescript_img:typescript-4.6.4
 podman push docker.io/bestiadev/rust_dev_typescript_img:vscode-1.67.1
-podman push docker.io/bestiadev/rust_dev_typescript_img:cargo-1.60.0
+podman push docker.io/bestiadev/rust_dev_typescript_img:cargo-1.61.0
 ```
 
 It takes some time to upload more than 2 Gb.
@@ -506,8 +506,8 @@ podman exec -it --user root rust_dev_vscode_cnt bash
 
 Rust is not so small. I saved some 600MB of space just deleting the docs folder, that actually noone needs.  
 docker.io/bestiadev/rust_dev_squid_img  squid3.5.27-2  168 MB
-docker.io/bestiadev/rust_dev_cargo_img  cargo-1.60.0  1.11 GB
-docker.io/bestiadev/rust_dev_vscode_img cargo-1.60.0  1.40 GB
+docker.io/bestiadev/rust_dev_cargo_img  cargo-1.61.0  1.11 GB
+docker.io/bestiadev/rust_dev_vscode_img cargo-1.61.0  1.40 GB
 
 ## Users keys for SSH
 

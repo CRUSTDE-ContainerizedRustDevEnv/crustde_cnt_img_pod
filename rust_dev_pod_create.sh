@@ -6,17 +6,17 @@
 # TODO: check if pod exists.
 
 echo " "
-echo "  Bash script to create the pod 'rust_dev_pod': 'rust_dev_pod_create.sh'"
-echo "  This 'pod' is made of the containers 'rust_dev_squid_cnt' and 'rust_dev_vscode_cnt'"
-echo "  All outbound network traffic from rust_dev_vscode_cnt goes through the proxy Squid."
-echo "  Published inbound network ports are 8001 on 'localhost'"
-# repository: https://github.com/bestia-dev/docker_rust_development"
+echo "\033[0;33m    Bash script to create the pod 'rust_dev_pod': 'rust_dev_pod_create.sh' \033[0m"
+echo "\033[0;33m    This 'pod' is made of the containers 'rust_dev_squid_cnt' and 'rust_dev_vscode_cnt' \033[0m"
+echo "\033[0;33m    All outbound network traffic from rust_dev_vscode_cnt goes through the proxy Squid. \033[0m"
+echo "\033[0;33m    Published inbound network ports are 8001 on 'localhost' \033[0m"
+# repository: https://github.com/bestia-dev/docker_rust_development
 
-echo "  setx.exe WSLENV 'USERPROFILE/p'"
-setx.exe WSLENV "USERPROFILE/p"
+echo "\033[0;33m    setx.exe WSLENV 'USERPROFILE/p' \033[0m"
+setx.exe WSLENV "USERPROFILE/p \033[0m"
 
 echo " "
-echo "  Create pod"
+echo "\033[0;33m    Create pod \033[0m"
 # in a "pod" the "publish port" is tied to the pod and not containers.
 
 podman pod create \
@@ -29,32 +29,32 @@ podman pod create \
 --name rust_dev_pod
 
 echo " "
-echo "  Create container rust_dev_squid_cnt in the pod"
+echo "\033[0;33m    Create container rust_dev_squid_cnt in the pod \033[0m"
 podman create --name rust_dev_squid_cnt \
 --pod=rust_dev_pod -ti \
 docker.io/bestiadev/rust_dev_squid_img:latest
 
 echo " "
-echo "  Create container rust_dev_vscode_cnt in the pod"
+echo "\033[0;33m    Create container rust_dev_vscode_cnt in the pod \033[0m"
 podman create --name rust_dev_vscode_cnt --pod=rust_dev_pod -ti \
 --env http_proxy=http://localhost:3128 \
 --env https_proxy=http://localhost:3128 \
 --env all_proxy=http://localhost:3128  \
 docker.io/bestiadev/rust_dev_typescript_img:latest
 
-echo "  Copy SSH server config"
+echo "\033[0;33m    Copy SSH server config \033[0m"
 podman cp ./etc_ssh_sshd_config.conf rust_dev_vscode_cnt:/etc/ssh/sshd_config
-echo "  Copy the files for host keys ed25519 for SSH server in rust_dev_pod"
+echo "\033[0;33m    Copy the files for host keys ed25519 for SSH server in rust_dev_pod \033[0m"
 podman cp ~/.ssh/rust_dev_pod_keys/etc/ssh/ssh_host_ed25519_key  rust_dev_vscode_cnt:/etc/ssh/ssh_host_ed25519_key
 podman cp ~/.ssh/rust_dev_pod_keys/etc/ssh/ssh_host_ed25519_key.pub  rust_dev_vscode_cnt:/etc/ssh/ssh_host_ed25519_key.pub
-echo "  Copy the public key of rustdevuser"
+echo "\033[0;33m    Copy the public key of rustdevuser \033[0m"
 podman cp ~/.ssh/rustdevuser_key.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/rustdevuser_key.pub
-echo "  Copy the personalized 'personal_keys_and_settings.sh' from win10 persistent folder to WSL2."
+echo "\033[0;33m    Copy the personalized 'personal_keys_and_settings.sh' from win10 persistent folder to WSL2. \033[0m"
 cp -v $USERPROFILE/.ssh/personal_keys_and_settings.sh ~/.ssh/personal_keys_and_settings.sh
 
-echo "  podman pod start"
+echo "\033[0;33m    podman pod start \033[0m"
 podman pod start rust_dev_pod
-echo "  User permissions:"
+echo "\033[0;33m    User permissions: \033[0m"
 
 # check the copied files
 # TODO: this commands return a WARN[0000] Error resizing exec session 
@@ -70,7 +70,7 @@ podman exec --user=rustdevuser rust_dev_vscode_cnt cat /etc/ssh/ssh_host_ed25519
 podman exec --user=rustdevuser rust_dev_vscode_cnt chmod 700 /home/rustdevuser/.ssh
 podman exec --user=rustdevuser rust_dev_vscode_cnt cat /home/rustdevuser/.ssh/rustdevuser_key.pub
 
-echo "add rustdevuser_key to authorized_keys"
+echo "\033[0;33m add rustdevuser_key to authorized_keys \033[0m"
 podman exec --user=rustdevuser rust_dev_vscode_cnt touch /home/rustdevuser/.ssh/authorized_keys
 # Chmod 600 (chmod a+rwx,u-x,g-rwx,o-rwx) sets permissions so that, 
 # (U)ser / owner can read, can write and can't execute. 
@@ -80,44 +80,44 @@ podman exec --user=rustdevuser rust_dev_vscode_cnt chmod 600 /home/rustdevuser/.
 podman exec --user=rustdevuser rust_dev_vscode_cnt /bin/sh -c 'cat /home/rustdevuser/.ssh/rustdevuser_key.pub >> /home/rustdevuser/.ssh/authorized_keys'
 podman exec --user=rustdevuser rust_dev_vscode_cnt cat /home/rustdevuser/.ssh/authorized_keys
 
-echo "  I have to disable the password for rustdevuser to enable SSH access with public key? Why?"
+echo "\033[0;33m    I have to disable the password for rustdevuser to enable SSH access with public key? Why? \033[0m"
 podman exec --user=root rust_dev_vscode_cnt usermod --password '*' rustdevuser
 
-echo "  Git global config"
+echo "\033[0;33m    Git global config \033[0m"
 podman exec --user=rustdevuser rust_dev_vscode_cnt git config --global pull.rebase false
 
-echo "  Start the SSH server"
+echo "\033[0;33m    Start the SSH server \033[0m"
 podman exec --user=root  rust_dev_vscode_cnt service ssh restart
 
-echo "  Remove the known_hosts for this pod/container."
+echo "\033[0;33m    Remove the known_hosts for this pod/container. \033[0m"
 ssh-keygen -f ~/.ssh/known_hosts -R "[localhost]:2201";
 setx.exe WSLENV "USERPROFILE/p";
 ssh-keygen -f $USERPROFILE/.ssh/known_hosts -R "[localhost]:2201";
 
-echo " Copy the personal files, SSH keys for github or publish-to-web,..."
+echo "\033[0;33m  Copy the personal files, SSH keys for github or publish-to-web,... \033[0m"
 sh ~/.ssh/personal_keys_and_settings.sh
 
 
 echo " "
-echo "  To start this 'pod' after a reboot type: "
-echo "podman pod restart rust_dev_pod"
-echo "podman exec --user=root rust_dev_vscode_cnt service ssh restart"
+echo "\033[0;33m    To start this 'pod' after a reboot type:  \033[0m"
+echo "\033[0;33m podman pod restart rust_dev_pod \033[0m"
+echo "\033[0;33m podman exec --user=root rust_dev_vscode_cnt service ssh restart \033[0m"
 
 echo " "
-echo "Open VSCode, press F1, type 'ssh' and choose 'Remote-SSH: Connect to Host...' and choose 'rust_dev_pod'" 
-echo "  This will open a new VSCode windows attached to the container. Type the passphrase."
-echo "  If needed Open VSCode terminal with Ctrl+J"
-echo "  Inside VSCode terminal, go to the project folder. Here we will create a sample project:"
-echo "cd ~/rustprojects"
-echo "cargo new rust_dev_hello"
-echo "cd ~/rustprojects/rust_dev_hello"
+echo "\033[0;33m Open VSCode, press F1, type 'ssh' and choose 'Remote-SSH: Connect to Host...' and choose 'rust_dev_pod' \033[0m" 
+echo "\033[0;33m    This will open a new VSCode windows attached to the container. Type the passphrase. \033[0m"
+echo "\033[0;33m    If needed Open VSCode terminal with Ctrl+J \033[0m"
+echo "\033[0;33m    Inside VSCode terminal, go to the project folder. Here we will create a sample project: \033[0m"
+echo "\033[0;33m cd ~/rustprojects \033[0m"
+echo "\033[0;33m cargo new rust_dev_hello \033[0m"
+echo "\033[0;33m cd ~/rustprojects/rust_dev_hello \033[0m"
 
 echo " "
-echo "  Secondly: open a new VSCode window exactly for this project/folder."
-echo "code ."
-echo "  A new VSCode windows will open for the 'rust_dev_hello' project. Retype the passphrase."
-echo "  You can close now all other VSCode windows."
+echo "\033[0;33m    Secondly: open a new VSCode window exactly for this project/folder. \033[0m"
+echo "\033[0;33m code . \033[0m"
+echo "\033[0;33m    A new VSCode windows will open for the 'rust_dev_hello' project. Retype the passphrase. \033[0m"
+echo "\033[0;33m    You can close now all other VSCode windows. \033[0m"
 
 echo " "
-echo "  Build and run the project in the VSCode terminal:"
-echo "cargo run"
+echo "\033[0;33m    Build and run the project in the VSCode terminal: \033[0m"
+echo "\033[0;33m cargo run \033[0m"
