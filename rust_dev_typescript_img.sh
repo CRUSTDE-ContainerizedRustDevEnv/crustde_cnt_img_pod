@@ -26,12 +26,12 @@ echo " "
 echo "\033[0;33m    Create new 'buildah container' named rust_dev_typescript_img from rust_dev_vscode_img \033[0m"
 set -o errexit
 
-buildah from --name rust_dev_typescript_img docker.io/bestiadev/rust_dev_vscode_img:vscode-1.67.1
+buildah from --name rust_dev_typescript_img docker.io/bestiadev/rust_dev_vscode_img:vscode-1.68.0
 
 buildah config \
 --author=github.com/bestia-dev \
 --label name=rust_dev_typescript_img \
---label version=typescript-4.6.4 \
+--label version=typescript-4.7.3 \
 --label source=github.com/bestia-dev/docker_rust_development \
 rust_dev_typescript_img
 
@@ -47,10 +47,16 @@ buildah run --user root rust_dev_typescript_img    apt -y upgrade
 echo " "
 echo "\033[0;33m    typescript compiler, nodejs, npm \033[0m"
 buildah run --user root rust_dev_typescript_img    apt install -y nodejs npm 
+echo "\033[0;33m    node -v \033[0m"
 buildah run --user root rust_dev_typescript_img    node -v
+# on 2022-06-09 is 12.22.5
+echo "\033[0;33m    npm -v \033[0m"
 buildah run --user root rust_dev_typescript_img    npm -v
+# on 2022-06-09 is 7.5.2
 buildah run --user root rust_dev_typescript_img    npm install -g typescript
+echo "\033[0;33m    tsc --version \033[0m"
 buildah run --user root rust_dev_typescript_img    tsc --version
+# on 2022-06-09 is 4.7.3
 
 echo " "
 echo "\033[0;33m    Remove unwanted files \033[0m"
@@ -61,6 +67,6 @@ echo " "
 echo "\033[0;33m    Finally save/commit the image named rust_dev_typescript_img \033[0m"
 buildah commit rust_dev_typescript_img docker.io/bestiadev/rust_dev_typescript_img:latest
 
-buildah tag docker.io/bestiadev/rust_dev_typescript_img:latest docker.io/bestiadev/rust_dev_typescript_img:typescript-4.6.4
-buildah tag docker.io/bestiadev/rust_dev_typescript_img:latest docker.io/bestiadev/rust_dev_typescript_img:vscode-1.67.1
+buildah tag docker.io/bestiadev/rust_dev_typescript_img:latest docker.io/bestiadev/rust_dev_typescript_img:typescript-4.7.3
+buildah tag docker.io/bestiadev/rust_dev_typescript_img:latest docker.io/bestiadev/rust_dev_typescript_img:vscode-1.68.0
 buildah tag docker.io/bestiadev/rust_dev_typescript_img:latest docker.io/bestiadev/rust_dev_typescript_img:cargo-1.61.0
