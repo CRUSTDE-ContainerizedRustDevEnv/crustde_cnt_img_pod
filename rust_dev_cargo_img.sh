@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# README:
+
 echo " "
 echo "\033[0;33m    Bash script to build the docker image for development in Rust. \033[0m"
 echo "\033[0;33m    Name of the image: rust_dev_cargo_img \033[0m"
@@ -13,8 +15,16 @@ echo "\033[0;33m    The final source code files will be pushed to github or copi
 echo "\033[0;33m    I want also to limit the network ports and addresses inbound and outbound. \033[0m"
 
 echo " "
+echo "\033[0;33m    FIRST !!! \033[0m"
+echo "\033[0;33m    Search and replace in this bash script: \033[0m"
+echo "\033[0;33m    Version of rustc: 1.62.0 \033[0m"
+echo "\033[0;33m    Version of rustup: 1.25.1 \033[0m"
+
+echo " "
 echo "\033[0;33m    To build the image, run in bash with: \033[0m"
 echo "\033[0;33m sh rust_dev_cargo_img.sh \033[0m"
+
+# Start of script actions:
 
 echo " "
 echo "\033[0;33m    Removing container and image if exists \033[0m"
@@ -36,7 +46,7 @@ buildah from --name rust_dev_cargo_img docker.io/library/debian:bullseye-slim
 buildah config \
 --author=github.com/bestia-dev \
 --label name=rust_dev_cargo_img \
---label version=cargo-1.61.0 \
+--label version=cargo-1.62.0 \
 --label source=github.com/bestia-dev/docker_rust_development \
 rust_dev_cargo_img
 
@@ -49,7 +59,7 @@ echo " "
 echo "\033[0;33m    Install curl, git, rsync and build-essential with root user \033[0m"
 # curl is the most used CLI for getting stuff from internet
 buildah run rust_dev_cargo_img    apt install -y curl
-# git is the legendary version control system
+# git is the legendary source control system
 buildah run rust_dev_cargo_img    apt install -y git
 # rsync is great for copying files and folders
 buildah run rust_dev_cargo_img    apt install -y rsync
@@ -96,8 +106,11 @@ OLDIMAGEPATH=$(buildah run rust_dev_cargo_img printenv PATH)
 buildah config --env PATH=/home/rustdevuser/.cargo/bin:$OLDIMAGEPATH rust_dev_cargo_img
 buildah run rust_dev_cargo_img /bin/sh -c 'echo $PATH'
 
+buildah run rust_dev_cargo_img /bin/sh -c 'rustup --version'
+# rustup 1.25.1 
+
 buildah run rust_dev_cargo_img /bin/sh -c '/home/rustdevuser/.cargo/bin/rustc --version'
-# rustc 1.61.0 (7737e0b5c 2022-04-04)
+# rustc 1.62.0 
 
 # this probably is not necessary, if rust-analyzer can call rust-lang.org
 # buildah config --env RUST_SRC_PATH=/home/rustdevuser/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library rust_dev_cargo_img
@@ -111,6 +124,7 @@ buildah run rust_dev_cargo_img /bin/sh -c 'rm -rf /home/rustdevuser/.rustup/tool
 echo " "
 echo "\033[0;33m    Install cargo-auto. It will pull the cargo-index registry. The first pull can take some time. \033[0m"
 buildah run rust_dev_cargo_img /bin/sh -c 'cargo install cargo-auto'
+echo "\033[0;33m    Install wasm pack \033[0m"
 buildah run rust_dev_cargo_img /bin/sh -c 'curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh'
 buildah run rust_dev_cargo_img /bin/sh -c 'cargo install dev_bestia_cargo_completion'
 
@@ -130,9 +144,15 @@ buildah run --user root rust_dev_cargo_img    apt -y clean
 echo " "
 echo "\033[0;33m    Finally save/commit the image named rust_dev_cargo_img \033[0m"
 buildah commit rust_dev_cargo_img docker.io/bestiadev/rust_dev_cargo_img:latest
+buildah tag docker.io/bestiadev/rust_dev_cargo_img:latest docker.io/bestiadev/rust_dev_cargo_img:cargo-1.62.0
 
-# TODO: dynamically ask ' rustc --version' and write the answer in the tag:
-buildah tag docker.io/bestiadev/rust_dev_cargo_img:latest docker.io/bestiadev/rust_dev_cargo_img:cargo-1.61.0
+echo " "
+echo "\033[0;33m    Upload the new image to docker hub. \033[0m"
+echo "\033[0;33m    First you need to store the credentials with: \033[0m"
+echo "\033[0;33m podman login --username bestiadev docker.io \033[0m"
+echo "\033[0;33m    then type docker access token. \033[0m"
+echo "\033[0;33m podman push docker.io/bestiadev/rust_dev_cargo_img:cargo-1.62.0 \033[0m"
+echo "\033[0;33m podman push docker.io/bestiadev/rust_dev_cargo_img:latest \033[0m"
 
 echo " "
 echo "\033[0;33m    To create the container 'rust_dev_cargo_cnt' use: \033[0m"

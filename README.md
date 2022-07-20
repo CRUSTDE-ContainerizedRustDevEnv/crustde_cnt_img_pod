@@ -460,7 +460,7 @@ Other extensions you can add manually through VSCode, but then it is not repeata
 ## Typescript compiler
 
 Some projects need the typescript compiler `tsc`. First we need to install nodejs with npm to install typescript.  
-The bash script `rust_dev_typescript_image.sh` will create a new image with typescript.  
+The bash script `rust_ts_dev_image.sh` will create a new image with typescript.  
 
 ## Push image to docker hub
 
@@ -486,10 +486,10 @@ podman push docker.io/bestiadev/rust_dev_vscode_img:latest
 podman push docker.io/bestiadev/rust_dev_squid_img:squid-3.5.27-2
 podman push docker.io/bestiadev/rust_dev_squid_img:latest
 
-podman push docker.io/bestiadev/rust_dev_typescript_img:typescript-4.7.3
-podman push docker.io/bestiadev/rust_dev_typescript_img:vscode-1.68.0
-podman push docker.io/bestiadev/rust_dev_typescript_img:cargo-1.61.0
-podman push docker.io/bestiadev/rust_dev_typescript_img:latest
+podman push docker.io/bestiadev/rust_ts_dev_img:typescript-4.7.3
+podman push docker.io/bestiadev/rust_ts_dev_img:vscode-1.68.0
+podman push docker.io/bestiadev/rust_ts_dev_img:cargo-1.61.0
+podman push docker.io/bestiadev/rust_ts_dev_img:latest
 ```
 
 It takes some time to upload more than 2 Gb.
