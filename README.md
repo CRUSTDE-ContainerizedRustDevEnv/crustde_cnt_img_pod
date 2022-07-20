@@ -54,6 +54,7 @@ curl -L -s https://github.com/bestia-dev/docker_rust_development/raw/main/person
 curl -L -s https://github.com/bestia-dev/docker_rust_development/raw/main/sshadd.sh --output $USERPROFILE/.ssh/sshadd.sh
 
 # use sed to replace these words with your own data and file names:
+# sed uses a strange syntax for replace 's/find_this/replace_with_this/g'
 # 'info@your.mail', 'your_name', 'githubssh1' and 'webserverssh1' 
 
 sed -i.bak 's/info@your.mail/info@my.mail/g' $USERPROFILE/.ssh/personal_keys_and_settings.sh
