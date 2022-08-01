@@ -458,11 +458,6 @@ VSCode is great because of its extensions. Most of these extensions are installe
 
 Other extensions you can add manually through VSCode, but then it is not repeatable. Better is to modify the script and recreate the image `rust_dev_vscode_img.sh`.
 
-## Typescript compiler
-
-Some projects need the typescript compiler `tsc`. First we need to install nodejs with npm to install typescript.  
-The bash script `rust_ts_dev_image.sh` will create a new image with typescript.  
-
 ## Push image to docker hub
 
 I signed in to hub.docker.com.
@@ -487,10 +482,6 @@ podman push docker.io/bestiadev/rust_dev_vscode_img:latest
 podman push docker.io/bestiadev/rust_dev_squid_img:squid-3.5.27-2
 podman push docker.io/bestiadev/rust_dev_squid_img:latest
 
-podman push docker.io/bestiadev/rust_ts_dev_img:typescript-4.7.3
-podman push docker.io/bestiadev/rust_ts_dev_img:vscode-1.68.0
-podman push docker.io/bestiadev/rust_ts_dev_img:cargo-1.61.0
-podman push docker.io/bestiadev/rust_ts_dev_img:latest
 ```
 
 It takes some time to upload more than 2 Gb.
@@ -929,6 +920,21 @@ ssh-keygen -f ~/.ssh/known_hosts -R "[localhost]:2201";
 setx.exe WSLENV "USERPROFILE/p";
 ssh-keygen -f $USERPROFILE/.ssh/known_hosts -R "[localhost]:2201";
 ```
+
+## Typescript compiler
+
+Some projects need the typescript compiler `tsc`. First we need to install nodejs with npm to install typescript. That is a lot of installation. This is because I don't want it in my default container. For typescript I created a new container image: `rust_ts_dev_image`.  
+The bash script `sh rust_ts_dev_image.sh` will create the new image with typescript.  
+Then we can use `sh rust_ts_dev_pod_create.sh` to create the podman pod with typescript.  
+And there is `sh rust_ts_dev_pod_after_reboot.sh` to use it after reboot.  
+You cannot use the pods `rust_dev_pod` and `rust_ts_dev_pod` simultaneously. You must run one or the other, because they use the same ports.  
+
+## PostgreSQL and pgAdmin
+
+Some projects need the database PostgreSQL 14. I created a new pod `rust_pg_dev_pod` with the command `sh rust_pg_dev_pod_create.sh`. You cannot use the pods `rust_dev_pod` and `rust_pg_dev_pod` simultaneously. You must run one or the other, because they use the same ports.  
+And there is `sh rust_pg_dev_pod_after_reboot.sh` to use it after reboot.  
+To use the administrative tool pgAdmin open the browser on `localhost:9876`.  
+You can change the user and passwords in the bash script `rust_pg_dev_pod_create.sh` to something stronger.  
 
 ## Read more
 
