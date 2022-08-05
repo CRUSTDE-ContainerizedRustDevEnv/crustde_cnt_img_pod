@@ -120,6 +120,13 @@ ssh-keygen -f $USERPROFILE/.ssh/known_hosts -R "[localhost]:2201";
 echo "\033[0;33m  Copy the personal files, SSH keys for github or publish-to-web,... \033[0m"
 sh ~/.ssh/personal_keys_and_settings.sh
 
+echo "\033[0;33m  install psql \033[0m"
+podman exec --user=root rust_dev_vscode_cnt /bin/sh -c 'export LANGUAGE="en_US.UTF-8"'
+podman exec --user=root rust_dev_vscode_cnt /bin/sh -c 'echo ''LANGUAGE="en_US.UTF-8"'' >> /etc/default/locale'
+podman exec --user=root rust_dev_vscode_cnt /bin/sh -c 'echo ''LC_ALL="en_US.UTF-8"'' >> /etc/default/locale'
+podman exec --user=root rust_dev_vscode_cnt /bin/sh -c 'apt install postgresql-client'
+
+
 echo " "
 echo "\033[0;33m    To start this 'pod' after a reboot of WSL/Windows use this bash script:  \033[0m"
 echo "\033[0;33m sh ~/rustprojects/docker_rust_development/rust_pg_dev_pod_after_reboot.sh \033[0m"

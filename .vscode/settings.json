@@ -47,6 +47,7 @@
         "printenv",
         "procps",
         "Prost",
+        "psql",
         "Pubkey",
         "publickey",
         "reqwest",

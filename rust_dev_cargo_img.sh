@@ -106,9 +106,15 @@ OLDIMAGEPATH=$(buildah run rust_dev_cargo_img printenv PATH)
 buildah config --env PATH=/home/rustdevuser/.cargo/bin:$OLDIMAGEPATH rust_dev_cargo_img
 buildah run rust_dev_cargo_img /bin/sh -c 'echo $PATH'
 
+echo "\033[0;33m    Debian version \033[0m"
+buildah run rust_dev_cargo_img /bin/sh -c 'cat /etc/debian_version'
+# debian bullseye 11.4
+
+echo "\033[0;33m    rustup version \033[0m"
 buildah run rust_dev_cargo_img /bin/sh -c 'rustup --version'
 # rustup 1.25.1 
 
+echo "\033[0;33m    rustc version \033[0m"
 buildah run rust_dev_cargo_img /bin/sh -c '/home/rustdevuser/.cargo/bin/rustc --version'
 # rustc 1.62.1 
 
