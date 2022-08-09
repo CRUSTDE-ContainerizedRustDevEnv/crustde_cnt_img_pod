@@ -73,6 +73,8 @@ buildah run rust_dev_cargo_img    apt install -y procps
 # pkg-config and libssl-dev are needed by the crate reqwest to work with TLS/SSL
 buildah run rust_dev_cargo_img    apt install -y pkg-config
 buildah run rust_dev_cargo_img    apt install -y libssl-dev
+# I will use postgres 13 in the future
+buildah run rust_dev_cargo_img    apt install -y postgresql-client
 
 echo " "
 echo "\033[0;33m    Create non-root user 'rustdevuser' and home folder. \033[0m"
