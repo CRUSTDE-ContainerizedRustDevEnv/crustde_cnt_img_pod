@@ -57,12 +57,12 @@ podman run --pod rust_pg_dev_pod \
 
 echo " "
 echo "\033[0;33m    Create container postgresql in the pod \033[0m"
-podman pull docker.io/library/postgres:14
+podman pull docker.io/library/postgres:13
 
 podman run --name postgresql --pod=rust_pg_dev_pod -d \
   -e POSTGRES_USER=admin \
   -e POSTGRES_PASSWORD=Passw0rd \
-  docker.io/library/postgres:14
+  docker.io/library/postgres:13
 
 
 echo "\033[0;33m    Copy SSH server config \033[0m"
@@ -125,23 +125,9 @@ podman exec --user=root rust_dev_vscode_cnt /bin/sh -c 'export LANGUAGE="en_US.U
 podman exec --user=root rust_dev_vscode_cnt /bin/sh -c 'export LC_ALL="C"'
 podman exec --user=root rust_dev_vscode_cnt /bin/sh -c 'echo ''LANGUAGE="en_US.UTF-8"'' >> /etc/default/locale'
 podman exec --user=root rust_dev_vscode_cnt /bin/sh -c 'echo ''LC_ALL="C"'' >> /etc/default/locale'
-echo "\033[0;33m  the Debian 11 packages are version 13, I need the version 14. \033[0m"
-echo "\033[0;33m  This version (13.7) on stable Debian 11 is not the one I want (14.4). I will get the 'testing' version from Debian 12.   \033[0m"
-echo "\033[0;33m  This is a fairly stable version. 'Testing' is the last stage before 'stable' and it has successfully passed most of the tests. \033[0m"
-echo "\033[0;33m  Temporarily I will add the 'testing' repository to install this package. And after that remove it. \033[0m"
-podman exec --user=root rust_dev_vscode_cnt /bin/sh -c 'cat /etc/apt/sources.list'
-podman exec --user=root rust_dev_vscode_cnt /bin/sh -c 'echo ''deb http://http.us.debian.org/debian/ testing non-free contrib main'' | tee -a /etc/apt/sources.list'
-podman exec --user=root rust_dev_vscode_cnt /bin/sh -c 'cat /etc/apt/sources.list'
-podman exec --user=root rust_dev_vscode_cnt /bin/sh -c 'apt update'
 podman exec --user=root rust_dev_vscode_cnt /bin/sh -c 'apt install -y postgresql-client'
 podman exec --user=root rust_dev_vscode_cnt /bin/sh -c 'psql --version'
-# psql (PostgreSQL) 14.4 (Debian 14.4-1+b1)
-echo "\033[0;33m  Great! This is the version I want. \033[0m"
-echo "\033[0;33m  Now remove the temporary added line \033[0m"
-podman exec --user=root rust_dev_vscode_cnt /bin/sh -c 'sed -i.bak "/deb http:\/\/http.us.debian.org\/debian\/ testing non-free contrib main/d" /etc/apt/sources.list'
-podman exec --user=root rust_dev_vscode_cnt /bin/sh -c 'cat /etc/apt/sources.list'
-podman exec --user=root rust_dev_vscode_cnt /bin/sh -c ''
-
+# psql (PostgreSQL) 13
 
 echo " "
 echo "\033[0;33m    To start this 'pod' after a reboot of WSL/Windows use this bash script:  \033[0m"
