@@ -140,9 +140,9 @@ echo " "
 echo "\033[0;33m    Add line dev_bestia_cargo_completion to .bashrc \033[0m"
 buildah run rust_dev_cargo_img /bin/sh -c 'echo "# dev_bestia_cargo_completion" >> ~/.bashrc'
 buildah run rust_dev_cargo_img /bin/sh -c 'echo "complete -C dev_bestia_cargo_completion cargo" >> ~/.bashrc'
-echo "\033[0;33m    Add ssh-agent to .bashrc, because it does not work in .bash_profile \033[0m"
-buildah copy rust_dev_cargo_img 'bash_profile.conf' '/home/rustdevuser/.ssh/bash_profile.conf'
-buildah run rust_dev_cargo_img /bin/sh -c 'cat /home/rustdevuser/.ssh/bash_profile.conf >> ~/.bashrc'
+echo "\033[0;33m    Add ssh-agent to .bashrc \033[0m"
+buildah copy rust_dev_cargo_img 'bashrc.conf' '/home/rustdevuser/.ssh/bashrc.conf'
+buildah run rust_dev_cargo_img /bin/sh -c 'cat /home/rustdevuser/.ssh/bashrc.conf >> ~/.bashrc'
 
 echo " "
 echo "\033[0;33m    Remove unwanted files \033[0m"

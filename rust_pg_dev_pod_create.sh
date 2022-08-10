@@ -121,13 +121,9 @@ echo "\033[0;33m  Copy the personal files, SSH keys for github or publish-to-web
 sh ~/.ssh/personal_keys_and_settings.sh
 
 echo "\033[0;33m  install psql \033[0m"
-podman exec --user=root rust_dev_vscode_cnt /bin/sh -c 'export LANGUAGE="en_US.UTF-8"'
-podman exec --user=root rust_dev_vscode_cnt /bin/sh -c 'export LC_ALL="C"'
-podman exec --user=root rust_dev_vscode_cnt /bin/sh -c 'echo ''LANGUAGE="en_US.UTF-8"'' >> /etc/default/locale'
-podman exec --user=root rust_dev_vscode_cnt /bin/sh -c 'echo ''LC_ALL="C"'' >> /etc/default/locale'
 podman exec --user=root rust_dev_vscode_cnt /bin/sh -c 'apt install -y postgresql-client'
 podman exec --user=root rust_dev_vscode_cnt /bin/sh -c 'psql --version'
-# psql (PostgreSQL) 13
+# psql (PostgreSQL) 13.7 (Debian 13.7-0+deb11u1)
 
 echo " "
 echo "\033[0;33m    To start this 'pod' after a reboot of WSL/Windows use this bash script:  \033[0m"
