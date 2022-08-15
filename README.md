@@ -7,7 +7,7 @@
 [![Lines in bash scripts](https://img.shields.io/badge/Lines_in_bash_scripts-722-blue.svg)](https://github.com/bestia-dev/docker_rust_development/)
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/bestia-dev/docker_rust_development/blob/master/LICENSE)
-![Hits](https://bestia.dev/webpage_hit_counter/get_svg_image/138544014)
+![Hits](https://bestia.dev/webpage_hit_counter/get_svg_image/138544014.svg)
 
 Hashtags: #rustlang #buildtool #developmenttool #tutorial #docker #ssh  
 My projects on Github are more like a tutorial than a finished product: [bestia-dev tutorials](https://github.com/bestia-dev/tutorials_rust_wasm).
