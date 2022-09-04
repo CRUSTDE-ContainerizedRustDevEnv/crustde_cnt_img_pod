@@ -42,7 +42,16 @@ podman create --name rust_dev_vscode_cnt --pod=rust_pg_dev_pod -ti \
 --env http_proxy=http://localhost:3128 \
 --env https_proxy=http://localhost:3128 \
 --env all_proxy=http://localhost:3128  \
+--volume /home/luciano/rust_volume:/mnt/rust_volume:Z
 docker.io/bestiadev/rust_dev_vscode_img:latest
+
+# to add the volume to a non-root container is special
+# I need to change the owner of the folder to the internal non-root uid. 
+# In my case it is 1000
+# podman unshare ls -al /home/luciano/
+# podman unshare chown 1000:1000 -R /home/luciano/rust_volume
+
+
 
 echo " "
 echo "\033[0;33m    Create container pgAdmin in the pod \033[0m"

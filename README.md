@@ -1,6 +1,6 @@
 # docker_rust_development
 
-**02. Tutorial for Rust development environment inside docker container. Rust - Hack Without Fear ! (docker_rust_development) (2022-03)**  
+**02. Tutorial for Rust development environment inside docker container. Rust - Hack Without Fear ! (2022-03)**  
 ***version: 2.0  date: 2022-04-13 author: [bestia.dev](https://bestia.dev) repository: [GitHub](https://github.com/bestia-dev/docker_rust_development)***  
 
 [![Lines in md](https://img.shields.io/badge/Lines_in_markdown-832-green.svg)](https://github.com/bestia-dev/docker_rust_development/)
@@ -9,7 +9,7 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/bestia-dev/docker_rust_development/blob/master/LICENSE)
 ![Hits](https://bestia.dev/webpage_hit_counter/get_svg_image/138544014.svg)
 
-Hashtags: #rustlang #buildtool #developmenttool #tutorial #docker #ssh  
+Hashtags: #rustlang #buildtool #developmenttool #tutorial #docker #ssh #container #podman 
 My projects on Github are more like a tutorial than a finished product: [bestia-dev tutorials](https://github.com/bestia-dev/tutorials_rust_wasm).
 
 ![spiral_of_madness](https://github.com/bestia-dev/docker_rust_development/raw/main/images/spiral_of_madness.png "spiral_of_madness")
@@ -31,15 +31,10 @@ Video tutorial on youtube:
 
 Super short instructions without explanation just in 2 easy steps. For tl;dr; continue reading below.
 I tested the script on a completely fresh installation of Debian on WSL2.  
-Prerequisites: Win10, WSL2, VSCode and curl:  
+Prerequisites: Win10, WSL2 and VSCode:  
 
-```bash
-sudo apt update
-sudo apt -y full-upgrade
-sudo apt install -y curl
-```
-
-1\. Prepare your existing SSH keys for github and publish-to-web, so you can use them from inside the container. Here we use the Win10 folder `~\.ssh` because we want this data to be persistent and can survive the destruction of the container or even WSL2.  
+1\. Prepare your personal data
+ existing SSH keys for github and publish-to-web inside ~/.ssh, so you can use them from inside the container.  
 
 Download the templates for bash scripts `personal_keys_and_settings.sh` and `sshadd.sh`. 
 Then modify the scripts: replace the placeholders with your own data and file_names.  
@@ -210,6 +205,7 @@ Let's install it. Open the `WSL2 terminal` and type:
 sudo apt update
 sudo apt install -y podman
 podman version
+   Version: 3.0.1
 ```
 
 Here we see some errors.
@@ -221,6 +217,7 @@ Wsl2 has a special kernel and Podman needs a small trick to work.
 <https://www.youtube.com/watch?v=fWFNGxJNZ8Y>
 
 ```bash
+mkdir $HOME/.config
 mkdir $HOME/.config/containers
 nano $HOME/.config/containers/containers.conf
 ```

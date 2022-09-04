@@ -13,9 +13,6 @@ echo "\033[0;33m    Published inbound network ports are 8001 on 'localhost' \033
 
 # Start of script actions:
 
-echo "\033[0;33m    setx.exe WSLENV 'USERPROFILE/p' \033[0m"
-setx.exe WSLENV "USERPROFILE/p \033[0m"
-
 echo " "
 echo "\033[0;33m    Create pod \033[0m"
 # in a "pod" the "publish port" is tied to the pod and not containers.
@@ -50,8 +47,6 @@ podman cp ~/.ssh/rust_dev_pod_keys/etc/ssh/ssh_host_ed25519_key  rust_dev_vscode
 podman cp ~/.ssh/rust_dev_pod_keys/etc/ssh/ssh_host_ed25519_key.pub  rust_dev_vscode_cnt:/etc/ssh/ssh_host_ed25519_key.pub
 echo "\033[0;33m    Copy the public key of rustdevuser \033[0m"
 podman cp ~/.ssh/rustdevuser_key.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/rustdevuser_key.pub
-echo "\033[0;33m    Copy the personalized 'personal_keys_and_settings.sh' from win10 persistent folder to WSL2. \033[0m"
-cp -v $USERPROFILE/.ssh/personal_keys_and_settings.sh ~/.ssh/personal_keys_and_settings.sh
 
 echo "\033[0;33m    podman pod start \033[0m"
 podman pod start rust_ts_dev_pod
@@ -92,8 +87,6 @@ podman exec --user=root  rust_dev_vscode_cnt service ssh restart
 
 echo "\033[0;33m    Remove the known_hosts for this pod/container. \033[0m"
 ssh-keygen -f ~/.ssh/known_hosts -R "[localhost]:2201";
-setx.exe WSLENV "USERPROFILE/p";
-ssh-keygen -f $USERPROFILE/.ssh/known_hosts -R "[localhost]:2201";
 
 echo "\033[0;33m  Copy the personal files, SSH keys for github or publish-to-web,... \033[0m"
 sh ~/.ssh/personal_keys_and_settings.sh
