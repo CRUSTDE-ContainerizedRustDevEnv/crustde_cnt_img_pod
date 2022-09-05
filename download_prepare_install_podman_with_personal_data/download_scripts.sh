@@ -64,7 +64,7 @@ if [ -f "$HOME/.ssh/personal_keys_and_settings.sh" ] && [ -f "$HOME/.ssh/sshadd.
 then
     echo "\033[0;33m    4. The files with your personal data already exist: ~/.ssh/personal_keys_and_settings_template.sh and ~/.ssh/sshadd.sh \033[0m"
     echo "\033[0;33m    You don't need to recreate them. Unless your data changed. Then simply delete them and run this script again."
-    echo "\033[0;33m    Now you can install podman and setup the keys rust_dev_pod_keys."
+    echo "\033[0;33m    Now you can install podman and setup the keys rustdevuser_key and rust_dev_pod_keys and."
     echo "\033[0;32m sh podman_install_and_setup.sh \033[0m"
 else 
     echo "\033[0;33m    4. Now you can run the first script with 4 parameters.  \033[0m"
