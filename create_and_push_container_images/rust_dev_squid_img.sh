@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 echo " "
 echo "\033[0;33m    Bash script to build the docker image for the Squid proxy server \033[0m"

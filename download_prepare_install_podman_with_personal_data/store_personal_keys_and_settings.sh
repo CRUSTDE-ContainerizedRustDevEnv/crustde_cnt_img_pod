@@ -1,9 +1,9 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 echo " "
 echo "\033[0;33m    Bash script to prepare personal keys and setting for the Rust development container. \033[0m"
 echo "\033[0;33m    They will be stored in ~/.ssh \033[0m"
-
+echo " "
 # store_personal_keys_and_settings.sh
 # repository: https://github.com/bestia-dev/docker_rust_development
 
@@ -14,11 +14,11 @@ echo "\033[0;33m    They will be stored in ~/.ssh \033[0m"
 
 # mandatory arguments
 if [ ! "$1" ] || [ ! "$2" ] || [ ! "$3" ] || [ ! "$4" ]; then
-  echo "\033[0;31m Error: All 4 arguments must be provided !\033[0m"
-  echo "Usage:"
-  echo "sh store_personal_keys_and_settings.sh info@your.mail your_name githubssh_filename webserverssh_filename"
-  echo "Example:"
-  echo "sh store_personal_keys_and_settings.sh info@bestia.dev bestia.dev lucianobestia_mac luciano_googlecloud"
+  echo "\033[0;31m    Error: All 4 arguments must be provided ! \033[0m"
+  echo "    Usage:"
+  echo "\033[0;32m sh store_personal_keys_and_settings.sh info@your.mail your_name githubssh_filename webserverssh_filename \033[0m"
+  echo "    Example:"
+  echo "\033[0;32m sh store_personal_keys_and_settings.sh info@bestia.dev bestia.dev lucianobestia_mac luciano_googlecloud \033[0m"
   exit 1;
 fi
 
@@ -26,6 +26,7 @@ echo "info@your.mail: $1";
 echo "your_name: $2";
 echo "githubssh_filename: $3";
 echo "webserverssh_filename: $4";
+echo " "
 
 cp personal_keys_and_settings_template.sh ~/.ssh/personal_keys_and_settings.sh
 cp sshadd_template.sh ~/.ssh/sshadd.sh
@@ -38,15 +39,6 @@ sed -i.bak "s/webserverssh1/$4/g" ~/.ssh/personal_keys_and_settings.sh
 sed -i.bak "s/githubssh1/$3/g" ~/.ssh/sshadd.sh
 sed -i.bak "s/webserverssh1/$4/g" ~/.ssh/sshadd.sh
 
-echo "Now you can create your pod.";
-echo "You can choose between 3 pods:";
-echo "1. pod with rust and vscode";
-echo "      sh ~/rustprojects/docker_rust_development_install/pod_with_rust_vscode/rust_dev_pod_create.sh";
-echo "2. pod with rust, postgres and vscode";
-echo "      sh ~/rustprojects/docker_rust_development_install/pod_with_rust_pg_vscode/rust_pg_dev_pod_create.sh";
-echo "3. pod with rust, typescript and vscode";
-echo "      sh ~/rustprojects/docker_rust_development_install/pod_with_rust__ts_vscode/rust_ts_dev_pod_create.sh";
+sh guide_to_create_pod.sh
 
-
-echo ""
 echo ""

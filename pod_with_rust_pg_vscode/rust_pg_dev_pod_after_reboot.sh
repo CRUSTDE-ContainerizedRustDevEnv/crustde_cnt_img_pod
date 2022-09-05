@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 echo " "
 echo "\033[0;33m    Bash script to restart the pod 'sh rust_pg_dev_pod_after_reboot.sh' \033[0m"

@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 echo "   Bash script to add your primary SSH keys to ssh_agent."
 # The ssh-agent is started already on login inside the ~/.bashrc script.

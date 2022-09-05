@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 echo " "
 echo "\033[0;33m    Bash script to backup personal data from WSL2 to windows \033[0m"

@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 echo " "
 echo "\033[0;33m    Bash script to restore personal data from windows to WSL2 \033[0m"

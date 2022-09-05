@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 echo " "
 echo "\033[0;33m    Bash script to install Podman and setup for rust_dev_pod for development in Rust with VSCode. \033[0m"
