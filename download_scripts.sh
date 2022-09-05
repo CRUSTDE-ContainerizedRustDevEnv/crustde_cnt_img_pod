@@ -3,51 +3,46 @@
 echo " "
 echo "\033[0;33m    Bash script to download all scripts needed to setup Rust development environment inside a docker container. \033[0m"
 echo "  run with "
-echo "curl -s https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/download_scripts.sh | sh "
+echo "curl -s -L https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/download_scripts.sh | sh "
 # download_scripts.sh
 # repository: https://github.com/bestia-dev/docker_rust_development
 
-echo " "
-echo "\033[0;33m    1. Install curl. We need curl to download the scripts. \033[0m"
-echo "\033[0;33m sudo apt install -y curl \033[0m"
-sudo apt install -y curl
-
-echo "\033[0;33m    2. Create dir ~/rustprojects/docker_rust_development_install \033[0m"
+echo "\033[0;33m    1. Create dir ~/rustprojects/docker_rust_development_install \033[0m"
 mkdir -p ~/rustprojects/docker_rust_development_install
 cd ~/rustprojects/docker_rust_development_install
 
-echo "\033[0;33m    3. Download all scripts from github \033[0m"
+echo "\033[0;33m    2. Download all scripts from github \033[0m"
 echo " personal_keys_and_settings_template"
-curl -L -s https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/personal_keys_and_settings_template.sh --output personal_keys_and_settings_template.sh
+curl -L https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/personal_keys_and_settings_template.sh --output personal_keys_and_settings_template.sh
 echo " sshadd_template"
-curl -L -s https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/sshadd_template.sh --output sshadd_template.sh
+curl -L https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/sshadd_template.sh --output sshadd_template.sh
 echo " store_personal_keys_and_settings"
-curl -L -s https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/store_personal_keys_and_settings.sh --output store_personal_keys_and_settings.sh
+curl -L https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/store_personal_keys_and_settings.sh --output store_personal_keys_and_settings.sh
 echo " backup_personal_data_from_wsl_to_win"
-curl -L -s https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/backup_personal_data_from_wsl_to_win.sh --output backup_personal_data_from_wsl_to_win.sh
+curl -L https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/backup_personal_data_from_wsl_to_win.sh --output backup_personal_data_from_wsl_to_win.sh
 echo " restore_personal_data_from_win_to_wsl"
-curl -L -s https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/restore_personal_data_from_win_to_wsl.sh --output restore_personal_data_from_win_to_wsl.sh
+curl -L https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/restore_personal_data_from_win_to_wsl.sh --output restore_personal_data_from_win_to_wsl.sh
 
 echo " podman_install_and_setup"
-curl -L -s https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/podman_install_and_setup.sh --output podman_install_and_setup.sh
+curl -L https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/podman_install_and_setup.sh --output podman_install_and_setup.sh
 
 echo " rust_dev_pod_create"
-curl -L -s https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/rust_dev_pod_create.sh --output rust_dev_pod_create.sh
+curl -L https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/rust_dev_pod_create.sh --output rust_dev_pod_create.sh
 echo " rust_dev_pod_after_reboot"
-curl -L -s https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/rust_dev_pod_after_reboot.sh --output rust_dev_pod_after_reboot.sh
+curl -L https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/rust_dev_pod_after_reboot.sh --output rust_dev_pod_after_reboot.sh
 
 echo " rust_pg_dev_pod_create"
-curl -L -s https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/rust_pg_dev_pod_create.sh --output rust_pg_dev_pod_create.sh
+curl -L https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/rust_pg_dev_pod_create.sh --output rust_pg_dev_pod_create.sh
 echo " rust_pg_dev_pod_after_reboot"
-curl -L -s https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/rust_pg_dev_pod_after_reboot.sh --output rust_pg_dev_pod_after_reboot.sh
+curl -L https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/rust_pg_dev_pod_after_reboot.sh --output rust_pg_dev_pod_after_reboot.sh
 
 echo ""
-echo "\033[0;33m    4. Now run this command in bash to change your working directory \033[0m"
+echo "\033[0;33m    3. Now run this command in bash to change your working directory \033[0m"
 echo "\033[0;32m cd ~/rustprojects/docker_rust_development_install \033[0m"
 
 # if both files already exist, don't need this step
 if [ -f ~/.ssh/personal_keys_and_settings_template.sh & -f ~/.ssh/sshadd.sh ]; then
-    echo "\033[0;33m    5. The files with your personal data already exist: ~/.ssh/personal_keys_and_settings_template.sh and ~/.ssh/sshadd.sh \033[0m"
+    echo "\033[0;33m    4. The files with your personal data already exist: ~/.ssh/personal_keys_and_settings_template.sh and ~/.ssh/sshadd.sh \033[0m"
     echo "\033[0;33m    You don't need to recreate them. Unless your data changed. Then simply delete them and run this script again. \033[0m"
     echo "Now you can create your pod.";
     echo "You can choose between 3 pods:";
@@ -58,7 +53,7 @@ if [ -f ~/.ssh/personal_keys_and_settings_template.sh & -f ~/.ssh/sshadd.sh ]; t
     echo "3. pod with rust, typescript and vscode";
     echo "      sh ~/rustprojects/docker_rust_development_install/pod_with_rust__ts_vscode/rust_ts_dev_pod_create.sh";
 else 
-    echo "\033[0;33m    5. Now run the first script with 4 parameters.  \033[0m"
+    echo "\033[0;33m    4. Now run the first script with 4 parameters.  \033[0m"
     echo "\033[0;33m    Change the parameters with your personal data. They are needed for the container.  \033[0m"
     echo "\033[0;33m    The files will be stored in ~/.ssh for later use. \033[0m"
     echo "\033[0;33m    Then follow the instructions from the next script. \033[0m"

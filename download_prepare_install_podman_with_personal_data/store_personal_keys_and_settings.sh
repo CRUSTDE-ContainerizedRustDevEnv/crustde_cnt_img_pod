@@ -19,7 +19,7 @@ if [ ! "$1" ] || [ ! "$2" ] || [ ! "$3" ] || [ ! "$4" ]; then
   echo "sh store_personal_keys_and_settings.sh info@your.mail your_name githubssh_filename webserverssh_filename"
   echo "Example:"
   echo "sh store_personal_keys_and_settings.sh info@bestia.dev bestia.dev lucianobestia_mac luciano_googlecloud"
-  exit 1
+  exit 1;
 fi
 
 echo "info@your.mail: $1";
