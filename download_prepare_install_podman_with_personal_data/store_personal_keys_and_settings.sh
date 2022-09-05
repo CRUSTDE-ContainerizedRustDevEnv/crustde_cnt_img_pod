@@ -38,3 +38,15 @@ sed -i.bak "s/webserverssh1/$4/g" ~/.ssh/personal_keys_and_settings.sh
 sed -i.bak "s/githubssh1/$3/g" ~/.ssh/sshadd.sh
 sed -i.bak "s/webserverssh1/$4/g" ~/.ssh/sshadd.sh
 
+echo "Now you can create your pod.";
+echo "You can choose between 3 pods:";
+echo "1. pod with rust and vscode";
+echo "      sh ~/rustprojects/docker_rust_development_install/pod_with_rust_vscode/rust_dev_pod_create.sh";
+echo "2. pod with rust, postgres and vscode";
+echo "      sh ~/rustprojects/docker_rust_development_install/pod_with_rust_pg_vscode/rust_pg_dev_pod_create.sh";
+echo "3. pod with rust, typescript and vscode";
+echo "      sh ~/rustprojects/docker_rust_development_install/pod_with_rust__ts_vscode/rust_ts_dev_pod_create.sh";
+
+
+echo ""
+echo ""

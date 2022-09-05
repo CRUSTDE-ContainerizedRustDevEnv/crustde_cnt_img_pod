@@ -2,12 +2,13 @@
 
 echo " "
 echo "\033[0;33m    Bash script to download all scripts needed to setup Rust development environment inside a docker container. \033[0m"
-
+echo "  run with "
+echo "curl -s https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/download_scripts.sh | sh "
 # download_scripts.sh
 # repository: https://github.com/bestia-dev/docker_rust_development
 
 echo " "
-echo "\033[0;33m    1. We need curl to download the scripts. \033[0m"
+echo "\033[0;33m    1. Install curl. We need curl to download the scripts. \033[0m"
 echo "\033[0;33m sudo apt install -y curl \033[0m"
 sudo apt install -y curl
 
@@ -44,8 +45,25 @@ echo ""
 echo "\033[0;33m    4. Now run this command in bash to change your working directory \033[0m"
 echo "\033[0;32m cd ~/rustprojects/docker_rust_development_install \033[0m"
 
-# if already exist, don't need this step
-echo "\033[0;33m    5. Now run the first script with 4 parameters.  \033[0m"
-echo "\033[0;33m    Change the parameters with your personal data. They are needed for the container.  \033[0m"
-echo "\033[0;33m    They will be stored in ~/.ssh \033[0m"
-echo "\033[0;32m sh store_personal_keys_and_settings.sh info@your.mail your_name githubssh_filename webserverssh_filename \033[0m"
+# if both files already exist, don't need this step
+if [ -f ~/.ssh/personal_keys_and_settings_template.sh & -f ~/.ssh/sshadd.sh ]; then
+    echo "\033[0;33m    5. The files with your personal data already exist: ~/.ssh/personal_keys_and_settings_template.sh and ~/.ssh/sshadd.sh \033[0m"
+    echo "\033[0;33m    You don't need to recreate them. Unless your data changed. Then simply delete them and run this script again. \033[0m"
+    echo "Now you can create your pod.";
+    echo "You can choose between 3 pods:";
+    echo "1. pod with rust and vscode";
+    echo "      sh ~/rustprojects/docker_rust_development_install/pod_with_rust_vscode/rust_dev_pod_create.sh";
+    echo "2. pod with rust, postgres and vscode";
+    echo "      sh ~/rustprojects/docker_rust_development_install/pod_with_rust_pg_vscode/rust_pg_dev_pod_create.sh";
+    echo "3. pod with rust, typescript and vscode";
+    echo "      sh ~/rustprojects/docker_rust_development_install/pod_with_rust__ts_vscode/rust_ts_dev_pod_create.sh";
+else 
+    echo "\033[0;33m    5. Now run the first script with 4 parameters.  \033[0m"
+    echo "\033[0;33m    Change the parameters with your personal data. They are needed for the container.  \033[0m"
+    echo "\033[0;33m    The files will be stored in ~/.ssh for later use. \033[0m"
+    echo "\033[0;33m    Then follow the instructions from the next script. \033[0m"
+    echo "\033[0;32m sh store_personal_keys_and_settings.sh info@your.mail your_name githubssh_filename webserverssh_filename \033[0m"
+fi
+
+echo ""
+echo ""

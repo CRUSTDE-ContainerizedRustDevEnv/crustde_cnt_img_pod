@@ -24,6 +24,9 @@ To be meticulously precise, you still have to trust the Windows code, Linux, GNU
 
 ## Try it
 
+Download and run the first script. It will download the rest of the scripts and explain the next steps:
+curl -s https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/.sh | sh
+
 Video tutorial on youtube:
 <!-- markdownlint-disable MD033 -->
 [<img src="https://github.com/bestia-dev/docker_rust_development/raw/main/images/thumbnail.png" width="400px">](https://bestia.dev/youtube/docker_rust_development.html)

@@ -11,5 +11,6 @@ echo "\033[0;33m    Bash script to backup personal data from WSL2 to windows \03
 setx.exe WSLENV "USERPROFILE/p"
 echo $USERPROFILE/.ssh/githubssh1
 
+# TODO: compress is more user friendly
 cp -v ~/.ssh/ $USERPROFILE/.ssh/
 
