@@ -40,7 +40,7 @@ podman create --name rust_dev_vscode_cnt --pod=rust_dev_pod -ti \
 docker.io/bestiadev/rust_dev_vscode_img:latest
 
 echo "\033[0;33m    Copy SSH server config \033[0m"
-podman cp ../etc_ssh_sshd_config.conf rust_dev_vscode_cnt:/etc/ssh/sshd_config
+podman cp ./etc_ssh_sshd_config.conf rust_dev_vscode_cnt:/etc/ssh/sshd_config
 echo "\033[0;33m    Copy the files for host keys ed25519 for SSH server in rust_dev_pod \033[0m"
 podman cp ~/.ssh/rust_dev_pod_keys/etc/ssh/ssh_host_ed25519_key  rust_dev_vscode_cnt:/etc/ssh/ssh_host_ed25519_key
 podman cp ~/.ssh/rust_dev_pod_keys/etc/ssh/ssh_host_ed25519_key.pub  rust_dev_vscode_cnt:/etc/ssh/ssh_host_ed25519_key.pub
