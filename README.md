@@ -151,7 +151,7 @@ Before entering any podman command we need first to clean some temporary files, 
 In `WSL2 terminal` restart the pod after reboot:
 
 ```bash
-sh ~/rustprojects/docker_rust_development/rust_dev_pod_after_reboot.sh
+sh ~/rustprojects/docker_rust_development/rust_dev_pod_after_wsl_reboot.sh
 ```
 
 7\. Eventually you will want to remove the entire pod. Docker containers and pods are ephemeral, it means just temporary. But your code and data must persist. Before destroying the pod/containers, push your changes to github, because it will destroy also all the data that is inside.  
@@ -877,7 +877,7 @@ Before entering any podman command we need first to clean some temporary files, 
 In `WSL2 terminal`:
 
 ```bash
-sh rust_dev_pod_after_reboot.sh
+sh rust_dev_pod_after_wsl_reboot.sh
 ```
 
 ## VSCode and file copying from win10
@@ -932,16 +932,16 @@ ssh-keygen -f $USERPROFILE/.ssh/known_hosts -R "[localhost]:2201";
 
 Some projects need the typescript compiler `tsc`. First we need to install nodejs with npm to install typescript. That is a lot of installation. This is because I don't want it in my default container. For typescript I created a new container image: `rust_ts_dev_image`.  
 The bash script `sh rust_ts_dev_image.sh` will create the new image with typescript.  
-Then we can use `sh rust_ts_dev_pod_create.sh` to create the podman pod with typescript.  
-And there is `sh rust_ts_dev_pod_after_reboot.sh` to use it after reboot.  
+Then we can use `sh rust_dev_pod_create.sh` to create the podman pod with typescript.  
+And there is `sh rust_ts_dev_pod_after_wsl_reboot.sh` to use it after reboot.  
 You cannot use the pods `rust_dev_pod` and `rust_ts_dev_pod` simultaneously. You must run one or the other, because they use the same ports.  
 
 ## PostgreSQL and pgAdmin
 
-Some projects need the database PostgreSQL 14. I created a new pod `rust_pg_dev_pod` with the command `sh rust_pg_dev_pod_create.sh`. You cannot use the pods `rust_dev_pod` and `rust_pg_dev_pod` simultaneously. You must run one or the other, because they use the same ports.  
-And there is `sh rust_pg_dev_pod_after_reboot.sh` to use it after reboot.  
+Some projects need the database PostgreSQL 14. I created a new pod `rust_pg_dev_pod` with the command `sh rust_dev_pod_create.sh`. You cannot use the pods `rust_dev_pod` and `rust_pg_dev_pod` simultaneously. You must run one or the other, because they use the same ports.  
+And there is `sh rust_pg_dev_pod_after_wsl_reboot.sh` to use it after reboot.  
 To use the administrative tool pgAdmin open the browser on `localhost:9876`.  
-You can change the user and passwords in the bash script `rust_pg_dev_pod_create.sh` to something stronger.  
+You can change the user and passwords in the bash script `rust_dev_pod_create.sh` to something stronger.  
 
 ## Read more
 

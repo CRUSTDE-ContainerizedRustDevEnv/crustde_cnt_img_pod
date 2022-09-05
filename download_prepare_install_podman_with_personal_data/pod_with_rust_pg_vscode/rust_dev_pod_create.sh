@@ -3,7 +3,7 @@
 # README:
 
 echo " "
-echo "\033[0;33m    Bash script to create the pod 'rust_pg_dev_pod': 'sh rust_pg_dev_pod_create.sh' \033[0m"
+echo "\033[0;33m    Bash script to create the pod 'rust_pg_dev_pod': 'sh rust_dev_pod_create.sh' \033[0m"
 echo "\033[0;33m    This 'pod' is made of 4 containers: 'rust_dev_squid_cnt', 'rust_dev_vscode_cnt', 'postgresql', 'pgAdmin' \033[0m"
 echo "\033[0;33m    It contains Rust, cargo, rustc, VSCode development environment' and postgreSQL with pgAdmin \033[0m"
 echo "\033[0;33m    All outbound network traffic from rust_dev_vscode_cnt goes through the proxy Squid. \033[0m"
@@ -42,16 +42,7 @@ podman create --name rust_dev_vscode_cnt --pod=rust_pg_dev_pod -ti \
 --env http_proxy=http://localhost:3128 \
 --env https_proxy=http://localhost:3128 \
 --env all_proxy=http://localhost:3128  \
---volume /home/luciano/rust_volume:/mnt/rust_volume:Z
 docker.io/bestiadev/rust_dev_vscode_img:latest
-
-# to add the volume to a non-root container is special
-# I need to change the owner of the folder to the internal non-root uid. 
-# In my case it is 1000
-# podman unshare ls -al /home/luciano/
-# podman unshare chown 1000:1000 -R /home/luciano/rust_volume
-
-
 
 echo " "
 echo "\033[0;33m    Create container pgAdmin in the pod \033[0m"
@@ -129,7 +120,7 @@ podman exec --user=root rust_dev_vscode_cnt /bin/sh -c 'psql --version'
 
 echo " "
 echo "\033[0;33m    To start this 'pod' after a reboot of WSL/Windows use this bash script:  \033[0m"
-echo "\033[0;33m sh ~/rustprojects/docker_rust_development/rust_pg_dev_pod_after_reboot.sh \033[0m"
+echo "\033[0;33m sh ~/rustprojects/docker_rust_development/rust_pg_dev_pod_after_wsl_reboot.sh \033[0m"
 echo "\033[0;33m    If you have already used it, you can find it in the bash history:  \033[0m"
 echo "\033[0;33m Ctrl-R, type after, press Tab, press Enter  \033[0m"
 echo "\033[0;33m    You can force the WSL reboot: Open powershell as Administrator:  \033[0m"

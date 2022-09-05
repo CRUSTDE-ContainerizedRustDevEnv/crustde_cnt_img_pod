@@ -3,7 +3,7 @@
 # README:
 
 echo " "
-echo "\033[0;33m    Bash script to create the pod 'rust_ts_dev_pod': 'sh rust_ts_dev_pod_create.sh' \033[0m"
+echo "\033[0;33m    Bash script to create the pod 'rust_ts_dev_pod': 'sh rust_dev_pod_create.sh' \033[0m"
 echo "\033[0;33m    This 'pod' is made of the containers 'rust_dev_squid_cnt' and 'rust_ts_dev_cnt' \033[0m"
 echo "\033[0;33m    It contains Rust, cargo, rustc, vscode and typescript development environment' \033[0m"
 echo "\033[0;33m    It uses the same ports as the 'rust_dev_pod', so only one of these can be used on the machine.  \033[0m"
@@ -94,7 +94,7 @@ sh ~/.ssh/personal_keys_and_settings.sh
 
 echo " "
 echo "\033[0;33m    To start this 'pod' after a reboot of WSL/Windows use this bash script:  \033[0m"
-echo "\033[0;33m sh ~/rustprojects/docker_rust_development/rust_ts_dev_pod_after_reboot.sh \033[0m"
+echo "\033[0;33m sh ~/rustprojects/docker_rust_development/rust_ts_dev_pod_after_wsl_reboot.sh \033[0m"
 echo "\033[0;33m    If you have already used it, you can find it in the bash history:  \033[0m"
 echo "\033[0;33m Ctrl-R, type after, press Tab, press Enter  \033[0m"
 echo "\033[0;33m    You can force the WSL reboot: Open powershell as Administrator:  \033[0m"

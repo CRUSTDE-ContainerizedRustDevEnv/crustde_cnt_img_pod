@@ -94,4 +94,4 @@ echo "\033[0;33m podman push docker.io/bestiadev/rust_dev_vscode_img:latest \033
 
 echo " "
 echo "\033[0;33m    This image is used solely inside the pod 'rust_ts_dev_pod'. \033[0m"
-echo "\033[0;33m    The command 'sh rust_ts_dev_pod_create.sh' inside the directory '~/rustprojects/docker_rust_development' creates the pod. \033[0m"
+echo "\033[0;33m    The command 'sh rust_dev_pod_create.sh' inside the directory '~/rustprojects/docker_rust_development' creates the pod. \033[0m"

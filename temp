@@ -2,3 +2,12 @@ sh store_personal_keys_and_settings.sh luciano.bestia@gmail.com bestia.dev lucia
 
 test -f my_file.txt && echo "file has been found"
 
+
+--volume /home/luciano/rust_volume:/mnt/rust_volume:Z
+
+# to add the volume to a non-root container is special
+# I need to change the owner of the folder to the internal non-root uid. 
+# In my case it is 1000
+# podman unshare ls -al /home/luciano/
+# podman unshare chown 1000:1000 -R /home/luciano/rust_volume
+

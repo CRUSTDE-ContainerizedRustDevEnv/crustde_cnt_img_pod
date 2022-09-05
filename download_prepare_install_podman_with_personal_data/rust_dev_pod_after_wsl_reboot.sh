@@ -1,10 +1,11 @@
 #!/bin/sh
 
 echo " "
-echo "\033[0;33m    Bash script to restart the pod 'sh rust_dev_pod_after_reboot.sh' \033[0m"
+echo "\033[0;33m    Bash script to restart the pod 'sh rust_dev_pod_after_wsl_reboot.sh' \033[0m"
+echo "\033[0;33m    Because WSL2 have some quirks.  \033[0m"
 # repository: https://github.com/bestia-dev/docker_rust_development
 echo " "
-echo "\033[0;33m    Warning: Use this only once after reboot! \033[0m"
+echo "\033[0;33m    Warning: Use this only once after WSL reboot! \033[0m"
 echo "\033[0;33m    You can simulate a reboot in windows powershell with: \033[0m"
 echo "\033[0;33m Get-Service LxssManager | Restart-Service \033[0m"
 echo "\033[0;33m    and then run this bash script again. \033[0m"

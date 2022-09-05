@@ -38,18 +38,18 @@ curl -L -sS https://github.com/bestia-dev/docker_rust_development/raw/main/downl
 
 echo " 8. rust_dev_pod_create"
 curl -L -sS https://github.com/bestia-dev/docker_rust_development/raw/main/pod_with_rust_vscode/rust_dev_pod_create.sh --output pod_with_rust_vscode/rust_dev_pod_create.sh
-echo " 9. rust_dev_pod_after_reboot"
-curl -L -sS https://github.com/bestia-dev/docker_rust_development/raw/main/pod_with_rust_vscode/rust_dev_pod_after_reboot.sh --output pod_with_rust_vscode/rust_dev_pod_after_reboot.sh
+echo " 9. rust_dev_pod_after_wsl_reboot"
+curl -L -sS https://github.com/bestia-dev/docker_rust_development/raw/main/pod_with_rust_vscode/rust_dev_pod_after_wsl_reboot.sh --output pod_with_rust_vscode/rust_dev_pod_after_wsl_reboot.sh
 
-echo " 10. rust_pg_dev_pod_create"
-curl -L -sS https://github.com/bestia-dev/docker_rust_development/raw/main/pod_with_rust_pg_vscode/rust_pg_dev_pod_create.sh --output pod_with_rust_pg_vscode/rust_pg_dev_pod_create.sh
-echo " 11. rust_pg_dev_pod_after_reboot"
-curl -L -sS https://github.com/bestia-dev/docker_rust_development/raw/main/pod_with_rust_pg_vscode/rust_pg_dev_pod_after_reboot.sh --output pod_with_rust_pg_vscode/rust_pg_dev_pod_after_reboot.sh
+echo " 10. rust_dev_pod_create"
+curl -L -sS https://github.com/bestia-dev/docker_rust_development/raw/main/pod_with_rust_pg_vscode/rust_dev_pod_create.sh --output pod_with_rust_pg_vscode/rust_dev_pod_create.sh
+echo " 11. rust_pg_dev_pod_after_wsl_reboot"
+curl -L -sS https://github.com/bestia-dev/docker_rust_development/raw/main/pod_with_rust_pg_vscode/rust_pg_dev_pod_after_wsl_reboot.sh --output pod_with_rust_pg_vscode/rust_pg_dev_pod_after_wsl_reboot.sh
 
-echo " 12. rust_ts_dev_pod_create"
-curl -L -sS https://github.com/bestia-dev/docker_rust_development/raw/main/pod_with_rust_ts_vscode/rust_ts_dev_pod_create.sh --output pod_with_rust_ts_vscode/rust_ts_dev_pod_create.sh
-echo " 13. rust_ts_dev_pod_after_reboot"
-curl -L -sS https://github.com/bestia-dev/docker_rust_development/raw/main/pod_with_rust_ts_vscode/rust_ts_dev_pod_after_reboot.sh --output pod_with_rust_ts_vscode/rust_ts_dev_pod_after_reboot.sh
+echo " 12. rust_dev_pod_create"
+curl -L -sS https://github.com/bestia-dev/docker_rust_development/raw/main/pod_with_rust_ts_vscode/rust_dev_pod_create.sh --output pod_with_rust_ts_vscode/rust_dev_pod_create.sh
+echo " 13. rust_ts_dev_pod_after_wsl_reboot"
+curl -L -sS https://github.com/bestia-dev/docker_rust_development/raw/main/pod_with_rust_ts_vscode/rust_ts_dev_pod_after_wsl_reboot.sh --output pod_with_rust_ts_vscode/rust_ts_dev_pod_after_wsl_reboot.sh
 
 echo " 14. README.md"
 curl -L -sS https://github.com/bestia-dev/docker_rust_development/raw/main/README.md --output README.md
