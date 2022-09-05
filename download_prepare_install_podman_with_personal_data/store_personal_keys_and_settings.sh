@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 echo " "
-echo "\033[0;33m    Bash script to install personal keys and setting into the Rust development container. \033[0m"
+echo "\033[0;33m    Bash script to prepare personal keys and setting for the Rust development container. \033[0m"
+echo "\033[0;33m    They will be stored in ~/.ssh \033[0m"
 
 # store_personal_keys_and_settings.sh
 # repository: https://github.com/bestia-dev/docker_rust_development

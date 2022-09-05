@@ -29,6 +29,13 @@ Video tutorial on youtube:
 [<img src="https://github.com/bestia-dev/docker_rust_development/raw/main/images/thumbnail.png" width="400px">](https://bestia.dev/youtube/docker_rust_development.html)
 <!-- markdownlint-enable MD033 -->
 
+
+
+curl -L -s https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/personal_keys_and_settings_template.sh --output personal_keys_and_settings_template.sh
+
+
+
+
 Super short instructions without explanation just in 2 easy steps. For tl;dr; continue reading below.
 I tested the script on a completely fresh installation of Debian on WSL2.  
 Prerequisites: Win10, WSL2 and VSCode:  
