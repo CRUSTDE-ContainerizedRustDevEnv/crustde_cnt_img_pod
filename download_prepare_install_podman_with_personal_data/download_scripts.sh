@@ -43,7 +43,7 @@ echo "\033[0;33m    3. Now run this command in bash to change your working direc
 echo "\033[0;32m cd ~/rustprojects/docker_rust_development_install \033[0m"
 
 # if both files already exist, don't need this step
-if [ test -f "~/.ssh/personal_keys_and_settings_template.sh" && test -f "~/.ssh/sshadd.sh" ]; then
+if [ -f "~/.ssh/personal_keys_and_settings_template.sh" -a -f "~/.ssh/sshadd.sh" ]; then
     echo "\033[0;33m    4. The files with your personal data already exist: ~/.ssh/personal_keys_and_settings_template.sh and ~/.ssh/sshadd.sh \033[0m"
     echo "\033[0;33m    You don't need to recreate them. Unless your data changed. Then simply delete them and run this script again. \033[0m"
     echo "Now you can create your pod.";
