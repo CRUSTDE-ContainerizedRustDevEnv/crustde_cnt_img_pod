@@ -22,19 +22,61 @@ We live in dangerous times for "supply chain attacks" in open-source and it is g
 In this project, you don't need to TRUST ME! You can run all the bash commands inside bash scripts line-by-line. My emphasis is to thoroughly comment and describe what is my intention for every single command. You can follow and observe exactly what is going on. This is the beauty of open-source. But this is realistic only for very simple projects.  
 To be meticulously precise, you still have to trust the Windows code, Linux, GNU tools, drivers, Podman, Buildah, VSCode, extensions, the microprocessor, memory, disc and many other projects. There is no system without an inherent minimal level of TRUST.
 
+## Speed
+
+I tried `cargo auto build` on my project `database_web_ui_on_server` on different settings.
+Here are the results:
+
+18s in container on WSL2 without shared volume
+8s  in container on WSL2 with shared volume
+6s  in WSL2
+
+11s in container on Debian (dual boot) without shared volume
+7s  in container on Debian (dual boot) with shared volume
+6s  in Debian (dual boot)
+
+when I changed the linker to "mold" on Debian
+4.43s in container on Debian (dual boot) without shared volume
+5.35s in container on Debian (dual boot) with shared volume
+3.66s in Debian (dual boot)  
+
+The "mold" linker is Linux only.
+
+nano ~/.cargo/config.toml
+[target.x86_64-unknown-linux-gnu]
+linker = "/usr/bin/clang"
+rustflags = ["-C", "link-arg=-fuse-ld=/usr/bin/mold"]
+
+
+downloaded from : https://github.com/rui314/mold/releases/download/v1.4.2/mold-1.4.2-x86_64-linux.tar.gz
+I Only copied the mold binary executable into /usr/bin
+
+Before that I installed clang:
+sudo apt-get install -y clang
+Test:
+clang --version
+Debian clang version 11.0.1-2
+
+
+
+
+
+
+
 ## Try it
 
-Download and run the first script. It will download the rest of the scripts and explain the next steps:
-curl -s https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/.sh | sh
+Download and run the first script. It will download the rest of the scripts and show instructions step-by-step.
+curl -sSf -L https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/download_scripts.sh | sh
+
+
+
+
+
 
 Video tutorial on youtube:
 <!-- markdownlint-disable MD033 -->
 [<img src="https://github.com/bestia-dev/docker_rust_development/raw/main/images/thumbnail.png" width="400px">](https://bestia.dev/youtube/docker_rust_development.html)
 <!-- markdownlint-enable MD033 -->
-
-
-
-curl -L -s https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/personal_keys_and_settings_template.sh --output personal_keys_and_settings_template.sh
 
 
 
@@ -933,8 +975,8 @@ ssh-keygen -f $USERPROFILE/.ssh/known_hosts -R "[localhost]:2201";
 Some projects need the typescript compiler `tsc`. First we need to install nodejs with npm to install typescript. That is a lot of installation. This is because I don't want it in my default container. For typescript I created a new container image: `rust_ts_dev_image`.  
 The bash script `sh rust_ts_dev_image.sh` will create the new image with typescript.  
 Then we can use `sh rust_dev_pod_create.sh` to create the podman pod with typescript.  
-And there is `sh rust_ts_dev_pod_after_wsl_reboot.sh` to use it after reboot.  
-You cannot use the pods `rust_dev_pod` and `rust_ts_dev_pod` simultaneously. You must run one or the other, because they use the same ports.  
+And there is `sh rust_dev_pod_after_wsl_reboot.sh` to use it after reboot.  
+You cannot use the pods `rust_dev_pod` and `rust_dev_pod` simultaneously. You must run one or the other, because they use the same ports.  
 
 ## PostgreSQL and pgAdmin
 

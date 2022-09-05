@@ -21,7 +21,7 @@ if [ ! -f ~/.ssh/rustdevuser_key ]; then
   echo "\033[0;33m    generate user key \033[0m"
   echo "\033[0;33m    give it a passphrase and remember it, you will need it \033[0m"
   echo "\033[0;33m    ssh-keygen -f ~/.ssh/rustdevuser_key -t ed25519 -C 'rustdevuser@rust_dev_pod' \033[0m"
-  ssh-keygen -f ~/.ssh/rustdevuser_key -t ed25519 -C "rustdevuser@rust_dev_pod \033[0m"
+  ssh-keygen -f ~/.ssh/rustdevuser_key -t ed25519 -C "rustdevuser@rust_dev_pod"
 else 
   echo "\033[0;33m    Key rustdevuser_key already exists. \033[0m"
 fi
@@ -79,12 +79,25 @@ if grep -q "Host rust_dev_vscode_cnt" "$HOME/.ssh/config"; then
   echo "\033[0;33m    VSCode config for SSH already exists. \033[0m"
 else
   echo "\033[0;33m    Add Host rust_dev_vscode_cnt to ~/.ssh/config \033[0m"
-  echo 'Host rust_dev_vscode_cnt
-  HostName localhost
-  Port 2201
-  User rustdevuser
-  IdentityFile ~\\.ssh\\rustdevuser_key
-  IdentitiesOnly yes' | tee -a ~/.ssh/config
+  
+  if grep -qi microsoft /proc/version; then  
+    # in VSCode Windows they use backslash
+    echo 'Host rust_dev_vscode_cnt
+HostName localhost
+Port 2201
+User rustdevuser
+IdentityFile ~\\.ssh\\rustdevuser_key
+IdentitiesOnly yes' | tee -a ~/.ssh/config
+  else
+    # in VSCode Debian they use slash
+    echo 'Host rust_dev_vscode_cnt
+HostName localhost
+Port 2201
+User rustdevuser
+IdentityFile ~/.ssh/rustdevuser_key
+IdentitiesOnly yes' | tee -a ~/.ssh/config
+  fi
+
 fi
 
 echo " "
@@ -103,5 +116,5 @@ echo "\033[0;33m    3. pod with rust, typescript and vscode: \033[0m"
 echo "\033[0;32m sh ~/rustprojects/docker_rust_development_install/pod_with_rust_ts_vscode/rust_dev_pod_create.sh \033[0m"
 echo ""
 echo "\033[0;33m    Check if the containers are started correctly \033[0m"
-echo "\033[0;33m podman ps \033[0m"
+echo "\033[0;32m podman ps \033[0m"
 echo "\033[0;33m    Every container must be started x seconds ago and not only created ! \033[0m"

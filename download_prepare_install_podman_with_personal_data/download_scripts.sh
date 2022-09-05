@@ -7,7 +7,7 @@ echo " "
 echo "\033[0;33m    Bash script to download all scripts needed to setup Rust development environment inside a docker container. \033[0m"
 echo "\033[0;33m    run with sh that aliases to dash and not bash in Debian: \033[0m"
 # -s silent -S show errors  -f fail-early -L redirect
-echo "\033[0;32m    curl -sSf -L https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/download_scripts.sh | sh \033[0m"
+echo "\033[0;32m curl -sSf -L https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/download_scripts.sh | sh \033[0m"
 # download_scripts.sh
 # repository: https://github.com/bestia-dev/docker_rust_development
 

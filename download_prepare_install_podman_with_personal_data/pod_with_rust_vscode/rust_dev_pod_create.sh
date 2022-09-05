@@ -15,6 +15,8 @@ echo "\033[0;33m    Published inbound network ports are 8001 on 'localhost' \033
 echo " "
 echo "\033[0;33m    Create pod \033[0m"
 # in a "pod" the "publish port" is tied to the pod and not containers.
+# http connection     8001
+# ssh connection      2201
 
 podman pod create \
 -p 127.0.0.1:8001:8001/tcp \
@@ -90,30 +92,33 @@ ssh-keygen -f ~/.ssh/known_hosts -R "[localhost]:2201";
 echo "\033[0;33m  Copy the personal files, SSH keys for github or publish-to-web,... \033[0m"
 sh ~/.ssh/personal_keys_and_settings.sh
 
-echo " "
-echo "\033[0;33m    To start this 'pod' after a reboot of WSL/Windows use this bash script:  \033[0m"
-echo "\033[0;33m sh ~/rustprojects/docker_rust_development/rust_dev_pod_after_wsl_reboot.sh \033[0m"
-echo "\033[0;33m    If you have already used it, you can find it in the bash history:  \033[0m"
-echo "\033[0;33m Ctrl-R, type after, press Tab, press Enter  \033[0m"
-echo "\033[0;33m    You can force the WSL reboot: Open powershell as Administrator:  \033[0m"
-echo "\033[0;33m  Get-Service LxssManager | Restart-Service \033[0m"
+# this step only for WSL:
+if grep -qi microsoft /proc/version; then
+    echo " "
+    echo "\033[0;33m    To start this 'pod' after a reboot of WSL/Windows use this bash script:  \033[0m"
+    echo "\033[0;32m sh ~/rustprojects/docker_rust_development/rust_dev_pod_after_wsl_reboot.sh \033[0m"
+    echo "\033[0;33m    If you have already used it, you can find it in the bash history:  \033[0m"
+    echo "\033[0;32m Ctrl-R, type after, press Tab, press Enter  \033[0m"
+    echo "\033[0;33m    You can force the WSL reboot: Open powershell as Administrator:  \033[0m"
+    echo "\033[0;32m  Get-Service LxssManager | Restart-Service \033[0m"
+fi
 
 echo " "
-echo "\033[0;33m Open VSCode, press F1, type 'ssh' and choose 'Remote-SSH: Connect to Host...' and choose 'rust_dev_pod' \033[0m" 
+echo "\033[0;33m    Open VSCode, press F1, type 'ssh' and choose 'Remote-SSH: Connect to Host...' and choose 'rust_dev_vscode_cnt' \033[0m" 
 echo "\033[0;33m    Type the passphrase. This will open a new VSCode windows attached to the container. \033[0m"
 echo "\033[0;33m    If needed Open VSCode terminal with Ctrl+J \033[0m"
 echo "\033[0;33m    Inside VSCode terminal, go to the project folder. Here we will create a sample project: \033[0m"
-echo "\033[0;33m cd ~/rustprojects \033[0m"
-echo "\033[0;33m cargo new rust_dev_hello \033[0m"
+echo "\033[0;32m cd ~/rustprojects \033[0m"
+echo "\033[0;32m cargo new rust_dev_hello \033[0m"
 echo "\033[0;33m    Secondly: open a new VSCode window exactly for this project/folder. \033[0m"
-echo "\033[0;33m code rust_dev_hello \033[0m"
+echo "\033[0;32m code rust_dev_hello \033[0m"
 echo "\033[0;33m    A new VSCode windows will open for the 'rust_dev_hello' project. Retype the passphrase. \033[0m"
 echo "\033[0;33m    You can close now all other VSCode windows. \033[0m"
 
 echo " "
 echo "\033[0;33m    Build and run the project in the VSCode terminal: \033[0m"
-echo "\033[0;33m cargo run \033[0m"
+echo "\033[0;32m cargo run \033[0m"
 
 echo " "
 echo "\033[0;33m    You can delete the pod and ALL of the DATA it contains: \033[0m"
-echo "\033[0;33m podman pod rm -f rust_dev_pod \033[0m"
+echo "\033[0;32m podman pod rm -f rust_dev_pod \033[0m"
