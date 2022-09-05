@@ -7,9 +7,8 @@ echo "\033[0;33m    Bash script to install personal keys and setting into the Ru
 # repository: https://github.com/bestia-dev/docker_rust_development
 
 # This script starts as a template with placeholders.
-# First, copy it into the Linux folder '~\.ssh' and rename it to "personal_keys_and_settings.sh".
-# There modify it with your personal data and file_names. You can use the command sed.
-# You need to replace the words: 
+# The script store_personal_keys_and_settings.sh copies it into the Linux folder '~\.ssh' and rename it to "personal_keys_and_settings.sh".
+# Then it replace the words: 
 # 'info@your.mail', 'your_name', 'githubssh1' and 'webserverssh1'
 # with you personal data and file_names.
 # Warning: Once modified, don't share this file with anyone and don't push it to Github, because it will contain your data.

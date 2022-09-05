@@ -36,8 +36,13 @@ fi
 
 echo " " 
 echo "\033[0;33m    2. Install Podman: \033[0m"
-echo "\033[0;33m    sudo apt install -y podman \033[0m"
-sudo apt install -y podman
+if ! [ -x "$(command -v podman)" ]; then
+  echo "\033[0;33m    sudo apt install -y podman \033[0m"
+  sudo apt install -y podman
+else
+  echo "\033[0;33m    Podman already installed. \033[0m"
+fi
+
 echo "\033[0;33m    podman --version \033[0m"
 podman --version
 # podman 3.0.1
@@ -63,8 +68,8 @@ fi
 
 echo " "
 echo "\033[0;33m    4. Docker hub uses https with TLS/SSL encryption. The server certificate cannot be recognized by podman. We will add it to the local system simply by using curl once. \033[0m"
-echo "\033[0;33m    curl -s -v https://registry-1.docker.io/v2/ -o /dev/null \033[0m"
-curl -s -v https://registry-1.docker.io/v2/ -o /dev/null
+echo "\033[0;33m    curl -s -v https://registry-1.docker.io/v2/ > /dev/null \033[0m"
+curl -s  https://registry-1.docker.io/v2/ > /dev/null
 echo "\033[0;33m    That's it. The server certificate is now locally recognized. \033[0m"
 
 echo " "
@@ -85,4 +90,18 @@ fi
 echo " "
 echo "\033[0;33m    Install and setup finished. \033[0m"
 
-sh guide_to_create_pod.sh
+echo ""
+echo "\033[0;33m    Now you can create your pod. \033[0m"
+echo "\033[0;33m    You can choose between 3 pods. You cannot use them simultaneously. You have to choose only one."
+echo "\033[0;33m    If the pod already exists remove it with: \033[0m"
+echo "\033[0;32m podman pod rm rust_dev_pod \033[0m"
+echo "\033[0;33m    1. pod with rust and vscode: \033[0m"
+echo "\033[0;32m sh ~/rustprojects/docker_rust_development_install/pod_with_rust_vscode/rust_dev_pod_create.sh \033[0m"
+echo "\033[0;33m    2. pod with rust, postgres and vscode: \033[0m"
+echo "\033[0;32m sh ~/rustprojects/docker_rust_development_install/pod_with_rust_pg_vscode/rust_dev_pod_create.sh \033[0m"
+echo "\033[0;33m    3. pod with rust, typescript and vscode: \033[0m"
+echo "\033[0;32m sh ~/rustprojects/docker_rust_development_install/pod_with_rust__ts_vscode/rust_dev_pod_create.sh \033[0m"
+echo ""
+echo "\033[0;33m    Check if the containers are started correctly \033[0m"
+echo "\033[0;33m podman ps \033[0m"
+echo "\033[0;33m    Every container must be started x seconds ago and not only created ! \033[0m"
