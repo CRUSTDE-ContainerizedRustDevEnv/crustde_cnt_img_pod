@@ -51,6 +51,9 @@ curl -L -sS https://github.com/bestia-dev/docker_rust_development/raw/main/pod_w
 echo " 13. rust_ts_dev_pod_after_reboot"
 curl -L -sS https://github.com/bestia-dev/docker_rust_development/raw/main/pod_with_rust_ts_vscode/rust_ts_dev_pod_after_reboot.sh --output pod_with_rust_ts_vscode/rust_ts_dev_pod_after_reboot.sh
 
+echo " 14. README.md"
+curl -L -sS https://github.com/bestia-dev/docker_rust_development/raw/main/README.md --output README.md
+
 echo ""
 echo "\033[0;33m    3. Now you can run this command to change your working directory \033[0m"
 echo "\033[0;32m cd ~/rustprojects/docker_rust_development_install \033[0m"
@@ -61,7 +64,8 @@ if [ -f "$HOME/.ssh/personal_keys_and_settings.sh" ] && [ -f "$HOME/.ssh/sshadd.
 then
     echo "\033[0;33m    4. The files with your personal data already exist: ~/.ssh/personal_keys_and_settings_template.sh and ~/.ssh/sshadd.sh \033[0m"
     echo "\033[0;33m    You don't need to recreate them. Unless your data changed. Then simply delete them and run this script again."
-    sh guide_to_create_pod.sh
+    echo "\033[0;33m    Now you can install podman and setup the keys rust_dev_pod_keys."
+    echo "\033[0;32m sh podman_install_and_setup.sh \033[0m"
 else 
     echo "\033[0;33m    4. Now you can run the first script with 4 parameters.  \033[0m"
     echo "\033[0;33m    Change the parameters with your personal data. They are needed for the container.  \033[0m"

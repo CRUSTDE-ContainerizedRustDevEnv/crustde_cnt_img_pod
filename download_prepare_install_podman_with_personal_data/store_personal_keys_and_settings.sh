@@ -39,6 +39,7 @@ sed -i.bak "s/webserverssh1/$4/g" ~/.ssh/personal_keys_and_settings.sh
 sed -i.bak "s/githubssh1/$3/g" ~/.ssh/sshadd.sh
 sed -i.bak "s/webserverssh1/$4/g" ~/.ssh/sshadd.sh
 
-sh guide_to_create_pod.sh
+echo "\033[0;33m    Now you can install podman and setup the keys rust_dev_pod_keys."
+echo "\033[0;32m sh podman_install_and_setup.sh \033[0m"
 
 echo ""
