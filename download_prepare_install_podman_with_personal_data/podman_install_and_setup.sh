@@ -59,10 +59,10 @@ if grep -qi microsoft /proc/version; then
     echo '  [engine]
     cgroup_manager = "cgroupfs"
     events_logger = "file"'
-    echo "\033[0;33m    | sudo tee -a $HOME/.config/containers/containers.conf \033[0m"
+    echo "\033[0;33m    | tee -a $HOME/.config/containers/containers.conf \033[0m"
     echo '[engine]
 cgroup_manager = "cgroupfs"
-events_logger = "file"' | sudo tee -a $HOME/.config/containers/containers.conf
+events_logger = "file"' | tee -a $HOME/.config/containers/containers.conf
   fi
 fi
 
@@ -84,7 +84,7 @@ else
   Port 2201
   User rustdevuser
   IdentityFile ~\\.ssh\\rustdevuser_key
-  IdentitiesOnly yes' | sudo tee -a ~/.ssh/config
+  IdentitiesOnly yes' | tee -a ~/.ssh/config
 fi
 
 echo " "
