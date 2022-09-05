@@ -40,19 +40,19 @@ echo " 8. podman_install_and_setup.sh"
 curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/podman_install_and_setup.sh --output podman_install_and_setup.sh
 
 echo " 10. pod_with_rust_vscode/rust_dev_pod_create.sh"
-curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/pod_with_rust_vscode/rust_dev_pod_create.sh --output pod_with_rust_vscode/rust_dev_pod_create.sh
+curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/pod_with_rust_vscode/rust_dev_pod_create.sh --output pod_with_rust_vscode/rust_dev_pod_create.sh    
 
 echo " 11. pod_with_rust_pg_vscode/rust_dev_pod_create.sh"
-curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/pod_with_rust_pg_vscode/rust_dev_pod_create.sh --output pod_with_rust_pg_vscode/rust_dev_pod_create.sh
+curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/pod_with_rust_pg_vscode/rust_dev_pod_create.sh --output pod_with_rust_pg_vscode/rust_dev_pod_create.sh
 
 echo " 12. pod_with_rust_pg_vscode/rust_dev_pod_create.sh"
-curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/pod_with_rust_ts_vscode/rust_dev_pod_create.sh --output pod_with_rust_ts_vscode/rust_dev_pod_create.sh
+curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/pod_with_rust_ts_vscode/rust_dev_pod_create.sh --output pod_with_rust_ts_vscode/rust_dev_pod_create.sh
 
 echo " 13. rust_dev_pod_after_wsl_reboot.sh"
-curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/rust_dev_pod_after_wsl_reboot.sh --output rust_dev_pod_after_wsl_reboot.sh
+curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/rust_dev_pod_after_wsl_reboot.sh --output rust_dev_pod_after_wsl_reboot.sh
 
 echo " 14. docker_rust_development_install.md"
-curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install.md --output docker_rust_development_install.md
+curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/docker_rust_development_install.md --output docker_rust_development_install.md
 
 echo ""
 echo "\033[0;33m    3. Now you can run this command to change your working directory \033[0m"
