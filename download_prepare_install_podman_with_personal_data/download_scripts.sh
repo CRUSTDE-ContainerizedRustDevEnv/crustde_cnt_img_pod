@@ -17,6 +17,7 @@ cd ~/rustprojects/docker_rust_development_install
 mkdir -p pod_with_rust_vscode
 mkdir -p pod_with_rust_pg_vscode
 mkdir -p pod_with_rust_ts_vscode
+mkdir -p pod_with_rust_ts_vscode_with_volume
 
 echo "\033[0;33m    2. Downloading all scripts from github \033[0m"
 
@@ -48,7 +49,6 @@ curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/down
 
 echo " 11. pod_with_rust_pg_vscode_with_volume/rust_dev_pod_create.sh"
 curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/pod_with_rust_ts_vscode_with_volume/rust_dev_pod_create.sh --output pod_with_rust_ts_vscode_with_volume/rust_dev_pod_create.sh
-
 echo " 12. rust_dev_pod_after_wsl_reboot.sh"
 curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/rust_dev_pod_after_wsl_reboot.sh --output rust_dev_pod_after_wsl_reboot.sh
 
