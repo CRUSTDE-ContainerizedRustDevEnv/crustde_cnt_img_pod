@@ -73,7 +73,7 @@ curl -s  https://registry-1.docker.io/v2/ > /dev/null
 echo "\033[0;33m    That's it. The server certificate is now locally recognized. \033[0m"
 
 echo " "
-echo "\033[0;33m    6. Prepare the config file for VSCode SSH: \033[0m"
+echo "\033[0;33m    5. Prepare the config file for VSCode SSH: \033[0m"
 echo "\033[0;33m    Check if the word rust_dev_vscode_cnt already exists in the config file. \033[0m"
 if grep -q "Host rust_dev_vscode_cnt" "$HOME/.ssh/config"; then
   echo "\033[0;33m    VSCode config for SSH already exists. \033[0m"
@@ -82,11 +82,14 @@ else
   
   if grep -qi microsoft /proc/version; then  
     # in VSCode Windows they use backslash
+    # here I need the windows profile folder
+    setx.exe WSLENV "USERPROFILE/p"
+
     echo 'Host rust_dev_vscode_cnt
 HostName localhost
 Port 2201
 User rustdevuser
-IdentityFile ~\\.ssh\\rustdevuser_key
+IdentityFile $USERPROFILE\\.ssh\\rustdevuser_key
 IdentitiesOnly yes' | tee -a ~/.ssh/config
   else
     # in VSCode Debian they use slash
