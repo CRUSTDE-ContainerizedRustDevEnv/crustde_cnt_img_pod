@@ -48,10 +48,13 @@ curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/down
 echo " 12. pod_with_rust_pg_vscode/rust_dev_pod_create.sh"
 curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/pod_with_rust_ts_vscode/rust_dev_pod_create.sh --output pod_with_rust_ts_vscode/rust_dev_pod_create.sh
 
-echo " 13. rust_dev_pod_after_wsl_reboot.sh"
+echo " 13. pod_with_rust_pg_vscode_with_volume/rust_dev_pod_create.sh"
+curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/pod_with_rust_ts_vscode_with_volume/rust_dev_pod_create.sh --output pod_with_rust_ts_vscode_with_volume/rust_dev_pod_create.sh
+
+echo " 14. rust_dev_pod_after_wsl_reboot.sh"
 curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/rust_dev_pod_after_wsl_reboot.sh --output rust_dev_pod_after_wsl_reboot.sh
 
-echo " 14. docker_rust_development_install.md"
+echo " 15. docker_rust_development_install.md"
 curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/docker_rust_development_install.md --output docker_rust_development_install.md
 
 echo ""
