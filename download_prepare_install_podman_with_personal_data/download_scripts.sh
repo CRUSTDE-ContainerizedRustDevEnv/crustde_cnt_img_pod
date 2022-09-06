@@ -31,30 +31,28 @@ curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/down
 echo " 5. restore_personal_data_from_win_to_wsl.sh"
 curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/restore_personal_data_from_win_to_wsl.sh --output restore_personal_data_from_win_to_wsl.sh
 
-echo " 6. bashrc.conf"
-curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/bashrc.conf --output bashrc.conf
-echo " 7. etc_ssh_sshd_config.conf"
+echo " 6. etc_ssh_sshd_config.conf"
 curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/etc_ssh_sshd_config.conf --output etc_ssh_sshd_config.conf
 
-echo " 8. podman_install_and_setup.sh"
+echo " 7. podman_install_and_setup.sh"
 curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/podman_install_and_setup.sh --output podman_install_and_setup.sh
 
-echo " 10. pod_with_rust_vscode/rust_dev_pod_create.sh"
+echo " 8. pod_with_rust_vscode/rust_dev_pod_create.sh"
 curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/pod_with_rust_vscode/rust_dev_pod_create.sh --output pod_with_rust_vscode/rust_dev_pod_create.sh    
 
-echo " 11. pod_with_rust_pg_vscode/rust_dev_pod_create.sh"
+echo " 9. pod_with_rust_pg_vscode/rust_dev_pod_create.sh"
 curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/pod_with_rust_pg_vscode/rust_dev_pod_create.sh --output pod_with_rust_pg_vscode/rust_dev_pod_create.sh
 
-echo " 12. pod_with_rust_pg_vscode/rust_dev_pod_create.sh"
+echo " 10. pod_with_rust_pg_vscode/rust_dev_pod_create.sh"
 curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/pod_with_rust_ts_vscode/rust_dev_pod_create.sh --output pod_with_rust_ts_vscode/rust_dev_pod_create.sh
 
-echo " 13. pod_with_rust_pg_vscode_with_volume/rust_dev_pod_create.sh"
+echo " 11. pod_with_rust_pg_vscode_with_volume/rust_dev_pod_create.sh"
 curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/pod_with_rust_ts_vscode_with_volume/rust_dev_pod_create.sh --output pod_with_rust_ts_vscode_with_volume/rust_dev_pod_create.sh
 
-echo " 14. rust_dev_pod_after_wsl_reboot.sh"
+echo " 12. rust_dev_pod_after_wsl_reboot.sh"
 curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/rust_dev_pod_after_wsl_reboot.sh --output rust_dev_pod_after_wsl_reboot.sh
 
-echo " 15. docker_rust_development_install.md"
+echo " 13. docker_rust_development_install.md"
 curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/docker_rust_development_install.md --output docker_rust_development_install.md
 
 echo ""
