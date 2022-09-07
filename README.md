@@ -94,7 +94,7 @@ Before entering any podman command we need first to clean some temporary files, 
 In `WSL2 terminal` restart the pod after reboot:
 
 ```bash
-sh ~/rustprojects/docker_rust_development_install/rust_dev_pod_after_wsl_reboot.sh
+sh ~/rustprojects/docker_rust_development_install/rust_dev_pod_after_reboot.sh
 podman ps
 ```
 
@@ -832,7 +832,7 @@ In `WSL2 terminal`:
 
 ```bash
 sh ~/rustprojects/docker_rust_development_install/
-sh rust_dev_pod_after_wsl_reboot.sh
+sh rust_dev_pod_after_reboot.sh
 ```
 
 If the restart is successful every container will be started a few seconds. It is not enough for containers to be in status "created". Then just repeat the restart procedure.
@@ -916,12 +916,12 @@ ssh-keygen -f $USERPROFILE/.ssh/known_hosts -R "[localhost]:2201";
 Some projects need the typescript compiler `tsc`. First we need to install nodejs with npm to install typescript. That is a lot of installation. This is because I don't want it in my default container. For typescript I created a new container image: `rust_ts_dev_image`.  
 The bash script `sh rust_ts_dev_image.sh` will create the new image with typescript.  
 Then we can use `sh download_prepare_install_podman_with_personal_data\pod_with_rust_ts_vscode\rust_dev_pod_create.sh.sh` to create the podman pod with typescript.  
-The same `sh rust_dev_pod_after_wsl_reboot.sh` is used after wsl reboot.  
+The same `sh rust_dev_pod_after_reboot.sh` is used after wsl reboot.  
 
 ## PostgreSQL and pgAdmin
 
 Some projects need the database PostgreSQL 13. I created a new pod with the command `sh download_prepare_install_podman_with_personal_data\pod_with_rust_pg_vscode\rust_dev_pod_create.sh`. 
-The same `sh rust_dev_pod_after_wsl_reboot.sh` is used after wsl reboot.  
+The same `sh rust_dev_pod_after_reboot.sh` is used after wsl reboot.  
 To use the administrative tool pgAdmin open the browser on `localhost:9876`.  
 If you want, you can change the user and passwords in the bash script `rust_dev_pod_create.sh` to something stronger.  
 

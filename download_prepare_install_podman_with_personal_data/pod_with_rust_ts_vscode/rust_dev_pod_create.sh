@@ -96,7 +96,7 @@ sh ~/.ssh/personal_keys_and_settings.sh
 if grep -qi microsoft /proc/version; then
     echo " "
     echo "\033[0;33m    To start this 'pod' after a reboot of WSL/Windows use this bash script:  \033[0m"
-    echo "\033[0;32m sh ~/rustprojects/docker_rust_development/rust_dev_pod_after_wsl_reboot.sh \033[0m"
+    echo "\033[0;32m sh ~/rustprojects/docker_rust_development/rust_dev_pod_after_reboot.sh \033[0m"
     echo "\033[0;33m    If you have already used it, you can find it in the bash history:  \033[0m"
     echo "\033[0;32m Ctrl-R, type after, press Tab, press Enter  \033[0m"
     echo "\033[0;33m    You can force the WSL reboot: Open powershell as Administrator:  \033[0m"
