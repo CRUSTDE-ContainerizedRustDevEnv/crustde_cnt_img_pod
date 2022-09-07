@@ -105,7 +105,7 @@ Be careful !
 In `WSL2 terminal`:
 
 ```bash
-podman pod rm -f rust_dev_pod_create 
+podman pod rm -f rust_dev_pod 
 ```
 
 ## Motivation
@@ -498,19 +498,19 @@ ssh-keygen -A -f ~/.ssh/rust_dev_pod_keys
 # check the new files
 # list user keys
 ls -l ~/.ssh | grep "rustdevuser"
-# -rw------- 1 luciano luciano  2655 Apr  3 12:03 rustdevuser_key
-# -rw-r--r-- 1 luciano luciano   569 Apr  3 12:03 rustdevuser_key.pub
+# -rw------- 1 rustdevuser rustdevuser  2655 Apr  3 12:03 rustdevuser_key
+# -rw-r--r-- 1 rustdevuser rustdevuser   569 Apr  3 12:03 rustdevuser_key.pub
 
 # list host keys
 ls -l ~/.ssh/rust_dev_pod_keys/etc/ssh
-# -rw------- 1 luciano luciano 1381 Apr  4 10:44 ssh_host_dsa_key
-# -rw-r--r-- 1 luciano luciano  603 Apr  4 10:44 ssh_host_dsa_key.pub
-# -rw------- 1 luciano luciano  505 Apr  4 10:44 ssh_host_ecdsa_key
-# -rw-r--r-- 1 luciano luciano  175 Apr  4 10:44 ssh_host_ecdsa_key.pub
-# -rw------- 1 luciano luciano  399 Apr  4 10:44 ssh_host_ed25519_key
-# -rw-r--r-- 1 luciano luciano   95 Apr  4 10:44 ssh_host_ed25519_key.pub
-# -rw------- 1 luciano luciano 2602 Apr  4 10:44 ssh_host_rsa_key
-# -rw-r--r-- 1 luciano luciano  567 Apr  4 10:44 ssh_host_rsa_key.pub
+# -rw------- 1 rustdevuser rustdevuser 1381 Apr  4 10:44 ssh_host_dsa_key
+# -rw-r--r-- 1 rustdevuser rustdevuser  603 Apr  4 10:44 ssh_host_dsa_key.pub
+# -rw------- 1 rustdevuser rustdevuser  505 Apr  4 10:44 ssh_host_ecdsa_key
+# -rw-r--r-- 1 rustdevuser rustdevuser  175 Apr  4 10:44 ssh_host_ecdsa_key.pub
+# -rw------- 1 rustdevuser rustdevuser  399 Apr  4 10:44 ssh_host_ed25519_key
+# -rw-r--r-- 1 rustdevuser rustdevuser   95 Apr  4 10:44 ssh_host_ed25519_key.pub
+# -rw------- 1 rustdevuser rustdevuser 2602 Apr  4 10:44 ssh_host_rsa_key
+# -rw-r--r-- 1 rustdevuser rustdevuser  567 Apr  4 10:44 ssh_host_rsa_key.pub
 ```
 
 If we use WSL2, the same keys we will need in Windows, because the VSCode client works in windows. We will copy them.  

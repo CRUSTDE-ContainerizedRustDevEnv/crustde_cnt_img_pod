@@ -36,22 +36,21 @@ podman create --name rust_dev_squid_cnt \
 --pod=rust_dev_pod -ti \
 docker.io/bestiadev/rust_dev_squid_img:latest
 
+# to add the volume to a non-root container is special
+# I need to change the owner of the folder to the internal non-root uid. 
+# In my case it is 1000
+mkdir -p $HOME/rustprojects_volume
+podman unshare ls -al $HOME/
+podman unshare chown 1000:1000 -R $HOME/rustprojects_volume
+
 echo " "
 echo "\033[0;33m    Create container rust_dev_vscode_cnt in the pod \033[0m"
 podman create --name rust_dev_vscode_cnt --pod=rust_dev_pod -ti \
 --env http_proxy=http://localhost:3128 \
 --env https_proxy=http://localhost:3128 \
 --env all_proxy=http://localhost:3128  \
---volume /home/luciano/rustprojects_volume:/mnt/rustprojects_volume:Z \
+--volume $HOME/rustprojects_volume:/mnt/rustprojects_volume:Z \
 docker.io/bestiadev/rust_dev_vscode_img:latest
-
-# to add the volume to a non-root container is special
-# I need to change the owner of the folder to the internal non-root uid. 
-# In my case it is 1000
-# podman unshare ls -al /home/luciano/
-# podman unshare chown 1000:1000 -R /home/luciano/rustprojects_volume
-
-
 
 echo " "
 echo "\033[0;33m    Create container pgAdmin in the pod \033[0m"
@@ -69,7 +68,6 @@ podman run --name postgresql --pod=rust_dev_pod -d \
   -e POSTGRES_USER=admin \
   -e POSTGRES_PASSWORD=Passw0rd \
   docker.io/library/postgres:13
-
 
 echo "\033[0;33m    Copy SSH server config \033[0m"
 podman cp ./etc_ssh_sshd_config.conf rust_dev_vscode_cnt:/etc/ssh/sshd_config
@@ -145,6 +143,7 @@ echo "\033[0;33m    If needed Open VSCode terminal with Ctrl+J \033[0m"
 echo "\033[0;33m    Inside VSCode terminal, go to the project folder. Here we will create a sample project: \033[0m"
 echo "\033[0;32m cd ~/rustprojects \033[0m"
 echo "\033[0;32m cargo new rust_dev_hello \033[0m"
+echo "Created binary (application) `rust_dev_hello` package"
 echo "\033[0;33m    Secondly: open a new VSCode window exactly for this project/folder. \033[0m"
 echo "\033[0;32m code rust_dev_hello \033[0m"
 echo "\033[0;33m    A new VSCode windows will open for the 'rust_dev_hello' project. Retype the passphrase. \033[0m"
@@ -153,6 +152,11 @@ echo "\033[0;33m    You can close now all other VSCode windows. \033[0m"
 echo " "
 echo "\033[0;33m    Build and run the project in the VSCode terminal: \033[0m"
 echo "\033[0;32m cargo run \033[0m"
+
+echo "Compiling rust_dev_hello v0.1.0 (/home/rustdevuser/rustprojects/rust_dev_hello)"
+echo "Finished dev [unoptimized + debuginfo] target(s) in 3.77s"
+echo "Running `target/debug/rust_dev_hello`"
+echo "Hello, world!"
 
 echo " "
 echo "\033[0;33m    You can administer your postgreSQL in the browser with username info@bestia.dev on: \033[0m"
