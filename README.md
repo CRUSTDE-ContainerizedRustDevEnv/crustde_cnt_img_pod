@@ -865,6 +865,31 @@ ls
   Remove-Variable -Name Key
 ```
 
+## Debian shutdown
+
+I got this error on shutdown: "A stop job running..." and it waits for 3 minutes.
+I think it is podman. I will try to add a script to stop podman before shutdown/reboot.
+This will be the content of 2 files:
+
+```bash
+#!/bin/sh
+podman pod stop --all
+podman stop --all
+```
+
+Now run nano or other editor and later chmod:
+
+``bash
+sudo nano /etc/rc0.d/K44podman-stop
+sudo nano /etc/rc6.d/K44podman-stop
+
+sudo chmod +x /etc/rc0.d/K44podman-stop
+sudo chmod +x /etc/rc6.d/K44podman-stop
+```
+
+
+
+
 ## Quirks
 
 It is a complex setting. There can be some quirks sometimes.
