@@ -42,7 +42,7 @@ podman create --name rust_dev_vscode_cnt --pod=rust_dev_pod -ti \
 docker.io/bestiadev/rust_ts_dev_vscode_img:latest
 
 echo "\033[0;33m    Copy SSH server config \033[0m"
-podman cp ./etc_ssh_sshd_config.conf rust_dev_vscode_cnt:/etc/ssh/sshd_config
+podman cp $HOME/rustprojects/docker_rust_development_install/etc_ssh_sshd_config.conf rust_dev_vscode_cnt:/etc/ssh/sshd_config
 echo "\033[0;33m    Copy the files for host keys ed25519 for SSH server in rust_dev_pod \033[0m"
 podman cp ~/.ssh/rust_dev_pod_keys/etc/ssh/ssh_host_ed25519_key  rust_dev_vscode_cnt:/etc/ssh/ssh_host_ed25519_key
 podman cp ~/.ssh/rust_dev_pod_keys/etc/ssh/ssh_host_ed25519_key.pub  rust_dev_vscode_cnt:/etc/ssh/ssh_host_ed25519_key.pub
@@ -56,7 +56,7 @@ echo "\033[0;33m    User permissions: \033[0m"
 # check the copied files
 # TODO: this commands return a WARN[0000] Error resizing exec session 
 # that looks like a bug in podman
-podman exec --user=rustdevuser rust_dev_vscode_cnt cat /etc/ssh/sshd_config
+# podman exec --user=rustdevuser rust_dev_vscode_cnt cat /etc/ssh/sshd_config
 # podman exec --user=rustdevuser rust_dev_vscode_cnt cat /etc/ssh/ssh_host_ed25519_key
 podman exec --user=rustdevuser rust_dev_vscode_cnt cat /etc/ssh/ssh_host_ed25519_key.pub
 # always is the problem in permissions
@@ -83,25 +83,29 @@ podman exec --user=root rust_dev_vscode_cnt usermod --password '*' rustdevuser
 echo "\033[0;33m    Git global config \033[0m"
 podman exec --user=rustdevuser rust_dev_vscode_cnt git config --global pull.rebase false
 
-echo "\033[0;33m    Start the SSH server \033[0m"
-podman exec --user=root  rust_dev_vscode_cnt service ssh restart
-
 echo "\033[0;33m    Remove the known_hosts for this pod/container. \033[0m"
 ssh-keygen -f ~/.ssh/known_hosts -R "[localhost]:2201";
 
 echo "\033[0;33m  Copy the personal files, SSH keys for github or publish-to-web,... \033[0m"
 sh ~/.ssh/personal_keys_and_settings.sh
+
+echo "\033[0;33m    Start the SSH server \033[0m"
+podman exec --user=root  rust_dev_vscode_cnt service ssh restart
  
 # this step only for WSL:
 if grep -qi microsoft /proc/version; then
     echo " "
     echo "\033[0;33m    To start this 'pod' after a reboot of WSL/Windows use this bash script:  \033[0m"
-    echo "\033[0;32m sh ~/rustprojects/docker_rust_development/rust_dev_pod_after_reboot.sh \033[0m"
+    echo "\033[0;32m sh ~/rustprojects/docker_rust_development_install/rust_dev_pod_after_reboot.sh \033[0m"
     echo "\033[0;33m    If you have already used it, you can find it in the bash history:  \033[0m"
     echo "\033[0;32m Ctrl-R, type after, press Tab, press Enter  \033[0m"
     echo "\033[0;33m    You can force the WSL reboot: Open powershell as Administrator:  \033[0m"
     echo "\033[0;32m  Get-Service LxssManager | Restart-Service \033[0m"
 fi
+
+echo " "
+echo "\033[0;33m    Fast ssh connection test from terminal: \033[0m"
+echo "\033[0;32m ssh -i ~/.ssh/rustdevuser_key -p 2201 rustdevuser@localhost \033[0m"
 
 echo " "
 echo "\033[0;33m    Open VSCode, press F1, type 'ssh' and choose 'Remote-SSH: Connect to Host...' and choose 'rust_dev_vscode_cnt' \033[0m" 
@@ -128,3 +132,5 @@ echo "Hello, world!"
 echo " "
 echo "\033[0;33m    You can delete the pod and ALL of the DATA it contains: \033[0m"
 echo "\033[0;32m podman pod rm -f rust_dev_pod \033[0m"
+
+echo " "

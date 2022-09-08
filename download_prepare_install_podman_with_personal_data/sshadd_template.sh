@@ -14,3 +14,4 @@ echo "   List public fingerprints inside ssh-agent:"
 echo "   ssh-add -l"
 ssh-add -l
 
+echo " "

@@ -27,7 +27,7 @@ podman pod list
 podman ps -a
 
 echo " "
-echo "\033[0;33m    Test the SSH connection from WSL2 terminal: \033[0m"
+echo "\033[0;33m    Test the SSH connection from bash terminal: \033[0m"
 echo "\033[0;32m ssh -i ~/.ssh/rustdevuser_key -p 2201 rustdevuser@localhost \033[0m"
 echo "\033[0;33m    Enter passphrase. \033[0m"
 echo "\033[0;33m    The prompt should change to: rustdevuser@rust_dev_pod:~$ \033[0m"
@@ -42,3 +42,5 @@ echo "\033[0;32m podman pod rm -f rust_dev_pod \033[0m"
 echo " "
 echo "\033[0;33m    Just for your info: the files /etc/rc0.d/K44podman-stop and /etc/rc6.d/K44podman-stop \033[0m"
 echo "\033[0;33m    will stop the pod before shutdown/reboot. \033[0m"
+
+echo " "

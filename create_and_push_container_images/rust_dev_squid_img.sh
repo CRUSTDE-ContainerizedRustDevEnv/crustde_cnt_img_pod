@@ -29,6 +29,9 @@ buildah from \
 --name rust_dev_squid_img \
 docker.io/sameersbn/squid:3.5.27-2
 
+echo "\033[0;33m    podman image tree docker.io/library/docker.io/sameersbn/squid:3.5.27-2 \033[0m"
+podman image tree docker.io/library/docker.io/sameersbn/squid:3.5.27-2
+
 buildah config \
 --author=github.com/bestia-dev \
 --label name=rust_dev_squid_img \
@@ -47,13 +50,21 @@ buildah run --user root rust_dev_squid_img    apt -y clean
 
 echo " "
 echo "\033[0;33m    Finally save/commit the image named rust_dev_squid_img \033[0m"
-buildah commit rust_dev_squid_img docker.io/bestiadev/rust_dev_squid_img:latest
+buildah commit --squash rust_dev_squid_img docker.io/bestiadev/rust_dev_squid_img:latest
 
 buildah tag docker.io/bestiadev/rust_dev_squid_img:latest docker.io/bestiadev/rust_dev_squid_img:squid-3.5.27-2
 
 echo " "
+echo "\033[0;33m    Upload the new image to docker hub. \033[0m"
+echo "\033[0;33m    First you need to store the credentials with: \033[0m"
+echo "\033[0;32m podman login --username bestiadev docker.io \033[0m"
+echo "\033[0;33m    then type docker access token. \033[0m"
+echo "\033[0;32m podman push docker.io/bestiadev/rust_dev_squid_img:squid-3.5.27-2 \033[0m"
+echo "\033[0;32m podman push docker.io/bestiadev/rust_dev_squid_img:latest \033[0m"
+
+echo " "
 echo "\033[0;33m    To create the 'pod' with 'rust_dev_squid_cnt' and 'rust_dev_vscode_cnt' use something similar to: \033[0m"
-echo "\033[0;32m cd ~/rustprojects/docker_rust_development/download_prepare_install_podman_with_personal_data/pod_with_rust_vscode  \033[0m"
+echo "\033[0;32m cd ~/rustprojects/docker_rust_development_install/download_prepare_install_podman_with_personal_data/pod_with_rust_vscode  \033[0m"
 echo "\033[0;32m sh rust_dev_pod_create.sh \033[0m"
 
 echo " "
@@ -65,3 +76,4 @@ echo "\033[0;32m curl --proxy 127.0.0.1:3128 http://httpbin.org/ip \033[0m"
 echo "origin: 127.0.0.1, 46.123.241.93"
 echo "\033[0;32m curl --proxy 127.0.0.1:3128 http://google.com \033[0m"
 echo "curl: (7) Failed to connect to 127.0.0.1 port 3128: Connection refused"
+echo " "

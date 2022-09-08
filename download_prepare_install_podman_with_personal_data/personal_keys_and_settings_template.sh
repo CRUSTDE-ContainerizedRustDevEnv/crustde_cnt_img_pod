@@ -45,4 +45,6 @@ echo "\033[0;33m    podman exec --user=rustdevuser rust_dev_vscode_cnt ls -l /ho
 podman exec --user=rustdevuser rust_dev_vscode_cnt ls -l /home/rustdevuser/.ssh
 
 echo "\033[0;33m    Copy the 'sshadd.sh' from Debian into the container\033[0m"
-podman cp ~/.ssh/sshadd.sh rust_dev_vscode_cnt:/home/rustdevuser/.ssh/sshadd.sh
+podman cp ~/.ssh/rust_dev_pod_keys/sshadd.sh rust_dev_vscode_cnt:/home/rustdevuser/.ssh/sshadd.sh
+
+echo " "

@@ -83,15 +83,16 @@ cargo run
 That should work and greet you with "Hello, world!"
 
 6\. After reboot, WSL2 can create some network problems for podman.  
-No problem for Debian on bare metal.  
+No problem for Debian on bare metal. But the script is ok to restart the pod and start the sshd server.
+So use it in both cases. 
 We can simulate the WSL2 reboot in `powershell in windows`:
 
 ```powershell
 Get-Service LxssManager | Restart-Service
 ```
 
-Before entering any podman command we need first to clean some temporary files, restart the pod and restart the SSh server.  
-In `WSL2 terminal` restart the pod after reboot:
+Before entering any podman command we need first to clean some temporary files, restart the pod and restart the SSH server.  
+In `host terminal` restart the pod after reboot:
 
 ```bash
 sh ~/rustprojects/docker_rust_development_install/rust_dev_pod_after_reboot.sh
@@ -645,7 +646,7 @@ netstat -tan
 ## VSCode
 
 Open VSCode and install the extension `Remote - SSH`.
-In VSCode `F1`, type `ssh` and choose `Remote-SSH: Open SSh configuration File...`.  
+In VSCode `F1`, type `ssh` and choose `Remote-SSH: Open SSH configuration File...`.  
 In Debian on bare metal:  
 choose  `~/.ssh/config` and type (if is missing)  
 
@@ -821,18 +822,20 @@ A good learning example.
 ## After reboot
 
 After reboot WSL2 can create some network problems for podman.  
+No problem for Debian on bare metal. But the script is ok to restart the pod and start the sshd server.
+So use it in both cases. 
 We can simulate the WSL2 reboot in `powershell in windows`:
 
 ```powershell
 Get-Service LxssManager | Restart-Service
 ```
 
-Before entering any podman command we need first to clean some temporary files, restart the pod and restart the SSh server.  
-In `WSL2 terminal`:
+Before entering any podman command we need first to clean some temporary files, restart the pod and restart the SSH server.  
+In `host terminal`:
 
 ```bash
-sh ~/rustprojects/docker_rust_development_install/
-sh rust_dev_pod_after_reboot.sh
+sh ~/rustprojects/docker_rust_development_install/rust_dev_pod_after_reboot.sh
+podman ps
 ```
 
 If the restart is successful every container will be started a few seconds. It is not enough for containers to be in status "created". Then just repeat the restart procedure.
@@ -877,18 +880,15 @@ podman pod stop --all
 podman stop --all
 ```
 
-Now run nano or other editor and later chmod:
+Now run nano or other editor, insert the content and then chmod the files:
 
-``bash
+```bash
 sudo nano /etc/rc0.d/K44podman-stop
 sudo nano /etc/rc6.d/K44podman-stop
 
 sudo chmod +x /etc/rc0.d/K44podman-stop
 sudo chmod +x /etc/rc6.d/K44podman-stop
 ```
-
-
-
 
 ## Quirks
 
@@ -916,12 +916,12 @@ ssh-keygen -f $USERPROFILE/.ssh/known_hosts -R "[localhost]:2201";
 Some projects need the typescript compiler `tsc`. First we need to install nodejs with npm to install typescript. That is a lot of installation. This is because I don't want it in my default container. For typescript I created a new container image: `rust_ts_dev_image`.  
 The bash script `sh rust_ts_dev_image.sh` will create the new image with typescript.  
 Then we can use `sh download_prepare_install_podman_with_personal_data\pod_with_rust_ts_vscode\rust_dev_pod_create.sh.sh` to create the podman pod with typescript.  
-The same `sh rust_dev_pod_after_reboot.sh` is used after wsl reboot.  
+The same `sh ~/rustprojects/docker_rust_development_install/rust_dev_pod_after_reboot.sh` is used after reboot.  
 
 ## PostgreSQL and pgAdmin
 
 Some projects need the database PostgreSQL 13. I created a new pod with the command `sh download_prepare_install_podman_with_personal_data\pod_with_rust_pg_vscode\rust_dev_pod_create.sh`. 
-The same `sh rust_dev_pod_after_reboot.sh` is used after wsl reboot.  
+The same `sh ~/rustprojects/docker_rust_development_install/rust_dev_pod_after_reboot.sh` is used after reboot.  
 To use the administrative tool pgAdmin open the browser on `localhost:9876`.  
 If you want, you can change the user and passwords in the bash script `rust_dev_pod_create.sh` to something stronger.  
 

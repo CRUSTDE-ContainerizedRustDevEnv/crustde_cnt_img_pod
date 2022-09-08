@@ -80,8 +80,8 @@ buildah run rust_dev_cargo_img    apt-get install -y clang
 buildah run rust_dev_cargo_img    clang --version
 # Debian clang version 11.0.1-2
 buildah copy rust_dev_cargo_img  'mold' '/usr/bin/'
-buildah run rust_dev_cargo_img    chown root:root mold
-buildah run rust_dev_cargo_img    chmod 755 mold
+buildah run rust_dev_cargo_img    chown root:root /usr/bin/mold
+buildah run rust_dev_cargo_img    chmod 755 /usr/bin/mold
 
 echo " "
 echo "\033[0;33m    Create non-root user 'rustdevuser' and home folder. \033[0m"
@@ -168,27 +168,28 @@ buildah tag docker.io/bestiadev/rust_dev_cargo_img:latest docker.io/bestiadev/ru
 echo " "
 echo "\033[0;33m    Upload the new image to docker hub. \033[0m"
 echo "\033[0;33m    First you need to store the credentials with: \033[0m"
-echo "\033[0;33m podman login --username bestiadev docker.io \033[0m"
+echo "\033[0;32m podman login --username bestiadev docker.io \033[0m"
 echo "\033[0;33m    then type docker access token. \033[0m"
-echo "\033[0;33m podman push docker.io/bestiadev/rust_dev_cargo_img:cargo-1.63.0 \033[0m"
-echo "\033[0;33m podman push docker.io/bestiadev/rust_dev_cargo_img:latest \033[0m"
+echo "\033[0;32m podman push docker.io/bestiadev/rust_dev_cargo_img:cargo-1.63.0 \033[0m"
+echo "\033[0;32m podman push docker.io/bestiadev/rust_dev_cargo_img:latest \033[0m"
 
 echo " "
 echo "\033[0;33m    To create the container 'rust_dev_cargo_cnt' use: \033[0m"
-echo "\033[0;33m podman create -ti --name rust_dev_cargo_cnt docker.io/bestiadev/rust_dev_cargo_img:latest \033[0m"
-echo "\033[0;33m podman restart rust_dev_cargo_cnt \033[0m"
-echo "\033[0;33m podman exec -it rust_dev_cargo_cnt bash \033[0m"
+echo "\033[0;32m podman create -ti --name rust_dev_cargo_cnt docker.io/bestiadev/rust_dev_cargo_img:latest \033[0m"
+echo "\033[0;32m podman restart rust_dev_cargo_cnt \033[0m"
+echo "\033[0;32m podman exec -it rust_dev_cargo_cnt bash \033[0m"
 
 echo " "
 echo "\033[0;33m    Try to build and run a sample Rust project: \033[0m"
-echo "\033[0;33m cargo new rust_dev_hello \033[0m"
-echo "\033[0;33m cd rust_dev_hello \033[0m"
-echo "\033[0;33m cargo run \033[0m"
+echo "\033[0;32m cargo new rust_dev_hello \033[0m"
+echo "\033[0;32m cd rust_dev_hello \033[0m"
+echo "\033[0;32m cargo run \033[0m"
 
 echo " "
 echo "\033[0;33m    Detach container (it will remain 'started') with: \033[0m"
-echo "\033[0;33m Ctrl+P, Ctrl+Q \033[0m"
+echo "\033[0;32m Ctrl+P, Ctrl+Q \033[0m"
 
 echo " "
 echo "\033[0;33m    To Exit/Stop the container type: \033[0m"
-echo "\033[0;33m exit \033[0m"
+echo "\033[0;32m exit \033[0m"
+echo " "

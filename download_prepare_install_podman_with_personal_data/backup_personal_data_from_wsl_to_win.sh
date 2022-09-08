@@ -14,3 +14,4 @@ echo $USERPROFILE/.ssh/githubssh1
 # TODO: compress is more user friendly
 cp -v ~/.ssh/ $USERPROFILE/.ssh/
 
+echo " "

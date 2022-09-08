@@ -14,3 +14,5 @@ setx.exe WSLENV "USERPROFILE/p"
 echo $USERPROFILE/.ssh/githubssh1
 
 cp -v $USERPROFILE/.ssh/ ~/.ssh/ 
+
+echo " "

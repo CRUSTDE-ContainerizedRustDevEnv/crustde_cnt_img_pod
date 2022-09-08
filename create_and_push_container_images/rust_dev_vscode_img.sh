@@ -78,6 +78,8 @@ buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/784b0177c56c607
 buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/784b0177c56c607789f9638da7b6bf3230d47a8c/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension dotjoshjohnson.xml'
 buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/784b0177c56c607789f9638da7b6bf3230d47a8c/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension serayuzgur.crates'
 buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/784b0177c56c607789f9638da7b6bf3230d47a8c/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension ms-vscode.live-server'
+buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/784b0177c56c607789f9638da7b6bf3230d47a8c/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension mtxr.sqltools'
+buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/784b0177c56c607789f9638da7b6bf3230d47a8c/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension mtxr.sqltools-driver-pg'
 
 echo " "
 echo "\033[0;33m    Remove unwanted files \033[0m"
@@ -93,12 +95,13 @@ buildah tag docker.io/bestiadev/rust_dev_vscode_img:latest docker.io/bestiadev/r
 echo " "
 echo "\033[0;33m    Upload the new image to docker hub. \033[0m"
 echo "\033[0;33m    First you need to store the credentials with: \033[0m"
-echo "\033[0;33m podman login --username bestiadev docker.io \033[0m"
+echo "\033[0;32m podman login --username bestiadev docker.io \033[0m"
 echo "\033[0;33m    then type docker access token. \033[0m"
-echo "\033[0;33m podman push docker.io/bestiadev/rust_dev_vscode_img:vscode-1.71.0 \033[0m"
-echo "\033[0;33m podman push docker.io/bestiadev/rust_dev_vscode_img:cargo-1.63.0 \033[0m"
-echo "\033[0;33m podman push docker.io/bestiadev/rust_dev_vscode_img:latest \033[0m"
+echo "\033[0;32m podman push docker.io/bestiadev/rust_dev_vscode_img:vscode-1.71.0 \033[0m"
+echo "\033[0;32m podman push docker.io/bestiadev/rust_dev_vscode_img:cargo-1.63.0 \033[0m"
+echo "\033[0;32m podman push docker.io/bestiadev/rust_dev_vscode_img:latest \033[0m"
 
 echo " "
 echo "\033[0;33m    This image is used solely inside the pod 'rust_dev_pod'. \033[0m"
 echo "\033[0;33m    The command 'sh rust_dev_pod_create.sh' inside the directory '~/rustprojects/docker_rust_development' creates the pod. \033[0m"
+echo " "

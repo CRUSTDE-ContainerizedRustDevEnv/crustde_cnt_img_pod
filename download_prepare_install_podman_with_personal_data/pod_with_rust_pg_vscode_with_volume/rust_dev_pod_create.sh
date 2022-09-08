@@ -4,7 +4,7 @@
 
 echo " "
 echo "\033[0;33m    Bash script to create the pod 'rust_dev_pod': 'sh rust_dev_pod_create.sh' \033[0m"
-echo "\033[0;33m    This 'pod' is made of 4 containers: 'rust_dev_squid_cnt', 'rust_dev_vscode_cnt', 'postgresql', 'pgAdmin' \033[0m"
+echo "\033[0;33m    This 'pod' is made of 4 containers: 'rust_dev_squid_cnt', 'rust_dev_vscode_cnt', 'rust_dev_postgresql_cnt', 'rust_dev_pgadmin_cnt' \033[0m"
 echo "\033[0;33m    It contains Rust, cargo, rustc, VSCode development environment' and postgreSQL with pgAdmin \033[0m"
 echo "\033[0;33m    All outbound network traffic from rust_dev_vscode_cnt goes through the proxy Squid. \033[0m"
 echo "\033[0;33m    Published inbound network ports are 8001 and 9876 on 'localhost' \033[0m"
@@ -57,20 +57,19 @@ echo "\033[0;33m    Create container pgAdmin in the pod \033[0m"
 podman run --pod rust_dev_pod \
 -e 'PGADMIN_DEFAULT_EMAIL=info@bestia.dev' \
 -e 'PGADMIN_DEFAULT_PASSWORD=Passw0rd'  \
---name pgadmin \
- -d docker.io/dpage/pgadmin4:latest
+--name rust_dev_pgadmin_cnt \
+ -d docker.io/bestiadev/rust_dev_pgadmin_img:pgadmin4
 
 echo " "
 echo "\033[0;33m    Create container postgresql in the pod \033[0m"
-podman pull docker.io/library/postgres:13
 
-podman run --name postgresql --pod=rust_dev_pod -d \
+podman run --name rust_dev_postgresql_cnt --pod=rust_dev_pod -d \
   -e POSTGRES_USER=admin \
   -e POSTGRES_PASSWORD=Passw0rd \
-  docker.io/library/postgres:13
+  docker.io/bestiadev/rust_dev_postgres_img:latest
 
 echo "\033[0;33m    Copy SSH server config \033[0m"
-podman cp ./etc_ssh_sshd_config.conf rust_dev_vscode_cnt:/etc/ssh/sshd_config
+podman cp ~/.ssh/rust_dev_pod_keys/etc_ssh_sshd_config.conf rust_dev_vscode_cnt:/etc/ssh/sshd_config
 echo "\033[0;33m    Copy the files for host keys ed25519 for SSH server in rust_dev_pod \033[0m"
 podman cp ~/.ssh/rust_dev_pod_keys/etc/ssh/ssh_host_ed25519_key  rust_dev_vscode_cnt:/etc/ssh/ssh_host_ed25519_key
 podman cp ~/.ssh/rust_dev_pod_keys/etc/ssh/ssh_host_ed25519_key.pub  rust_dev_vscode_cnt:/etc/ssh/ssh_host_ed25519_key.pub
@@ -84,7 +83,7 @@ echo "\033[0;33m    User permissions: \033[0m"
 # check the copied files
 # TODO: this commands return a WARN[0000] Error resizing exec session 
 # that looks like a bug in podman
-podman exec --user=rustdevuser rust_dev_vscode_cnt cat /etc/ssh/sshd_config
+# podman exec --user=rustdevuser rust_dev_vscode_cnt cat /etc/ssh/sshd_config
 # podman exec --user=rustdevuser rust_dev_vscode_cnt cat /etc/ssh/ssh_host_ed25519_key
 podman exec --user=rustdevuser rust_dev_vscode_cnt cat /etc/ssh/ssh_host_ed25519_key.pub
 # always is the problem in permissions
@@ -111,9 +110,6 @@ podman exec --user=root rust_dev_vscode_cnt usermod --password '*' rustdevuser
 echo "\033[0;33m    Git global config \033[0m"
 podman exec --user=rustdevuser rust_dev_vscode_cnt git config --global pull.rebase false
 
-echo "\033[0;33m    Start the SSH server \033[0m"
-podman exec --user=root  rust_dev_vscode_cnt service ssh restart
-
 echo "\033[0;33m    Remove the known_hosts for this pod/container. \033[0m"
 ssh-keygen -f ~/.ssh/known_hosts -R "[localhost]:2201";
 
@@ -125,17 +121,23 @@ podman exec --user=root rust_dev_vscode_cnt /bin/sh -c 'apt install -y postgresq
 podman exec --user=root rust_dev_vscode_cnt /bin/sh -c 'psql --version'
 # psql (PostgreSQL) 13.7 (Debian 13.7-0+deb11u1)
 
+echo "\033[0;33m    Start the SSH server \033[0m"
+podman exec --user=root  rust_dev_vscode_cnt service ssh restart
+
 # this step only for WSL:
 if grep -qi microsoft /proc/version; then
     echo " "
     echo "\033[0;33m    To start this 'pod' after a reboot of WSL/Windows use this bash script:  \033[0m"
-    echo "\033[0;32m sh ~/rustprojects/docker_rust_development/rust_dev_pod_after_reboot.sh \033[0m"
+    echo "\033[0;32m sh ~/rustprojects/docker_rust_development_install/rust_dev_pod_after_reboot.sh \033[0m"
     echo "\033[0;33m    If you have already used it, you can find it in the bash history:  \033[0m"
     echo "\033[0;32m Ctrl-R, type after, press Tab, press Enter  \033[0m"
     echo "\033[0;33m    You can force the WSL reboot: Open powershell as Administrator:  \033[0m"
     echo "\033[0;32m  Get-Service LxssManager | Restart-Service \033[0m"
 fi
 
+echo " "
+echo "\033[0;33m    Fast ssh connection test from terminal: \033[0m"
+echo "\033[0;32m ssh -i ~/.ssh/rustdevuser_key -p 2201 rustdevuser@localhost \033[0m"
 echo " "
 echo "\033[0;33m    Open VSCode, press F1, type 'ssh' and choose 'Remote-SSH: Connect to Host...' and choose 'rust_dev_vscode_cnt' \033[0m" 
 echo "\033[0;33m    Type the passphrase. This will open a new VSCode windows attached to the container. \033[0m"
@@ -165,3 +167,5 @@ echo "\033[0;32m localhost:9876 \033[0m"
 echo " "
 echo "\033[0;33m    You can delete the pod and ALL of the DATA it contains: \033[0m"
 echo "\033[0;32m podman pod rm -f rust_dev_pod \033[0m"
+
+echo " "

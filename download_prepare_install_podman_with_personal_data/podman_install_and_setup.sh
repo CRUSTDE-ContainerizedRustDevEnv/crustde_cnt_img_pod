@@ -84,7 +84,7 @@ else
     # in VSCode Windows they use backslash
     # here I need the windows profile folder
     setx.exe WSLENV "USERPROFILE/p"
-
+# TODO: is this working for WSL?
     echo 'Host rust_dev_vscode_cnt
 HostName localhost
 Port 2201
@@ -121,3 +121,5 @@ echo ""
 echo "\033[0;33m    Check if the containers are started correctly \033[0m"
 echo "\033[0;32m podman ps \033[0m"
 echo "\033[0;33m    Every container must be started x seconds ago and not only created ! \033[0m"
+
+echo " "

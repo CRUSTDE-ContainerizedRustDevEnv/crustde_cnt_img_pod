@@ -28,16 +28,16 @@ echo "githubssh_filename: $3";
 echo "webserverssh_filename: $4";
 echo " "
 
-cp personal_keys_and_settings_template.sh ~/.ssh/personal_keys_and_settings.sh
-cp sshadd_template.sh ~/.ssh/sshadd.sh
+cp personal_keys_and_settings_template.sh ~/.ssh/rust_dev_pod_keys/personal_keys_and_settings.sh
+cp sshadd_template.sh ~/.ssh/rust_dev_pod_keys/sshadd.sh
 
-sed -i.bak "s/info@your.mail/$1/g" ~/.ssh/personal_keys_and_settings.sh
-sed -i.bak "s/your_name/$2/g" ~/.ssh/personal_keys_and_settings.sh
-sed -i.bak "s/githubssh1/$3/g" ~/.ssh/personal_keys_and_settings.sh
-sed -i.bak "s/webserverssh1/$4/g" ~/.ssh/personal_keys_and_settings.sh
+sed -i.bak "s/info@your.mail/$1/g" ~/.ssh/rust_dev_pod_keys/personal_keys_and_settings.sh
+sed -i.bak "s/your_name/$2/g" ~/.ssh/rust_dev_pod_keys/personal_keys_and_settings.sh
+sed -i.bak "s/githubssh1/$3/g" ~/.ssh/rust_dev_pod_keys/personal_keys_and_settings.sh
+sed -i.bak "s/webserverssh1/$4/g" ~/.ssh/rust_dev_pod_keys/personal_keys_and_settings.sh
 
-sed -i.bak "s/githubssh1/$3/g" ~/.ssh/sshadd.sh
-sed -i.bak "s/webserverssh1/$4/g" ~/.ssh/sshadd.sh
+sed -i.bak "s/githubssh1/$3/g" ~/.ssh/rust_dev_pod_keys/sshadd.sh
+sed -i.bak "s/webserverssh1/$4/g" ~/.ssh/rust_dev_pod_keys/sshadd.sh
 
 echo "\033[0;33m    Now you can install podman and setup the keys rust_dev_pod_keys."
 echo "\033[0;32m sh podman_install_and_setup.sh \033[0m"
