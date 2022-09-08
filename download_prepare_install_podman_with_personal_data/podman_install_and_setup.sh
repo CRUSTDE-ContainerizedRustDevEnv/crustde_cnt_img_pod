@@ -16,6 +16,8 @@ echo "\033[0;33m    This is done only once. To avoid old crypto-algorithms I wil
 echo "\033[0;33m    mkdir  -p ~/.ssh/rust_dev_pod_keys/etc/ssh \033[0m"
 mkdir  -p ~/.ssh/rust_dev_pod_keys/etc/ssh
 
+cp ~/rustprojects/docker_rust_development_install/etc_ssh_sshd_config.conf ~/.ssh/rust_dev_pod_keys/etc_ssh_sshd_config.conf
+
 echo "\033[0;33m    If keys do not exist then generate them. \033[0m"
 if [ ! -f ~/.ssh/rustdevuser_key ]; then
   echo "\033[0;33m    generate user key \033[0m"

@@ -8,7 +8,7 @@ echo "\033[0;33m    Bash script to restart the pod 'sh rust_dev_pod_after_reboot
 # WSL2 have some quirks.
 if grep -qi microsoft /proc/version; then
     echo " "
-    echo "\033[0;33m    Warning: Use this only once after WSL reboot! \033[0m"
+    echo "\033[0;33m    Warning: Use this only once after Debian reboot! \033[0m"
     echo "\033[0;33m    You can simulate a reboot in windows powershell with: \033[0m"
     echo "\033[0;33m Get-Service LxssManager | Restart-Service \033[0m"
     echo "\033[0;33m    and then run this bash script again. \033[0m"
