@@ -1,6 +1,6 @@
 # docker_rust_development
 
-**02. Tutorial for Rust development environment inside docker container. Rust - Hack Without Fear and Truest! (2022-03)**  
+**02. Tutorial for Rust development environment inside docker container. Rust - Hack Without Fear and Trust! (2022-03)**  
 ***version: 3.0  date: 2022-09-06 author: [bestia.dev](https://bestia.dev) repository: [GitHub](https://github.com/bestia-dev/docker_rust_development)***  
 
 [![Lines in md](https://img.shields.io/badge/Lines_in_markdown-932-green.svg)](https://github.com/bestia-dev/docker_rust_development/)
