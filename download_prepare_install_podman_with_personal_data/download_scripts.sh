@@ -63,7 +63,7 @@ echo "\033[0;32m cd ~/rustprojects/docker_rust_development_install \033[0m"
 
 # if both files already exist, don't need this step
 # beware the last ] needs a space before it or it does not work!
-if [ -f "$HOME/.ssh/personal_keys_and_settings.sh" ] && [ -f "$HOME/.ssh/sshadd.sh" ];
+if [ -f "$HOME/.ssh/rust_dev_pod_keys/personal_keys_and_settings.sh" ] && [ -f "$HOME/.ssh/sshadd.sh" ];
 then
     echo "\033[0;33m    4. The files with your personal data already exist: ~/.ssh/personal_keys_and_settings_template.sh and ~/.ssh/sshadd.sh \033[0m"
     echo "\033[0;33m    You don't need to recreate them. Unless your data changed. Then simply delete them and run this script again."

@@ -143,13 +143,10 @@ echo "\033[0;33m    Install wasm pack \033[0m"
 buildah run rust_dev_cargo_img /bin/sh -c 'curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh'
 buildah run rust_dev_cargo_img /bin/sh -c 'cargo install dev_bestia_cargo_completion'
 
-echo " "
-echo "\033[0;33m    Add line dev_bestia_cargo_completion to .bashrc \033[0m"
-buildah run rust_dev_cargo_img /bin/sh -c 'echo "# dev_bestia_cargo_completion" >> ~/.bashrc'
-buildah run rust_dev_cargo_img /bin/sh -c 'echo "complete -C dev_bestia_cargo_completion cargo" >> ~/.bashrc'
 echo "\033[0;33m    Add ssh-agent to .bashrc \033[0m"
-buildah copy rust_dev_cargo_img 'bashrc.conf' '/home/rustdevuser/.ssh/bashrc.conf'
-buildah run rust_dev_cargo_img /bin/sh -c 'cat /home/rustdevuser/.ssh/bashrc.conf >> ~/.bashrc'
+buildah run rust_dev_cargo_img /bin/sh -c 'mkdir /home/rustdevuser/.ssh/rust_dev_pod_keys'
+buildah copy rust_dev_cargo_img 'bashrc.conf' '/home/rustdevuser/.ssh/rust_dev_pod_keys/bashrc.conf'
+buildah run rust_dev_cargo_img /bin/sh -c 'cat /home/rustdevuser/.ssh/rust_dev_pod_keys/bashrc.conf >> ~/.bashrc'
 
 echo " "
 echo "\033[0;33m    Copy file cargo_config.toml because of 'mold linker' \033[0m"

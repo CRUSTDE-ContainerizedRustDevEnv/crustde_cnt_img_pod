@@ -114,7 +114,7 @@ echo "\033[0;33m    Remove the known_hosts for this pod/container. \033[0m"
 ssh-keygen -f ~/.ssh/known_hosts -R "[localhost]:2201";
 
 echo "\033[0;33m  Copy the personal files, SSH keys for github or publish-to-web,... \033[0m"
-sh ~/.ssh/personal_keys_and_settings.sh
+sh ~/.ssh/rust_dev_pod_keys/personal_keys_and_settings.sh
 
 echo "\033[0;33m  install psql \033[0m"
 podman exec --user=root rust_dev_vscode_cnt /bin/sh -c 'apt install -y postgresql-client'

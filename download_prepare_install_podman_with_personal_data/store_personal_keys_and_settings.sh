@@ -7,7 +7,7 @@ echo " "
 # store_personal_keys_and_settings.sh
 # repository: https://github.com/bestia-dev/docker_rust_development
 
-# Copy the file personal_keys_and_settings_template.sh into ~/.ssh/personal_keys_and_settings.sh
+# Copy the file personal_keys_and_settings_template.sh into ~/.ssh/rust_dev_pod_keys/personal_keys_and_settings.sh
 # There replace the words: 
 # 'info@your.mail', 'your_name', 'githubssh1' and 'webserverssh1'
 # Call this script with 4 parameters.

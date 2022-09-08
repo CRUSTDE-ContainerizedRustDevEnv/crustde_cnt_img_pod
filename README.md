@@ -715,7 +715,7 @@ into Debian folder `~\.ssh`. It contains all the steps explained below. First re
 Run in `host terminal`:
 
 ```bash
-sh ~/.ssh/personal_keys_and_settings.sh
+sh ~/.ssh/rust_dev_pod_keys/personal_keys_and_settings.sh
 ```
 
 Manually step by step instructions that are inside the `personal_keys_and_settings.sh`.  
