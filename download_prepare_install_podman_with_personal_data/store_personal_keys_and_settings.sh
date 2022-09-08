@@ -28,6 +28,8 @@ echo "githubssh_filename: $3";
 echo "webserverssh_filename: $4";
 echo " "
 
+mkdir ~/.ssh/rust_dev_pod_keys/
+
 cp personal_keys_and_settings_template.sh ~/.ssh/rust_dev_pod_keys/personal_keys_and_settings.sh
 cp sshadd_template.sh ~/.ssh/sshadd.sh
 
