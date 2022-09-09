@@ -26,9 +26,9 @@ Every script will show step-by-step instructions what to do next.
 curl -sSf -L https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/download_scripts.sh | sh
 ```
 
-That's it. 
+That's it !  
 
-The video tutorial on youtube is now old and it needs an update:
+Watch the short video tutorial on youtube:
 <!-- markdownlint-disable MD033 -->
 [<img src="https://github.com/bestia-dev/docker_rust_development/raw/main/images/thumbnail.png" width="400px">](https://bestia.dev/youtube/docker_rust_development.html)
 <!-- markdownlint-enable MD033 -->
