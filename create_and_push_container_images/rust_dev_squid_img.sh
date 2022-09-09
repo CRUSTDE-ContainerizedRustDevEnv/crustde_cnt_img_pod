@@ -64,7 +64,7 @@ echo "\033[0;32m podman push docker.io/bestiadev/rust_dev_squid_img:latest \033[
 
 echo " "
 echo "\033[0;33m    To create the 'pod' with 'rust_dev_squid_cnt' and 'rust_dev_vscode_cnt' use something similar to: \033[0m"
-echo "\033[0;32m cd ~/rustprojects/docker_rust_development_install/download_prepare_install_podman_with_personal_data/pod_with_rust_vscode  \033[0m"
+echo "\033[0;32m cd ~/rustprojects/docker_rust_development_install/docker_rust_development_install/pod_with_rust_vscode  \033[0m"
 echo "\033[0;32m sh rust_dev_pod_create.sh \033[0m"
 
 echo " "

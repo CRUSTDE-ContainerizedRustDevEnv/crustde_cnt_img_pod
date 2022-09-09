@@ -23,7 +23,7 @@ After download you can inspect them to see exactly what they are doing. There is
 Every script will show step-by-step instructions what to do next.  
 
 ```bash
-curl -sSf -L https://github.com/bestia-dev/docker_rust_development/raw/main/download_prepare_install_podman_with_personal_data/download_scripts.sh | sh
+curl -sSf -L https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/download_scripts.sh | sh
 ```
 
 That's it. 
@@ -567,7 +567,7 @@ Inside the container `rust_dev_vscode_cnt` I want that everything goes through t
 Run the bash script to create a new pod `rust_dev_pod` with proxy settings:
 
 ```bash
-cd ~/rustprojects/docker_rust_development/download_prepare_install_podman_with_personal_data/pod_with_rust_vscode 
+cd ~/rustprojects/docker_rust_development/docker_rust_development_install/pod_with_rust_vscode 
 sh rust_dev_pod_create.sh
 ```
 
@@ -710,7 +710,7 @@ Leave VSCode open because the next chapter will continue from here.
 ## Github in the container
 
 Download the template for bash script from here:  
-[personal_keys_and_settings.sh](https://github.com/bestia-dev/docker_rust_development/blob/main/download_prepare_install_podman_with_personal_data/personal_keys_and_settings_template.sh)  
+[personal_keys_and_settings.sh](https://github.com/bestia-dev/docker_rust_development/blob/main/docker_rust_development_install/personal_keys_and_settings_template.sh)  
 into Debian folder `~\.ssh`. It contains all the steps explained below. First rename it to personal_keys_and_settings.sh. You have to personalize it with your personal data.  
 Run in `host terminal`:
 
@@ -756,7 +756,7 @@ ssh-add /home/rustdevuser/.ssh/githubssh1
 # enter your passphrase
 ```
 
-You can download the template [sshadd_template.sh](https://github.com/bestia-dev/docker_rust_development/blob/main/download_prepare_install_podman_with_personal_data/sshadd_template.sh) from Github and save it into Debian folder `~/.ssh`. Rename it to `sshadd.sh` and personalize it with you SSH keys file names.  
+You can download the template [sshadd_template.sh](https://github.com/bestia-dev/docker_rust_development/blob/main/docker_rust_development_install/sshadd_template.sh) from Github and save it into Debian folder `~/.ssh`. Rename it to `sshadd.sh` and personalize it with you SSH keys file names.  
 Run in `host Terminal`:
 
 ```bash
@@ -915,12 +915,12 @@ ssh-keygen -f $USERPROFILE/.ssh/known_hosts -R "[localhost]:2201";
 
 Some projects need the typescript compiler `tsc`. First we need to install nodejs with npm to install typescript. That is a lot of installation. This is because I don't want it in my default container. For typescript I created a new container image: `rust_ts_dev_image`.  
 The bash script `sh rust_ts_dev_image.sh` will create the new image with typescript.  
-Then we can use `sh download_prepare_install_podman_with_personal_data\pod_with_rust_ts_vscode\rust_dev_pod_create.sh.sh` to create the podman pod with typescript.  
+Then we can use `sh docker_rust_development_install\pod_with_rust_ts_vscode\rust_dev_pod_create.sh.sh` to create the podman pod with typescript.  
 The same `sh ~/rustprojects/docker_rust_development_install/rust_dev_pod_after_reboot.sh` is used after reboot.  
 
 ## PostgreSQL and pgAdmin
 
-Some projects need the database PostgreSQL 13. I created a new pod with the command `sh download_prepare_install_podman_with_personal_data\pod_with_rust_pg_vscode\rust_dev_pod_create.sh`. 
+Some projects need the database PostgreSQL 13. I created a new pod with the command `sh docker_rust_development_install\pod_with_rust_pg_vscode\rust_dev_pod_create.sh`. 
 The same `sh ~/rustprojects/docker_rust_development_install/rust_dev_pod_after_reboot.sh` is used after reboot.  
 To use the administrative tool pgAdmin open the browser on `localhost:9876`.  
 If you want, you can change the user and passwords in the bash script `rust_dev_pod_create.sh` to something stronger.  
