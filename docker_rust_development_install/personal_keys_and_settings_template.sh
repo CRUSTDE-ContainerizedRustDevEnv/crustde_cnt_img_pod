@@ -24,8 +24,8 @@ podman exec --user=rustdevuser rust_dev_vscode_cnt git config --global user.name
 echo "\033[0;33m    podman exec --user=rustdevuser rust_dev_vscode_cnt git config --global -l \033[0m"
 podman exec --user=rustdevuser rust_dev_vscode_cnt git config --global -l
 
-echo "\033[0;33m    podman exec --user=rustdevuser rust_dev_vscode_cnt ls -l /home/rustdevuser/.ssh \033[0m"
-podman exec --user=rustdevuser rust_dev_vscode_cnt ls -l /home/rustdevuser/.ssh
+echo "\033[0;33m    podman exec --user=rustdevuser rust_dev_vscode_cnt ls -la /home/rustdevuser/.ssh \033[0m"
+podman exec --user=rustdevuser rust_dev_vscode_cnt ls -la /home/rustdevuser/.ssh
 
 echo "\033[0;33m    podman cp ~/.ssh/githubssh1 rust_dev_vscode_cnt:/home/rustdevuser/.ssh/githubssh1 \033[0m"
 podman cp ~/.ssh/githubssh1 rust_dev_vscode_cnt:/home/rustdevuser/.ssh/githubssh1
@@ -41,8 +41,8 @@ podman exec --user=rustdevuser rust_dev_vscode_cnt chmod 600 /home/rustdevuser/.
 echo "\033[0;33m    podman cp ~/.ssh/webserverssh1.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/webserverssh1.pub \033[0m"
 podman cp ~/.ssh/webserverssh1.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/webserverssh1.pub
 
-echo "\033[0;33m    podman exec --user=rustdevuser rust_dev_vscode_cnt ls -l /home/rustdevuser/.ssh \033[0m"
-podman exec --user=rustdevuser rust_dev_vscode_cnt ls -l /home/rustdevuser/.ssh
+echo "\033[0;33m    podman exec --user=rustdevuser rust_dev_vscode_cnt ls -la /home/rustdevuser/.ssh \033[0m"
+podman exec --user=rustdevuser rust_dev_vscode_cnt ls -la /home/rustdevuser/.ssh
 
 echo "\033[0;33m    Copy the 'sshadd.sh' from Debian into the container\033[0m"
 podman cp ~/.ssh/sshadd.sh rust_dev_vscode_cnt:/home/rustdevuser/.ssh/sshadd.sh

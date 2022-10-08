@@ -349,7 +349,7 @@ First let find the rustc version:
 
 ```bash
 rustc --version
-  rustc 1.61.0 (7737e0b5c 2022-04-04)
+  rustc 1.64.0 (7737e0b5c 2022-04-04)
 ```
 
 Let create and run a small Rust program:
@@ -451,11 +451,11 @@ In `host terminal`:
 podman login --username bestiadev docker.io
 # type docker access token
 
-podman push docker.io/bestiadev/rust_dev_cargo_img:cargo-1.61.0
+podman push docker.io/bestiadev/rust_dev_cargo_img:cargo-1.64.0
 podman push docker.io/bestiadev/rust_dev_cargo_img:latest
 
-podman push docker.io/bestiadev/rust_dev_vscode_img:vscode-1.68.0
-podman push docker.io/bestiadev/rust_dev_vscode_img:cargo-1.61.0
+podman push docker.io/bestiadev/rust_dev_vscode_img:vscode-1.71.2
+podman push docker.io/bestiadev/rust_dev_vscode_img:cargo-1.64.0
 podman push docker.io/bestiadev/rust_dev_vscode_img:latest
 
 podman push docker.io/bestiadev/rust_dev_squid_img:squid-3.5.27-2
@@ -480,8 +480,8 @@ I saved some 600MB of space just deleting the docs folder, that actually noone n
 | Image  | Label | Size |
 | ------------- | ------------- |------------- |
 | docker.io/bestiadev/rust_dev_squid_img  | squid3.5.27-2  | 168 MB |
-| docker.io/bestiadev/rust_dev_cargo_img  | cargo-1.61.0   | 1.11 GB |
-| docker.io/bestiadev/rust_dev_vscode_img  | cargo-1.61.0  | 1.40 GB |
+| docker.io/bestiadev/rust_dev_cargo_img  | cargo-1.64.0   | 1.11 GB |
+| docker.io/bestiadev/rust_dev_vscode_img  | cargo-1.64.0  | 1.40 GB |
 
 ## Users keys for SSH
 
@@ -498,12 +498,12 @@ ssh-keygen -A -f ~/.ssh/rust_dev_pod_keys
 
 # check the new files
 # list user keys
-ls -l ~/.ssh | grep "rustdevuser"
+ls -la ~/.ssh | grep "rustdevuser"
 # -rw------- 1 rustdevuser rustdevuser  2655 Apr  3 12:03 rustdevuser_key
 # -rw-r--r-- 1 rustdevuser rustdevuser   569 Apr  3 12:03 rustdevuser_key.pub
 
 # list host keys
-ls -l ~/.ssh/rust_dev_pod_keys/etc/ssh
+ls -la ~/.ssh/rust_dev_pod_keys/etc/ssh
 # -rw------- 1 rustdevuser rustdevuser 1381 Apr  4 10:44 ssh_host_dsa_key
 # -rw-r--r-- 1 rustdevuser rustdevuser  603 Apr  4 10:44 ssh_host_dsa_key.pub
 # -rw------- 1 rustdevuser rustdevuser  505 Apr  4 10:44 ssh_host_ecdsa_key
@@ -524,8 +524,8 @@ cp -v ~/.ssh/rustdevuser_key $USERPROFILE/.ssh/rustdevuser_key
 cp -v ~/.ssh/rustdevuser_key.pub $USERPROFILE/.ssh/rustdevuser_key.pub
 cp -v -r ~/.ssh/rust_dev_pod_keys $USERPROFILE/.ssh/rust_dev_pod_keys
 # check
-ls -l $USERPROFILE/.ssh | grep "rustdevuser"
-ls -l $USERPROFILE/.ssh/rust_dev_pod_keys/etc/ssh
+ls -la $USERPROFILE/.ssh | grep "rustdevuser"
+ls -la $USERPROFILE/.ssh/rust_dev_pod_keys/etc/ssh
 ```
 
 ## Volumes or mount restrictions
@@ -736,11 +736,11 @@ It means that this container I cannot share anymore with anybody. It is now my p
 In `host terminal`:
 
 ```bash
-podman exec --user=rustdevuser rust_dev_vscode_cnt ls -l /home/rustdevuser/.ssh
+podman exec --user=rustdevuser rust_dev_vscode_cnt ls -la /home/rustdevuser/.ssh
 podman cp ~/.ssh/githubssh1 rust_dev_vscode_cnt:/home/rustdevuser/.ssh/githubssh1
 podman exec --user=rustdevuser rust_dev_vscode_cnt chmod 600 /home/rustdevuser/.ssh/githubssh1
 podman cp ~/.ssh/githubssh1.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/githubssh1.pub
-podman exec --user=rustdevuser rust_dev_vscode_cnt ls -l /home/rustdevuser/.ssh
+podman exec --user=rustdevuser rust_dev_vscode_cnt ls -la /home/rustdevuser/.ssh
 ```
 
 The `VSCode terminal` is still opened on the project `rust_dev_hello` from the previous chapter.
