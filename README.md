@@ -911,6 +911,19 @@ setx.exe WSLENV "USERPROFILE/p";
 ssh-keygen -f $USERPROFILE/.ssh/known_hosts -R "[localhost]:2201";
 ```
 
+## Double-commander SFTP
+
+On Debian I use Double-commander as alternative of Total-commander on Windows. It has a Ftp functionality that allows SSH and SFTP. But the private key must be PEM/rsa. It does not work with the existing rustdevuser_key that is OPENSSH. I tried to convert the key format, but neither key-gen, openssl nor putty were up to the task. So I decided to make a new private key just for Double-commander.
+On the host Debian system run:
+
+```bash
+ssh-keygen -t rsa -b 4096 -m PEM -C rustdevuser@rust_dev_pod -f /home/rustdevuser/.ssh/rustdevuser_rsa_key
+podman cp ~/.ssh/rustdevuser_rsa_key.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/rustdevuser_rsa_key.pub
+podman exec --user=rustdevuser rust_dev_vscode_cnt /bin/sh -c 'cat /home/rustdevuser/.ssh/rustdevuser_rsa_key.pub >> /home/rustdevuser/.ssh/authorized_keys'
+```
+
+Now I can use this key for Double-commander SFTP.
+
 ## Typescript compiler
 
 Some projects need the typescript compiler `tsc`. First we need to install nodejs with npm to install typescript. That is a lot of installation. This is because I don't want it in my default container. For typescript I created a new container image: `rust_ts_dev_image`.  
