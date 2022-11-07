@@ -349,7 +349,7 @@ First let find the rustc version:
 
 ```bash
 rustc --version
-  rustc 1.64.0 (7737e0b5c 2022-04-04)
+  rustc 1.65.0 (7737e0b5c 2022-04-04)
 ```
 
 Let create and run a small Rust program:
@@ -451,11 +451,11 @@ In `host terminal`:
 podman login --username bestiadev docker.io
 # type docker access token
 
-podman push docker.io/bestiadev/rust_dev_cargo_img:cargo-1.64.0
+podman push docker.io/bestiadev/rust_dev_cargo_img:cargo-1.65.0
 podman push docker.io/bestiadev/rust_dev_cargo_img:latest
 
-podman push docker.io/bestiadev/rust_dev_vscode_img:vscode-1.72.0
-podman push docker.io/bestiadev/rust_dev_vscode_img:cargo-1.64.0
+podman push docker.io/bestiadev/rust_dev_vscode_img:vscode-1.73.0
+podman push docker.io/bestiadev/rust_dev_vscode_img:cargo-1.65.0
 podman push docker.io/bestiadev/rust_dev_vscode_img:latest
 
 podman push docker.io/bestiadev/rust_dev_squid_img:squid-3.5.27-2
@@ -480,8 +480,8 @@ I saved some 600MB of space just deleting the docs folder, that actually noone n
 | Image  | Label | Size |
 | ------------- | ------------- |------------- |
 | docker.io/bestiadev/rust_dev_squid_img  | squid3.5.27-2  | 168 MB |
-| docker.io/bestiadev/rust_dev_cargo_img  | cargo-1.64.0   | 1.11 GB |
-| docker.io/bestiadev/rust_dev_vscode_img  | cargo-1.64.0  | 1.40 GB |
+| docker.io/bestiadev/rust_dev_cargo_img  | cargo-1.65.0   | 1.11 GB |
+| docker.io/bestiadev/rust_dev_vscode_img  | cargo-1.65.0  | 1.40 GB |
 
 ## Users keys for SSH
 
