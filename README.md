@@ -559,6 +559,14 @@ sh rust_dev_squid_img.sh
 ```
 
 If you need, you can modify the file `etc_squid_squid.conf` to add more whitelisted domains. Then run `sh rust_dev_squid_img.sh` to build the modified image.
+You can also add whitelisted domains later, when you actually use the squid container. First modify the file `~/rustprojects/docker_rust_development_install/create_and_push_container_images/etc_squid_squid.con`. Then copy this file into the squid container:
+
+```bash
+podman cp ~/rustprojects/docker_rust_development_install/create_and_push_container_images/etc_squid_squid.conf rust_dev_squid_cnt:/etc/squid/squid.conf
+# Finally restart the squid container
+podman restart rust_dev_squid_cnt
+```
+
 
 ## One pod with 2 containers
 
@@ -909,6 +917,18 @@ In `WSL2 terminal` we can use:
 ssh-keygen -f ~/.ssh/known_hosts -R "[localhost]:2201";
 setx.exe WSLENV "USERPROFILE/p";
 ssh-keygen -f $USERPROFILE/.ssh/known_hosts -R "[localhost]:2201";
+```
+
+## Check the proxy env variables
+
+Check if the proxy env variables are set inside `rust_dev_vscode_cnt` bash terminal:
+
+```bash
+env
+# you can set the env variable also manually there:
+export http_proxy='http://localhost:3128'
+export https_proxy='http://localhost:3128'
+export all_proxy='http://localhost:3128'
 ```
 
 ## Double-commander SFTP

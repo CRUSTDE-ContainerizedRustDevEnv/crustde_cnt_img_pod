@@ -46,9 +46,9 @@ podman unshare chown 1000:1000 -R $HOME/rustprojects_volume
 echo " "
 echo "\033[0;33m    Create container rust_dev_vscode_cnt in the pod \033[0m"
 podman create --name rust_dev_vscode_cnt --pod=rust_dev_pod -ti \
---env http_proxy=http://localhost:3128 \
---env https_proxy=http://localhost:3128 \
---env all_proxy=http://localhost:3128  \
+--env http_proxy='http://localhost:3128' \
+--env https_proxy='http://localhost:3128' \
+--env all_proxy='http://localhost:3128'  \
 --volume $HOME/rustprojects_volume:/mnt/rustprojects_volume:Z \
 docker.io/bestiadev/rust_dev_vscode_img:latest
 
