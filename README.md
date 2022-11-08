@@ -567,6 +567,16 @@ podman cp ~/rustprojects/docker_rust_development_install/create_and_push_contain
 podman restart rust_dev_squid_cnt
 ```
 
+Check later, if this env variables are set inside `rust_dev_vscode_cnt` bash terminal.
+These variables should be set when creating the pod.
+
+```bash
+env
+# you can set the env variable manually 
+export http_proxy='http://localhost:3128'
+export https_proxy='http://localhost:3128'
+export all_proxy='http://localhost:3128'
+```
 
 ## One pod with 2 containers
 
@@ -917,18 +927,6 @@ In `WSL2 terminal` we can use:
 ssh-keygen -f ~/.ssh/known_hosts -R "[localhost]:2201";
 setx.exe WSLENV "USERPROFILE/p";
 ssh-keygen -f $USERPROFILE/.ssh/known_hosts -R "[localhost]:2201";
-```
-
-## Check the proxy env variables
-
-Check if the proxy env variables are set inside `rust_dev_vscode_cnt` bash terminal:
-
-```bash
-env
-# you can set the env variable also manually there:
-export http_proxy='http://localhost:3128'
-export https_proxy='http://localhost:3128'
-export all_proxy='http://localhost:3128'
 ```
 
 ## Double-commander SFTP
