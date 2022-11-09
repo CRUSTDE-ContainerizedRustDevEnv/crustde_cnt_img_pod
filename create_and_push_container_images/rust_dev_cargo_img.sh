@@ -76,13 +76,6 @@ buildah run rust_dev_cargo_img    apt install -y pkg-config
 buildah run rust_dev_cargo_img    apt install -y libssl-dev
 echo "\033[0;33m    Install postgres client for postgres 13. \033[0m"
 buildah run rust_dev_cargo_img    apt install -y postgresql-client
-echo "\033[0;33m    Install 'mold linker'. It is 3x faster.  \033[0m"
-buildah copy rust_dev_cargo_img  'mold' '/usr/bin/'
-buildah run rust_dev_cargo_img    chown root:root /usr/bin/mold
-buildah run rust_dev_cargo_img    chmod 755 /usr/bin/mold
-echo "\033[0;33m    with GCC advise to use a workaround to -fuse-ld \033[0m"
-buildah run rust_dev_cargo_img    mkdir /home/rustdevuser/.cargo/bin/mold
-buildah run rust_dev_cargo_img    ln -s /usr/bin/mold /home/rustdevuser/.cargo/bin/mold/ld
 
 echo " "
 echo "\033[0;33m    Create non-root user 'rustdevuser' and home folder. \033[0m"
@@ -136,6 +129,14 @@ buildah run rust_dev_cargo_img /bin/sh -c 'rustup component add rust-src'
 
 echo "\033[0;33m    remove the toolchain docs, because they are 610MB big \033[0m"
 buildah run rust_dev_cargo_img /bin/sh -c 'rm -rf /home/rustdevuser/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/share/doc'
+
+echo "\033[0;33m    Install 'mold linker'. It is 3x faster.  \033[0m"
+buildah copy rust_dev_cargo_img  'mold' '/usr/bin/'
+buildah run rust_dev_cargo_img    chown root:root /usr/bin/mold
+buildah run rust_dev_cargo_img    chmod 755 /usr/bin/mold
+echo "\033[0;33m    with GCC advise to use a workaround to -fuse-ld \033[0m"
+buildah run rust_dev_cargo_img    mkdir /home/rustdevuser/.cargo/bin/mold
+buildah run rust_dev_cargo_img    ln -s /usr/bin/mold /home/rustdevuser/.cargo/bin/mold/ld
 
 echo " "
 echo "\033[0;33m    Install cargo-auto. It will pull the cargo-index registry. The first pull can take some time. \033[0m"
