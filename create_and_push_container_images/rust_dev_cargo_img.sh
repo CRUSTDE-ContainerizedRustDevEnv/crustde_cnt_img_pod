@@ -144,6 +144,8 @@ buildah run rust_dev_cargo_img /bin/sh -c 'cargo install cargo-auto'
 echo "\033[0;33m    Install wasm pack \033[0m"
 buildah run rust_dev_cargo_img /bin/sh -c 'curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh'
 buildah run rust_dev_cargo_img /bin/sh -c 'cargo install dev_bestia_cargo_completion'
+echo "\033[0;33m    Install sccache to cache compiled artifacts. \033[0m"
+buildah run rust_dev_cargo_img /bin/sh -c 'cargo install sccache'
 
 echo "\033[0;33m    Add alias l for ls -la in .bashrc \033[0m"
 buildah run rust_dev_cargo_img /bin/sh -c 'echo "alias l=''ls -al''" >> ~/.bashrc'
@@ -154,7 +156,7 @@ buildah copy rust_dev_cargo_img 'bashrc.conf' '/home/rustdevuser/.ssh/rust_dev_p
 buildah run rust_dev_cargo_img /bin/sh -c 'cat /home/rustdevuser/.ssh/rust_dev_pod_keys/bashrc.conf >> ~/.bashrc'
 
 echo " "
-echo "\033[0;33m    Copy file cargo_config.toml because of 'mold linker' \033[0m"
+echo "\033[0;33m    Copy file cargo_config.toml because of 'mold linker' and sccache \033[0m"
 buildah copy rust_dev_cargo_img 'cargo_config.toml' '/home/rustdevuser/.cargo/config.toml'
 
 echo " "
