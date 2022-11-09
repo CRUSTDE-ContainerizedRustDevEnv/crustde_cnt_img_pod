@@ -393,6 +393,8 @@ Copy it as root into `/usr/bin` and adjust ownership and permissions:
 podman cp $HOME/mold  rust_dev_vscode_cnt:/usr/bin/
 podman exec --user=root rust_dev_vscode_cnt chown root:root /usr/bin/mold
 podman exec --user=root rust_dev_vscode_cnt chmod 755 /usr/bin/mold
+podman exec --user=root rust_dev_vscode_cnt mkdir /home/rustdevuser/.cargo/bin/mold
+podman exec --user=root rust_dev_vscode_cnt ln -s /usr/bin/mold /home/rustdevuser/.cargo/bin/mold/ld
 ```
 
 Create or modify the global `config.toml` file that will be used for all rust builds:
@@ -401,13 +403,9 @@ Create or modify the global `config.toml` file that will be used for all rust bu
 nano ~/.cargo/config.toml
 ```
 
-```toml
-# with Clang
-[target.x86_64-unknown-linux-gnu]
-linker = "clang"
-rustflags = ["-C", "link-arg=-fuse-ld=/usr/bin/mold"]
+with GCC advise to use a workaround to -fuse-ld
 
-# with GCC advise to use a workaround
+```toml
 [target.x86_64-unknown-linux-gnu]
 rustflags = ["-C", "link-arg=-B/home/rustdevuser/.cargo/bin/mold"]
 ```
