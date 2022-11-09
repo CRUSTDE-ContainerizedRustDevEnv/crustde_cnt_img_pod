@@ -14,7 +14,7 @@ echo " "
 echo "\033[0;33m    FIRST !!! \033[0m"
 echo "\033[0;33m    Search and replace in this bash script: \033[0m"
 echo "\033[0;33m    Version of rustc: 1.65.0 \033[0m"
-echo "\033[0;33m    Version of vscode: 1.73.0 \033[0m"
+echo "\033[0;33m    Version of vscode: 1.73.1 \033[0m"
 echo "\033[0;33m    Version of typescript: 4.7.4 \033[0m"
 
 echo "\033[0;33m    To build the image, run in bash with: \033[0m"
@@ -37,7 +37,7 @@ echo " "
 echo "\033[0;33m    Create new 'buildah container' named rust_ts_dev_vscode_img from rust_dev_vscode_img \033[0m"
 set -o errexit
 
-buildah from --name rust_ts_dev_vscode_img docker.io/bestiadev/rust_dev_vscode_img:vscode-1.73.0
+buildah from --name rust_ts_dev_vscode_img docker.io/bestiadev/rust_dev_vscode_img:vscode-1.73.1
 
 buildah config \
 --author=github.com/bestia-dev \
@@ -79,7 +79,7 @@ echo "\033[0;33m    Finally save/commit the image named rust_ts_dev_vscode_img \
 buildah commit rust_ts_dev_vscode_img docker.io/bestiadev/rust_ts_dev_vscode_img:latest
 
 buildah tag docker.io/bestiadev/rust_ts_dev_vscode_img:latest docker.io/bestiadev/rust_ts_dev_vscode_img:typescript-4.7.4
-buildah tag docker.io/bestiadev/rust_ts_dev_vscode_img:latest docker.io/bestiadev/rust_ts_dev_vscode_img:vscode-1.73.0
+buildah tag docker.io/bestiadev/rust_ts_dev_vscode_img:latest docker.io/bestiadev/rust_ts_dev_vscode_img:vscode-1.73.1
 buildah tag docker.io/bestiadev/rust_ts_dev_vscode_img:latest docker.io/bestiadev/rust_ts_dev_vscode_img:cargo-1.65.0
 
 echo " "
@@ -88,7 +88,7 @@ echo "\033[0;33m    First you need to store the credentials with: \033[0m"
 echo "\033[0;32m podman login --username bestiadev docker.io \033[0m"
 echo "\033[0;33m    then type docker access token. \033[0m"
 echo "\033[0;32m podman push docker.io/bestiadev/rust_ts_dev_vscode_img:typescript-4.7.4 \033[0m"
-echo "\033[0;32m podman push docker.io/bestiadev/rust_ts_dev_vscode_img:vscode-1.73.0 \033[0m"
+echo "\033[0;32m podman push docker.io/bestiadev/rust_ts_dev_vscode_img:vscode-1.73.1 \033[0m"
 echo "\033[0;32m podman push docker.io/bestiadev/rust_dev_vscode_img:cargo-1.65.0 \033[0m"
 echo "\033[0;32m podman push docker.io/bestiadev/rust_dev_vscode_img:latest \033[0m"
 

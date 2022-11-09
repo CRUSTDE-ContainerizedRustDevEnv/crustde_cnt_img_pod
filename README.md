@@ -449,7 +449,7 @@ podman login --username bestiadev docker.io
 podman push docker.io/bestiadev/rust_dev_cargo_img:cargo-1.65.0
 podman push docker.io/bestiadev/rust_dev_cargo_img:latest
 
-podman push docker.io/bestiadev/rust_dev_vscode_img:vscode-1.73.0
+podman push docker.io/bestiadev/rust_dev_vscode_img:vscode-1.73.1
 podman push docker.io/bestiadev/rust_dev_vscode_img:cargo-1.65.0
 podman push docker.io/bestiadev/rust_dev_vscode_img:latest
 
