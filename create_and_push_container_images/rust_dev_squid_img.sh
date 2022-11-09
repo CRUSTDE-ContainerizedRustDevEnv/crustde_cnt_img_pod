@@ -29,8 +29,8 @@ buildah from \
 --name rust_dev_squid_img \
 docker.io/sameersbn/squid:3.5.27-2
 
-echo "\033[0;33m    podman image tree docker.io/library/docker.io/sameersbn/squid:3.5.27-2 \033[0m"
-podman image tree docker.io/library/docker.io/sameersbn/squid:3.5.27-2
+echo "\033[0;33m    podman image tree docker.io/sameersbn/squid:3.5.27-2 \033[0m"
+podman image tree docker.io/sameersbn/squid:3.5.27-2
 
 buildah config \
 --author=github.com/bestia-dev \

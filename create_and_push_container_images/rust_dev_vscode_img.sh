@@ -36,7 +36,9 @@ echo " "
 echo "\033[0;33m    Create new 'buildah container' named rust_dev_vscode_img from rust_dev_cargo_img \033[0m"
 set -o errexit
 
-buildah from --name rust_dev_vscode_img docker.io/bestiadev/rust_dev_cargo_img:cargo-1.65.0
+buildah from \
+--name rust_dev_vscode_img \
+docker.io/bestiadev/rust_dev_cargo_img:cargo-1.65.0
 
 buildah config \
 --author=github.com/bestia-dev \

@@ -40,7 +40,9 @@ buildah rmi -f docker.io/bestiadev/rust_dev_cargo_img || :
 echo " "
 echo "\033[0;33m    Create new 'buildah container' named rust_dev_cargo_img \033[0m"
 set -o errexit
-buildah from --name rust_dev_cargo_img docker.io/library/debian:bullseye-slim
+buildah from \
+--name rust_dev_cargo_img \
+docker.io/library/debian:bullseye-slim
 
 
 buildah config \
