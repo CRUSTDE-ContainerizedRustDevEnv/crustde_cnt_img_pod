@@ -81,9 +81,7 @@ buildah run rust_dev_cargo_img    apt install -y postgresql-client
 buildah run rust_dev_cargo_img    apt-get install -y clang
 buildah run rust_dev_cargo_img    clang --version
 # Debian clang version 11.0.1-2
-buildah copy rust_dev_cargo_img  'mold' '/usr/bin/'
-buildah run rust_dev_cargo_img    chown root:root /usr/bin/mold
-buildah run rust_dev_cargo_img    chmod 755 /usr/bin/mold
+buildah copy --chown root:root --chmod 755 rust_dev_cargo_img  'mold' '/usr/bin/'
 
 echo " "
 echo "\033[0;33m    Create non-root user 'rustdevuser' and home folder. \033[0m"
@@ -157,7 +155,7 @@ buildah run rust_dev_cargo_img /bin/sh -c 'cat /home/rustdevuser/.ssh/rust_dev_p
 
 echo " "
 echo "\033[0;33m    Copy file cargo_config.toml because of 'mold linker' and sccache \033[0m"
-buildah copy rust_dev_cargo_img 'cargo_config.toml' '/home/rustdevuser/.cargo/config.toml'
+buildah copy chown rustdevuser:rustdevuser rust_dev_cargo_img 'cargo_config.toml' '/home/rustdevuser/.cargo/config.toml'
 
 echo " "
 echo "\033[0;33m    Remove unwanted files \033[0m"
