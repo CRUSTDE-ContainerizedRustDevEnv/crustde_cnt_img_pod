@@ -143,8 +143,8 @@ echo "\033[0;33m    Install wasm pack \033[0m"
 buildah run rust_dev_cargo_img /bin/sh -c 'curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh'
 buildah run rust_dev_cargo_img /bin/sh -c 'cargo install dev_bestia_cargo_completion'
 
-echo "\033[0;33m    Uncomment alias for ll in .bashrc \033[0m"
-buildah run rust_dev_cargo_img /bin/sh -c 'sed -i "s/#alias ll=''ls -al''/alias ll=''ls -al''/gi" $HOME/.bashrc'
+echo "\033[0;33m    Add alias l for ls -la in .bashrc \033[0m"
+buildah run rust_dev_cargo_img /bin/sh -c 'echo "alias l=''ls -al''" >> ~/.bashrc'
 
 echo "\033[0;33m    Add ssh-agent to .bashrc \033[0m"
 buildah run rust_dev_cargo_img /bin/sh -c 'mkdir /home/rustdevuser/.ssh/rust_dev_pod_keys'
