@@ -144,7 +144,8 @@ echo "\033[0;33m    Install sccache to cache compiled artifacts. \033[0m"
 buildah run rust_dev_cargo_img /bin/sh -c 'cargo install sccache'
 
 echo "\033[0;33m    Add alias l for ls -la in .bashrc \033[0m"
-buildah run rust_dev_cargo_img /bin/sh -c 'echo "alias l=''ls -al''" >> ~/.bashrc'
+buildah run rust_dev_cargo_img /bin/sh -c 'echo "alias l=\'ls -al\'" >> ~/.bashrc'
+buildah run rust_dev_cargo_img /bin/sh -c 'echo "alias ll=\'ls -l\'" >> ~/.bashrc'
 
 echo "\033[0;33m    Add ssh-agent to .bashrc \033[0m"
 buildah run rust_dev_cargo_img /bin/sh -c 'mkdir /home/rustdevuser/.ssh/rust_dev_pod_keys'

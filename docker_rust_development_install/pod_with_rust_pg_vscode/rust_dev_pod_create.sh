@@ -71,9 +71,9 @@ podman pod start rust_dev_pod
 echo "\033[0;33m    Add env var for proxy settings \033[0m"
 # echo a newline to avoid appending to the last line.
 podman exec --user=rustdevuser  rust_dev_vscode_cnt /bin/sh -c 'echo "" >>  ~/.bashrc'
-podman exec --user=rustdevuser  rust_dev_vscode_cnt /bin/sh -c 'echo "export http_proxy=''http://localhost:3128''" >>  ~/.bashrc'
-podman exec --user=rustdevuser  rust_dev_vscode_cnt /bin/sh -c 'echo "export https_proxy=''http://localhost:3128''" >>  ~/.bashrc'
-podman exec --user=rustdevuser  rust_dev_vscode_cnt /bin/sh -c 'echo "export all_proxy=''http://localhost:3128''" >>  ~/.bashrc'
+podman exec --user=rustdevuser  rust_dev_vscode_cnt /bin/sh -c 'echo "export http_proxy=\'http://localhost:3128\'" >>  ~/.bashrc'
+podman exec --user=rustdevuser  rust_dev_vscode_cnt /bin/sh -c 'echo "export https_proxy=\'http://localhost:3128\'" >>  ~/.bashrc'
+podman exec --user=rustdevuser  rust_dev_vscode_cnt /bin/sh -c 'echo "export all_proxy=\'http://localhost:3128\'" >>  ~/.bashrc'
 podman exec --user=rustdevuser  rust_dev_vscode_cnt /bin/sh -c '. ~/.bashrc'
 
 echo "\033[0;33m    User permissions: \033[0m"
