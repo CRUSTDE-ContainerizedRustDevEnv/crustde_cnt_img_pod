@@ -402,8 +402,14 @@ nano ~/.cargo/config.toml
 ```
 
 ```toml
+# with Clang
 [target.x86_64-unknown-linux-gnu]
+linker = "clang"
 rustflags = ["-C", "link-arg=-fuse-ld=/usr/bin/mold"]
+
+# with GCC advise to use a workaround
+[target.x86_64-unknown-linux-gnu]
+rustflags = ["-C", "link-arg=-B/home/rustdevuser/.cargo/bin/mold"]
 ```
 
 ## Docker image with VSCode server and extensions

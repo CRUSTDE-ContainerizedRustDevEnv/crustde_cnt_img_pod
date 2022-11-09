@@ -80,6 +80,9 @@ echo "\033[0;33m    Install 'mold linker'. It is 3x faster.  \033[0m"
 buildah copy rust_dev_cargo_img  'mold' '/usr/bin/'
 buildah run rust_dev_cargo_img    chown root:root /usr/bin/mold
 buildah run rust_dev_cargo_img    chmod 755 /usr/bin/mold
+echo "\033[0;33m    GCC advise to use a workaround to -fuse-ld \033[0m"
+buildah run rust_dev_cargo_img    mkdir /home/rustdevuser/.cargo/bin/mold
+buildah run rust_dev_cargo_img    ln -s /usr/bin/mold /home/rustdevuser/.cargo/bin/mold/ld
 
 echo " "
 echo "\033[0;33m    Create non-root user 'rustdevuser' and home folder. \033[0m"
