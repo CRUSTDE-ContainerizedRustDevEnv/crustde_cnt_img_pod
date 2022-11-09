@@ -383,17 +383,9 @@ podman rm rust_dev_cargo_cnt -f
 
 I discovered lately that my compile times are bad and that could be better using the "mold linker". It is experimental, but that is ok for me.  
 <https://github.com/rui314/mold>  
-It needs the CLang package.  
-I don't have `sudo` inside the container, therefor I use `podman exec` to executed commands as root:
-
-```bash
-podman exec --user=root rust_dev_vscode_cnt apt-get install -y clang
-podman exec --user=root rust_dev_vscode_cnt clang --version
-# Debian clang version 11.0.1-2
-```
-
+ 
 Download mold from:  
-<https://github.com/rui314/mold/releases/download/v1.4.2/mold-1.4.2-x86_64-linux.tar.gz>  
+<https://github.com/rui314/mold/releases/download/v1.6.0/mold-1.6.0-x86_64-linux.tar.gz> 
 and extract only the `mold` binary executable into `~`.  
 Copy it as root into `/usr/bin` and adjust ownership and permissions:
 
@@ -411,7 +403,6 @@ nano ~/.cargo/config.toml
 
 ```toml
 [target.x86_64-unknown-linux-gnu]
-linker = "/usr/bin/clang"
 rustflags = ["-C", "link-arg=-fuse-ld=/usr/bin/mold"]
 ```
 

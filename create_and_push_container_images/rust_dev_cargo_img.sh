@@ -58,29 +58,25 @@ buildah run rust_dev_cargo_img    apt -y update
 buildah run rust_dev_cargo_img    apt -y full-upgrade
 
 echo " "
-echo "\033[0;33m    Install curl, git, rsync and build-essential with root user \033[0m"
-# curl is the most used CLI for getting stuff from internet
+echo "\033[0;33m    Install curl, the most used CLI for getting stuff from internet \033[0m"
 buildah run rust_dev_cargo_img    apt install -y curl
-# git is the legendary source control system
+echo "\033[0;33m    Install git, the legendary source control system \033[0m"
 buildah run rust_dev_cargo_img    apt install -y git
-# rsync is great for copying files and folders
+echo "\033[0;33m    Install rsync, it is great for copying files and folders \033[0m"
 buildah run rust_dev_cargo_img    apt install -y rsync
-# rust needs the C stuff that comes with build-essential
+echo "\033[0;33m    Install build-essential. Rust needs some the C stuff.  \033[0m"
 buildah run rust_dev_cargo_img    apt install -y build-essential
-# nano is the default easy to use text editor in Debian
+echo "\033[0;33m    Install nano, the default easy to use text editor in Debian \033[0m"
 buildah run rust_dev_cargo_img    apt install -y nano
-# ps displays information about a selection of the active processes
-# concretely it is used to run the ssh-agent
+echo "\033[0;33m    Install ps. It displays information about a selection of the active processes \033[0m"
+echo "\033[0;33m    concretely it is used to run the ssh-agent  \033[0m"
 buildah run rust_dev_cargo_img    apt install -y procps
-# pkg-config and libssl-dev are needed by the crate reqwest to work with TLS/SSL
+echo "\033[0;33m    Install pkg-config and libssl-dev are needed by the crate reqwest to work with TLS/SSL. \033[0m"
 buildah run rust_dev_cargo_img    apt install -y pkg-config
 buildah run rust_dev_cargo_img    apt install -y libssl-dev
-# I will use postgres 13 in the future
+echo "\033[0;33m    Install postgres client for postgres 13. \033[0m"
 buildah run rust_dev_cargo_img    apt install -y postgresql-client
-# The "mold linker" is much faster and it needs Clang
-buildah run rust_dev_cargo_img    apt-get install -y clang
-buildah run rust_dev_cargo_img    clang --version
-# Debian clang version 11.0.1-2
+echo "\033[0;33m    Install 'mold linker'. It is 3x faster.  \033[0m"
 buildah copy rust_dev_cargo_img  'mold' '/usr/bin/'
 buildah run rust_dev_cargo_img    chown root:root /usr/bin/mold
 buildah run rust_dev_cargo_img    chmod 755 /usr/bin/mold
@@ -158,7 +154,7 @@ buildah run rust_dev_cargo_img /bin/sh -c 'cat /home/rustdevuser/.ssh/rust_dev_p
 echo " "
 echo "\033[0;33m    Copy file cargo_config.toml because of 'mold linker' and sccache \033[0m"
 buildah copy rust_dev_cargo_img 'cargo_config.toml' '/home/rustdevuser/.cargo/config.toml'
-buildah run rust_dev_cargo_img    chown rustdevuser:rustdevuser /home/rustdevuser/.cargo/config.toml
+buildah run --user root rust_dev_cargo_img    chown rustdevuser:rustdevuser /home/rustdevuser/.cargo/config.toml
 
 echo " "
 echo "\033[0;33m    Remove unwanted files \033[0m"
