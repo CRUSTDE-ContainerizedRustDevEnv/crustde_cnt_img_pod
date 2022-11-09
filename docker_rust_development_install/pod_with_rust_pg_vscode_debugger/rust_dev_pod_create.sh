@@ -12,6 +12,10 @@ echo "\033[0;33m    Published inbound network ports are 8001 and 9876 on 'localh
 # https://techviewleo.com/how-to-run-postgresql-in-podman-container/
 
 # Start of script actions:
+# For debugging the ASLR (address space layout randomization)
+# should be disabled before running the container
+echo "\033[0;33m    Disable ASLR for debugging \033[0m"
+echo 0 | sudo tee /proc/sys/kernel/randomize_va_space
 
 echo " "
 echo "\033[0;33m    Create pod \033[0m"
@@ -19,11 +23,6 @@ echo "\033[0;33m    Create pod \033[0m"
 # http connection     8001
 # ssh connection      2201
 # pgAdmin connection  9876  from 80 ??
-
-# For debugging the ASLR (address space layout randomization)
-# should be disabled before running the container
-echo "\033[0;33m    Disable ASLR for debugging \033[0m"
-echo 0 | sudo tee /proc/sys/kernel/randomize_va_space
 
 podman pod create \
 -p 127.0.0.1:8001:8001/tcp \
@@ -46,9 +45,6 @@ echo "\033[0;33m    Create container rust_dev_vscode_cnt in the pod \033[0m"
 # for debugging with CodeLLDB: cap-add and security-opt are added 
 
 podman create --name rust_dev_vscode_cnt --pod=rust_dev_pod -ti \
---env http_proxy='http://localhost:3128' \
---env https_proxy='http://localhost:3128' \
---env all_proxy='http://localhost:3128'  \
 --cap-add=SYS_PTRACE \
 --security-opt seccomp=unconfined \
 docker.io/bestiadev/rust_dev_vscode_img:latest
@@ -79,8 +75,16 @@ podman cp ~/.ssh/rustdevuser_key.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/
 
 echo "\033[0;33m    podman pod start \033[0m"
 podman pod start rust_dev_pod
-echo "\033[0;33m    User permissions: \033[0m"
 
+echo "\033[0;33m    Add env var for proxy settings \033[0m"
+# echo a newline to avoid appending to the last line.
+podman exec --user=rustdevuser  rust_dev_vscode_cnt /bin/sh -c 'echo "" >>  ~/.bashrc'
+podman exec --user=rustdevuser  rust_dev_vscode_cnt /bin/sh -c 'echo "export http_proxy=''http://localhost:3128''" >>  ~/.bashrc'
+podman exec --user=rustdevuser  rust_dev_vscode_cnt /bin/sh -c 'echo "export https_proxy=''http://localhost:3128''" >>  ~/.bashrc'
+podman exec --user=rustdevuser  rust_dev_vscode_cnt /bin/sh -c 'echo "export all_proxy=''http://localhost:3128''" >>  ~/.bashrc'
+podman exec --user=rustdevuser  rust_dev_vscode_cnt /bin/sh -c '. ~/.bashrc'
+
+echo "\033[0;33m    User permissions: \033[0m"
 # check the copied files
 # TODO: this commands return a WARN[0000] Error resizing exec session 
 # that looks like a bug in podman
@@ -131,7 +135,7 @@ if grep -qi microsoft /proc/version; then
     echo "\033[0;33m    To start this 'pod' after a reboot of WSL/Windows use this bash script:  \033[0m"
     echo "\033[0;32m sh ~/rustprojects/docker_rust_development_install/rust_dev_pod_after_reboot.sh \033[0m"
     echo "\033[0;33m    If you have already used it, you can find it in the bash history:  \033[0m"
-    echo "\033[0;32m Ctrl-R, type after, press Tab, press Enter  \033[0m"
+    echo "\033[0;32m Ctrl-R, type after, press Esc, press Enter  \033[0m"
     echo "\033[0;33m    You can force the WSL reboot: Open powershell as Administrator:  \033[0m"
     echo "\033[0;32m  Get-Service LxssManager | Restart-Service \033[0m"
 fi
@@ -146,7 +150,7 @@ echo "\033[0;33m    If needed Open VSCode terminal with Ctrl+J \033[0m"
 echo "\033[0;33m    Inside VSCode terminal, go to the project folder. Here we will create a sample project: \033[0m"
 echo "\033[0;32m cd ~/rustprojects \033[0m"
 echo "\033[0;32m cargo new rust_dev_hello \033[0m"
-echo "Created binary (application) `rust_dev_hello` package"
+
 echo "\033[0;33m    Secondly: open a new VSCode window exactly for this project/folder. \033[0m"
 echo "\033[0;32m code rust_dev_hello \033[0m"
 echo "\033[0;33m    A new VSCode windows will open for the 'rust_dev_hello' project. Retype the passphrase. \033[0m"
@@ -155,11 +159,6 @@ echo "\033[0;33m    You can close now all other VSCode windows. \033[0m"
 echo " "
 echo "\033[0;33m    Build and run the project in the VSCode terminal: \033[0m"
 echo "\033[0;32m cargo run \033[0m"
-
-echo "Compiling rust_dev_hello v0.1.0 (/home/rustdevuser/rustprojects/rust_dev_hello)"
-echo "Finished dev [unoptimized + debuginfo] target(s) in 3.77s"
-echo "Running `target/debug/rust_dev_hello`"
-echo "Hello, world!"
 
 echo " "
 echo "\033[0;33m    You can administer your postgreSQL in the browser with username info@bestia.dev on: \033[0m"
