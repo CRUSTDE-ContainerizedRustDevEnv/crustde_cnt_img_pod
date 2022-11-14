@@ -28,6 +28,15 @@ else
   echo "\033[0;33m    Key rustdevuser_key already exists. \033[0m"
 fi
 
+if [ ! -f ~/.ssh/rustdevuser_rsa_key ]; then
+  echo "\033[0;33m    generate user rsa key for dbl commander \033[0m"
+  echo "\033[0;33m    give it a passphrase and remember it, you will need it \033[0m"
+  echo "\033[0;33m    ssh-keygen -t rsa -b 4096 -m PEM -C rustdevuser@rust_dev_pod -f /home/rustdevuser/.ssh/rustdevuser_rsa_key \033[0m"
+  ssh-keygen -t rsa -b 4096 -m PEM -C rustdevuser@rust_dev_pod -f /home/rustdevuser/.ssh/rustdevuser_rsa_key
+else 
+  echo "\033[0;33m    Key rustdevuser_rsa_key already exists. \033[0m"
+fi
+
 if [ ! -f ~/.ssh/rust_dev_pod_keys/etc/ssh/ssh_host_ed25519_key ]; then
   echo "\033[0;33m    generate host key \033[0m"
   echo "\033[0;33m    ssh-keygen -A -f ~/.ssh/rust_dev_pod_keys \033[0m"

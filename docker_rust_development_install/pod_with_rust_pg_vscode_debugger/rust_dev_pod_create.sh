@@ -72,6 +72,7 @@ podman cp ~/.ssh/rust_dev_pod_keys/etc/ssh/ssh_host_ed25519_key  rust_dev_vscode
 podman cp ~/.ssh/rust_dev_pod_keys/etc/ssh/ssh_host_ed25519_key.pub  rust_dev_vscode_cnt:/etc/ssh/ssh_host_ed25519_key.pub
 echo "\033[0;33m    Copy the public key of rustdevuser \033[0m"
 podman cp ~/.ssh/rustdevuser_key.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/rustdevuser_key.pub
+podman cp ~/.ssh/rustdevuser_rsa_key.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/rustdevuser_rsa_key.pub
 
 echo "\033[0;33m    podman pod start \033[0m"
 podman pod start rust_dev_pod
@@ -97,7 +98,6 @@ podman exec --user=rustdevuser rust_dev_vscode_cnt cat /etc/ssh/ssh_host_ed25519
 # (G)roup can't read, can't write and can't execute. 
 # (O)thers can't read, can't write and can't execute.
 podman exec --user=rustdevuser rust_dev_vscode_cnt chmod 700 /home/rustdevuser/.ssh
-podman exec --user=rustdevuser rust_dev_vscode_cnt cat /home/rustdevuser/.ssh/rustdevuser_key.pub
 
 echo "\033[0;33m add rustdevuser_key to authorized_keys \033[0m"
 podman exec --user=rustdevuser rust_dev_vscode_cnt touch /home/rustdevuser/.ssh/authorized_keys
@@ -107,7 +107,7 @@ podman exec --user=rustdevuser rust_dev_vscode_cnt touch /home/rustdevuser/.ssh/
 # (O)thers can't read, can't write and can't execute.
 podman exec --user=rustdevuser rust_dev_vscode_cnt chmod 600 /home/rustdevuser/.ssh/authorized_keys
 podman exec --user=rustdevuser rust_dev_vscode_cnt /bin/sh -c 'cat /home/rustdevuser/.ssh/rustdevuser_key.pub >> /home/rustdevuser/.ssh/authorized_keys'
-podman exec --user=rustdevuser rust_dev_vscode_cnt cat /home/rustdevuser/.ssh/authorized_keys
+podman exec --user=rustdevuser rust_dev_vscode_cnt /bin/sh -c 'cat /home/rustdevuser/.ssh/rustdevuser_rsa_key.pub >> /home/rustdevuser/.ssh/authorized_keys'
 
 echo "\033[0;33m    I have to disable the password for rustdevuser to enable SSH access with public key? Why? \033[0m"
 podman exec --user=root rust_dev_vscode_cnt usermod --password '*' rustdevuser

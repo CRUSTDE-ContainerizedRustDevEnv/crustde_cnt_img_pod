@@ -39,6 +39,8 @@ Now we can test the connection from various locations.
 
 ```bash
 ssh -i ~/.ssh/rustdevuser_key -p 2201 rustdevuser@localhost
+# or using the ssh config file
+ssh -F ~/.ssh/config rust_dev_vscode_cnt
 # Choose `yes` to save fingerprint if asked, just the first time.
 # type passphrase
 # should work !
@@ -926,13 +928,15 @@ ssh-keygen -f $USERPROFILE/.ssh/known_hosts -R "[localhost]:2201";
 
 ## Double-commander SFTP
 
-On Debian I use Double-commander as alternative of Total-commander on Windows. It has a Ftp functionality that allows SSH and SFTP. But the private key must be PEM/rsa. It does not work with the existing rustdevuser_key that is OPENSSH. I tried to convert the key format, but neither key-gen, openssl nor putty were up to the task. So I decided to make a new private key just for Double-commander.
+On Debian I use Double-commander as alternative of Total-commander on Windows. It has a Ftp functionality that allows SSH and SFTP. But the private key must be PEM/rsa. It does not work with the existing rustdevuser_key that is OPENSSH. I tried to convert the key format, but neither key-gen, openssl nor putty were up to the task. So I decided to make a new private key just for Double-commander.  
+In doublecmd ftp setting I must enable the "use SSH+SCP protocol (no SFTP)" to make it work. 
 On the host Debian system run:
 
 ```bash
 ssh-keygen -t rsa -b 4096 -m PEM -C rustdevuser@rust_dev_pod -f /home/rustdevuser/.ssh/rustdevuser_rsa_key
 podman cp ~/.ssh/rustdevuser_rsa_key.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/rustdevuser_rsa_key.pub
 podman exec --user=rustdevuser rust_dev_vscode_cnt /bin/sh -c 'cat /home/rustdevuser/.ssh/rustdevuser_rsa_key.pub >> /home/rustdevuser/.ssh/authorized_keys'
+ssh-keyscan -p 2201 -H 127.0.0.1 >> ~/.ssh/known_hosts
 ```
 
 Now I can use this key for Double-commander SFTP.
