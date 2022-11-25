@@ -40,7 +40,7 @@ echo "\033[0;33m    You can delete the pod and ALL of the DATA it contains: \033
 echo "\033[0;32m podman pod rm -f rust_dev_pod \033[0m"
 
 echo " "
-echo "\033[0;33m    Just for your info: the files /etc/rc0.d/K44podman-stop and /etc/rc6.d/K44podman-stop \033[0m"
-echo "\033[0;33m    will stop the pod before shutdown/reboot. \033[0m"
+echo "\033[0;33m    To stop podman and shutdown Debian, use: \033[0m"
+echo "\033[0;32m shut \033[0m"
 
 echo " "
