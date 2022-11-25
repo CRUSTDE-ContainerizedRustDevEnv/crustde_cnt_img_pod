@@ -886,23 +886,30 @@ ls
 ## Debian shutdown
 
 I got this error on shutdown: "A stop job running..." and it waits for 3 minutes.
-I think it is podman. I will try to add a script to stop podman before shutdown/reboot.
-This will be the content of 2 files:
+I think it is podman. I will always shutdown Debian with a script that stops podman first.
+Create a bash script with this text:
 
 ```bash
 #!/bin/sh
+echo 'podman pod stop --all'
 podman pod stop --all
+echo 'podman stop --all'
 podman stop --all
+echo 'sudo shutdown -h now'
+sudo shutdown -h now
 ```
 
-Now run nano or other editor, insert the content and then chmod the files:
+```bash
+nano ~/shut.sh
+sudo chmod a+x ~/shut.sh
+sh ~/shut.sh
+```
+
+In ~/.bashrc add these lines, than use just the short command `shut`:
 
 ```bash
-sudo nano /etc/rc0.d/K44podman-stop
-sudo nano /etc/rc6.d/K44podman-stop
-
-sudo chmod +x /etc/rc0.d/K44podman-stop
-sudo chmod +x /etc/rc6.d/K44podman-stop
+echo "For correct shutdown that stops podman use the command 'shut'"
+alias shut="sh ~/shut.sh"
 ```
 
 ## Quirks
