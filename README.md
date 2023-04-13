@@ -983,11 +983,14 @@ podman cp rust_dev_cargo_cnt:/home/rustdevuser/rustprojects/rust_dev_hello/targe
 
 Now in the host system (Linux) you can copy this file (somehow) to your Windows system and run it there. It works.
 
-## Cross-compile for Linux Alpine (Musl)
+## Cross-compile for Musl (standalone executable 100% statically linked)
 
 I added to the image `rust_dev_cargo_img` the target and needed utilities for cross-compiling to Musl.  
-Using a container to publish your executable to a server makes distribution much easier.
-The smallest Linux container image is Alpine, only 5 MB. It has achieved this minimal size not using glibc and instead using the alternative musl library. Most of the programs will run just fine with musl. Cross-compile with this:  
+This executables are 100% statically linked and don't need any other dynamic library.  
+Using a container to publish your executable to a server makes distribution and isolation much easier.
+This executables can run on the empty container `scratch`.
+Or on the smallest Linux container images likeAlpine (7 MB) or distroless static-debian11 (3 MB).  
+Most of the programs will run just fine with musl. Cross-compile with this:  
 
 ```bash
 cargo build --target x86_64-unknown-linux-musl
@@ -1002,7 +1005,31 @@ mkdir -p ~/rustprojects/rust_dev_hello/musl
 podman cp rust_dev_cargo_cnt:/home/rustdevuser/rustprojects/rust_dev_hello/target/x86_64-unknown-linux-musl/debug/rust_dev_hello ~/rustprojects/rust_dev_hello/musl/rust_dev_hello
 ```
 
-Now in the host system (Linux) you can create an alpine container and copy this executable into it.  
+First let's make an empty `scratch` container with only this executable:  
+
+```bash
+# build the container image from scratch
+
+buildah from \
+--name scratch_hello_world_img \
+scratch
+
+buildah config \
+--author=github.com/bestia-dev \
+--label name=scratch_hello_world_img \
+--label source=github.com/bestia-dev/docker_rust_development \
+scratch_hello_world_img
+
+buildah copy scratch_hello_world_img  ~/rustprojects/rust_dev_hello/musl/rust_dev_hello /rust_dev_hello
+
+buildah commit scratch_hello_world_img docker.io/bestiadev/scratch_hello_world_img
+
+# now run the container and executable
+
+podman run scratch_hello_world_img /rust_dev_hello
+```
+
+We can create also a small alpine container and copy this executable into it.  
 
 ```bash
 # build the container image
@@ -1026,6 +1053,30 @@ buildah commit alpine_hello_world_img docker.io/bestiadev/alpine_hello_world_img
 # now run the container and executable
 
 podman run alpine_hello_world_img /usr/bin/rust_dev_hello
+```
+
+Similar with distroless static.  
+
+```bash
+# build the container image
+
+buildah from \
+--name distroless_hello_world_img \
+gcr.io/distroless/static-debian11
+
+buildah config \
+--author=github.com/bestia-dev \
+--label name=distroless_hello_world_img \
+--label source=github.com/bestia-dev/docker_rust_development \
+distroless_hello_world_img
+
+buildah copy distroless_hello_world_img  ~/rustprojects/rust_dev_hello/musl/rust_dev_hello /usr/bin/rust_dev_hello
+
+buildah commit distroless_hello_world_img docker.io/bestiadev/distroless_hello_world_img
+
+# now run the container and executable
+
+podman run distroless_hello_world_img /usr/bin/rust_dev_hello
 ```
 
 There is an example of this code in the folder `alpine_hello_world_test`.
