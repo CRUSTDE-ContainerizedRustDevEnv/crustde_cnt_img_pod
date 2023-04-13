@@ -17,7 +17,7 @@ echo "\033[0;33m    I want also to limit the network ports and addresses inbound
 echo " "
 echo "\033[0;33m    FIRST !!! \033[0m"
 echo "\033[0;33m    Search and replace in this bash script: \033[0m"
-echo "\033[0;33m    Version of rustc: 1.68.0 \033[0m"
+echo "\033[0;33m    Version of rustc: 1.68.2 \033[0m"
 echo "\033[0;33m    Version of rustup: 1.25.2 \033[0m"
 
 echo " "
@@ -48,7 +48,7 @@ docker.io/library/debian:bullseye-slim
 buildah config \
 --author=github.com/bestia-dev \
 --label name=rust_dev_cargo_img \
---label version=cargo-1.68.0 \
+--label version=cargo-1.68.2 \
 --label source=github.com/bestia-dev/docker_rust_development \
 rust_dev_cargo_img
 
@@ -119,38 +119,60 @@ buildah run rust_dev_cargo_img /bin/sh -c 'rustup --version'
 
 echo "\033[0;33m    rustc version \033[0m"
 buildah run rust_dev_cargo_img /bin/sh -c '/home/rustdevuser/.cargo/bin/rustc --version'
-# rustc 1.68.0 
+# rustc 1.68.2 
 
 # this probably is not necessary, if rust-analyzer can call rust-lang.org
 # buildah config --env RUST_SRC_PATH=/home/rustdevuser/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library rust_dev_cargo_img
 # buildah run rust_dev_cargo_img /bin/sh -c 'echo $RUST_SRC_PATH'
 
+echo " "
+echo "\033[0;33m    Add rust-src for debugging \033[0m"
 buildah run rust_dev_cargo_img /bin/sh -c 'rustup component add rust-src'
 
-echo "\033[0;33m    remove the toolchain docs, because they are 610MB big \033[0m"
+echo " "
+echo "\033[0;33m    Add mingw-w64 and target for cross-compile to windows \033[0m"
+buildah run --user root rust_dev_cargo_img /bin/sh -c 'apt-get install -y mingw-w64'
+buildah run rust_dev_cargo_img /bin/sh -c 'rustup target add x86_64-pc-windows-gnu'
+
+echo " "
+echo "\033[0;33m    Add musl-tools and target for compile to musl (full static executable) \033[0m"
+buildah run --user root rust_dev_cargo_img /bin/sh -c 'apt-get install -y musl-tools'
+buildah run rust_dev_cargo_img /bin/sh -c 'rustup target add x86_64-unknown-linux-musl'
+
+echo " "
+echo "\033[0;33m    Remove the toolchain docs, because they are 610MB big \033[0m"
 buildah run rust_dev_cargo_img /bin/sh -c 'rm -rf /home/rustdevuser/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/share/doc'
 
-echo "\033[0;33m    Install 'mold linker'. It is 3x faster.  \033[0m"
+echo " "
+echo "\033[0;33m    Install 'mold linker'. It is 3x faster. \033[0m"
 buildah copy rust_dev_cargo_img  'mold' '/usr/bin/'
 buildah run --user root  rust_dev_cargo_img    chown root:root /usr/bin/mold
 buildah run --user root  rust_dev_cargo_img    chmod 755 /usr/bin/mold
-echo "\033[0;33m    with GCC advise to use a workaround to -fuse-ld \033[0m"
+
+echo " "
+echo "\033[0;33m    With GCC advise to use a workaround to -fuse-ld \033[0m"
 buildah run rust_dev_cargo_img    mkdir /home/rustdevuser/.cargo/bin/mold
 buildah run rust_dev_cargo_img    ln -s /usr/bin/mold /home/rustdevuser/.cargo/bin/mold/ld
 
 echo " "
 echo "\033[0;33m    Install cargo-auto. It will pull the cargo-index registry. The first pull can take some time. \033[0m"
 buildah run rust_dev_cargo_img /bin/sh -c 'cargo install cargo-auto'
+
+echo " "
 echo "\033[0;33m    Install wasm pack \033[0m"
 buildah run rust_dev_cargo_img /bin/sh -c 'curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh'
 buildah run rust_dev_cargo_img /bin/sh -c 'cargo install dev_bestia_cargo_completion'
+
+echo " "
 echo "\033[0;33m    Install sccache to cache compiled artifacts. \033[0m"
 buildah run rust_dev_cargo_img /bin/sh -c 'cargo install sccache'
 
+echo " "
 echo "\033[0;33m    Add alias l for ls -la in .bashrc \033[0m"
 buildah run rust_dev_cargo_img /bin/sh -c 'echo "alias l=\"ls -al\"" >> ~/.bashrc'
 buildah run rust_dev_cargo_img /bin/sh -c 'echo "alias ll=\"ls -l\"" >> ~/.bashrc'
 
+echo " "
 echo "\033[0;33m    Add ssh-agent to .bashrc \033[0m"
 buildah run rust_dev_cargo_img /bin/sh -c 'mkdir /home/rustdevuser/.ssh/rust_dev_pod_keys'
 buildah copy rust_dev_cargo_img 'bashrc.conf' '/home/rustdevuser/.ssh/rust_dev_pod_keys/bashrc.conf'
@@ -169,14 +191,14 @@ buildah run --user root rust_dev_cargo_img    apt -y clean
 echo " "
 echo "\033[0;33m    Finally save/commit the image named rust_dev_cargo_img \033[0m"
 buildah commit rust_dev_cargo_img docker.io/bestiadev/rust_dev_cargo_img:latest
-buildah tag docker.io/bestiadev/rust_dev_cargo_img:latest docker.io/bestiadev/rust_dev_cargo_img:cargo-1.68.0
+buildah tag docker.io/bestiadev/rust_dev_cargo_img:latest docker.io/bestiadev/rust_dev_cargo_img:cargo-1.68.2
 
 echo " "
 echo "\033[0;33m    Upload the new image to docker hub. \033[0m"
 echo "\033[0;33m    First you need to store the credentials with: \033[0m"
 echo "\033[0;32m podman login --username bestiadev docker.io \033[0m"
 echo "\033[0;33m    then type docker access token. \033[0m"
-echo "\033[0;32m podman push docker.io/bestiadev/rust_dev_cargo_img:cargo-1.68.0 \033[0m"
+echo "\033[0;32m podman push docker.io/bestiadev/rust_dev_cargo_img:cargo-1.68.2 \033[0m"
 echo "\033[0;32m podman push docker.io/bestiadev/rust_dev_cargo_img:latest \033[0m"
 
 echo " "
@@ -187,6 +209,7 @@ echo "\033[0;32m podman exec -it rust_dev_cargo_cnt bash \033[0m"
 
 echo " "
 echo "\033[0;33m    Try to build and run a sample Rust project: \033[0m"
+echo "\033[0;32m cd ~/rustprojects \033[0m"
 echo "\033[0;32m cargo new rust_dev_hello \033[0m"
 echo "\033[0;32m cd rust_dev_hello \033[0m"
 echo "\033[0;32m cargo run \033[0m"

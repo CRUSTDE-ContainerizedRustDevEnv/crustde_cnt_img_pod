@@ -351,7 +351,7 @@ First let find the rustc version:
 
 ```bash
 rustc --version
-  rustc 1.68.0 (7737e0b5c 2022-04-04)
+  rustc 1.68.2 
 ```
 
 Let create and run a small Rust program:
@@ -448,11 +448,11 @@ In `host terminal`:
 podman login --username bestiadev docker.io
 # type docker access token
 
-podman push docker.io/bestiadev/rust_dev_cargo_img:cargo-1.68.0
+podman push docker.io/bestiadev/rust_dev_cargo_img:cargo-1.68.2
 podman push docker.io/bestiadev/rust_dev_cargo_img:latest
 
-podman push docker.io/bestiadev/rust_dev_vscode_img:vscode-1.76.1
-podman push docker.io/bestiadev/rust_dev_vscode_img:cargo-1.68.0
+podman push docker.io/bestiadev/rust_dev_vscode_img:vscode-1.77.2
+podman push docker.io/bestiadev/rust_dev_vscode_img:cargo-1.68.2
 podman push docker.io/bestiadev/rust_dev_vscode_img:latest
 
 podman push docker.io/bestiadev/rust_dev_squid_img:squid-3.5.27-2
@@ -477,8 +477,8 @@ I saved some 600MB of space just deleting the docs folder, that actually noone n
 | Image  | Label | Size |
 | ------------- | ------------- |------------- |
 | docker.io/bestiadev/rust_dev_squid_img  | squid3.5.27-2  | 168 MB |
-| docker.io/bestiadev/rust_dev_cargo_img  | cargo-1.68.0   | 1.11 GB |
-| docker.io/bestiadev/rust_dev_vscode_img  | cargo-1.68.0  | 1.40 GB |
+| docker.io/bestiadev/rust_dev_cargo_img  | cargo-1.68.2   | 1.11 GB |
+| docker.io/bestiadev/rust_dev_vscode_img  | cargo-1.68.2  | 1.40 GB |
 
 ## Users keys for SSH
 
@@ -962,6 +962,85 @@ The same `sh ~/rustprojects/docker_rust_development_install/rust_dev_pod_after_r
 To use the administrative tool pgAdmin open the browser on `localhost:9876`.  
 If you want, you can change the user and passwords in the bash script `rust_dev_pod_create.sh` to something stronger.  
 
+## Cross-compile for Windows
+
+I added to the image `rust_dev_cargo_img` the target and needed utilities for cross-compiling to Windows.  
+It is nice for some programs to compile the executables both for Linux and Windows.  
+This is now simple to cross-compile with this command:  
+
+```bash
+cargo build --target x86_64-pc-windows-gnu
+```
+
+The result will be in the folder `target/x86_64-pc-windows-gnu/debug`.  
+You can then copy this file from the container to the host system.  
+Run inside the host system (example for the simple rust_dev_hello project):  
+
+```bash
+mkdir -p ~/rustprojects/rust_dev_hello/win
+podman cp rust_dev_cargo_cnt:/home/rustdevuser/rustprojects/rust_dev_hello/target/x86_64-pc-windows-gnu/debug/rust_dev_hello.exe ~/rustprojects/rust_dev_hello/win/rust_dev_hello.exe
+```
+
+Now in the host system (Linux) you can copy this file (somehow) to your Windows system and run it there. It works.
+
+## Cross-compile for Linux Alpine (Musl)
+
+I added to the image `rust_dev_cargo_img` the target and needed utilities for cross-compiling to Musl.  
+Using a container to publish your executable to a server makes distribution much easier.
+The smallest Linux container image is Alpine, only 5 MB. It has achieved this minimal size not using glibc and instead using the alternative musl library. Most of the programs will run just fine with musl. Cross-compile with this:  
+
+```bash
+cargo build --target x86_64-unknown-linux-musl
+```
+
+The result will be in the folder `target/x86_64-unknown-linux-musl/debug`.  
+You can then copy this file from the container to the host system.  
+Run inside the host system (example for the simple rust_dev_hello project):  
+
+```bash
+mkdir -p ~/rustprojects/rust_dev_hello/musl
+podman cp rust_dev_cargo_cnt:/home/rustdevuser/rustprojects/rust_dev_hello/target/x86_64-unknown-linux-musl/debug/rust_dev_hello ~/rustprojects/rust_dev_hello/musl/rust_dev_hello
+```
+
+Now in the host system (Linux) you can create an alpine container and copy this executable into it.  
+
+```bash
+# build the container image
+
+buildah from \
+--name alpine_hello_world_img \
+docker.io/library/alpine
+
+buildah config \
+--author=github.com/bestia-dev \
+--label name=alpine_hello_world_img \
+--label source=github.com/bestia-dev/docker_rust_development \
+alpine_hello_world_img
+
+buildah copy alpine_hello_world_img  ~/rustprojects/rust_dev_hello/musl/rust_dev_hello /usr/bin/rust_dev_hello
+buildah run --user root  alpine_hello_world_img    chown root:root /usr/bin/rust_dev_hello
+buildah run --user root  alpine_hello_world_img    chmod 755 /usr/bin/rust_dev_hello
+
+buildah commit alpine_hello_world_img docker.io/bestiadev/alpine_hello_world_img
+
+# now run the container and executable
+
+podman run alpine_hello_world_img /usr/bin/rust_dev_hello
+```
+
+There is an example of this code in the folder `alpine_hello_world_test`.
+
+You can use this image for distribution of the program to your server. It is only 11MB in size.
+
+## Cross-compile to Wasm/Webassembly
+
+I added to the image `rust_dev_cargo_img` the utility `wasm-pack` for cross-compiling to Wasm/Webassembly. 
+It is in-place substitute for the default `cargo` command:
+
+```bash
+wasm-pack build --target web
+```
+
 ## Read more
 
 Read more how I use my [Development environment](https://github.com/bestia-dev/development_environment).  
@@ -973,7 +1052,6 @@ podman exec rust_dev_squid_cnt cat /var/log/squid/access.log
 podman exec rust_dev_squid_cnt tail -f /var/log/squid/access.log
 
 new image with cargo-crev and cargo_crev_reviews
-new image with windows cross compile
 
 ## cargo crev reviews and advisory
 
