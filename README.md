@@ -285,7 +285,7 @@ Buildah is a replacement for the `docker build` command. It is easier to incorpo
 
 The Rust official images are on Docker hub: <https://hub.docker.com/_/rust>
 
-I was surprised by the size of the image. It is big from 500MB compressed to 1.41GB uncompressed. But this is mostly the size of rust files.
+I was surprised by the size of the image. It is big from 500 MB compressed to 1.4 GB uncompressed. But this is mostly the size of rust files.
 
 I don't like that this images have only the `root` user. I will start from the Debian-11 image and install all I need as a non-privileged user `rustdevuser`.
 
@@ -459,7 +459,7 @@ podman push docker.io/bestiadev/rust_dev_squid_img:squid-3.5.27-2
 podman push docker.io/bestiadev/rust_dev_squid_img:latest
 ```
 
-It takes some time to upload more than 2 Gb.
+It takes some time to upload more than 2.6 GB with my slow internet connection.
 
 ## Enter the container as root
 
@@ -472,13 +472,23 @@ podman exec -it --user root rust_dev_vscode_cnt bash
 
 ## Image sizes
 
-Rust is not so small.  
-I saved some 600MB of space just deleting the docs folder, that actually noone needs.  
-| Image  | Label | Size |
-| ------------- | ------------- |------------- |
-| docker.io/bestiadev/rust_dev_squid_img  | squid3.5.27-2  | 168 MB |
-| docker.io/bestiadev/rust_dev_cargo_img  | cargo-1.68.2   | 1.11 GB |
-| docker.io/bestiadev/rust_dev_vscode_img  | cargo-1.68.2  | 1.40 GB |
+Rust is not so small. The official Rust image is 500 MB compressed to 1.4 GB uncompressed.  
+I saved some 600MB of space just deleting the docs folder, that actually noone needs, because you can find it on the internet.  
+I added in the image a lot of useful tools:  
+
+- cross-compile to Windows, Musl and Wasm/WebAssembly, 
+- faster linking with mold,
+- sccache to cache artifacts, 
+- crate.io-index is already downloaded in the image, 
+- rust-src for debugging
+- cargo-auto for task automation
+
+Docker hub stores compressed images, so they are a third of the size to download. 
+
+| Image                                    | Label          | Size         | compressed  |
+| ---------------------------------------- | -------------- |------------- | ----------- |
+| docker.io/bestiadev/rust_dev_cargo_img   | cargo-1.68.2   | 2.89 GB      | 0.96 GB     |
+| docker.io/bestiadev/rust_dev_vscode_img  | cargo-1.68.2   | 3.17 GB      | 1.05 GB     |
 
 ## Users keys for SSH
 
@@ -1079,9 +1089,9 @@ buildah commit distroless_hello_world_img docker.io/bestiadev/distroless_hello_w
 podman run distroless_hello_world_img /usr/bin/rust_dev_hello
 ```
 
-There is an example of this code in the folder `alpine_hello_world_test`.
+There is an example of this code in the folder `test_cross_compile`.
 
-You can use this image for distribution of the program to your server. It is only 11MB in size.
+You can use this image for distribution of the program to your server. It is only 11 MB in size.
 
 ## Cross-compile to Wasm/Webassembly
 
