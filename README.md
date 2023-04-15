@@ -285,7 +285,7 @@ Buildah is a replacement for the `docker build` command. It is easier to incorpo
 
 The Rust official images are on Docker hub: <https://hub.docker.com/_/rust>
 
-I was surprised by the size of the image. It is big from 200Mb compressed to 1.2Gb uncompressed. But this is mostly the size of rust files.
+I was surprised by the size of the image. It is big from 500MB compressed to 1.41GB uncompressed. But this is mostly the size of rust files.
 
 I don't like that this images have only the `root` user. I will start from the Debian-11 image and install all I need as a non-privileged user `rustdevuser`.
 
