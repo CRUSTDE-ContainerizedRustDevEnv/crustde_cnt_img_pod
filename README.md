@@ -566,10 +566,10 @@ sh rust_dev_squid_img.sh
 ```
 
 If you need, you can modify the file `etc_squid_squid.conf` to add more whitelisted domains. Then run `sh rust_dev_squid_img.sh` to build the modified image.
-You can also add whitelisted domains later, when you actually use the squid container. First modify the file `~/rustprojects/docker_rust_development_install/create_and_push_container_images/etc_squid_squid.con`. Then copy this file into the squid container:
+You can also add whitelisted domains later, when you actually use the squid container. First modify the file `~/rustprojects/docker_rust_development/create_and_push_container_images/etc_squid_squid.con`. Then copy this file into the squid container:
 
 ```bash
-podman cp ~/rustprojects/docker_rust_development_install/create_and_push_container_images/etc_squid_squid.conf rust_dev_squid_cnt:/etc/squid/squid.conf
+podman cp ~/rustprojects/docker_rust_development/create_and_push_container_images/etc_squid_squid.conf rust_dev_squid_cnt:/etc/squid/squid.conf
 # Finally restart the squid container
 podman restart rust_dev_squid_cnt
 ```
@@ -967,7 +967,7 @@ The same `sh ~/rustprojects/docker_rust_development_install/rust_dev_pod_after_r
 
 ## PostgreSQL and pgAdmin
 
-Some projects need the database PostgreSQL 13. I created a new pod with the command `sh docker_rust_development_install\pod_with_rust_pg_vscode\rust_dev_pod_create.sh`. 
+Some projects need the database PostgreSQL 13. I created a new pod with the command `sh docker_rust_development_install\pod_with_rust_pg_vscode\rust_dev_pod_create.sh`.  
 The same `sh ~/rustprojects/docker_rust_development_install/rust_dev_pod_after_reboot.sh` is used after reboot.  
 To use the administrative tool pgAdmin open the browser on `localhost:9876`.  
 If you want, you can change the user and passwords in the bash script `rust_dev_pod_create.sh` to something stronger.  
