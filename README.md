@@ -207,8 +207,8 @@ Wsl2 has a special kernel and Podman needs a small trick to work.
 <https://www.youtube.com/watch?v=fWFNGxJNZ8Y>  
 
 ```bash
-mkdir $HOME/.config
-mkdir $HOME/.config/containers
+mkdir -p $HOME/.config
+mkdir -p $HOME/.config/containers
 nano $HOME/.config/containers/containers.conf
 ```
 
@@ -395,7 +395,7 @@ Copy it as root into `/usr/bin` and adjust ownership and permissions:
 podman cp $HOME/mold  rust_dev_vscode_cnt:/usr/bin/
 podman exec --user=root rust_dev_vscode_cnt chown root:root /usr/bin/mold
 podman exec --user=root rust_dev_vscode_cnt chmod 755 /usr/bin/mold
-podman exec --user=root rust_dev_vscode_cnt mkdir /home/rustdevuser/.cargo/bin/mold
+podman exec --user=root rust_dev_vscode_cnt mkdir -p /home/rustdevuser/.cargo/bin/mold
 podman exec --user=root rust_dev_vscode_cnt ln -s /usr/bin/mold /home/rustdevuser/.cargo/bin/mold/ld
 ```
 
@@ -500,7 +500,7 @@ In `host terminal`:
 ssh-keygen -f ~/.ssh/rustdevuser_key -t ed25519 -C "info@my.domain"
 # give it a passphrase and remember it, you will need it
 # generate host key
-mkdir  -p ~/.ssh/rust_dev_pod_keys/etc/ssh
+mkdir -p ~/.ssh/rust_dev_pod_keys/etc/ssh
 ssh-keygen -A -f ~/.ssh/rust_dev_pod_keys
 
 # check the new files
