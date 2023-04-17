@@ -65,8 +65,8 @@ if grep -qi microsoft /proc/version; then
   if [ -f $HOME/.config/containers/containers.conf ]; then
     echo "\033[0;33m    $HOME/.config/containers/containers.conf already exists. \033[0m"
   else
-    echo "\033[0;33m    mkdir $HOME/.config/containers \033[0m"
-    mkdir $HOME/.config/containers
+    echo "\033[0;33m    mkdir -p $HOME/.config/containers \033[0m"
+    mkdir -p $HOME/.config/containers
     echo '  [engine]
     cgroup_manager = "cgroupfs"
     events_logger = "file"'
