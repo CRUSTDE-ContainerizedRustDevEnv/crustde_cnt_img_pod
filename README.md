@@ -255,6 +255,8 @@ List all containers:
 
 ```bash
 podman ps -a
+# it will list also closed container. To clean all the closed container:
+podman container cleanup -a --rm
 ```
 
 Testing the httpd container:
