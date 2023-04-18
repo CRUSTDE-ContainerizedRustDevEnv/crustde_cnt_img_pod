@@ -732,6 +732,14 @@ cargo run
 That should work and greet you with "Hello, world!".  
 Leave VSCode open because the next chapter will continue from here.
 
+## Open VSCode project from command line
+
+You can call directly an existing vscode project inside the container from the Linux host over SSH like this:
+
+```bash
+code --remote ssh-remote+rust_dev_vscode_cnt /home/rustdevuser/rustprojects/rust_dev_hello
+```
+
 ## Github in the container
 
 Download the template for bash script from here:  

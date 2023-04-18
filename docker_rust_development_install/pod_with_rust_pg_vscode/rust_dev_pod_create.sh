@@ -37,6 +37,10 @@ podman create --name rust_dev_squid_cnt \
 docker.io/bestiadev/rust_dev_squid_img:latest
 
 echo " "
+echo "\033[0;33m    Copy squid.conf for customized ACL proxy permissions \033[0m"
+podman cp etc_squid_squid.conf rust_dev_squid_cnt:/etc/squid/squid.conf
+
+echo " "
 echo "\033[0;33m    Create container rust_dev_vscode_cnt in the pod \033[0m"
 podman create --name rust_dev_vscode_cnt --pod=rust_dev_pod -ti \
 docker.io/bestiadev/rust_dev_vscode_img:latest
@@ -148,6 +152,9 @@ echo "\033[0;33m    Secondly: open a new VSCode window exactly for this project/
 echo "\033[0;32m code rust_dev_hello \033[0m"
 echo "\033[0;33m    A new VSCode windows will open for the 'rust_dev_hello' project. Retype the passphrase. \033[0m"
 echo "\033[0;33m    You can close now all other VSCode windows. \033[0m"
+
+echo "\033[0;33m    You can call directly an existing vscode project inside the container from the Linux host over SSH like this: \033[0m"
+echo "\033[0;32m code --remote ssh-remote+rust_dev_vscode_cnt /home/rustdevuser/rustprojects/rust_dev_hello \033[0m"
 
 echo " "
 echo "\033[0;33m    Build and run the project in the VSCode terminal: \033[0m"
