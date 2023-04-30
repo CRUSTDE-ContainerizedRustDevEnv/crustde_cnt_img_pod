@@ -172,6 +172,12 @@ echo "\033[0;33m    You can administer your postgreSQL in the browser with usern
 echo "\033[0;32m localhost:9876 \033[0m"
 
 echo " "
+echo "\033[0;33m    Squid limits connections to very few internet places. If you need to allow more, modify the \033[0m"
+echo "\033[0;33m    etc_squid_squid.conf file then execute: \033[0m"
+echo "\033[0;32m podman cp etc_squid_squid.conf rust_dev_squid_cnt:/etc/squid/squid.conf  \033[0m"
+echo "\033[0;32m podman restart rust_dev_squid_cnt  \033[0m"
+
+echo " "
 echo "\033[0;33m    You can delete the pod and ALL of the DATA it contains: \033[0m"
 echo "\033[0;32m podman pod rm -f rust_dev_pod \033[0m"
 
