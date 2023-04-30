@@ -147,25 +147,16 @@ fi
 echo " "
 echo "\033[0;33m    Fast ssh connection test from terminal: \033[0m"
 echo "\033[0;32m ssh -i ~/.ssh/rustdevuser_key -p 2201 rustdevuser@localhost \033[0m"
-echo " "
-echo "\033[0;33m    Open VSCode, press F1, type 'ssh' and choose 'Remote-SSH: Connect to Host...' and choose 'rust_dev_vscode_cnt' \033[0m" 
-echo "\033[0;33m    Type the passphrase. This will open a new VSCode windows attached to the container. \033[0m"
-echo "\033[0;33m    If needed Open VSCode terminal with Ctrl+J \033[0m"
-echo "\033[0;33m    Inside VSCode terminal, go to the project folder. Here we will create a sample project: \033[0m"
 echo "\033[0;32m cd ~/rustprojects \033[0m"
 echo "\033[0;32m cargo new rust_dev_hello \033[0m"
-
-echo "\033[0;33m    Secondly: open a new VSCode window exactly for this project/folder. \033[0m"
-echo "\033[0;32m code rust_dev_hello \033[0m"
-echo "\033[0;33m    A new VSCode windows will open for the 'rust_dev_hello' project. Retype the passphrase. \033[0m"
-echo "\033[0;33m    You can close now all other VSCode windows. \033[0m"
-
-echo "\033[0;33m    You can call directly an existing vscode project inside the container from the Linux host over SSH like this: \033[0m"
-echo "\033[0;32m code --remote ssh-remote+rust_dev_vscode_cnt /home/rustdevuser/rustprojects/rust_dev_hello \033[0m"
+echo "\033[0;32m cd rust_dev_hello \033[0m"
+echo "\033[0;32m cargo run \033[0m"
+echo "\033[0;32m exit \033[0m"
 
 echo " "
-echo "\033[0;33m    Build and run the project in the VSCode terminal: \033[0m"
-echo "\033[0;32m cargo run \033[0m"
+echo "\033[0;33m    You can open VSCode directly on an existing project inside the container from the Linux host: \033[0m"
+echo "\033[0;32m code --remote ssh-remote+rust_dev_vscode_cnt /home/rustdevuser/rustprojects/rust_dev_hello \033[0m"
+echo "\033[0;33m    It will ask for the ssh passphrase. \033[0m"
 
 echo " "
 echo "\033[0;33m    You can administer your postgreSQL in the browser with username info@bestia.dev on: \033[0m"
@@ -178,6 +169,7 @@ echo "\033[0;32m podman cp etc_squid_squid.conf rust_dev_squid_cnt:/etc/squid/sq
 echo "\033[0;32m podman restart rust_dev_squid_cnt  \033[0m"
 
 echo " "
+echo "\033[0;33m    Be sure to push your code to Github frequently, because sometimes containers just stop to work. \033[0m"
 echo "\033[0;33m    You can delete the pod and ALL of the DATA it contains: \033[0m"
 echo "\033[0;32m podman pod rm -f rust_dev_pod \033[0m"
 

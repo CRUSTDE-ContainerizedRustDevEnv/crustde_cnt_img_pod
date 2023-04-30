@@ -23,7 +23,7 @@ fi
 # this will execute on Debian in WSL2 and on bare metal.
 podman pod restart rust_dev_pod
 podman exec --user=root  rust_dev_vscode_cnt service ssh restart
-podman container cleanup -a --rm
+#podman container cleanup -a --rm
 podman pod list
 podman ps -a
 
