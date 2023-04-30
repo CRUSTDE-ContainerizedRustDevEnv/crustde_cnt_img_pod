@@ -94,6 +94,7 @@
         "sqltools",
         "sshadd",
         "thers",
+        "tmpfs",
         "toolchains",
         "unoptimized",
         "usermod",

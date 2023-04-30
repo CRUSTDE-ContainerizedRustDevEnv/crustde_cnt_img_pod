@@ -1,30 +1,38 @@
 #!/bin/sh
 
 echo " "
-echo "\033[0;33m    Bash script to restart the pod 'sh rust_dev_pod_after_reboot.sh' \033[0m"
+echo "\033[0;33m    Bash script to correctly restart the pod 'sh rust_dev_pod_after_reboot.sh' \033[0m"
 
 # repository: https://github.com/bestia-dev/docker_rust_development
 
 # WSL2 have some quirks.
 if grep -qi microsoft /proc/version; then
     echo " "
-    echo "\033[0;33m    Warning: Use this only once after Debian reboot! \033[0m"
-    echo "\033[0;33m    You can simulate a reboot in windows powershell with: \033[0m"
-    echo "\033[0;33m Get-Service LxssManager | Restart-Service \033[0m"
-    echo "\033[0;33m    and then run this bash script again. \033[0m"
+    echo "\033[0;33m    Inside WSL the /tmp folder must be on a temporary filesystem. \033[0m"
+    echo "\033[0;33m    If not, there are remaining files in /tmp that corrupt the podman workings. \033[0m"
+    echo "\033[0;33m    The /tmp folder must already exist. Usually it does by default. \033[0m"
+    echo "\033[0;32m test -d /tmp && echo "ok. Directory /tmp exist." || echo "Error ! Directory /tmp DOES NOT EXIST !"   \033[0m"
+    echo "\033[0;33m    Check if the settings for tmpfs is already there. \033[0m"
+    echo "\033[0;32m sudo cat /etc/fstab  \033[0m"
+    echo "\033[0;33m    Here is how I set fstab to mount tmpfs. \033[0m"
+    echo "\033[0;32m sudo grep -qxF 'none  /tmp  tmpfs  defaults  0 0' /etc/fstab || echo "none  /tmp  tmpfs  defaults  0 0" | sudo tee -a /etc/fstab  \033[0m"
+    
     echo " "
-
-    rm -rf /tmp/podman-run-$(id -u)/libpod/tmp
-    # if repeated 3 times, the problems vanishes. Maybe because we have 3 containers in the pod.
-    podman pod restart rust_dev_pod
-    podman pod restart rust_dev_pod
+    echo "\033[0;33m    You can simulate a reboot in windows powershell with: \033[0m"
+    echo "\033[0;32m wsl --shutdown  \033[0m"
 fi
 
 # this will execute on Debian in WSL2 and on bare metal.
+echo " "
+echo "\033[0;33m    podman pod restart rust_dev_pod \033[0m"
 podman pod restart rust_dev_pod
+echo " "
+echo "\033[0;33m    podman exec --user=root  rust_dev_vscode_cnt service ssh restart \033[0m"
 podman exec --user=root  rust_dev_vscode_cnt service ssh restart
-#podman container cleanup -a --rm
+echo " "
+echo "\033[0;33m    podman pod list \033[0m"
 podman pod list
+echo "\033[0;33m    podman ps -a \033[0m"
 podman ps -a
 
 echo " "

@@ -109,7 +109,7 @@ if grep -qi microsoft /proc/version; then
     echo "\033[0;33m    If you have already used it, you can find it in the bash history:  \033[0m"
     echo "\033[0;32m Ctrl-R, type after, press Esc, press Enter  \033[0m"
     echo "\033[0;33m    You can force the WSL reboot: Open powershell as Administrator:  \033[0m"
-    echo "\033[0;32m  Get-Service LxssManager | Restart-Service \033[0m"
+    echo "\033[0;32m  wsl --shutdown  \033[0m"
 fi
 
 echo " "

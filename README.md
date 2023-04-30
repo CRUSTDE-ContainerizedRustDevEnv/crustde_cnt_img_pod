@@ -86,11 +86,11 @@ That should work and greet you with "Hello, world!"
 
 6\. After reboot, WSL2 can create some network problems for podman.  
 No problem for Debian on bare metal. But the script is ok to restart the pod and start the sshd server.
-So use it in both cases. 
+So use it in both cases.  
 We can simulate the WSL2 reboot in `powershell in windows`:
 
 ```powershell
-Get-Service LxssManager | Restart-Service
+wsl --shutdown 
 ```
 
 Before entering any podman command we need first to clean some temporary files, restart the pod and restart the SSH server.  
@@ -858,11 +858,11 @@ A good learning example.
 
 After reboot WSL2 can create some network problems for podman.  
 No problem for Debian on bare metal. But the script is ok to restart the pod and start the sshd server.
-So use it in both cases. 
+So use it in both cases.  
 We can simulate the WSL2 reboot in `powershell in windows`:
 
 ```powershell
-Get-Service LxssManager | Restart-Service
+wsl --shutdown 
 ```
 
 Before entering any podman command we need first to clean some temporary files, restart the pod and restart the SSH server.  
@@ -1115,6 +1115,19 @@ wasm-pack build --target web
 ## Read more
 
 Read more how I use my [Development environment](https://github.com/bestia-dev/development_environment).  
+
+## WSL problems
+
+I still have problems after WSL reboot.
+Some say: The `/tmp` files should be on a temporary filesystem.  
+Here is how I set fstab to mount tmpfs, it works.
+
+```bash
+echo "none  /tmp  tmpfs  defaults  0 0" | sudo tee -a /etc/fstab
+# create /tmp folder if not exist
+sudo mkdir /tmp
+sudo chmod 1777 /tmp
+```
 
 ## TODO
 
