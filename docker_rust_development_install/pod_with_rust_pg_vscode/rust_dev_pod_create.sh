@@ -140,6 +140,8 @@ fi
 echo " "
 echo "\033[0;33m    Fast ssh connection test from terminal: \033[0m"
 echo "\033[0;32m ssh -i ~/.ssh/rustdevuser_key -p 2201 rustdevuser@localhost \033[0m"
+echo "\033[0;33m    Enter passphrase. \033[0m"
+echo "\033[0;33m    The prompt should change to: rustdevuser@rust_dev_pod:~$ \033[0m"
 echo "\033[0;32m cd ~/rustprojects \033[0m"
 echo "\033[0;32m cargo new rust_dev_hello \033[0m"
 echo "\033[0;32m cd rust_dev_hello \033[0m"
