@@ -21,6 +21,7 @@
         "cgroupfs",
         "clippy",
         "cntssh",
+        "cranelift",
         "crev",
         "crun",
         "daemonless",

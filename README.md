@@ -1136,6 +1136,7 @@ podman exec rust_dev_squid_cnt cat /var/log/squid/access.log
 podman exec rust_dev_squid_cnt tail -f /var/log/squid/access.log
 
 new image with cargo-crev and cargo_crev_reviews
+Test performance with ram-disk and with cranelift.
 
 ## cargo crev reviews and advisory
 
