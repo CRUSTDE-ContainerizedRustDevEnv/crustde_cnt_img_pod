@@ -50,6 +50,7 @@ echo " "
 echo "\033[0;33m    You can open VSCode directly on an existing project inside the container from the Linux host: \033[0m"
 echo "\033[0;32m code --remote ssh-remote+rust_dev_vscode_cnt /home/rustdevuser/rustprojects/rust_dev_hello \033[0m"
 echo "\033[0;33m    It will ask for the ssh passphrase. \033[0m"
+echo "\033[0;33m    If the command line does not return to bash, use Ctrl+<. I don't know why Ctrl+c does not work. \033[0m"
 
 echo " "
 echo "\033[0;33m    Be sure to push your code to Github frequently, because sometimes containers just stop to work. \033[0m"
