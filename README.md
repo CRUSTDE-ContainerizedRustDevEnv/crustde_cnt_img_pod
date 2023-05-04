@@ -739,7 +739,7 @@ Leave VSCode open because the next chapter will continue from here.
 You can call directly an existing vscode project inside the container from the Linux host over SSH like this:
 
 ```bash
-code --remote ssh-remote+rust_dev_vscode_cnt /home/rustdevuser/rustprojects/rust_dev_hello
+code --remote ssh-remote+rust_dev_vscode_cnt /home/rustdevuser/rustprojects
 ```
 
 ## Github in the container
