@@ -287,7 +287,7 @@ Buildah is a replacement for the `docker build` command. It is easier to incorpo
 
 The Rust official images are on Docker hub: <https://hub.docker.com/_/rust>
 
-I was surprised by the size of the image. It is big from 500 MB compressed to 1.4 GB uncompressed. But this is mostly the size of rust files.
+I was surprised by the size of the image. It is big from 500 MB compressed to 1.4 GB uncompressed. But this is the size of rust development tools.
 
 I don't like that this images have only the `root` user. I will start from the Debian-11 image and install all I need as a non-privileged user `rustdevuser`.
 
@@ -586,7 +586,6 @@ VSCode is great because of its extensions. Most of these extensions are installe
 - streetsidesoftware.code-spell-checker
 - rust-lang.rust-analyzer
 - davidanson.vscode-markdownlint
-- 2gua.rainbow-brackets
 - dotjoshjohnson.xml
 - lonefy.vscode-js-css-html-formatter
 - serayuzgur.crates
@@ -607,6 +606,9 @@ podman login --username bestiadev docker.io
 podman push docker.io/bestiadev/rust_dev_cargo_img:cargo-1.69.0
 podman push docker.io/bestiadev/rust_dev_cargo_img:latest
 
+podman push docker.io/bestiadev/rust_dev_cross_img:cargo-1.69.0
+podman push docker.io/bestiadev/rust_dev_cross_img:latest
+
 podman push docker.io/bestiadev/rust_dev_vscode_img:vscode-1.78.2
 podman push docker.io/bestiadev/rust_dev_vscode_img:cargo-1.69.0
 podman push docker.io/bestiadev/rust_dev_vscode_img:latest
@@ -615,7 +617,7 @@ podman push docker.io/bestiadev/rust_dev_squid_img:squid-3.5.27-2
 podman push docker.io/bestiadev/rust_dev_squid_img:latest
 ```
 
-It takes some time to upload more than 2.6 GB with my slow internet connection.
+It takes some time to upload more than 3 GB with my slow internet connection.
 
 ## Enter the container as root
 
@@ -644,7 +646,7 @@ Docker hub stores compressed images, so they are a third of the size to download
 | Image                                    | Label          | Size         | compressed  |
 | ---------------------------------------- | -------------- |------------- | ----------- |
 | docker.io/bestiadev/rust_dev_cargo_img   | cargo-1.69.0   | 1.30 GB      | 0.96 GB     |
-| docker.io/bestiadev/rust_dev_cross_img   | cargo-1.69.0   | ?.? GB       | ?.? GB     |
+| docker.io/bestiadev/rust_dev_cross_img   | cargo-1.69.0   | 1.70 GB      | ?.? GB     |
 | docker.io/bestiadev/rust_dev_vscode_img  | cargo-1.69.0   | 3.17 GB      | 1.05 GB     |
 
 ## Users keys for SSH

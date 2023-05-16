@@ -58,9 +58,7 @@ buildah run --user root rust_dev_vscode_img    chmod 700 /home/rustdevuser/.ssh
 buildah run --user root rust_dev_vscode_img    chown -R rustdevuser:rustdevuser /home/rustdevuser/.ssh
 
 echo " "
-echo "\033[0;33m    apk update \033[0m"
-buildah run --user root rust_dev_vscode_img    apt -y update
-buildah run --user root rust_dev_vscode_img    apt -y upgrade
+echo "\033[0;33m    install ssh server \033[0m"
 buildah run --user root rust_dev_vscode_img    apt install -y openssh-server
 
 echo " "
@@ -76,7 +74,6 @@ buildah run rust_dev_vscode_img /bin/sh -c 'rm /tmp/vscode-server-linux-x64.tar.
 buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/b3e4e68a0bc097f0ae7907b217c1119af9e03435/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension streetsidesoftware.code-spell-checker'
 buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/b3e4e68a0bc097f0ae7907b217c1119af9e03435/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension rust-lang.rust-analyzer'
 buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/b3e4e68a0bc097f0ae7907b217c1119af9e03435/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension davidanson.vscode-markdownlint'
-buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/b3e4e68a0bc097f0ae7907b217c1119af9e03435/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension 2gua.rainbow-brackets'
 buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/b3e4e68a0bc097f0ae7907b217c1119af9e03435/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension dotjoshjohnson.xml'
 buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/b3e4e68a0bc097f0ae7907b217c1119af9e03435/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension serayuzgur.crates'
 buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/b3e4e68a0bc097f0ae7907b217c1119af9e03435/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension ms-vscode.live-server'
