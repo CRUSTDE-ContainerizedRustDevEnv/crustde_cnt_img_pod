@@ -103,6 +103,8 @@
         "userns",
         "USERPROFILE",
         "wais",
+        "wasi",
+        "wasmtime",
         "Webassembly",
         "webserverssh",
         "WINHOME",

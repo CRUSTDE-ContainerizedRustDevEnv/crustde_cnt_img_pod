@@ -140,6 +140,10 @@ buildah run --user root rust_dev_cargo_img /bin/sh -c 'apt-get install -y musl-t
 buildah run rust_dev_cargo_img /bin/sh -c 'rustup target add x86_64-unknown-linux-musl'
 
 echo " "
+echo "\033[0;33m    Add target for compile to wasm32-wasi \033[0m"
+buildah run rust_dev_cargo_img /bin/sh -c 'rustup target add wasm32-wasi'
+
+echo " "
 echo "\033[0;33m    Remove the toolchain docs, because they are 610MB big \033[0m"
 buildah run rust_dev_cargo_img /bin/sh -c 'rm -rf /home/rustdevuser/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/share/doc'
 
@@ -164,8 +168,16 @@ buildah run rust_dev_cargo_img /bin/sh -c 'curl https://rustwasm.github.io/wasm-
 buildah run rust_dev_cargo_img /bin/sh -c 'cargo install dev_bestia_cargo_completion'
 
 echo " "
+echo "\033[0;33m    Install wasmtime wasi runtime \033[0m"
+buildah run rust_dev_cargo_img /bin/sh -c 'curl https://wasmtime.dev/install.sh -sSf | bash'
+
+echo " "
 echo "\033[0;33m    Install sccache to cache compiled artifacts. \033[0m"
 buildah run rust_dev_cargo_img /bin/sh -c 'cargo install sccache'
+
+echo " "
+echo "\033[0;33m    Install basic-http-server to work with WASM. \033[0m"
+buildah run rust_dev_cargo_img /bin/sh -c 'cargo install basic-http-server'
 
 echo " "
 echo "\033[0;33m    Add alias l for ls -la in .bashrc \033[0m"
