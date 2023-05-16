@@ -353,7 +353,7 @@ First let find the rustc version:
 
 ```bash
 rustc --version
-  rustc 1.68.2 
+  rustc 1.69.0 
 ```
 
 Let create and run a small Rust program:
@@ -387,9 +387,9 @@ podman rm rust_dev_cargo_cnt -f
 
 I discovered lately that my compile times are bad and that could be better using the "mold linker". It is experimental, but that is ok for me.  
 <https://github.com/rui314/mold>  
- 
+
 Download mold from:  
-<https://github.com/rui314/mold/releases/download/v1.6.0/mold-1.6.0-x86_64-linux.tar.gz> 
+<https://github.com/rui314/mold/releases/download/v1.6.0/mold-1.6.0-x86_64-linux.tar.gz>  
 and extract only the `mold` binary executable into `~`.  
 Copy it as root into `/usr/bin` and adjust ownership and permissions:
 
@@ -450,11 +450,11 @@ In `host terminal`:
 podman login --username bestiadev docker.io
 # type docker access token
 
-podman push docker.io/bestiadev/rust_dev_cargo_img:cargo-1.68.2
+podman push docker.io/bestiadev/rust_dev_cargo_img:cargo-1.69.0
 podman push docker.io/bestiadev/rust_dev_cargo_img:latest
 
-podman push docker.io/bestiadev/rust_dev_vscode_img:vscode-1.77.3
-podman push docker.io/bestiadev/rust_dev_vscode_img:cargo-1.68.2
+podman push docker.io/bestiadev/rust_dev_vscode_img:vscode-1.78.2
+podman push docker.io/bestiadev/rust_dev_vscode_img:cargo-1.69.0
 podman push docker.io/bestiadev/rust_dev_vscode_img:latest
 
 podman push docker.io/bestiadev/rust_dev_squid_img:squid-3.5.27-2
@@ -478,19 +478,19 @@ Rust is not so small. The official Rust image is 500 MB compressed to 1.4 GB unc
 I saved some 600MB of space just deleting the docs folder, that actually noone needs, because you can find it on the internet.  
 I added in the image a lot of useful tools:  
 
-- cross-compile to Windows, Musl and Wasm/WebAssembly, 
+- cross-compile to Windows, Musl, Wasi and Wasm/WebAssembly,
 - faster linking with mold,
-- sccache to cache artifacts, 
-- crate.io-index is already downloaded in the image, 
+- sccache to cache artifacts,
+- crate.io-index is already downloaded in the image,
 - rust-src for debugging
 - cargo-auto for task automation
 
-Docker hub stores compressed images, so they are a third of the size to download. 
+Docker hub stores compressed images, so they are a third of the size to download.  
 
 | Image                                    | Label          | Size         | compressed  |
 | ---------------------------------------- | -------------- |------------- | ----------- |
-| docker.io/bestiadev/rust_dev_cargo_img   | cargo-1.68.2   | 2.89 GB      | 0.96 GB     |
-| docker.io/bestiadev/rust_dev_vscode_img  | cargo-1.68.2   | 3.17 GB      | 1.05 GB     |
+| docker.io/bestiadev/rust_dev_cargo_img   | cargo-1.69.0   | 2.89 GB      | 0.96 GB     |
+| docker.io/bestiadev/rust_dev_vscode_img  | cargo-1.69.0   | 3.17 GB      | 1.05 GB     |
 
 ## Users keys for SSH
 
@@ -956,7 +956,7 @@ ssh-keygen -f $USERPROFILE/.ssh/known_hosts -R "[localhost]:2201";
 ## Double-commander SFTP
 
 On Debian I use Double-commander as alternative of Total-commander on Windows. It has a Ftp functionality that allows SSH and SFTP. But the private key must be PEM/rsa. It does not work with the existing rustdevuser_key that is OPENSSH. I tried to convert the key format, but neither key-gen, openssl nor putty were up to the task. So I decided to make a new private key just for Double-commander.  
-In doublecmd ftp setting I must enable the "use SSH+SCP protocol (no SFTP)" to make it work. 
+In doublecmd ftp setting I must enable the "use SSH+SCP protocol (no SFTP)" to make it work.  
 On the host Debian system run:
 
 ```bash
@@ -1103,13 +1103,24 @@ There is an example of this code in the folder `test_cross_compile`.
 
 You can use this image for distribution of the program to your server. It is only 11 MB in size.
 
+## Cross-compile to Wasi
+
+I added to the target `wasm32-wasi` for cross-compiling to Wasi and the CLI wasmtime to run wasi programs.  
+
+```bash
+wasm-pack build --target wasm32-wasi
+wasmtime ./target/wasm32-wasi/debug/rust_dev_hello.wasm upper world
+```
+
+We can also run this wasm program in the WASI-playground on <https://runno.dev/wasi>.  
+
 ## Cross-compile to Wasm/Webassembly
 
-I added to the image `rust_dev_cargo_img` the utility `wasm-pack` for cross-compiling to Wasm/Webassembly. 
+I added to the image `rust_dev_cargo_img` the utility `wasm-pack` for cross-compiling to Wasm/Webassembly.  
 It is in-place substitute for the default `cargo` command:
 
 ```bash
-wasm-pack build --target web
+wasm-pack build --release --target web
 ```
 
 ## Read more
