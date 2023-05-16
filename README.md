@@ -1,6 +1,6 @@
 # docker_rust_development
 
-**02. Tutorial for Rust development environment inside docker container. Rust - Hack Without Fear and Trust! (2022-03)**  
+**02. Tutorial for Rust development environment inside Linux OCI container. Rust - Hack Without Fear and Trust! (2022-03)**  
 ***version: 3.0  date: 2022-09-06 author: [bestia.dev](https://bestia.dev) repository: [GitHub](https://github.com/bestia-dev/docker_rust_development)***  
 
 [![Lines in md](https://img.shields.io/badge/Lines_in_markdown-932-green.svg)](https://github.com/bestia-dev/docker_rust_development/)
@@ -9,8 +9,8 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/bestia-dev/docker_rust_development/blob/master/LICENSE)
 ![Hits](https://bestia.dev/webpage_hit_counter/get_svg_image/138544014.svg)
 
-Hashtags: #rustlang #buildtool #developmenttool #tutorial #docker #ssh #container #podman  
-My projects on Github are more like a tutorial than a finished product: [bestia-dev tutorials](https://github.com/bestia-dev/tutorials_rust_wasm).
+Hashtags: #rustlang #buildtool #developmenttool #tutorial #docker #ssh #container #podman #Linux #OCI  
+My projects on Github are more like a tutorial than a finished product: [bestia-dev tutorials](https://github.com/bestia-dev/tutorials_rust_wasm).  
 
 ![spiral_of_madness](https://github.com/bestia-dev/docker_rust_development/raw/main/images/spiral_of_madness.png "spiral_of_madness")
 
@@ -103,7 +103,7 @@ podman ps
 
 If the restart is successful every container will be started a few seconds. It is not enough for containers to be in status "created". Then just repeat the restart procedure.
 
-7\. Eventually you will want to remove the entire pod. Docker containers and pods are ephemeral, it means just temporary. But your code and data must persist. Before destroying the pod/containers, push your changes to github, because removing the pod it will destroy also all the data that is inside.  
+7\. Eventually you will want to remove the entire pod. Linux OCI containers and pods are ephemeral, it means just temporary. But your code and data must persist. Before destroying the pod/containers, push your changes to github, because removing the pod it will destroy also all the data that is inside.  
 Be careful !  
 In `WSL2 terminal`:
 
@@ -126,10 +126,10 @@ It is very hard to avoid "supply chain attacks" in Rust as things are today. We 
 For big open-source project you will not read and understand every line of code. It is impossible because of the sheer size of projects and it is impossible to gain deep understanding of all the underlying principles, rules and exceptions of everything. And everything is moving and changing fast and continuously. It is impossible to follow all the changes.  
 We need to have layered protection between our computer system and some unknown code. In this project I propose a containerized development environment that will allow some degree of isolation. And in the same time easy of installation, transfer and repeatability.  
 
-Let learn to develope "everything" inside a Docker container and to isolate/sandbox it as much as possible from the underlying system.
+Let learn to develope "everything" inside a Linux OCI container and to isolate/sandbox it as much as possible from the underlying system.
 
-I have to acknowledge that Docker Linux Containers are not the perfect sandboxing solution. But I believe that for my "Rust development environment", it is "good enough". I expect that container isolation will get better with time (google, amazon, Intel, OpenStack and IBM are working on it).  
-It is possible to use the same docker container also inside a virtual machine for better isolation. For example: My main system is Win10. Inside that, I have WSL2, which is a Linux virtual machine. And inside that, I have Docker Linux Containers. But because of compiling performance I decided to go with a Debian dual boot with docker containers. My opinionated preferences:  
+I have to acknowledge that Linux OCI Containers are not the perfect sandboxing solution. But I believe that for my "Rust development environment", it is "good enough". I expect that container isolation will get better with time (google, amazon, Intel, OpenStack and IBM are working on it).  
+It is possible to use the same Linux OCI container also inside a virtual machine for better isolation. For example: My main system is Win10. Inside that, I have WSL2, which is a Linux virtual machine. And inside that, I have Linux OCI Containers. But because of compiling performance I decided to go with a Debian dual boot with Linux OCI containers. My opinionated preferences:  
 
 - No files/volumes are shared with the host.  
 - The outbound network is restricted to whitelisted domains by a Squid proxy server.  
@@ -310,7 +310,7 @@ This will create the image `rust_dev_cargo_img`.
 
 The scripts are just bash scripts and are super easy to read, follow, learn and modify. Much easier than Dockerfile. You can even run the commands one by one in the `bash terminal` and inspect the container to debug the building process.
 
-## Rust development in a Docker container
+## Rust development in a Linux OCI container
 
 There is a lot of benefits making a development environment in a container.  
 We want that everything is isolated/sandboxed and cannot affect our host system (Debian on bare metal or in WSL2 in Win10).  
@@ -414,7 +414,161 @@ with GCC advise to use a workaround to -fuse-ld
 rustflags = ["-C", "link-arg=-B/home/rustdevuser/.cargo/bin/mold"]
 ```
 
-## Docker image with VSCode server and extensions
+## Linux Oci image for cross-compile to Linux, Windows, WASI and WASM
+
+I wrote the bash script `rust_dev_cross_img.sh`
+
+Run it with
+
+```bash
+cd ~/rustprojects/docker_rust_development/create_and_push_container_images 
+sh rust_dev_cross_img.sh
+```
+
+This will create the image `rust_dev_cross_img`.
+
+## Cross-compile for Windows
+
+I added to the image `rust_dev_cross_img` the target and needed utilities for cross-compiling to Windows.  
+It is nice for some programs to compile the executables both for Linux and Windows.  
+This is now simple to cross-compile with this command:  
+
+```bash
+cargo build --target x86_64-pc-windows-gnu
+```
+
+The result will be in the folder `target/x86_64-pc-windows-gnu/debug`.  
+You can then copy this file from the container to the host system.  
+Run inside the host system (example for the simple rust_dev_hello project):  
+
+```bash
+mkdir -p ~/rustprojects/rust_dev_hello/win
+podman cp rust_dev_cross_cnt:/home/rustdevuser/rustprojects/rust_dev_hello/target/x86_64-pc-windows-gnu/debug/rust_dev_hello.exe ~/rustprojects/rust_dev_hello/win/rust_dev_hello.exe
+```
+
+Now in the host system (Linux) you can copy this file (somehow) to your Windows system and run it there. It works.
+
+## Cross-compile for Musl (standalone executable 100% statically linked)
+
+I added to the image `rust_dev_cross_img` the target and needed utilities for cross-compiling to Musl.  
+This executables are 100% statically linked and don't need any other dynamic library.  
+Using a container to publish your executable to a server makes distribution and isolation much easier.
+This executables can run on the empty container `scratch`.
+Or on the smallest Linux container images likeAlpine (7 MB) or distroless static-debian11 (3 MB).  
+Most of the programs will run just fine with musl. Cross-compile with this:  
+
+```bash
+cargo build --target x86_64-unknown-linux-musl
+```
+
+The result will be in the folder `target/x86_64-unknown-linux-musl/debug`.  
+You can then copy this file from the container to the host system.  
+Run inside the host system (example for the simple rust_dev_hello project):  
+
+```bash
+mkdir -p ~/rustprojects/rust_dev_hello/musl
+podman cp rust_dev_cross_cnt:/home/rustdevuser/rustprojects/rust_dev_hello/target/x86_64-unknown-linux-musl/debug/rust_dev_hello ~/rustprojects/rust_dev_hello/musl/rust_dev_hello
+```
+
+First let's make an empty `scratch` container with only this executable:  
+
+```bash
+# build the container image from scratch
+
+buildah from \
+--name scratch_hello_world_img \
+scratch
+
+buildah config \
+--author=github.com/bestia-dev \
+--label name=scratch_hello_world_img \
+--label source=github.com/bestia-dev/docker_rust_development \
+scratch_hello_world_img
+
+buildah copy scratch_hello_world_img  ~/rustprojects/rust_dev_hello/musl/rust_dev_hello /rust_dev_hello
+
+buildah commit scratch_hello_world_img docker.io/bestiadev/scratch_hello_world_img
+
+# now run the container and executable
+
+podman run scratch_hello_world_img /rust_dev_hello
+```
+
+We can create also a small alpine container and copy this executable into it.  
+
+```bash
+# build the container image
+
+buildah from \
+--name alpine_hello_world_img \
+docker.io/library/alpine
+
+buildah config \
+--author=github.com/bestia-dev \
+--label name=alpine_hello_world_img \
+--label source=github.com/bestia-dev/docker_rust_development \
+alpine_hello_world_img
+
+buildah copy alpine_hello_world_img  ~/rustprojects/rust_dev_hello/musl/rust_dev_hello /usr/bin/rust_dev_hello
+buildah run --user root  alpine_hello_world_img    chown root:root /usr/bin/rust_dev_hello
+buildah run --user root  alpine_hello_world_img    chmod 755 /usr/bin/rust_dev_hello
+
+buildah commit alpine_hello_world_img docker.io/bestiadev/alpine_hello_world_img
+
+# now run the container and executable
+
+podman run alpine_hello_world_img /usr/bin/rust_dev_hello
+```
+
+Similar with distroless static.  
+
+```bash
+# build the container image
+
+buildah from \
+--name distroless_hello_world_img \
+gcr.io/distroless/static-debian11
+
+buildah config \
+--author=github.com/bestia-dev \
+--label name=distroless_hello_world_img \
+--label source=github.com/bestia-dev/docker_rust_development \
+distroless_hello_world_img
+
+buildah copy distroless_hello_world_img  ~/rustprojects/rust_dev_hello/musl/rust_dev_hello /usr/bin/rust_dev_hello
+
+buildah commit distroless_hello_world_img docker.io/bestiadev/distroless_hello_world_img
+
+# now run the container and executable
+
+podman run distroless_hello_world_img /usr/bin/rust_dev_hello
+```
+
+There is an example of this code in the folder `test_cross_compile`.
+
+You can use this image for distribution of the program to your server. It is only 11 MB in size.
+
+## Cross-compile to Wasi
+
+I added to the image `rust_dev_cross_img` the target `wasm32-wasi` for cross-compiling to Wasi and the CLI wasmtime to run wasi programs.  
+
+```bash
+wasm-pack build --target wasm32-wasi
+wasmtime ./target/wasm32-wasi/debug/rust_dev_hello.wasm upper world
+```
+
+We can also run this wasm program in the WASI-playground on <https://runno.dev/wasi>.  
+
+## Cross-compile to Wasm/Webassembly
+
+I added to the image `rust_dev_cross_img` the utility `wasm-pack` for cross-compiling to Wasm/Webassembly.  
+It is in-place substitute for the default `cargo` command:
+
+```bash
+wasm-pack build --release --target web
+```
+
+## Linux OCI image with VSCode server and extensions
 
 I use VSCode as my primary code editor in Windows and in Debian GUI.  
 I will install the `Remote SSH` extension for remote developing. That is very broadly usable. We need to create an image that contains the VSCode server and extensions.
@@ -439,7 +593,7 @@ VSCode is great because of its extensions. Most of these extensions are installe
 
 Other extensions you can add manually through VSCode, but then it is not repeatable. Better is to modify the script and recreate the image `rust_dev_vscode_img.sh`.
 
-## Push image to docker hub
+## Push image to Docker hub
 
 I signed in to hub.docker.com.  
 In Account settings - Security I created an access token. This is the password for `podman login`. It is needed only once.  
@@ -489,7 +643,7 @@ Docker hub stores compressed images, so they are a third of the size to download
 
 | Image                                    | Label          | Size         | compressed  |
 | ---------------------------------------- | -------------- |------------- | ----------- |
-| docker.io/bestiadev/rust_dev_cargo_img   | cargo-1.69.0   | 2.89 GB      | 0.96 GB     |
+| docker.io/bestiadev/rust_dev_cargo_img   | cargo-1.69.0   | 1.30 GB      | 0.96 GB     |
 | docker.io/bestiadev/rust_dev_cross_img   | cargo-1.69.0   | ?.? GB       | ?.? GB     |
 | docker.io/bestiadev/rust_dev_vscode_img  | cargo-1.69.0   | 3.17 GB      | 1.05 GB     |
 
@@ -859,7 +1013,7 @@ cargo auto build_and_run
 In VSCode go to Ports and add the port `4000`.  
 Open the browser in Windows:  
 <http://localhost:4000/rust_wasm_pwa_minimal_clock/>  
-This is an example of Webassembly and PWA, directly from a docker container.  
+This is an example of Webassembly and PWA, directly from a Linux OCI container.  
 A good learning example.
 
 ## After reboot
@@ -990,147 +1144,6 @@ The same `sh ~/rustprojects/docker_rust_development_install/rust_dev_pod_after_r
 To use the administrative tool pgAdmin open the browser on `localhost:9876`.  
 If you want, you can change the user and passwords in the bash script `rust_dev_pod_create.sh` to something stronger.  
 
-## Cross-compile for Windows
-
-I added to the image `rust_dev_cross_img` the target and needed utilities for cross-compiling to Windows.  
-It is nice for some programs to compile the executables both for Linux and Windows.  
-This is now simple to cross-compile with this command:  
-
-```bash
-cargo build --target x86_64-pc-windows-gnu
-```
-
-The result will be in the folder `target/x86_64-pc-windows-gnu/debug`.  
-You can then copy this file from the container to the host system.  
-Run inside the host system (example for the simple rust_dev_hello project):  
-
-```bash
-mkdir -p ~/rustprojects/rust_dev_hello/win
-podman cp rust_dev_cross_cnt:/home/rustdevuser/rustprojects/rust_dev_hello/target/x86_64-pc-windows-gnu/debug/rust_dev_hello.exe ~/rustprojects/rust_dev_hello/win/rust_dev_hello.exe
-```
-
-Now in the host system (Linux) you can copy this file (somehow) to your Windows system and run it there. It works.
-
-## Cross-compile for Musl (standalone executable 100% statically linked)
-
-I added to the image `rust_dev_cross_img` the target and needed utilities for cross-compiling to Musl.  
-This executables are 100% statically linked and don't need any other dynamic library.  
-Using a container to publish your executable to a server makes distribution and isolation much easier.
-This executables can run on the empty container `scratch`.
-Or on the smallest Linux container images likeAlpine (7 MB) or distroless static-debian11 (3 MB).  
-Most of the programs will run just fine with musl. Cross-compile with this:  
-
-```bash
-cargo build --target x86_64-unknown-linux-musl
-```
-
-The result will be in the folder `target/x86_64-unknown-linux-musl/debug`.  
-You can then copy this file from the container to the host system.  
-Run inside the host system (example for the simple rust_dev_hello project):  
-
-```bash
-mkdir -p ~/rustprojects/rust_dev_hello/musl
-podman cp rust_dev_cross_cnt:/home/rustdevuser/rustprojects/rust_dev_hello/target/x86_64-unknown-linux-musl/debug/rust_dev_hello ~/rustprojects/rust_dev_hello/musl/rust_dev_hello
-```
-
-First let's make an empty `scratch` container with only this executable:  
-
-```bash
-# build the container image from scratch
-
-buildah from \
---name scratch_hello_world_img \
-scratch
-
-buildah config \
---author=github.com/bestia-dev \
---label name=scratch_hello_world_img \
---label source=github.com/bestia-dev/docker_rust_development \
-scratch_hello_world_img
-
-buildah copy scratch_hello_world_img  ~/rustprojects/rust_dev_hello/musl/rust_dev_hello /rust_dev_hello
-
-buildah commit scratch_hello_world_img docker.io/bestiadev/scratch_hello_world_img
-
-# now run the container and executable
-
-podman run scratch_hello_world_img /rust_dev_hello
-```
-
-We can create also a small alpine container and copy this executable into it.  
-
-```bash
-# build the container image
-
-buildah from \
---name alpine_hello_world_img \
-docker.io/library/alpine
-
-buildah config \
---author=github.com/bestia-dev \
---label name=alpine_hello_world_img \
---label source=github.com/bestia-dev/docker_rust_development \
-alpine_hello_world_img
-
-buildah copy alpine_hello_world_img  ~/rustprojects/rust_dev_hello/musl/rust_dev_hello /usr/bin/rust_dev_hello
-buildah run --user root  alpine_hello_world_img    chown root:root /usr/bin/rust_dev_hello
-buildah run --user root  alpine_hello_world_img    chmod 755 /usr/bin/rust_dev_hello
-
-buildah commit alpine_hello_world_img docker.io/bestiadev/alpine_hello_world_img
-
-# now run the container and executable
-
-podman run alpine_hello_world_img /usr/bin/rust_dev_hello
-```
-
-Similar with distroless static.  
-
-```bash
-# build the container image
-
-buildah from \
---name distroless_hello_world_img \
-gcr.io/distroless/static-debian11
-
-buildah config \
---author=github.com/bestia-dev \
---label name=distroless_hello_world_img \
---label source=github.com/bestia-dev/docker_rust_development \
-distroless_hello_world_img
-
-buildah copy distroless_hello_world_img  ~/rustprojects/rust_dev_hello/musl/rust_dev_hello /usr/bin/rust_dev_hello
-
-buildah commit distroless_hello_world_img docker.io/bestiadev/distroless_hello_world_img
-
-# now run the container and executable
-
-podman run distroless_hello_world_img /usr/bin/rust_dev_hello
-```
-
-There is an example of this code in the folder `test_cross_compile`.
-
-You can use this image for distribution of the program to your server. It is only 11 MB in size.
-
-## Cross-compile to Wasi
-
-I added to the image `rust_dev_cross_img` the target `wasm32-wasi` for cross-compiling to Wasi and the CLI wasmtime to run wasi programs.  
-
-```bash
-wasm-pack build --target wasm32-wasi
-wasmtime ./target/wasm32-wasi/debug/rust_dev_hello.wasm upper world
-```
-
-We can also run this wasm program in the WASI-playground on <https://runno.dev/wasi>.  
-
-## Cross-compile to Wasm/Webassembly
-
-I added to the image `rust_dev_cross_img` the utility `wasm-pack` for cross-compiling to Wasm/Webassembly.  
-It is in-place substitute for the default `cargo` command:
-
-```bash
-wasm-pack build --release --target web
-```
-
 ## Read more
 
 Read more how I use my [Development environment](https://github.com/bestia-dev/development_environment).  
@@ -1149,7 +1162,6 @@ sudo chmod 1777 /tmp
 ```
 
 ## TODO
-
 
 ## cargo crev reviews and advisory
 

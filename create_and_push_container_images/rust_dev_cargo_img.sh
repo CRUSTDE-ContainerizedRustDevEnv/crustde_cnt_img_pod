@@ -150,7 +150,9 @@ buildah run rust_dev_cargo_img /bin/sh -c 'cargo install cargo-auto'
 
 echo " "
 echo "\033[0;33m    Install sccache to cache compiled artifacts. \033[0m"
-buildah run rust_dev_cargo_img /bin/sh -c 'cargo install sccache'
+buildah run rust_dev_cargo_img /bin/sh -c 'curl -L https://github.com/mozilla/sccache/releases/download/v0.4.2/sccache-dist-v0.4.2-x86_64-unknown-linux-musl.tar.gz --output /tmp/sccache.tar.gz'
+buildah run rust_dev_vscode_img /bin/sh -c 'tar --no-same-owner -xzv --strip-components=1 -C ~/.cargo/bin -f /tmp/sccache.tar.gz --wildcard */sccache-dist'
+buildah run rust_dev_vscode_img /bin/sh -c 'rm /tmp/sccache.tar.gz'
 
 echo " "
 echo "\033[0;33m    Add alias l for ls -la in .bashrc \033[0m"

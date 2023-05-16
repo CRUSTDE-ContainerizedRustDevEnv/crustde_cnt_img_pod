@@ -8,7 +8,7 @@ echo "\033[0;33m    Name of the image: rust_dev_vscode_img \033[0m"
 # repository: https://github.com/bestia-dev/docker_rust_development
 
 echo "\033[0;33m    Container image for complete Rust development environment with VSCode. \033[0m"
-echo "\033[0;33m    This is based on rust_dev_cargo_img and adds VSCode and extensions. \033[0m"
+echo "\033[0;33m    This is based on rust_dev_cross_img and adds VSCode and extensions. \033[0m"
 
 echo " "
 echo "\033[0;33m    FIRST !!! \033[0m"
@@ -33,12 +33,12 @@ buildah rm rust_dev_vscode_img || :
 buildah rmi -f docker.io/bestiadev/rust_dev_vscode_img || :
 
 echo " "
-echo "\033[0;33m    Create new 'buildah container' named rust_dev_vscode_img from rust_dev_cargo_img \033[0m"
+echo "\033[0;33m    Create new 'buildah container' named rust_dev_vscode_img from rust_dev_cross_img \033[0m"
 set -o errexit
 
 buildah from \
 --name rust_dev_vscode_img \
-docker.io/bestiadev/rust_dev_cargo_img:cargo-1.69.0
+docker.io/bestiadev/rust_dev_cross_img:cargo-1.69.0
 
 buildah config \
 --author=github.com/bestia-dev \
@@ -70,7 +70,7 @@ echo "\033[0;33m    version vscode 1.78.2 \033[0m"
 echo "\033[0;33m    b3e4e68a0bc097f0ae7907b217c1119af9e03435 \033[0m"
 buildah run rust_dev_vscode_img /bin/sh -c 'mkdir -vp ~/.vscode-server/bin/b3e4e68a0bc097f0ae7907b217c1119af9e03435'
 buildah run rust_dev_vscode_img /bin/sh -c 'mkdir -vp ~/.vscode-server/extensions'
-buildah run rust_dev_vscode_img /bin/sh -c 'curl -L -s https://update.code.visualstudio.com/commit:b3e4e68a0bc097f0ae7907b217c1119af9e03435/server-linux-x64/stable --output /tmp/vscode-server-linux-x64.tar.gz'
+buildah run rust_dev_vscode_img /bin/sh -c 'curl -L https://update.code.visualstudio.com/commit:b3e4e68a0bc097f0ae7907b217c1119af9e03435/server-linux-x64/stable --output /tmp/vscode-server-linux-x64.tar.gz'
 buildah run rust_dev_vscode_img /bin/sh -c 'tar --no-same-owner -xzv --strip-components=1 -C ~/.vscode-server/bin/b3e4e68a0bc097f0ae7907b217c1119af9e03435 -f /tmp/vscode-server-linux-x64.tar.gz'
 buildah run rust_dev_vscode_img /bin/sh -c 'rm /tmp/vscode-server-linux-x64.tar.gz'
 buildah run rust_dev_vscode_img /bin/sh -c '~/.vscode-server/bin/b3e4e68a0bc097f0ae7907b217c1119af9e03435/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension streetsidesoftware.code-spell-checker'
