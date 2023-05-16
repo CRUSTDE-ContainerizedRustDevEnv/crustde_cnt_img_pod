@@ -3,13 +3,13 @@
 # README:
 
 echo " "
-echo "\033[0;33m    Bash script to build alpine image to test execute hello_world with and without musl. \033[0m"
+echo "\033[0;33m    Bash script to build Alpine image to test execute hello_world with and without musl. \033[0m"
 echo "\033[0;33m    Name of the image: alpine_hello_world_img \033[0m"
 # repository: https://github.com/bestia-dev/docker_rust_development
 
 echo " "
 echo "\033[0;33m    Rust can cross compile with statically link to the musl library. \033[0m"
-echo "\033[0;33m    That can be run from a minimal Alpine docker container. Only 5MB.  \033[0m"
+echo "\033[0;33m    That can be run from a minimal Alpine Linux OCI container. Only 5MB.  \033[0m"
 echo "\033[0;33m    By default Rust programs are dynamically linked to glibc and that cannot work on Alpine,  \033[0m"
 echo "\033[0;33m    because it does not come installed with this big library.  \033[0m"
 

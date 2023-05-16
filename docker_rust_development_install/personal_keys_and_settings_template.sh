@@ -11,8 +11,8 @@ echo "\033[0;33m    Bash script to install personal keys and setting into the Ru
 # Then it replace the words: 
 # 'info@your.mail', 'your_name', 'githubssh1' and 'webserverssh1'
 # with you personal data and file_names.
-# Warning: Once modified, don't share this file with anyone and don't push it to Github, because it will contain your data.
-# Use the backup_personal_data_from_wsl_to_win.sh to backup this data into windows folder. So it will be persistent also in 
+# Warning: Once modified, don't share this file with anyone and don't push it to GitHub because it will contain your data.
+# Use the backup_personal_data_from_wsl_to_win.sh to backup this data into Windows folder. So it will be persistent also in 
 # the event that the WSL2 is reset.
 
 echo " "

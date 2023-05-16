@@ -4,10 +4,17 @@
 # There are some small differences ex.[] instead of [[ ]]
 
 echo " "
-echo "\033[0;33m    Bash script to download all scripts needed to setup Rust development environment inside a docker container. \033[0m"
+echo "\033[0;33m    Bash script to download all scripts needed to setup Rust development environment inside a Linux OCI container. \033[0m"
 echo "\033[0;33m    run with sh that aliases to dash and not bash in Debian: \033[0m"
-# -s silent -S show errors  -f fail-early -L redirect
-echo "\033[0;32m curl -sSf -L https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/download_scripts.sh | sh \033[0m"
+# -S show errors  -f fail-early -L redirect
+echo "\033[0;32m mkdir -p ~/rustprojects/docker_rust_development_install \033[0m"
+echo "\033[0;32m cd ~/rustprojects/docker_rust_development_install \033[0m"
+echo "\033[0;32m curl -Sf -L https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/download_scripts.sh --output download_scripts.sh \033[0m"
+echo "\033[0;32m # you can read the bash script, it only creates dirs, download scripts and suggests what script to run next
+echo "\033[0;32m cat download_scripts.sh \033[0m"
+echo "\033[0;32m sh download_scripts.sh \033[0m"
+
+echo "\033[0;32m curl -Sf -L https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/download_scripts.sh \033[0m"
 # download_scripts.sh
 # repository: https://github.com/bestia-dev/docker_rust_development
 

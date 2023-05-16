@@ -43,7 +43,7 @@ buildah config \
 rust_dev_cross_img
 
 echo " "
-echo "\033[0;33m    Add mingw-w64 and target for cross-compile to windows \033[0m"
+echo "\033[0;33m    Add mingw-w64 and target for cross-compile to Windows \033[0m"
 buildah run --user root rust_dev_cross_img /bin/sh -c 'apt-get install -y mingw-w64'
 buildah run rust_dev_cross_img /bin/sh -c 'rustup target add x86_64-pc-windows-gnu'
 

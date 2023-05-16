@@ -69,7 +69,7 @@ echo "\033[0;32m sh rust_dev_pod_create.sh \033[0m"
 
 echo " "
 echo "\033[0;33m    Open VSCode, press F1, type 'ssh' and choose 'Remote-SSH: Connect to Host...' and choose 'rust_dev_vscode_cnt' \033[0m" 
-echo "\033[0;33m    Type the passphrase. This will open a new VSCode windows attached to the container. \033[0m"
+echo "\033[0;33m    Type the passphrase. This will open a new VSCode window attached to the container. \033[0m"
 echo "\033[0;33m    Open the VSCode terminal with Ctrl+J \033[0m"
 echo "\033[0;33m    Try the if the proxy restrictions work: \033[0m"
 echo "\033[0;32m curl --proxy 127.0.0.1:3128 http://httpbin.org/ip \033[0m"

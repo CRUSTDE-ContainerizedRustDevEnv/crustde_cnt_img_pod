@@ -9,7 +9,7 @@ echo "\033[0;33m    Name of the image: scratch_hello_world_img \033[0m"
 
 echo " "
 echo "\033[0;33m    Rust can cross compile with statically link to the musl library. \033[0m"
-echo "\033[0;33m    That can be run from a minimal scratch docker container. Only 5MB.  \033[0m"
+echo "\033[0;33m    That can be run from a minimal scratch Linux OCI container. Only 5MB.  \033[0m"
 echo "\033[0;33m    By default Rust programs are dynamically linked to glibc and that cannot work on scratch,  \033[0m"
 echo "\033[0;33m    because it does not come installed with this big library.  \033[0m"
 

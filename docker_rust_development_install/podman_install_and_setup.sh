@@ -95,7 +95,7 @@ else
   
   if grep -qi microsoft /proc/version; then  
     # in VSCode Windows they use backslash
-    # here I need the windows profile folder
+    # here I need the Windows profile folder
     setx.exe WSLENV "USERPROFILE/p"
 # TODO: is this working for WSL?
     echo 'Host rust_dev_vscode_cnt

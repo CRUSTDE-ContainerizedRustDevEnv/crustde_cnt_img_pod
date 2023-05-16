@@ -140,7 +140,7 @@ if grep -qi microsoft /proc/version; then
     echo "\033[0;32m sh ~/rustprojects/docker_rust_development_install/rust_dev_pod_after_reboot.sh \033[0m"
     echo "\033[0;33m    If you have already used it, you can find it in the bash history:  \033[0m"
     echo "\033[0;32m Ctrl-R, type after, press Esc, press Enter  \033[0m"
-    echo "\033[0;33m    You can force the WSL reboot: Open powershell as Administrator:  \033[0m"
+    echo "\033[0;33m    You can force the WSL reboot: Open Powershell as Administrator:  \033[0m"
     echo "\033[0;32m  wsl --shutdown  \033[0m"
 fi
 
@@ -172,7 +172,7 @@ echo "\033[0;32m podman cp etc_squid_squid.conf rust_dev_squid_cnt:/etc/squid/sq
 echo "\033[0;32m podman restart rust_dev_squid_cnt  \033[0m"
 
 echo " "
-echo "\033[0;33m    Be sure to push your code to Github frequently, because sometimes containers just stop to work. \033[0m"
+echo "\033[0;33m    Be sure to push your code to GitHub frequently because sometimes containers just stop to work. \033[0m"
 echo "\033[0;33m    You can delete the pod and ALL of the DATA it contains: \033[0m"
 echo "\033[0;32m podman pod rm -f rust_dev_pod \033[0m"
 

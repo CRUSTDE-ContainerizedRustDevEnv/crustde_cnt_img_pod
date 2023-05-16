@@ -130,7 +130,7 @@ echo "\033[0;33m    Add rust-src for debugging \033[0m"
 buildah run rust_dev_cargo_img /bin/sh -c 'rustup component add rust-src'
 
 echo " "
-echo "\033[0;33m    Remove the toolchain docs, because they are 610MB big \033[0m"
+echo "\033[0;33m    Remove the toolchain docs because they are 610MB big \033[0m"
 buildah run rust_dev_cargo_img /bin/sh -c 'rm -rf /home/rustdevuser/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/share/doc'
 
 echo " "
