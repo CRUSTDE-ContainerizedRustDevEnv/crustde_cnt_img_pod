@@ -130,20 +130,6 @@ echo "\033[0;33m    Add rust-src for debugging \033[0m"
 buildah run rust_dev_cargo_img /bin/sh -c 'rustup component add rust-src'
 
 echo " "
-echo "\033[0;33m    Add mingw-w64 and target for cross-compile to windows \033[0m"
-buildah run --user root rust_dev_cargo_img /bin/sh -c 'apt-get install -y mingw-w64'
-buildah run rust_dev_cargo_img /bin/sh -c 'rustup target add x86_64-pc-windows-gnu'
-
-echo " "
-echo "\033[0;33m    Add musl-tools and target for compile to musl (full static executable) \033[0m"
-buildah run --user root rust_dev_cargo_img /bin/sh -c 'apt-get install -y musl-tools'
-buildah run rust_dev_cargo_img /bin/sh -c 'rustup target add x86_64-unknown-linux-musl'
-
-echo " "
-echo "\033[0;33m    Add target for compile to wasm32-wasi \033[0m"
-buildah run rust_dev_cargo_img /bin/sh -c 'rustup target add wasm32-wasi'
-
-echo " "
 echo "\033[0;33m    Remove the toolchain docs, because they are 610MB big \033[0m"
 buildah run rust_dev_cargo_img /bin/sh -c 'rm -rf /home/rustdevuser/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/share/doc'
 
@@ -163,21 +149,8 @@ echo "\033[0;33m    Install cargo-auto. It will pull the cargo-index registry. T
 buildah run rust_dev_cargo_img /bin/sh -c 'cargo install cargo-auto'
 
 echo " "
-echo "\033[0;33m    Install wasm pack \033[0m"
-buildah run rust_dev_cargo_img /bin/sh -c 'curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh'
-buildah run rust_dev_cargo_img /bin/sh -c 'cargo install dev_bestia_cargo_completion'
-
-echo " "
-echo "\033[0;33m    Install wasmtime wasi runtime \033[0m"
-buildah run rust_dev_cargo_img /bin/sh -c 'curl https://wasmtime.dev/install.sh -sSf | bash'
-
-echo " "
 echo "\033[0;33m    Install sccache to cache compiled artifacts. \033[0m"
 buildah run rust_dev_cargo_img /bin/sh -c 'cargo install sccache'
-
-echo " "
-echo "\033[0;33m    Install basic-http-server to work with WASM. \033[0m"
-buildah run rust_dev_cargo_img /bin/sh -c 'cargo install basic-http-server'
 
 echo " "
 echo "\033[0;33m    Add alias l for ls -la in .bashrc \033[0m"

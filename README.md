@@ -389,7 +389,7 @@ I discovered lately that my compile times are bad and that could be better using
 <https://github.com/rui314/mold>  
 
 Download mold from:  
-<https://github.com/rui314/mold/releases/download/v1.6.0/mold-1.6.0-x86_64-linux.tar.gz>  
+<https://github.com/rui314/mold/releases/download/v1.11.0/mold-1.11.0-x86_64-linux.tar.gz>
 and extract only the `mold` binary executable into `~`.  
 Copy it as root into `/usr/bin` and adjust ownership and permissions:
 
@@ -478,18 +478,19 @@ Rust is not so small. The official Rust image is 500 MB compressed to 1.4 GB unc
 I saved some 600MB of space just deleting the docs folder, that actually noone needs, because you can find it on the internet.  
 I added in the image a lot of useful tools:  
 
-- cross-compile to Windows, Musl, Wasi and Wasm/WebAssembly,
 - faster linking with mold,
 - sccache to cache artifacts,
 - crate.io-index is already downloaded in the image,
 - rust-src for debugging
 - cargo-auto for task automation
+- cross-compile to Windows, Musl, Wasi and Wasm/WebAssembly,
 
 Docker hub stores compressed images, so they are a third of the size to download.  
 
 | Image                                    | Label          | Size         | compressed  |
 | ---------------------------------------- | -------------- |------------- | ----------- |
 | docker.io/bestiadev/rust_dev_cargo_img   | cargo-1.69.0   | 2.89 GB      | 0.96 GB     |
+| docker.io/bestiadev/rust_dev_cross_img   | cargo-1.69.0   | ?.? GB       | ?.? GB     |
 | docker.io/bestiadev/rust_dev_vscode_img  | cargo-1.69.0   | 3.17 GB      | 1.05 GB     |
 
 ## Users keys for SSH
@@ -574,6 +575,13 @@ You can also add whitelisted domains later, when you actually use the squid cont
 podman cp ~/rustprojects/docker_rust_development/create_and_push_container_images/etc_squid_squid.conf rust_dev_squid_cnt:/etc/squid/squid.conf
 # Finally restart the squid container
 podman restart rust_dev_squid_cnt
+```
+
+Watch the squid log if the access has been denied to some domains:
+
+```bash
+podman exec rust_dev_squid_cnt cat /var/log/squid/access.log
+podman exec rust_dev_squid_cnt tail -f /var/log/squid/access.log
 ```
 
 Check later, if this env variables are set inside `rust_dev_vscode_cnt` bash terminal.
@@ -984,7 +992,7 @@ If you want, you can change the user and passwords in the bash script `rust_dev_
 
 ## Cross-compile for Windows
 
-I added to the image `rust_dev_cargo_img` the target and needed utilities for cross-compiling to Windows.  
+I added to the image `rust_dev_cross_img` the target and needed utilities for cross-compiling to Windows.  
 It is nice for some programs to compile the executables both for Linux and Windows.  
 This is now simple to cross-compile with this command:  
 
@@ -998,14 +1006,14 @@ Run inside the host system (example for the simple rust_dev_hello project):
 
 ```bash
 mkdir -p ~/rustprojects/rust_dev_hello/win
-podman cp rust_dev_cargo_cnt:/home/rustdevuser/rustprojects/rust_dev_hello/target/x86_64-pc-windows-gnu/debug/rust_dev_hello.exe ~/rustprojects/rust_dev_hello/win/rust_dev_hello.exe
+podman cp rust_dev_cross_cnt:/home/rustdevuser/rustprojects/rust_dev_hello/target/x86_64-pc-windows-gnu/debug/rust_dev_hello.exe ~/rustprojects/rust_dev_hello/win/rust_dev_hello.exe
 ```
 
 Now in the host system (Linux) you can copy this file (somehow) to your Windows system and run it there. It works.
 
 ## Cross-compile for Musl (standalone executable 100% statically linked)
 
-I added to the image `rust_dev_cargo_img` the target and needed utilities for cross-compiling to Musl.  
+I added to the image `rust_dev_cross_img` the target and needed utilities for cross-compiling to Musl.  
 This executables are 100% statically linked and don't need any other dynamic library.  
 Using a container to publish your executable to a server makes distribution and isolation much easier.
 This executables can run on the empty container `scratch`.
@@ -1022,7 +1030,7 @@ Run inside the host system (example for the simple rust_dev_hello project):
 
 ```bash
 mkdir -p ~/rustprojects/rust_dev_hello/musl
-podman cp rust_dev_cargo_cnt:/home/rustdevuser/rustprojects/rust_dev_hello/target/x86_64-unknown-linux-musl/debug/rust_dev_hello ~/rustprojects/rust_dev_hello/musl/rust_dev_hello
+podman cp rust_dev_cross_cnt:/home/rustdevuser/rustprojects/rust_dev_hello/target/x86_64-unknown-linux-musl/debug/rust_dev_hello ~/rustprojects/rust_dev_hello/musl/rust_dev_hello
 ```
 
 First let's make an empty `scratch` container with only this executable:  
@@ -1105,7 +1113,7 @@ You can use this image for distribution of the program to your server. It is onl
 
 ## Cross-compile to Wasi
 
-I added to the target `wasm32-wasi` for cross-compiling to Wasi and the CLI wasmtime to run wasi programs.  
+I added to the image `rust_dev_cross_img` the target `wasm32-wasi` for cross-compiling to Wasi and the CLI wasmtime to run wasi programs.  
 
 ```bash
 wasm-pack build --target wasm32-wasi
@@ -1116,7 +1124,7 @@ We can also run this wasm program in the WASI-playground on <https://runno.dev/w
 
 ## Cross-compile to Wasm/Webassembly
 
-I added to the image `rust_dev_cargo_img` the utility `wasm-pack` for cross-compiling to Wasm/Webassembly.  
+I added to the image `rust_dev_cross_img` the utility `wasm-pack` for cross-compiling to Wasm/Webassembly.  
 It is in-place substitute for the default `cargo` command:
 
 ```bash
@@ -1142,12 +1150,6 @@ sudo chmod 1777 /tmp
 
 ## TODO
 
-Watch the log if the access is restricted to some domains:
-podman exec rust_dev_squid_cnt cat /var/log/squid/access.log
-podman exec rust_dev_squid_cnt tail -f /var/log/squid/access.log
-
-new image with cargo-crev and cargo_crev_reviews
-Test performance with ram-disk and with cranelift.
 
 ## cargo crev reviews and advisory
 
