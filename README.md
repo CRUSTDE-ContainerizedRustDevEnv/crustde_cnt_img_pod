@@ -648,9 +648,9 @@ Docker Hub stores compressed images, so they are a third of the size to download
 
 | Image                                    | Label          | Size         | compressed  |
 | ---------------------------------------- | -------------- |------------- | ----------- |
-| docker.io/bestiadev/rust_dev_cargo_img   | cargo-1.69.0   | 1.30 GB      | 0.96 GB     |
-| docker.io/bestiadev/rust_dev_cross_img   | cargo-1.69.0   | 1.70 GB      | ?.? GB     |
-| docker.io/bestiadev/rust_dev_vscode_img  | cargo-1.69.0   | 0.27 GB      | 1.05 GB     |
+| docker.io/bestiadev/rust_dev_cargo_img   | cargo-1.69.0   | 1.30 GB      | 0.59 GB     |
+| docker.io/bestiadev/rust_dev_cross_img   | cargo-1.69.0   | 1.70 GB      | 0.57 GB     |
+| docker.io/bestiadev/rust_dev_vscode_img  | cargo-1.69.0   | 0.27 GB      | 0.10 GB     |
 
 ## Users keys for SSH
 
