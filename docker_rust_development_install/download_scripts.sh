@@ -72,12 +72,12 @@ then
 else 
     echo "\033[0;33m    3. Inside ~/.ssh you will need 2 keys, one to access Github and the second to access your web server virtual machine. \033[0m"
     echo "\033[0;33m    You should already have these keys and you just need to copy them into the ssh folder. \033[0m"
-    echo "\033[0;33m    I will call these keys githubssh and webserverssh, but you can have other names. \033[0m"
+    echo "\033[0;33m    I will call these keys githubssh1 and webserverssh1, but you can have other names. \033[0m"
     echo "\033[0;33m    4. Now you can run the first script with 4 parameters.  \033[0m"
     echo "\033[0;33m    Change the parameters with your personal data. They are needed for the container.  \033[0m"
     echo "\033[0;33m    The files will be stored in ~/.ssh for later use. \033[0m"
     echo "\033[0;33m    Then follow the instructions from the next script. \033[0m"
-    echo "\033[0;32m sh store_personal_keys_and_settings.sh info@your.mail your_name githubssh_filename webserverssh_filename \033[0m"
+    echo "\033[0;32m sh store_personal_keys_and_settings.sh info@your.mail your_name githubssh1 webserverssh1 \033[0m"
 fi
 
 echo ""
