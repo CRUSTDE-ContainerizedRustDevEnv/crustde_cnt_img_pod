@@ -14,18 +14,15 @@ echo "\033[0;33m    You can read the bash script, it only creates dirs, download
 echo "\033[0;32m cat download_scripts.sh \033[0m"
 echo "\033[0;32m sh download_scripts.sh \033[0m"
 
-echo "\033[0;32m curl -Sf -L https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/download_scripts.sh \033[0m"
 # download_scripts.sh
 # repository: https://github.com/bestia-dev/docker_rust_development
 
-echo "\033[0;33m    1. Creating dir ~/rustprojects/docker_rust_development_install \033[0m"
-mkdir -p ~/rustprojects/docker_rust_development_install
-cd ~/rustprojects/docker_rust_development_install
+echo "\033[0;33m    1. Creating dir structure in ~/rustprojects/docker_rust_development_install \033[0m"
+
 mkdir -p pod_with_rust_vscode
 mkdir -p pod_with_rust_pg_vscode
 mkdir -p pod_with_rust_pg_vscode_with_volume
 mkdir -p pod_with_rust_ts_vscode
-
 
 echo "\033[0;33m    2. Downloading all scripts from github \033[0m"
 
@@ -64,19 +61,18 @@ curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/dock
 echo " 13. docker_rust_development_install.md"
 curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/docker_rust_development_install.md --output docker_rust_development_install.md
 
-echo ""
-echo "\033[0;33m    3. Now you can run this command to change your working directory \033[0m"
-echo "\033[0;32m cd ~/rustprojects/docker_rust_development_install \033[0m"
-
 # if both files already exist, don't need this step
 # beware the last ] needs a space before it or it does not work!
 if [ -f "$HOME/.ssh/rust_dev_pod_keys/personal_keys_and_settings.sh" ] && [ -f "$HOME/.ssh/sshadd.sh" ];
 then
-    echo "\033[0;33m    4. The files with your personal data already exist: ~/.ssh/personal_keys_and_settings_template.sh and ~/.ssh/sshadd.sh \033[0m"
+    echo "\033[0;33m    3. The files with your personal data already exist: ~/.ssh/personal_keys_and_settings_template.sh and ~/.ssh/sshadd.sh \033[0m"
     echo "\033[0;33m    You don't need to recreate them. Unless your data changed. Then simply delete them and run this script again."
     echo "\033[0;33m    Now you can install podman and setup the keys rustdevuser_key and rust_dev_pod_keys and."
     echo "\033[0;32m sh podman_install_and_setup.sh \033[0m"
 else 
+    echo "\033[0;33m    3. Inside ~/.ssh you will need 2 keys, one to access Github and the second to access your web server virtual machine. \033[0m"
+    echo "\033[0;33m    You should already have these keys and you just need to copy them into the ssh folder. \033[0m"
+    echo "\033[0;33m    I will call these keys githubssh and webserverssh, but you can have other names. \033[0m"
     echo "\033[0;33m    4. Now you can run the first script with 4 parameters.  \033[0m"
     echo "\033[0;33m    Change the parameters with your personal data. They are needed for the container.  \033[0m"
     echo "\033[0;33m    The files will be stored in ~/.ssh for later use. \033[0m"
