@@ -35,7 +35,7 @@ docker.io/bestiadev/rust_dev_squid_img:latest
 
 echo " "
 echo "\033[0;33m    Copy squid.conf for customized ACL proxy permissions \033[0m"
-podman cp etc_squid_squid.conf rust_dev_squid_cnt:/etc/squid/squid.conf
+podman cp ~/rustprojects/docker_rust_development_install/pod_with_rust_ts_vscode/etc_squid_squid.conf rust_dev_squid_cnt:/etc/squid/squid.conf
 
 echo " "
 echo "\033[0;33m    Create container rust_dev_vscode_cnt in the pod \033[0m"

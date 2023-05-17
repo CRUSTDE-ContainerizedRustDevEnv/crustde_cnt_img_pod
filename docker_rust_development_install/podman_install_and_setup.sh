@@ -111,37 +111,23 @@ else
     # here I need the Windows profile folder
     echo "setx.exe WSLENV 'USERPROFILE/p'"
     setx.exe WSLENV "USERPROFILE/p"
-# TODO: is this working for WSL?
-    echo 'Host rust_dev_vscode_cnt
-HostName localhost
-Port 2201
-User rustdevuser
-IdentityFile $USERPROFILE\\.ssh\\rustdevuser_key
-IdentitiesOnly yes'
-  echo "| tee -a ~/.ssh/config"
-
+    
     echo 'Host rust_dev_vscode_cnt
 HostName localhost
 Port 2201
 User rustdevuser
 IdentityFile $USERPROFILE\\.ssh\\rustdevuser_key
 IdentitiesOnly yes' | tee -a ~/.ssh/config
+echo "| tee -a ~/.ssh/config"
   else
     # in VSCode Debian they use slash
-        echo 'Host rust_dev_vscode_cnt
-HostName localhost
-Port 2201
-User rustdevuser
-IdentityFile ~/.ssh/rustdevuser_key
-IdentitiesOnly yes'
-    echo "| tee -a ~/.ssh/config"
-
     echo 'Host rust_dev_vscode_cnt
 HostName localhost
 Port 2201
 User rustdevuser
 IdentityFile ~/.ssh/rustdevuser_key
 IdentitiesOnly yes' | tee -a ~/.ssh/config
+    echo "| tee -a ~/.ssh/config"
   fi
 
 fi
