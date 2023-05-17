@@ -66,8 +66,16 @@ if echo "$PWD" | grep -q '/rustprojects/docker_rust_development_install'; then
     else
         echo " " 
         echo "\033[0;33m    3. Inside ~/.ssh you will need 2 keys, one to access Github and the second to access your web server virtual machine. \033[0m"
-        echo "\033[0;33m    You should already have these keys and you just need to copy them into the ssh folder. \033[0m"
+        echo "\033[0;33m    You should already have these keys somewhere and you just need to copy them into the ssh folder. \033[0m"
         echo "\033[0;33m    I will call these keys githubssh1 and webserverssh1, but you can have other names. \033[0m"
+        echo "\033[0;32m mkdir ~/.ssh \033[0m"
+        echo "\033[0;32m chmod 700 ~/.ssh \033[0m"
+        echo "\033[0;32m cp githubssh1 ~/.ssh \033[0m"
+        echo "\033[0;32m chmod 600 ~/.ssh/githubssh1 \033[0m"
+        echo "\033[0;32m cp githubssh1.pub ~/.ssh \033[0m"
+        echo "\033[0;32m cp webserverssh1 ~/.ssh \033[0m"
+        echo "\033[0;32m chmod 600 ~/.ssh/webserverssh1 \033[0m"
+        echo "\033[0;32m cp webserverssh1.pub ~/.ssh \033[0m"
         
         echo " "
         echo "\033[0;33m    4. Now you can run the first script with 4 parameters.  \033[0m"
