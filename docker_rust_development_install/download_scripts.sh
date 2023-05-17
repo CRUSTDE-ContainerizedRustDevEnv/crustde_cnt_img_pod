@@ -7,7 +7,7 @@ echo " "
 echo "\033[0;33m    Bash script to download all scripts needed to setup the  \033[0m"
 echo "\033[0;33m    Containerized Rust Development Environment (CRDE). \033[0m"
 
-if [ ! -f ~/rustprojects/docker_rust_development_install ]; then
+if [ $PWD =~ /rustprojects/docker_rust_development_install ]; then
     echo " "
     echo "\033[0;33m    You are not in the correct directory ~/rustprojects/docker_rust_development_install \033[0m"
     echo "\033[0;33m    Run the commands to create the directory, cd and download the script. \033[0m"
