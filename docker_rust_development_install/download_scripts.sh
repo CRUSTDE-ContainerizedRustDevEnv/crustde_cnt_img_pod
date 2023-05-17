@@ -66,8 +66,8 @@ curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/dock
 if [ -f "$HOME/.ssh/rust_dev_pod_keys/personal_keys_and_settings.sh" ] && [ -f "$HOME/.ssh/sshadd.sh" ];
 then
     echo "\033[0;33m    3. The files with your personal data already exist: ~/.ssh/personal_keys_and_settings_template.sh and ~/.ssh/sshadd.sh \033[0m"
-    echo "\033[0;33m    You don't need to recreate them. Unless your data changed. Then simply delete them and run this script again."
-    echo "\033[0;33m    Now you can install podman and setup the keys rustdevuser_key and rust_dev_pod_keys and."
+    echo "\033[0;33m    You don't need to recreate them. Unless your data changed. Then simply delete them and run this script again. \033[0m"
+    echo "\033[0;33m    Now you can install podman and setup the keys rustdevuser_key and rust_dev_pod_keys \033[0m"
     echo "\033[0;32m sh podman_install_and_setup.sh \033[0m"
 else 
     echo "\033[0;33m    3. Inside ~/.ssh you will need 2 keys, one to access Github and the second to access your web server virtual machine. \033[0m"
