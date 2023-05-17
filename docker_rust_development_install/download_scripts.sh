@@ -10,7 +10,7 @@ echo "\033[0;33m    run with sh that aliases to dash and not bash in Debian: \03
 echo "\033[0;32m mkdir -p ~/rustprojects/docker_rust_development_install \033[0m"
 echo "\033[0;32m cd ~/rustprojects/docker_rust_development_install \033[0m"
 echo "\033[0;32m curl -Sf -L https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/download_scripts.sh --output download_scripts.sh \033[0m"
-echo "\033[0;32m # you can read the bash script, it only creates dirs, download scripts and suggests what script to run next \033[0m"
+echo "\033[0;33m    You can read the bash script, it only creates dirs, download scripts and suggests what script to run next \033[0m"
 echo "\033[0;32m cat download_scripts.sh \033[0m"
 echo "\033[0;32m sh download_scripts.sh \033[0m"
 
