@@ -7,19 +7,7 @@ echo " "
 echo "\033[0;33m    Bash script to download all scripts needed to setup the  \033[0m"
 echo "\033[0;33m    Containerized Rust Development Environment (CRDE). \033[0m"
 
-if [ $PWD =~ /rustprojects/docker_rust_development_install ]; then
-    echo " "
-    echo "\033[0;33m    You are not in the correct directory ~/rustprojects/docker_rust_development_install \033[0m"
-    echo "\033[0;33m    Run the commands to create the directory, cd and download the script. \033[0m"
-    echo "\033[0;32m mkdir -p ~/rustprojects/docker_rust_development_install \033[0m"
-    echo "\033[0;32m cd ~/rustprojects/docker_rust_development_install \033[0m"
-    # -S show errors  -f fail-early -L redirect
-    echo "\033[0;32m curl -Sf -L https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/download_scripts.sh --output download_scripts.sh \033[0m"
-    echo "\033[0;33m    You can read the bash script, it only creates dirs, download scripts and suggests what script to run next \033[0m"
-    echo "\033[0;32m cat download_scripts.sh \033[0m"
-    echo "\033[0;33m    Run with sh that aliases to dash and not bash in Debian. \033[0m"
-    echo "\033[0;32m sh download_scripts.sh \033[0m"
-else 
+if echo "$PWD" | grep -q '/rustprojects/docker_rust_development_install'; then
     # download_scripts.sh
     # repository: https://github.com/bestia-dev/docker_rust_development
     echo " "
@@ -88,5 +76,17 @@ else
         echo "\033[0;33m    Then follow the instructions from the next script. \033[0m"
         echo "\033[0;32m sh store_personal_keys_and_settings.sh info@your.mail your_name githubssh1 webserverssh1 \033[0m"
     fi
+else
+    echo " "
+    echo "\033[0;33m    You are not in the correct directory ~/rustprojects/docker_rust_development_install \033[0m"
+    echo "\033[0;33m    Run the commands to create the directory, cd and download the script. \033[0m"
+    echo "\033[0;32m mkdir -p ~/rustprojects/docker_rust_development_install \033[0m"
+    echo "\033[0;32m cd ~/rustprojects/docker_rust_development_install \033[0m"
+    # -S show errors  -f fail-early -L redirect
+    echo "\033[0;32m curl -Sf -L https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/download_scripts.sh --output download_scripts.sh \033[0m"
+    echo "\033[0;33m    You can read the bash script, it only creates dirs, download scripts and suggests what script to run next \033[0m"
+    echo "\033[0;32m cat download_scripts.sh \033[0m"
+    echo "\033[0;33m    Run with sh that aliases to dash and not bash in Debian. \033[0m"
+    echo "\033[0;32m sh download_scripts.sh \033[0m"
 fi
 echo ""
