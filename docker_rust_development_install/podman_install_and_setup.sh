@@ -8,7 +8,7 @@ echo "\033[0;33m    Bash script to install Podman and setup for rust_dev_pod for
 
 echo " " 
 if [ ! -f ~/.ssh/rust_dev_pod_keys/etc_ssh_sshd_config.conf ]; then
-  echo "\033[0;33m    1. Copy etc_ssh_sshd_config.conf \033[0m"
+  echo "\033[0;33m    1. Copying etc_ssh_sshd_config.conf \033[0m"
   echo "mkdir  -p ~/.ssh/rust_dev_pod_keys/etc/ssh"
   mkdir  -p ~/.ssh/rust_dev_pod_keys/etc/ssh
   echo "cp etc_ssh_sshd_config.conf ~/.ssh/rust_dev_pod_keys/etc_ssh_sshd_config.conf"
@@ -33,10 +33,10 @@ echo " "
 if [ ! -f ~/.ssh/rustdevuser_rsa_key ]; then
   echo "\033[0;33m    3. Generating rustdevuser_rsa_key for the identity of 'rustdevuser'  \033[0m"
   echo "\033[0;33m    because dbl_commander cannot use the ed25519 key. \033[0m"
-  echo "\033[0;33m    Give it a the same passphrase and remember it, you will need it. \033[0m"
+  echo "\033[0;33m    Give it the same passphrase and remember it, you will need it. \033[0m"
   echo "ssh-keygen -t rsa -b 4096 -m PEM -C rustdevuser@rust_dev_pod -f ~/.ssh/rustdevuser_rsa_key"
   ssh-keygen -t rsa -b 4096 -m PEM -C rustdevuser@rust_dev_pod -f ~/.ssh/rustdevuser_rsa_key
-  chmod 600 /home/rustdevuser/.ssh/rustdevuser_rsa_key
+  chmod 600 $HOME/.ssh/rustdevuser_rsa_key
 else 
   echo "\033[0;33m    3. SSH key rustdevuser_rsa_key already exists. \033[0m"
 fi
@@ -46,7 +46,7 @@ if [ ! -f ~/.ssh/rust_dev_pod_keys/etc/ssh/ssh_host_ed25519_key ]; then
   echo "\033[0;33m    4. Generating ssh_host_ed25519_key for 'SSH server' identity of the container. \033[0m"
   echo "ssh-keygen -A -f ~/.ssh/rust_dev_pod_keys"
   ssh-keygen -A -f ~/.ssh/rust_dev_pod_keys
-  chmod 600 /home/rustdevuser/.ssh/rust_dev_pod_keys
+  chmod 600 $HOME/.ssh/rust_dev_pod_keys
 else 
   echo "\033[0;33m    4. SSH key ssh_host_ed25519_key already exists. \033[0m"
 fi
@@ -95,7 +95,13 @@ echo "\033[0;33m    That's it. The server certificate is now locally recognized.
 echo " "
 echo "\033[0;33m    8. Prepare the config file for VSCode SSH: \033[0m"
 echo "\033[0;33m    Check if the word rust_dev_vscode_cnt already exists in the config file. \033[0m"
-if grep -q "Host rust_dev_vscode_cnt" "$HOME/.ssh/config"; then
+
+# create file if it does not exist
+if [ ! -f ~/.ssh/config ]; then
+      echo '' | tee -a ~/.ssh/config
+fi
+
+if grep -qi "Host rust_dev_vscode_cnt" "$HOME/.ssh/config"; then
   echo "\033[0;33m    VSCode config for SSH already exists. \033[0m"
 else
   echo "\033[0;33m    Add Host rust_dev_vscode_cnt to ~/.ssh/config \033[0m"
@@ -141,7 +147,7 @@ IdentitiesOnly yes' | tee -a ~/.ssh/config
 fi
 
 echo " "
-echo "\033[0;33m    Install and setup finished. \033[0m"
+echo "\033[0;33m    Install podman and setup finished. \033[0m"
 
 echo ""
 echo "\033[0;33m    Now you can create the pod rust_dev_pod. \033[0m"
@@ -152,7 +158,11 @@ echo "\033[0;33m    Check if the containers are started correctly \033[0m"
 echo "\033[0;32m podman ps \033[0m"
 
 echo ""
-echo "\033[0;33m    You can remove the pod at any time. \033[0m"
+echo "\033[0;33m    You can now work on Rust projects inside the container with VSCode over SSH \033[0m"
+echo "\033[0;32m code --remote ssh-remote+rust_dev_vscode_cnt /home/rustdevuser/rustprojects \033[0m"
+
+echo ""
+echo "\033[0;33m    You could remove the pod at any time. \033[0m"
 echo "\033[0;33m    Attention: you will loose all your data inside the containers.  \033[0m"
 echo "\033[0;33m    Be sure to commit and push to remote repository before removing the pod. \033[0m"
 echo "\033[0;32m podman pod rm -f rust_dev_pod \033[0m"
