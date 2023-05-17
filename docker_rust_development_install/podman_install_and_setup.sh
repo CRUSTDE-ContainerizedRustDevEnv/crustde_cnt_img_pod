@@ -10,7 +10,8 @@ echo " "
 echo "\033[0;33m    Prerequisites: Debian, VSCode, downloaded scripts, your personal data already in ~/.ssh \033[0m"
 
 echo " " 
-echo "\033[0;33m    1. Create 2 SSH keys, one for the 'SSH server' identity 'host key' of the container and the other for the identity of 'rustdevuser'.  \033[0m"
+echo "\033[0;33m    1. Creating 2 SSH keys, one for the 'SSH server' identity 'host key' of the container  \033[0m"
+echo "\033[0;33m    and the other for the identity of 'rustdevuser'.  \033[0m"
 echo "\033[0;33m    This is done only once. To avoid old crypto-algorithms I will force the new 'ed25519'. \033[0m"
 
 echo "\033[0;33m    mkdir  -p ~/.ssh/rust_dev_pod_keys/etc/ssh \033[0m"
@@ -20,7 +21,7 @@ cp etc_ssh_sshd_config.conf ~/.ssh/rust_dev_pod_keys/etc_ssh_sshd_config.conf
 
 echo "\033[0;33m    If keys do not exist then generate them. \033[0m"
 if [ ! -f ~/.ssh/rustdevuser_key ]; then
-  echo "\033[0;33m    generate user key \033[0m"
+  echo "\033[0;33m    generating user key \033[0m"
   echo "\033[0;33m    give it a passphrase and remember it, you will need it \033[0m"
   echo "\033[0;33m    ssh-keygen -f ~/.ssh/rustdevuser_key -t ed25519 -C 'rustdevuser@rust_dev_pod' \033[0m"
   ssh-keygen -f ~/.ssh/rustdevuser_key -t ed25519 -C "rustdevuser@rust_dev_pod"
@@ -120,20 +121,17 @@ echo " "
 echo "\033[0;33m    Install and setup finished. \033[0m"
 
 echo ""
-echo "\033[0;33m    Now you can create your pod. \033[0m"
-echo "\033[0;33m    You can choose between 3 pods. You cannot use them simultaneously. You have to choose only one. \033[0m"
-echo "\033[0;33m    If the pod already exists remove it. \033[0m"
-echo "\033[0;33m    Attention: you will loose all your data inside the containers. Be sure to have already copied or pushed all out of the container. \033[0m"
-echo "\033[0;32m podman pod rm -f rust_dev_pod \033[0m"
-echo "\033[0;33m    1. pod with rust and vscode: \033[0m"
+echo "\033[0;33m    Now you can create the pod rust_dev_pod. \033[0m"
 echo "\033[0;32m sh ~/rustprojects/docker_rust_development_install/pod_with_rust_vscode/rust_dev_pod_create.sh \033[0m"
-echo "\033[0;33m    2. pod with rust, postgres and vscode: \033[0m"
-echo "\033[0;32m sh ~/rustprojects/docker_rust_development_install/pod_with_rust_pg_vscode/rust_dev_pod_create.sh \033[0m"
-echo "\033[0;33m    3. pod with rust, typescript and vscode: \033[0m"
-echo "\033[0;32m sh ~/rustprojects/docker_rust_development_install/pod_with_rust_ts_vscode/rust_dev_pod_create.sh \033[0m"
+
 echo ""
 echo "\033[0;33m    Check if the containers are started correctly \033[0m"
 echo "\033[0;32m podman ps \033[0m"
-echo "\033[0;33m    Every container must be started x seconds ago and not only created ! \033[0m"
+
+echo ""
+echo "\033[0;33m    You can remove the pod at any time. \033[0m"
+echo "\033[0;33m    Attention: you will loose all your data inside the containers.  \033[0m"
+echo "\033[0;33m    Be sure to have already copied or pushed all out of the container. \033[0m"
+echo "\033[0;32m podman pod rm -f rust_dev_pod \033[0m"
 
 echo " "
