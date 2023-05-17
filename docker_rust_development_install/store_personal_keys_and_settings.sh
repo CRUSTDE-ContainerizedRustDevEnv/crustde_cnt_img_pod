@@ -17,15 +17,13 @@ if [ ! "$1" ] || [ ! "$2" ] || [ ! "$3" ] || [ ! "$4" ]; then
   echo "\033[0;31m    Error: All 4 arguments must be provided ! \033[0m"
   echo "    Usage:"
   echo "\033[0;32m sh store_personal_keys_and_settings.sh info@your.mail your_name githubssh1 webserverssh1 \033[0m"
-  echo "    Example:"
-  echo "\033[0;32m sh store_personal_keys_and_settings.sh info@bestia.dev bestia.dev lucianobestia_mac luciano_googlecloud \033[0m"
   exit 1;
 fi
 
 echo "info@your.mail: $1";
 echo "your_name: $2";
-echo "githubssh1: $3";
-echo "webserverssh1: $4";
+echo "githubssh: $3";
+echo "webserverssh: $4";
 echo " "
 
 mkdir -p ~/.ssh/rust_dev_pod_keys/
