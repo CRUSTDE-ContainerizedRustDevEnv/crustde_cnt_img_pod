@@ -38,15 +38,20 @@ if echo "$PWD" | grep -q '/rustprojects/docker_rust_development_install'; then
 
     echo " 8. pod_with_rust_vscode/rust_dev_pod_create.sh"
     curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/pod_with_rust_vscode/rust_dev_pod_create.sh --output pod_with_rust_vscode/rust_dev_pod_create.sh    
+    curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/pod_with_rust_vscode/etc_squid_squid.conf --output pod_with_rust_vscode/etc_squid_squid.conf
 
     echo " 9. pod_with_rust_pg_vscode/rust_dev_pod_create.sh"
     curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/pod_with_rust_pg_vscode/rust_dev_pod_create.sh --output pod_with_rust_pg_vscode/rust_dev_pod_create.sh
+    curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/pod_with_rust_pg_vscode/etc_squid_squid.conf --output pod_with_rust_pg_vscode/etc_squid_squid.conf
 
     echo " 10. pod_with_rust_pg_vscode/rust_dev_pod_create.sh"
     curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/pod_with_rust_ts_vscode/rust_dev_pod_create.sh --output pod_with_rust_ts_vscode/rust_dev_pod_create.sh
+    curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/pod_with_rust_ts_vscode/etc_squid_squid.conf --output pod_with_rust_ts_vscode/etc_squid_squid.conf
+    
 
     echo " 11. pod_with_rust_pg_vscode_with_volume/rust_dev_pod_create.sh"
     curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/pod_with_rust_pg_vscode_with_volume/rust_dev_pod_create.sh --output pod_with_rust_pg_vscode_with_volume/rust_dev_pod_create.sh
+    curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/pod_with_rust_pg_vscode_with_volume/etc_squid_squid.conf --output pod_with_rust_pg_vscode_with_volume/etc_squid_squid.conf
 
     echo " 12. rust_dev_pod_after_reboot.sh"
     curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/rust_dev_pod_after_reboot.sh --output rust_dev_pod_after_reboot.sh

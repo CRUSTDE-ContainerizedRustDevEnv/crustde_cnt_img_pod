@@ -145,15 +145,12 @@ echo "\033[0;33m    Install podman and setup finished. \033[0m"
 echo ""
 echo "\033[0;33m    Now you can create the pod rust_dev_pod. \033[0m"
 echo "\033[0;33m    On first run it will download around 1.2 GB from DockerHub and store it in the cache for later use. \033[0m"
+echo "\033[0;33m    After that, follow the detailed instructions. \033[0m"
 echo "\033[0;32m sh ~/rustprojects/docker_rust_development_install/pod_with_rust_vscode/rust_dev_pod_create.sh \033[0m"
 
 echo ""
 echo "\033[0;33m    Check if the containers are started correctly \033[0m"
 echo "\033[0;32m podman ps \033[0m"
-
-echo ""
-echo "\033[0;33m    You can now work on Rust projects inside the container with VSCode over SSH \033[0m"
-echo "\033[0;32m code --remote ssh-remote+rust_dev_vscode_cnt /home/rustdevuser/rustprojects \033[0m"
 
 echo ""
 echo "\033[0;33m    You could remove the pod at any time. \033[0m"

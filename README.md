@@ -23,12 +23,12 @@ After downloading, you can inspect them to see exactly what they are doing. Ther
 Every script will show step-by-step instructions on what to do next.  
 
 ```bash
-mkdir -p ~/rustprojects/docker_rust_development_install
-cd ~/rustprojects/docker_rust_development_install
-curl -Sf -L https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/download_scripts.sh --output download_scripts.sh
+mkdir -p ~/rustprojects/docker_rust_development_install;
+cd ~/rustprojects/docker_rust_development_install;
+curl -Sf -L https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/download_scripts.sh --output download_scripts.sh;
 # you can read the bash script, it only creates dirs, download scripts and suggests what script to run next
-cat download_scripts.sh 
-sh download_scripts.sh
+cat download_scripts.sh; 
+sh download_scripts.sh;
 ```
 
 That's it !  
