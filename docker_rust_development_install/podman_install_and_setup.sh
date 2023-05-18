@@ -6,6 +6,13 @@ echo "\033[0;33m    Bash script to install Podman and setup for rust_dev_pod for
 # podman_install_and_setup.sh
 # repository: https://github.com/bestia-dev/docker_rust_development
 
+# if Debian inside WSL it needs some special care
+if grep -qi microsoft /proc/version; then    
+  # here I need the Windows profile folder
+  echo "setx.exe WSLENV 'USERPROFILE/p'"
+  setx.exe WSLENV "USERPROFILE/p"
+fi
+
 echo " " 
 if [ ! -f ~/.ssh/rust_dev_pod_keys/etc_ssh_sshd_config.conf ]; then
   echo "\033[0;33m    1. Copying etc_ssh_sshd_config.conf \033[0m"
@@ -25,6 +32,11 @@ if [ ! -f ~/.ssh/rustdevuser_key ]; then
   echo "ssh-keygen -f ~/.ssh/rustdevuser_key -t ed25519 -C 'rustdevuser@rust_dev_pod'"
   ssh-keygen -f ~/.ssh/rustdevuser_key -t ed25519 -C "rustdevuser@rust_dev_pod"
   chmod 600 ~/.ssh/rustdevuser_key
+  # if WSL, copy rustdevuser_key to windows
+  if grep -qi microsoft /proc/version; then    
+    cp -v ~/.ssh/rustdevuser_key $USERPROFILE/.ssh/
+  fi
+
 else 
   echo "\033[0;33m    2. SSH key rustdevuser_key already exists. \033[0m"
 fi
@@ -113,16 +125,12 @@ else
   echo "\033[0;33m    Add Host rust_dev_vscode_cnt to ~/.ssh/config \033[0m"
   
   if grep -qi microsoft /proc/version; then  
-    # in VSCode Windows they use backslash
-    # here I need the Windows profile folder
-    echo "setx.exe WSLENV 'USERPROFILE/p'"
-    setx.exe WSLENV "USERPROFILE/p"
-    
+    # in VSCode Windows they use backslash    
     echo 'Host rust_dev_vscode_cnt
 HostName localhost
 Port 2201
 User rustdevuser
-IdentityFile $USERPROFILE\\.ssh\\rustdevuser_key
+IdentityFile ~\\.ssh\\rustdevuser_key
 IdentitiesOnly yes' | tee -a ~/.ssh/config
 echo "| tee -a ~/.ssh/config"
 cp -v ~/.ssh/config $USERPROFILE/.ssh/
