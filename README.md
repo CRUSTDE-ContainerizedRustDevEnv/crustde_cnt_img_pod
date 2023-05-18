@@ -556,7 +556,7 @@ You can use this image for distribution of the program to your server. It is onl
 I added to the image `rust_dev_cross_img` the target `wasm32-wasi` for cross-compiling to Wasi and the CLI wasmtime to run wasi programs.  
 
 ```bash
-wasm-pack build --target wasm32-wasi
+cargo build --target wasm32-wasi
 wasmtime ./target/wasm32-wasi/debug/rust_dev_hello.wasm upper world
 ```
 

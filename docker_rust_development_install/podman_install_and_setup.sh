@@ -149,7 +149,7 @@ IdentitiesOnly yes' | tee -a ~/.ssh/config
 fi
 
 echo " "
-echo "\033[0;33m    Install podman and setup finished. \033[0m"
+echo "\033[0;33m    Installing Podman and setup is finished. \033[0m"
 
 echo ""
 echo "\033[0;33m    Now you can create the pod rust_dev_pod. \033[0m"
