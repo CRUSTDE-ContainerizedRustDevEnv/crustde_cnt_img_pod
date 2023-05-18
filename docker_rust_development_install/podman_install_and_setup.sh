@@ -9,8 +9,8 @@ echo "\033[0;33m    Bash script to install Podman and setup for rust_dev_pod for
 echo " " 
 if [ ! -f ~/.ssh/rust_dev_pod_keys/etc_ssh_sshd_config.conf ]; then
   echo "\033[0;33m    1. Copying etc_ssh_sshd_config.conf \033[0m"
-  echo "mkdir  -p ~/.ssh/rust_dev_pod_keys/etc/ssh"
-  mkdir  -p ~/.ssh/rust_dev_pod_keys/etc/ssh
+  echo "mkdir -p ~/.ssh/rust_dev_pod_keys/etc/ssh"
+  mkdir -p ~/.ssh/rust_dev_pod_keys/etc/ssh
   echo "cp etc_ssh_sshd_config.conf ~/.ssh/rust_dev_pod_keys/etc_ssh_sshd_config.conf"
   cp etc_ssh_sshd_config.conf ~/.ssh/rust_dev_pod_keys/etc_ssh_sshd_config.conf
 else 
@@ -45,8 +45,7 @@ echo " "
 if [ ! -f ~/.ssh/rust_dev_pod_keys/etc/ssh/ssh_host_ed25519_key ]; then
   echo "\033[0;33m    4. Generating ssh_host_ed25519_key for 'SSH server' identity of the container. \033[0m"
   echo "ssh-keygen -A -f ~/.ssh/rust_dev_pod_keys"
-  ssh-keygen -A -f ~/.ssh/rust_dev_pod_keys
-  chmod 600 $HOME/.ssh/rust_dev_pod_keys
+  ssh-keygen -A -f ~/.ssh/rust_dev_pod_keys  
 else 
   echo "\033[0;33m    4. SSH key ssh_host_ed25519_key already exists. \033[0m"
 fi
@@ -81,7 +80,14 @@ if grep -qi microsoft /proc/version; then
     echo '[engine]
 cgroup_manager = "cgroupfs"
 events_logger = "file"' | tee -a $HOME/.config/containers/containers.conf
+    
+    echo "\033[0;33m    WSL2 must have tmp in tmpfs, so it can restart correctly after reboot \033[0m"
+    echo "sudo grep -qxF 'none  /tmp  tmpfs  defaults  0 0' /etc/fstab || echo 'none  /tmp  tmpfs  defaults  0 0' | sudo tee -a /etc/fstab"
+    sudo grep -qxF 'none  /tmp  tmpfs  defaults  0 0' /etc/fstab || echo "none  /tmp  tmpfs  defaults  0 0" | sudo tee -a /etc/fstab
+
   fi
+  else
+    echo "\033[0;33m    6. Podman is NOT inside WSL2. \033[0m"
 fi
 
 echo " "
@@ -119,6 +125,7 @@ User rustdevuser
 IdentityFile $USERPROFILE\\.ssh\\rustdevuser_key
 IdentitiesOnly yes' | tee -a ~/.ssh/config
 echo "| tee -a ~/.ssh/config"
+cp -v ~/.ssh/config $USERPROFILE/.ssh/
   else
     # in VSCode Debian they use slash
     echo 'Host rust_dev_vscode_cnt
@@ -137,6 +144,7 @@ echo "\033[0;33m    Install podman and setup finished. \033[0m"
 
 echo ""
 echo "\033[0;33m    Now you can create the pod rust_dev_pod. \033[0m"
+echo "\033[0;33m    On first run it will download around 1.2 GB from DockerHub and store it in the cache for later use. \033[0m"
 echo "\033[0;32m sh ~/rustprojects/docker_rust_development_install/pod_with_rust_vscode/rust_dev_pod_create.sh \033[0m"
 
 echo ""
