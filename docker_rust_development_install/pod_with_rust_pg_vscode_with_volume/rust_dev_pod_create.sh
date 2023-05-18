@@ -143,31 +143,8 @@ if grep -qi microsoft /proc/version; then
 fi
 
 echo " "
-echo "\033[0;33m    Fast ssh connection test from terminal: \033[0m"
-echo "\033[0;32m ssh -i ~/.ssh/rustdevuser_key -p 2201 rustdevuser@localhost \033[0m"
-echo "\033[0;33m    Enter passphrase. \033[0m"
-echo "\033[0;33m    The prompt should change to: rustdevuser@rust_dev_pod:~$ \033[0m"
-echo "\033[0;32m cd ~/rustprojects \033[0m"
-echo "\033[0;32m cargo new rust_dev_hello \033[0m"
-echo "\033[0;32m cd rust_dev_hello \033[0m"
-echo "\033[0;32m cargo run \033[0m"
-echo "\033[0;32m exit \033[0m"
-
-echo " "
-echo "\033[0;33m    You can open VSCode directly on an existing project inside the container from the Linux host: \033[0m"
-echo "\033[0;32m code --remote ssh-remote+rust_dev_vscode_cnt /home/rustdevuser/rustprojects \033[0m"
-echo "\033[0;33m    It will ask for the ssh passphrase. \033[0m"
-echo "\033[0;33m    If the command line does not return to bash, use Ctrl+<. I don't know why Ctrl+c does not work. \033[0m"
-
-echo " "
 echo "\033[0;33m    You can administer your postgreSQL in the browser with username info@bestia.dev on: \033[0m"
 echo "\033[0;32m localhost:9876 \033[0m"
-
-echo " "
-echo "\033[0;33m    Squid limits connections to very few internet places. If you need to allow more, modify the \033[0m"
-echo "\033[0;33m    etc_squid_squid.conf file then execute: \033[0m"
-echo "\033[0;32m podman cp etc_squid_squid.conf rust_dev_squid_cnt:/etc/squid/squid.conf  \033[0m"
-echo "\033[0;32m podman restart rust_dev_squid_cnt  \033[0m"
 
 echo " "
 echo "\033[0;33m    Be sure to push your code to GitHub frequently because sometimes containers just stop to work. \033[0m"
