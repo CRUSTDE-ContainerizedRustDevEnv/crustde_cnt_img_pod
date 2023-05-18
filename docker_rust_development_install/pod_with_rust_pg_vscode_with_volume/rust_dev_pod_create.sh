@@ -113,7 +113,7 @@ podman exec --user=rustdevuser rust_dev_vscode_cnt chmod 600 /home/rustdevuser/.
 podman exec --user=rustdevuser rust_dev_vscode_cnt /bin/sh -c 'cat /home/rustdevuser/.ssh/rustdevuser_key.pub >> /home/rustdevuser/.ssh/authorized_keys'
 podman exec --user=rustdevuser rust_dev_vscode_cnt /bin/sh -c 'cat /home/rustdevuser/.ssh/rustdevuser_rsa_key.pub >> /home/rustdevuser/.ssh/authorized_keys'
 
-echo "\033[0;33m    I have to disable the password for rustdevuser to enable SSH access with public key? Why? \033[0m"
+# echo "\033[0;33m    I have to disable the password for rustdevuser to enable SSH access with public key? Why? \033[0m"
 podman exec --user=root rust_dev_vscode_cnt usermod --password '*' rustdevuser
 
 echo "\033[0;33m    Git global config \033[0m"
