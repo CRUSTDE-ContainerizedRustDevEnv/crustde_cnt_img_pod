@@ -35,6 +35,7 @@ if [ ! -f ~/.ssh/rustdevuser_key ]; then
   # if WSL, copy rustdevuser_key to windows
   if grep -qi microsoft /proc/version; then    
     cp -v ~/.ssh/rustdevuser_key $USERPROFILE/.ssh/
+    cp -v ~/.ssh/rustdevuser_key.pub $USERPROFILE/.ssh/
   fi
 
 else 

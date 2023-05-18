@@ -97,18 +97,16 @@ ssh-keygen -f ~/.ssh/known_hosts -R "[localhost]:2201";
 
 echo "\033[0;33m  Copy the personal files, SSH keys for github or publish-to-web,... \033[0m"
 sh ~/.ssh/rust_dev_pod_keys/personal_keys_and_settings.sh
-
-echo "\033[0;33m    Start the SSH server \033[0m"
-podman exec --user=root  rust_dev_vscode_cnt service ssh restart
  
+echo " "
+echo "\033[0;33m    To start this 'pod' it is mandatory to run this bash script (after every reboot just once):  \033[0m"
+echo "\033[0;32m sh ~/rustprojects/docker_rust_development_install/rust_dev_pod_after_reboot.sh \033[0m"
+echo "\033[0;33m    If you have already run it, you can find it in the bash history:  \033[0m"
+echo "\033[0;32m Ctrl-R, type after, press Esc, press Enter  \033[0m"
+
 # this step only for WSL:
 if grep -qi microsoft /proc/version; then
-    echo " "
-    echo "\033[0;33m    To start this 'pod' after a reboot of WSL/Windows use this bash script:  \033[0m"
-    echo "\033[0;32m sh ~/rustprojects/docker_rust_development_install/rust_dev_pod_after_reboot.sh \033[0m"
-    echo "\033[0;33m    If you have already used it, you can find it in the bash history:  \033[0m"
-    echo "\033[0;32m Ctrl-R, type after, press Esc, press Enter  \033[0m"
-    echo "\033[0;33m    You can force the WSL reboot: Open Powershell as Administrator:  \033[0m"
+    echo "\033[0;33m    You can force the WSL reboot in Powershell:  \033[0m"
     echo "\033[0;32m  wsl --shutdown  \033[0m"
 fi
 

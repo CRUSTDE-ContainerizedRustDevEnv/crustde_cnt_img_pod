@@ -6,17 +6,7 @@ echo "\033[0;33m    Bash script to correctly restart the pod 'sh rust_dev_pod_af
 # repository: https://github.com/bestia-dev/docker_rust_development
 
 # WSL2 have some quirks.
-if grep -qi microsoft /proc/version; then
-    echo " "
-    echo "\033[0;33m    Inside WSL the /tmp folder must be on a temporary filesystem. \033[0m"
-    echo "\033[0;33m    If not, there are remaining files in /tmp that corrupt the podman workings. \033[0m"
-    echo "\033[0;33m    The /tmp folder must already exist. Usually it does by default. \033[0m"
-    echo "\033[0;32m test -d /tmp && echo "ok. Directory /tmp exist." || echo "Error ! Directory /tmp DOES NOT EXIST !"   \033[0m"
-    echo "\033[0;33m    Check if the settings for tmpfs is already there. \033[0m"
-    echo "\033[0;32m sudo cat /etc/fstab  \033[0m"
-    echo "\033[0;33m    Here is how I set fstab to mount tmpfs. \033[0m"
-    echo "\033[0;32m sudo grep -qxF 'none  /tmp  tmpfs  defaults  0 0' /etc/fstab || echo "none  /tmp  tmpfs  defaults  0 0" | sudo tee -a /etc/fstab  \033[0m"
-    
+if grep -qi microsoft /proc/version; then    
     echo " "
     echo "\033[0;33m    You can simulate a reboot in Windows Powershell with: \033[0m"
     echo "\033[0;32m wsl --shutdown  \033[0m"
