@@ -33,9 +33,9 @@ sh download_scripts.sh;
 
 That's it !  
 
-Watch the short video tutorial on youtube:
+This project has also a youtube video tutorial. Watch it:
 <!-- markdownlint-disable MD033 -->
-[<img src="https://github.com/bestia-dev/docker_rust_development/raw/main/images/thumbnail.png" width="400px">](https://bestia.dev/youtube/docker_rust_development.html)
+[<img src="https://bestia.dev/youtube/docker_rust_development.jpg" width="400px">](https://bestia.dev/youtube/docker_rust_development.html)
 <!-- markdownlint-enable MD033 -->
 
 Now we can test the connection from various locations.  
