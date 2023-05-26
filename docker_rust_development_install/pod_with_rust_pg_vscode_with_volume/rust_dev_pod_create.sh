@@ -11,7 +11,8 @@ echo "\033[0;33m    Published inbound network ports are 8001 and 9876 on 'localh
 # repository: https://github.com/bestia-dev/docker_rust_development
 # https://techviewleo.com/how-to-run-postgresql-in-podman-container/
 
-# Start of script actions:
+# The script will run in this folder:
+cd ~/rustprojects/docker_rust_development_install/pod_with_rust_pg_vscode_with_volume/
 
 echo " "
 echo "\033[0;33m    Create pod \033[0m"
@@ -38,7 +39,7 @@ docker.io/bestiadev/rust_dev_squid_img:latest
 
 echo " "
 echo "\033[0;33m    Copy squid.conf for customized ACL proxy permissions \033[0m"
-podman cp ~/rustprojects/docker_rust_development_install/pod_with_rust_pg_vscode_with_volume/etc_squid_squid.conf rust_dev_squid_cnt:/etc/squid/squid.conf
+podman cp etc_squid_squid.conf rust_dev_squid_cnt:/etc/squid/squid.conf
 
 # to add the volume to a non-root container is special
 # I need to change the owner of the folder to the internal non-root uid. 
