@@ -4,8 +4,8 @@
 
 echo " "
 echo "\033[0;33m    Bash script to create the pod 'rust_dev_pod': 'sh rust_dev_pod_create.sh' \033[0m"
-echo "\033[0;33m    This 'pod' is made of 4 containers: 'rust_dev_squid_cnt', 'rust_dev_vscode_cnt', 'rust_dev_postgres_cnt', 'rust_dev_pgadmin_cnt' \033[0m"
-echo "\033[0;33m    It contains Rust, cargo, rustc, VSCode development environment' and postgreSQL with pgAdmin \033[0m"
+echo "\033[0;33m    This 'pod' is made of 3 containers: 'rust_dev_squid_cnt', 'rust_dev_vscode_cnt', 'rust_dev_postgres_cnt' \033[0m"
+echo "\033[0;33m    It contains Rust, cargo, rustc, VSCode development environment' and postgreSQL \033[0m"
 echo "\033[0;33m    All outbound network traffic from rust_dev_vscode_cnt goes through the proxy Squid. \033[0m"
 echo "\033[0;33m    Published inbound network ports are 8001 and 9876 on 'localhost' \033[0m"
 # repository: https://github.com/bestia-dev/docker_rust_development
@@ -19,7 +19,7 @@ echo "\033[0;33m    Create pod \033[0m"
 # in a "pod" the "publish port" is tied to the pod and not containers.
 # http connection     8001
 # ssh connection      2201
-# pgAdmin connection  9876  from 80 ??
+# sql admin connection  9876  from 80 ??
 
 podman pod create \
 -p 127.0.0.1:8001:8001/tcp \
@@ -45,14 +45,6 @@ echo " "
 echo "\033[0;33m    Create container rust_dev_vscode_cnt in the pod \033[0m"
 podman create --name rust_dev_vscode_cnt --pod=rust_dev_pod -ti \
 docker.io/bestiadev/rust_dev_vscode_img:latest
-
-echo " "
-echo "\033[0;33m    Create container pgAdmin in the pod \033[0m"
-podman run --pod rust_dev_pod \
--e 'PGADMIN_DEFAULT_EMAIL=info@bestia.dev' \
--e 'PGADMIN_DEFAULT_PASSWORD=Passw0rd'  \
---name rust_dev_pgadmin_cnt \
- -d docker.io/bestiadev/rust_dev_pgadmin_img:pgadmin4
 
 echo " "
 echo "\033[0;33m    Create container postgresql in the pod \033[0m"

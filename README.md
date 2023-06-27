@@ -1142,11 +1142,11 @@ The bash script `sh rust_ts_dev_image.sh` will create the new image with typescr
 Then we can use `sh docker_rust_development_install\pod_with_rust_ts_vscode\rust_dev_pod_create.sh.sh` to create the Podman pod with typescript.  
 The same `sh ~/rustprojects/docker_rust_development_install/rust_dev_pod_after_reboot.sh` is used after reboot.  
 
-## PostgreSQL and pgAdmin
+## PostgreSQL
 
 Some projects need the database PostgreSQL 13. I created a new pod with the command `sh docker_rust_development_install\pod_with_rust_pg_vscode\rust_dev_pod_create.sh`.  
-The same `sh ~/rustprojects/docker_rust_development_install/rust_dev_pod_after_reboot.sh` is used after reboot.  
-To use the administrative tool pgAdmin open the browser on `localhost:9876`.  
+The same `sh ~/rustprojects/docker_rust_development_install/rust_dev_pod_after_reboot.sh` is used after reboot.
+I didn't like the pgAdmin administrative tool. I will try DBeaver instead on `localhost:9876`.  
 If you want, you can change the user and passwords in the bash script `rust_dev_pod_create.sh` to something stronger.  
 
 ## Read more
