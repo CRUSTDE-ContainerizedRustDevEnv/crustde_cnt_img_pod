@@ -149,11 +149,11 @@ buildah run rust_dev_cargo_img    ln -s /usr/bin/mold /home/rustdevuser/.cargo/b
 echo " "
 echo "\033[0;33m    Install cargo-auto. \033[0m"
 buildah run rust_dev_cargo_img /bin/sh -c 'cargo install cargo-auto'
-buildah run rust_dev_cross_img /bin/sh -c 'cargo install dev_bestia_cargo_completion'
+buildah run rust_dev_cargo_img /bin/sh -c 'cargo install dev_bestia_cargo_completion'
 
 echo " "
 echo "\033[0;33m    Install basic-http-server to work with WASM. \033[0m"
-buildah run rust_dev_cross_img /bin/sh -c 'cargo install basic-http-server'
+buildah run rust_dev_cargo_img /bin/sh -c 'cargo install basic-http-server'
 
 echo " "
 echo "\033[0;33m    Install sccache to cache compiled artifacts. \033[0m"
