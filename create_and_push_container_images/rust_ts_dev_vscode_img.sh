@@ -57,7 +57,7 @@ buildah run --user root rust_ts_dev_vscode_img    apt -y upgrade
 
 echo " "
 echo "\033[0;33m    typescript compiler, nodejs, npm \033[0m"
-buildah run --user root rust_ts_dev_vscode_img    apt install -y nodejs npm 
+buildah run --user root rust_ts_dev_vscode_img    apt-get install -y nodejs npm 
 echo "\033[0;33m    node -v \033[0m"
 buildah run --user root rust_ts_dev_vscode_img    node -v
 # on 2022-07-19 is v12.22.12

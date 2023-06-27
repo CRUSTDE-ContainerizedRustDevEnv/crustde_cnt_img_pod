@@ -199,7 +199,7 @@ Let's install it. Open the `WSL2 terminal` and type:
 
 ```bash
 sudo apt update
-sudo apt install -y podman
+sudo apt-get install -y podman
 podman version
    Version: 3.0.1
 ```

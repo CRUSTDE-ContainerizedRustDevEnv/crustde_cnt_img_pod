@@ -66,8 +66,8 @@ fi
 echo " " 
 if ! [ -x "$(command -v podman)" ]; then
   echo "\033[0;33m    5. Installing Podman: \033[0m"
-  echo "sudo apt install -y podman"
-  sudo apt install -y podman
+  echo "sudo apt-get install -y podman"
+  sudo apt-get install -y podman
 else
   echo "\033[0;33m    5. Podman is already installed. \033[0m"
 fi

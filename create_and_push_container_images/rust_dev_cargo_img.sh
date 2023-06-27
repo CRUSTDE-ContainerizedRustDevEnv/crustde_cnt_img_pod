@@ -61,23 +61,23 @@ buildah run rust_dev_cargo_img    apt -y full-upgrade
 
 echo " "
 echo "\033[0;33m    Install curl, the most used CLI for getting stuff from internet \033[0m"
-buildah run rust_dev_cargo_img    apt install -y curl
+buildah run rust_dev_cargo_img    apt-get install -y curl
 echo "\033[0;33m    Install git, the legendary source control system \033[0m"
-buildah run rust_dev_cargo_img    apt install -y git
+buildah run rust_dev_cargo_img    apt-get install -y git
 echo "\033[0;33m    Install rsync, it is great for copying files and folders \033[0m"
-buildah run rust_dev_cargo_img    apt install -y rsync
+buildah run rust_dev_cargo_img    apt-get install -y rsync
 echo "\033[0;33m    Install build-essential. Rust needs some the C stuff.  \033[0m"
-buildah run rust_dev_cargo_img    apt install -y build-essential
+buildah run rust_dev_cargo_img    apt-get install -y build-essential
 echo "\033[0;33m    Install nano, the default easy to use text editor in Debian \033[0m"
-buildah run rust_dev_cargo_img    apt install -y nano
+buildah run rust_dev_cargo_img    apt-get install -y nano
 echo "\033[0;33m    Install ps. It displays information about a selection of the active processes \033[0m"
 echo "\033[0;33m    concretely it is used to run the ssh-agent  \033[0m"
-buildah run rust_dev_cargo_img    apt install -y procps
+buildah run rust_dev_cargo_img    apt-get install -y procps
 echo "\033[0;33m    Install pkg-config and libssl-dev are needed by the crate reqwest to work with TLS/SSL. \033[0m"
-buildah run rust_dev_cargo_img    apt install -y pkg-config
-buildah run rust_dev_cargo_img    apt install -y libssl-dev
+buildah run rust_dev_cargo_img    apt-get install -y pkg-config
+buildah run rust_dev_cargo_img    apt-get install -y libssl-dev
 echo "\033[0;33m    Install postgres client for postgres 13. \033[0m"
-buildah run rust_dev_cargo_img    apt install -y postgresql-client
+buildah run rust_dev_cargo_img    apt-get install -y postgresql-client
 
 echo " "
 echo "\033[0;33m    Create non-root user 'rustdevuser' and home folder. \033[0m"
@@ -89,7 +89,7 @@ buildah config --user rustdevuser rust_dev_cargo_img
 buildah config --workingdir /home/rustdevuser rust_dev_cargo_img
 
 # If needed, the user can be forced for a buildah command:
-# buildah run  --user root rust_dev_cargo_img    apt install -y --no-install-recommends build-essential
+# buildah run  --user root rust_dev_cargo_img    apt-get install -y --no-install-recommends build-essential
 
 echo " "
 echo "\033[0;33m    Configure rustdevuser things \033[0m"

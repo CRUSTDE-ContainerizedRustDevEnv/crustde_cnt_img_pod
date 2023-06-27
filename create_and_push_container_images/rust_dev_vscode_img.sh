@@ -59,7 +59,7 @@ buildah run --user root rust_dev_vscode_img    chown -R rustdevuser:rustdevuser 
 
 echo " "
 echo "\033[0;33m    install ssh server \033[0m"
-buildah run --user root rust_dev_vscode_img    apt install -y openssh-server
+buildah run --user root rust_dev_vscode_img    apt-get install -y openssh-server
 
 echo " "
 echo "\033[0;33m    Download vscode-server. Be sure the commit_sha of the server and client is the same: \033[0m"
