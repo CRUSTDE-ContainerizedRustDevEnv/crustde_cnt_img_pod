@@ -10,14 +10,16 @@ echo "\033[0;33m    Name of the image: rust_dev_cargo_img \033[0m"
 echo " "
 echo "\033[0;33m    I want a sandbox that cannot compromise my local system. \033[0m"
 echo "\033[0;33m    No shared volumes. All the files and folders will be inside the container.  \033[0m"
-echo "\033[0;33m    The original source code files will be cloned from github or copied from the local system. \033[0m"
-echo "\033[0;33m    The final source code files will be pushed to github or copied to the local system. \033[0m"
+echo "\033[0;33m    Containers are not perfect sandboxes, but are good enough. \033[0m"
+echo "\033[0;33m    Containers images can be recreated easily, coherently and repeatedly with new versions of tools. \033[0m"
+echo "\033[0;33m    The original source code files will be cloned from github. \033[0m"
+echo "\033[0;33m    The final source code files will be pushed to github. \033[0m"
 echo "\033[0;33m    I want also to limit the network ports and addresses inbound and outbound. \033[0m"
 
 echo " "
 echo "\033[0;33m    FIRST !!! \033[0m"
 echo "\033[0;33m    Search and replace in this bash script: \033[0m"
-echo "\033[0;33m    Version of rustc: 1.69.0 \033[0m"
+echo "\033[0;33m    Version of rustc: 1.70.0 \033[0m"
 echo "\033[0;33m    Version of rustup: 1.26.0 \033[0m"
 
 echo " "
@@ -48,7 +50,7 @@ docker.io/library/debian:bullseye-slim
 buildah config \
 --author=github.com/bestia-dev \
 --label name=rust_dev_cargo_img \
---label version=cargo-1.69.0 \
+--label version=cargo-1.70.0 \
 --label source=github.com/bestia-dev/docker_rust_development \
 rust_dev_cargo_img
 
@@ -119,7 +121,7 @@ buildah run rust_dev_cargo_img /bin/sh -c 'rustup --version'
 
 echo "\033[0;33m    rustc version \033[0m"
 buildah run rust_dev_cargo_img /bin/sh -c '/home/rustdevuser/.cargo/bin/rustc --version'
-# rustc 1.69.0 
+# rustc 1.70.0 
 
 # this probably is not necessary, if rust-analyzer can call rust-lang.org
 # buildah config --env RUST_SRC_PATH=/home/rustdevuser/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library rust_dev_cargo_img
@@ -145,14 +147,19 @@ buildah run rust_dev_cargo_img    mkdir /home/rustdevuser/.cargo/bin/mold
 buildah run rust_dev_cargo_img    ln -s /usr/bin/mold /home/rustdevuser/.cargo/bin/mold/ld
 
 echo " "
-echo "\033[0;33m    Install cargo-auto. It will pull the cargo-index registry. The first pull can take some time. \033[0m"
+echo "\033[0;33m    Install cargo-auto. \033[0m"
 buildah run rust_dev_cargo_img /bin/sh -c 'cargo install cargo-auto'
+buildah run rust_dev_cross_img /bin/sh -c 'cargo install dev_bestia_cargo_completion'
+
+echo " "
+echo "\033[0;33m    Install basic-http-server to work with WASM. \033[0m"
+buildah run rust_dev_cross_img /bin/sh -c 'cargo install basic-http-server'
 
 echo " "
 echo "\033[0;33m    Install sccache to cache compiled artifacts. \033[0m"
-buildah run rust_dev_cargo_img /bin/sh -c 'curl -L https://github.com/mozilla/sccache/releases/download/v0.4.2/sccache-dist-v0.4.2-x86_64-unknown-linux-musl.tar.gz --output /tmp/sccache.tar.gz'
-buildah run rust_dev_vscode_img /bin/sh -c 'tar --no-same-owner -xzv --strip-components=1 -C ~/.cargo/bin -f /tmp/sccache.tar.gz --wildcard */sccache-dist'
-buildah run rust_dev_vscode_img /bin/sh -c 'rm /tmp/sccache.tar.gz'
+buildah run rust_dev_cargo_img /bin/sh -c 'curl -L https://github.com/mozilla/sccache/releases/download/v0.5.3/sccache-dist-v0.5.3-x86_64-unknown-linux-musl.tar.gz --output /tmp/sccache.tar.gz'
+buildah run rust_dev_cargo_img /bin/sh -c 'tar --no-same-owner -xzv --strip-components=1 -C ~/.cargo/bin -f /tmp/sccache.tar.gz --wildcards */sccache-dist'
+buildah run rust_dev_cargo_img /bin/sh -c 'rm /tmp/sccache.tar.gz'
 
 echo " "
 echo "\033[0;33m    Add alias l for ls -la in .bashrc \033[0m"
@@ -178,14 +185,14 @@ buildah run --user root rust_dev_cargo_img    apt -y clean
 echo " "
 echo "\033[0;33m    Finally save/commit the image named rust_dev_cargo_img \033[0m"
 buildah commit rust_dev_cargo_img docker.io/bestiadev/rust_dev_cargo_img:latest
-buildah tag docker.io/bestiadev/rust_dev_cargo_img:latest docker.io/bestiadev/rust_dev_cargo_img:cargo-1.69.0
+buildah tag docker.io/bestiadev/rust_dev_cargo_img:latest docker.io/bestiadev/rust_dev_cargo_img:cargo-1.70.0
 
 echo " "
 echo "\033[0;33m    Upload the new image to docker hub. \033[0m"
 echo "\033[0;33m    First you need to store the credentials with: \033[0m"
 echo "\033[0;32m podman login --username bestiadev docker.io \033[0m"
 echo "\033[0;33m    then type docker access token. \033[0m"
-echo "\033[0;32m podman push docker.io/bestiadev/rust_dev_cargo_img:cargo-1.69.0 \033[0m"
+echo "\033[0;32m podman push docker.io/bestiadev/rust_dev_cargo_img:cargo-1.70.0 \033[0m"
 echo "\033[0;32m podman push docker.io/bestiadev/rust_dev_cargo_img:latest \033[0m"
 
 echo " "
@@ -202,10 +209,15 @@ echo "\033[0;32m cd rust_dev_hello \033[0m"
 echo "\033[0;32m cargo run \033[0m"
 
 echo " "
-echo "\033[0;33m    Detach container (it will remain 'started') with: \033[0m"
+echo "\033[0;33m    Detach container with - it will remain 'started': \033[0m"
 echo "\033[0;32m Ctrl+P, Ctrl+Q \033[0m"
 
 echo " "
 echo "\033[0;33m    To Exit/Stop the container type: \033[0m"
 echo "\033[0;32m exit \033[0m"
+echo " "
+
+echo " "
+echo "\033[0;33m    Continue other images creation with: \033[0m"
+echo "\033[0;32m sh rust_dev_cross_img.sh \033[0m"
 echo " "

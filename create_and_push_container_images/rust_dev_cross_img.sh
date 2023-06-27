@@ -38,7 +38,7 @@ docker.io/bestiadev/rust_dev_cargo_img:latest
 buildah config \
 --author=github.com/bestia-dev \
 --label name=rust_dev_cross_img \
---label version=cargo-1.69.0 \
+--label version=cargo-1.70.0 \
 --label source=github.com/bestia-dev/docker_rust_development \
 rust_dev_cross_img
 
@@ -59,27 +59,22 @@ buildah run rust_dev_cross_img /bin/sh -c 'rustup target add wasm32-wasi'
 echo " "
 echo "\033[0;33m    Install wasm pack \033[0m"
 buildah run rust_dev_cross_img /bin/sh -c 'curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh'
-buildah run rust_dev_cross_img /bin/sh -c 'cargo install dev_bestia_cargo_completion'
 
 echo " "
 echo "\033[0;33m    Install wasmtime wasi runtime \033[0m"
 buildah run rust_dev_cross_img /bin/sh -c 'curl https://wasmtime.dev/install.sh -sSf | bash'
 
 echo " "
-echo "\033[0;33m    Install basic-http-server to work with WASM. \033[0m"
-buildah run rust_dev_cross_img /bin/sh -c 'cargo install basic-http-server'
-
-echo " "
 echo "\033[0;33m    Finally save/commit the image named rust_dev_cross_img \033[0m"
 buildah commit rust_dev_cross_img docker.io/bestiadev/rust_dev_cross_img:latest
-buildah tag docker.io/bestiadev/rust_dev_cross_img:latest docker.io/bestiadev/rust_dev_cross_img:cargo-1.69.0
+buildah tag docker.io/bestiadev/rust_dev_cross_img:latest docker.io/bestiadev/rust_dev_cross_img:cargo-1.70.0
 
 echo " "
 echo "\033[0;33m    Upload the new image to docker hub. \033[0m"
 echo "\033[0;33m    First you need to store the credentials with: \033[0m"
 echo "\033[0;32m podman login --username bestiadev docker.io \033[0m"
 echo "\033[0;33m    then type docker access token. \033[0m"
-echo "\033[0;32m podman push docker.io/bestiadev/rust_dev_cross_img:cargo-1.69.0 \033[0m"
+echo "\033[0;32m podman push docker.io/bestiadev/rust_dev_cross_img:cargo-1.70.0 \033[0m"
 echo "\033[0;32m podman push docker.io/bestiadev/rust_dev_cross_img:latest \033[0m"
 
 echo " "
@@ -102,4 +97,9 @@ echo "\033[0;32m Ctrl+P, Ctrl+Q \033[0m"
 echo " "
 echo "\033[0;33m    To Exit/Stop the container type: \033[0m"
 echo "\033[0;32m exit \033[0m"
+echo " "
+
+echo " "
+echo "\033[0;33m    Continue other images creation with: \033[0m"
+echo "\033[0;32m sh rust_dev_vscode_img.sh \033[0m"
 echo " "
