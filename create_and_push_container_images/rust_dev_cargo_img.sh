@@ -157,8 +157,8 @@ buildah run rust_dev_cargo_img /bin/sh -c 'cargo install basic-http-server'
 
 echo " "
 echo "\033[0;33m    Install sccache to cache compiled artifacts. \033[0m"
-buildah run rust_dev_cargo_img /bin/sh -c 'curl -L https://github.com/mozilla/sccache/releases/download/v0.5.3/sccache-dist-v0.5.3-x86_64-unknown-linux-musl.tar.gz --output /tmp/sccache.tar.gz'
-buildah run rust_dev_cargo_img /bin/sh -c 'tar --no-same-owner -xzv --strip-components=1 -C ~/.cargo/bin -f /tmp/sccache.tar.gz --wildcards */sccache-dist'
+buildah run rust_dev_cargo_img /bin/sh -c 'curl -L https://github.com/mozilla/sccache/releases/download/v0.5.3/sccache-v0.5.3-x86_64-unknown-linux-musl.tar.gz --output /tmp/sccache.tar.gz'
+buildah run rust_dev_cargo_img /bin/sh -c 'tar --no-same-owner -xzv --strip-components=1 -C ~/.cargo/bin -f /tmp/sccache.tar.gz --wildcards */sccache'
 buildah run rust_dev_cargo_img /bin/sh -c 'rm /tmp/sccache.tar.gz'
 
 echo " "
