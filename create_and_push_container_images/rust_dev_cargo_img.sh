@@ -19,7 +19,7 @@ echo "\033[0;33m    I want also to limit the network ports and addresses inbound
 echo " "
 echo "\033[0;33m    FIRST !!! \033[0m"
 echo "\033[0;33m    Search and replace in this bash script: \033[0m"
-echo "\033[0;33m    Version of rustc: 1.70.0 \033[0m"
+echo "\033[0;33m    Version of rustc: 1.72.0 \033[0m"
 echo "\033[0;33m    Version of rustup: 1.26.0 \033[0m"
 
 echo " "
@@ -44,13 +44,13 @@ echo "\033[0;33m    Create new 'buildah container' named rust_dev_cargo_img \033
 set -o errexit
 buildah from \
 --name rust_dev_cargo_img \
-docker.io/library/debian:bullseye-slim
+docker.io/library/debian:bookworm-slim
 
 
 buildah config \
 --author=github.com/bestia-dev \
 --label name=rust_dev_cargo_img \
---label version=cargo-1.70.0 \
+--label version=cargo-1.72.0 \
 --label source=github.com/bestia-dev/docker_rust_development \
 rust_dev_cargo_img
 
@@ -78,6 +78,8 @@ buildah run rust_dev_cargo_img    apt-get install -y pkg-config
 buildah run rust_dev_cargo_img    apt-get install -y libssl-dev
 echo "\033[0;33m    Install postgres client for postgres 13. \033[0m"
 buildah run rust_dev_cargo_img    apt-get install -y postgresql-client
+echo "\033[0;33m    Install lsb_release for Debian version \033[0m"
+buildah run rust_dev_cargo_img    apt-get install -y lsb-release
 
 echo " "
 echo "\033[0;33m    Create non-root user 'rustdevuser' and home folder. \033[0m"
@@ -111,9 +113,12 @@ OLDIMAGEPATH=$(buildah run rust_dev_cargo_img printenv PATH)
 buildah config --env PATH=/home/rustdevuser/.cargo/bin:$OLDIMAGEPATH rust_dev_cargo_img
 buildah run rust_dev_cargo_img /bin/sh -c 'echo $PATH'
 
+echo " "
 echo "\033[0;33m    Debian version \033[0m"
+buildah run rust_dev_cargo_img /bin/sh -c 'lsb_release -d'
+# Debian GNU/Linux 12 (bookworm)
 buildah run rust_dev_cargo_img /bin/sh -c 'cat /etc/debian_version'
-# debian bullseye 11.4
+# 12.1
 
 echo "\033[0;33m    rustup version \033[0m"
 buildah run rust_dev_cargo_img /bin/sh -c 'rustup --version'
@@ -121,7 +126,7 @@ buildah run rust_dev_cargo_img /bin/sh -c 'rustup --version'
 
 echo "\033[0;33m    rustc version \033[0m"
 buildah run rust_dev_cargo_img /bin/sh -c '/home/rustdevuser/.cargo/bin/rustc --version'
-# rustc 1.70.0 
+# rustc 1.72.0 
 
 # this probably is not necessary, if rust-analyzer can call rust-lang.org
 # buildah config --env RUST_SRC_PATH=/home/rustdevuser/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library rust_dev_cargo_img
@@ -185,14 +190,14 @@ buildah run --user root rust_dev_cargo_img    apt -y clean
 echo " "
 echo "\033[0;33m    Finally save/commit the image named rust_dev_cargo_img \033[0m"
 buildah commit rust_dev_cargo_img docker.io/bestiadev/rust_dev_cargo_img:latest
-buildah tag docker.io/bestiadev/rust_dev_cargo_img:latest docker.io/bestiadev/rust_dev_cargo_img:cargo-1.70.0
+buildah tag docker.io/bestiadev/rust_dev_cargo_img:latest docker.io/bestiadev/rust_dev_cargo_img:cargo-1.72.0
 
 echo " "
 echo "\033[0;33m    Upload the new image to docker hub. \033[0m"
 echo "\033[0;33m    First you need to store the credentials with: \033[0m"
 echo "\033[0;32m podman login --username bestiadev docker.io \033[0m"
 echo "\033[0;33m    then type docker access token. \033[0m"
-echo "\033[0;32m podman push docker.io/bestiadev/rust_dev_cargo_img:cargo-1.70.0 \033[0m"
+echo "\033[0;32m podman push docker.io/bestiadev/rust_dev_cargo_img:cargo-1.72.0 \033[0m"
 echo "\033[0;32m podman push docker.io/bestiadev/rust_dev_cargo_img:latest \033[0m"
 
 echo " "

@@ -185,15 +185,15 @@ They developed and promoted Linux containers. Then they helped to create an open
 
 There are alternatives to using Docker software that I will explore here.
 
-## Install Podman in Debian 11(Bullseye) (on bare metal or in Win10 + WSL2)
+## Install Podman in Debian 12(Bookworm) (on bare metal or in Win10 + WSL2)
 
 [Podman](https://podman.io/) is a **daemonless**, open-source, Linux native tool designed to work with Open Containers Initiative (OCI) Containers and Container Images. Containers under the control of Podman can be run by a **non-privileged user**. The CLI commands of the Podman ***"Container Engine"*** are practically identical to the Docker CLI. Podman relies on an OCI-compliant ***"Container Runtime"*** (runc, crun, runv, etc) to interface with the operating system and create the running containers.
 
-I already wrote some information on how to install and use the combination of Win10 + WSL2 + Debian11(Bullseye):
+I already wrote some information on how to install and use the combination of Win10 + WSL2 + Debian12(Bookworm):
 
 <https://github.com/bestia-dev/win10_wsl2_debian11>
 
-Podman is available from the Debian11 package manager.
+Podman is available from the Debian12 package manager.
 
 <https://podman.io/getting-started/installation>
 
@@ -294,12 +294,12 @@ The Rust official images are on the Docker hub: <https://hub.docker.com/_/rust>
 
 I was surprised by the size of the image. It is big from 500 MB compressed to 1.4 GB uncompressed. But this is the size of rust development tools.
 
-I don't like that these images have only the `root` user. I will start from the Debian-11 image and install all I need as a non-privileged user `rustdevuser`.
+I don't like that these images have only the `root` user. I will start from the Debian-12 image and install all I need as a non-privileged user `rustdevuser`.
 
 In the bash terminal pull the image from the Docker hub:
 
 ```bash
-podman pull docker.io/library/debian:bullseye-slim
+podman pull docker.io/library/debian:bookworm-slim
 ```
 
 I wrote the bash script `rust_dev_cargo_img.sh`
@@ -358,7 +358,7 @@ First let's find the rustc version:
 
 ```bash
 rustc --version
-  rustc 1.70.0 
+  rustc 1.72.0 
 ```
 
 Let's create and run a small Rust program:
@@ -394,7 +394,7 @@ I discovered later that my compile times are bad and that could be better using 
 <https://github.com/rui314/mold>  
 
 Download mold from:  
-<https://github.com/rui314/mold/releases/download/v1.11.0/mold-1.11.0-x86_64-linux.tar.gz>
+<https://github.com/rui314/mold/releases/download/v2.1.0/mold-2.1.0-x86_64-linux.tar.gz>
 and extract only the `mold` binary executable into `~`.  
 Copy it as root into `/usr/bin` and adjust ownership and permissions:
 
@@ -459,7 +459,7 @@ I added to the image `rust_dev_cross_img` the target and needed utilities for cr
 These executables are 100% statically linked and don't need any other dynamic library.  
 Using a container to publish your executable to a server makes distribution and isolation much easier.
 These executables can run on the empty container `scratch`.
-Or on the smallest Linux container images like Alpine (7 MB) or distroless static-debian11 (3 MB).  
+Or on the smallest Linux container images like Alpine (7 MB) or distroless static-debian12 (3 MB).  
 Most of the programs will run just fine with musl. Cross-compile with this:  
 
 ```bash
@@ -532,7 +532,7 @@ The commands are similar for distroless static.
 
 buildah from \
 --name distroless_hello_world_img \
-gcr.io/distroless/static-debian11
+gcr.io/distroless/static-debian12
 
 buildah config \
 --author=github.com/bestia-dev \
@@ -608,14 +608,14 @@ In `host terminal`:
 podman login --username bestiadev docker.io
 # type docker access token
 
-podman push docker.io/bestiadev/rust_dev_cargo_img:cargo-1.70.0
+podman push docker.io/bestiadev/rust_dev_cargo_img:cargo-1.72.0
 podman push docker.io/bestiadev/rust_dev_cargo_img:latest
 
-podman push docker.io/bestiadev/rust_dev_cross_img:cargo-1.70.0
+podman push docker.io/bestiadev/rust_dev_cross_img:cargo-1.72.0
 podman push docker.io/bestiadev/rust_dev_cross_img:latest
 
-podman push docker.io/bestiadev/rust_dev_vscode_img:vscode-1.79.2
-podman push docker.io/bestiadev/rust_dev_vscode_img:cargo-1.70.0
+podman push docker.io/bestiadev/rust_dev_vscode_img:vscode-1.82.0
+podman push docker.io/bestiadev/rust_dev_vscode_img:cargo-1.72.0
 podman push docker.io/bestiadev/rust_dev_vscode_img:latest
 
 podman push docker.io/bestiadev/rust_dev_squid_img:squid-3.5.27-2
@@ -650,9 +650,9 @@ Docker Hub stores compressed images, so they are a third of the size to download
 
 | Image                                    | Label          | Size         | compressed  |
 | ---------------------------------------- | -------------- |------------- | ----------- |
-| docker.io/bestiadev/rust_dev_cargo_img   | cargo-1.70.0   | 1.30 GB      | 0.59 GB     |
-| docker.io/bestiadev/rust_dev_cross_img   | cargo-1.70.0   | 1.70 GB      | 0.57 GB     |
-| docker.io/bestiadev/rust_dev_vscode_img  | cargo-1.70.0   | 0.27 GB      | 0.10 GB     |
+| docker.io/bestiadev/rust_dev_cargo_img   | cargo-1.72.0   | 1.30 GB      | 0.59 GB     |
+| docker.io/bestiadev/rust_dev_cross_img   | cargo-1.72.0   | 1.70 GB      | 0.57 GB     |
+| docker.io/bestiadev/rust_dev_vscode_img  | cargo-1.72.0   | 0.27 GB      | 0.10 GB     |
 
 ## Users keys for SSH
 

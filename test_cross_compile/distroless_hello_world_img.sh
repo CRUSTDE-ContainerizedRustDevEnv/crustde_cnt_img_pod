@@ -33,7 +33,7 @@ echo "\033[0;33m    Create new 'buildah container' named distroless_hello_world_
 set -o errexit
 buildah from \
 --name distroless_hello_world_img \
-gcr.io/distroless/static-debian11
+gcr.io/distroless/static-debian12
 
 buildah config \
 --author=github.com/bestia-dev \
