@@ -1,0 +1,33 @@
+Search and replace
+
+When creating new images there will probably be new versions of programs and utilities.
+These version numbers should be replaced with a simple "search and replace all".
+
+Rustc and cargo version
+old version: 1.73.0 
+new version: 1.73.0 
+
+Rustup version changes rarely:
+old version: 1.26.0  
+new version: 1.26.0 
+
+Debian version:
+old version: Debian GNU/Linux 12 (bookworm) 12.1
+new version: Debian GNU/Linux 12 (bookworm) 12.1
+
+mold linker version
+old version: 2.2.0
+new version: 2.2.0
+
+sccache version 
+old version: 0.5.4
+new version: 0.5.4
+
+VSCode version:
+old version: 1.83.0
+new version: 1.83.0
+
+VSCode hash:
+old hash: e7e037083ff4455cf320e344325dacb480062c3c
+new hash: e7e037083ff4455cf320e344325dacb480062c3c
+

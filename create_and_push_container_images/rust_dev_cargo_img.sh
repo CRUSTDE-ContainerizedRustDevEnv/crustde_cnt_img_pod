@@ -19,7 +19,7 @@ echo "\033[0;33m    I want also to limit the network ports and addresses inbound
 echo " "
 echo "\033[0;33m    FIRST !!! \033[0m"
 echo "\033[0;33m    Search and replace in this bash script: \033[0m"
-echo "\033[0;33m    Version of rustc: 1.72.1 \033[0m"
+echo "\033[0;33m    Version of rustc: 1.73.0 \033[0m"
 echo "\033[0;33m    Version of rustup: 1.26.0 \033[0m"
 
 echo " "
@@ -50,7 +50,7 @@ docker.io/library/debian:bookworm-slim
 buildah config \
 --author=github.com/bestia-dev \
 --label name=rust_dev_cargo_img \
---label version=cargo-1.72.1 \
+--label version=cargo-1.73.0 \
 --label source=github.com/bestia-dev/docker_rust_development \
 rust_dev_cargo_img
 
@@ -104,7 +104,7 @@ echo "\033[0;33m    Kill auto-completion horrible sound \033[0m"
 buildah run rust_dev_cargo_img /bin/sh -c 'echo "set bell-style none" >> ~/.inputrc'
 
 echo " "
-echo "\033[0;33m    Install rustup and default x86_64-unknown-linux-gnu, cargo, std, rustfmt, clippy, docs, rustc,...  \033[0m"
+echo "\033[0;33m    Install rustup 1.26.0 and default x86_64-unknown-linux-gnu, cargo, std, rustfmt, clippy, docs, rustc,...  \033[0m"
 buildah run rust_dev_cargo_img /bin/sh -c 'curl https://sh.rustup.rs -sSf | sh -s -- -yq'
 
 echo "\033[0;33m    Rustup wants to add the ~/.cargo/bin to PATH. But it needs to force bash reboot and that does not work in buildah. \033[0m"
@@ -126,7 +126,7 @@ buildah run rust_dev_cargo_img /bin/sh -c 'rustup --version'
 
 echo "\033[0;33m    rustc version \033[0m"
 buildah run rust_dev_cargo_img /bin/sh -c '/home/rustdevuser/.cargo/bin/rustc --version'
-# rustc 1.72.1 
+# rustc 1.73.0 
 
 # this probably is not necessary, if rust-analyzer can call rust-lang.org
 # buildah config --env RUST_SRC_PATH=/home/rustdevuser/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library rust_dev_cargo_img
@@ -141,8 +141,11 @@ echo "\033[0;33m    Remove the toolchain docs because they are 610MB big \033[0m
 buildah run rust_dev_cargo_img /bin/sh -c 'rm -rf /home/rustdevuser/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/share/doc'
 
 echo " "
-echo "\033[0;33m    Install 'mold linker'. It is 3x faster. \033[0m"
-buildah copy rust_dev_cargo_img  'mold' '/usr/bin/'
+echo "\033[0;33m    Install 'mold linker' 2.2.0. It is 3x faster. \033[0m"
+buildah run rust_dev_cargo_img /bin/sh -c 'curl -L https://github.com/rui314/mold/releases/download/v2.2.0/mold-2.2.0-x86_64-linux.tar.gz --output /tmp/mold.tar.gz'
+buildah run rust_dev_cargo_img /bin/sh -c 'tar --no-same-owner -xzv --strip-components=2 -C /usr/bin -f /tmp/mold.tar.gz --wildcards */bin/mold'
+buildah run rust_dev_cargo_img /bin/sh -c 'rm /tmp/mold.tar.gz'
+
 buildah run --user root  rust_dev_cargo_img    chown root:root /usr/bin/mold
 buildah run --user root  rust_dev_cargo_img    chmod 755 /usr/bin/mold
 
@@ -161,8 +164,8 @@ echo "\033[0;33m    Install basic-http-server to work with WASM. \033[0m"
 buildah run rust_dev_cargo_img /bin/sh -c 'cargo install basic-http-server'
 
 echo " "
-echo "\033[0;33m    Install sccache to cache compiled artifacts. \033[0m"
-buildah run rust_dev_cargo_img /bin/sh -c 'curl -L https://github.com/mozilla/sccache/releases/download/v0.5.3/sccache-v0.5.3-x86_64-unknown-linux-musl.tar.gz --output /tmp/sccache.tar.gz'
+echo "\033[0;33m    Install sccache 0.5.4 to cache compiled artifacts. \033[0m"
+buildah run rust_dev_cargo_img /bin/sh -c 'curl -L https://github.com/mozilla/sccache/releases/download/v0.5.4/sccache-dist-v0.5.4-x86_64-unknown-linux-musl.tar.gz --output /tmp/sccache.tar.gz'
 buildah run rust_dev_cargo_img /bin/sh -c 'tar --no-same-owner -xzv --strip-components=1 -C ~/.cargo/bin -f /tmp/sccache.tar.gz --wildcards */sccache'
 buildah run rust_dev_cargo_img /bin/sh -c 'rm /tmp/sccache.tar.gz'
 
@@ -190,14 +193,14 @@ buildah run --user root rust_dev_cargo_img    apt -y clean
 echo " "
 echo "\033[0;33m    Finally save/commit the image named rust_dev_cargo_img \033[0m"
 buildah commit rust_dev_cargo_img docker.io/bestiadev/rust_dev_cargo_img:latest
-buildah tag docker.io/bestiadev/rust_dev_cargo_img:latest docker.io/bestiadev/rust_dev_cargo_img:cargo-1.72.1
+buildah tag docker.io/bestiadev/rust_dev_cargo_img:latest docker.io/bestiadev/rust_dev_cargo_img:cargo-1.73.0
 
 echo " "
 echo "\033[0;33m    Upload the new image to docker hub. \033[0m"
 echo "\033[0;33m    First you need to store the credentials with: \033[0m"
 echo "\033[0;32m podman login --username bestiadev docker.io \033[0m"
 echo "\033[0;33m    then type docker access token. \033[0m"
-echo "\033[0;32m podman push docker.io/bestiadev/rust_dev_cargo_img:cargo-1.72.1 \033[0m"
+echo "\033[0;32m podman push docker.io/bestiadev/rust_dev_cargo_img:cargo-1.73.0 \033[0m"
 echo "\033[0;32m podman push docker.io/bestiadev/rust_dev_cargo_img:latest \033[0m"
 
 echo " "
