@@ -1,14 +1,9 @@
 #!/bin/sh
 
-# README:
-
 echo " "
 echo "\033[0;33m    Copy and reload modified squid config file. \033[0m"
+echo "\033[0;33m    The script will use the files in the Working directory. \033[0m"
 # repository: https://github.com/bestia-dev/docker_rust_development
-
-
-# The script will run in this folder:
-cd ~/rustprojects/docker_rust_development_install/pod_with_rust_ts_vscode/
 
 echo " "
 echo "\033[0;33m    Copy squid.conf for customized ACL proxy permissions \033[0m"
