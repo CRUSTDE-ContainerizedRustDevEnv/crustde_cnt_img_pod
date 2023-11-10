@@ -11,6 +11,11 @@ if grep -qi microsoft /proc/version; then
   # here I need the Windows profile folder
   echo "setx.exe WSLENV 'USERPROFILE/p'"
   setx.exe WSLENV "USERPROFILE/p"
+  echo "default propagation for / in WSL is private, for podman change to shared"
+  findmnt -o PROPAGATION /
+  echo "sudo mount --make-rshared /"
+  sudo mount --make-rshared /
+  findmnt -o PROPAGATION /
 fi
 
 echo " " 
@@ -131,7 +136,7 @@ else
 HostName localhost
 Port 2201
 User rustdevuser
-IdentityFile ~\\.ssh\\rustdevuser_key
+IdentityFile ~\.ssh\rustdevuser_key
 IdentitiesOnly yes' | tee -a ~/.ssh/config
 echo "| tee -a ~/.ssh/config"
 cp -v ~/.ssh/config $USERPROFILE/.ssh/

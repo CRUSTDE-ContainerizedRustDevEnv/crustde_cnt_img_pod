@@ -19,20 +19,22 @@ My projects on GitHub are more like a tutorial than a finished product: [bestia-
 ## Try it
 
 The installation is just a bunch of bash scripts.  
-The scripts are for the Debian OS. It can be installed on bare metal or inside Win10+WSL2.  
-First download and run the download_script. It will download the rest of the scripts.  
-After downloading, you can inspect them to see exactly what they are doing. There are a lot of comments and descriptions inside. A more detailed explanation is in this README.md.  
-Every script will show step-by-step instructions on what to do next.  
+The scripts are for the Debian OS. Debian can be installed on bare metal or inside Win10+WSL2.  
+First download and run the download_scripts.sh. This script will download the rest of the scripts.  
+After downloading, you can inspect them to see exactly what they are doing. There are a lot of comments and descriptions inside to make it easy to understand and follow. A more detailed explanation is in this README.md.  
 
 ```bash
 mkdir -p ~/rustprojects/docker_rust_development_install;
 cd ~/rustprojects/docker_rust_development_install;
+# only if curl is not yet installed:
+sudo apt install curl
 curl -Sf -L https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/download_scripts.sh --output download_scripts.sh;
-# you can read the bash script, it only creates dirs, download scripts and suggests what script to run next
+# you can rewiew the bash script, it only creates dirs, download scripts and suggests what script to run next
 cat download_scripts.sh; 
 sh download_scripts.sh;
 ```
 
+Every script will show step-by-step instructions on what to do next.  
 That's it !  
 
 This project has also a youtube video tutorial. Watch it:
@@ -40,47 +42,16 @@ This project has also a youtube video tutorial. Watch it:
 [<img src="https://bestia.dev/youtube/docker_rust_development.jpg" width="400px">](https://bestia.dev/youtube/docker_rust_development.html)
 <!-- markdownlint-enable MD033 -->
 
-Now we can test the connection from various locations.  
+Now we can use the container in VSCode.  
 
-1\. Try the SSH connection from the Debian host:
+1\. Open VSCode and install extension `Remote - SSH`.
 
-```bash
-ssh -i ~/.ssh/rustdevuser_key -p 2201 rustdevuser@localhost
-# or using the ssh config file
-ssh -F ~/.ssh/config rust_dev_vscode_cnt
-# Choose `yes` to save fingerprint if asked, just the first time.
-# type passphrase
-# should work !
-# try for example
-ls
-# ls result: rustprojects
-# to exit the container
-exit
-```
-
-2\. If you are in Win10+WSL2, then try the SSH connection from the Windows command prompt or Windows Powershell terminal:
-
-```bash
-# test the ssh connection from Windows cmd prompt
-"C:\WINDOWS\System32\OpenSSH\ssh.exe" -i ~\.ssh\rustdevuser_key -p 2201 rustdevuser@localhost
-# Choose `y` to save fingerprint if asked, just the first time.
-# type passphrase
-# should work !
-# try for example
-ls
-# ls result: rustprojects
-# to exit the container
-exit
-```
-
-3\. Open VSCode and install extension `Remote - SSH`.
-
-4\. Then in VSCode `F1`, type `ssh` and choose `Remote-SSH: Connect to Host...` and choose `rust_dev_vscode_cnt`.  
+2\. Then in VSCode `F1`, type `ssh` and choose `Remote-SSH: Connect to Host...` and choose `rust_dev_vscode_cnt`.  
 Choose `Linux` if asked, just the first time.  
 Type your passphrase.  
 If we are lucky, everything works and you are now inside the container over SSH.
 
-5\. In the `VSCode terminal` create a simple Rust project and run it:
+3\. In the `VSCode terminal` create a simple Rust project and run it:
 
 ```bash
 cd ~/rustprojects
@@ -91,7 +62,7 @@ cargo run
 
 That should work and greet you with "Hello, world!"
 
-6\. After reboot, WSL2 can create some network problems for Podman.  
+4\. After reboot, WSL2 can create some network problems for Podman.  
 No problem for Debian on bare metal. But the script is ok to restart the pod and start the sshd server.
 So use it in both cases.  
 We can simulate the WSL2 reboot in `Powershell in Windows`:
@@ -110,7 +81,7 @@ podman ps
 
 If the restart is successful every container will be started a few seconds. It is not enough for containers to be in the status "created". Then just repeat the restart procedure.
 
-7\. Eventually you will want to remove the entire pod. Linux OCI containers and pods are ephemeral, which means just temporary. But your code and data must persist. Before destroying the pod/containers, push your changes to GitHub because removing the pod will destroy also all the data that is inside.  
+5\. Eventually you will want to remove the entire pod. Linux OCI containers and pods are ephemeral, which means just temporary. But your code and data must persist. Before destroying the pod/containers, push your changes to GitHub because removing the pod will destroy also all the data that is inside.  
 Be careful !  
 In the `WSL2 terminal`:
 
@@ -151,32 +122,6 @@ First I have to talk about TRUST. This is the whole point of this entire project
 We live in dangerous times for "supply chain attacks" in open-source and it is getting worse. This is a problem we need to address!  
 In this project, you don't need to TRUST ME! You can run all the bash commands inside bash scripts line-by-line. My emphasis is to thoroughly comment and describe what is my intention for every single command. You can follow and observe exactly what is going on. This is the beauty of open source. But this is realistic only for very simple projects.  
 To be meticulously precise, you still have to trust the Windows code, Linux, GNU tools, drivers, Podman, Buildah, VSCode, extensions, the microprocessor, memory, disc and many other projects. There is no system without an inherent minimal level of TRUST.
-
-## Compile (build) speed in various environments
-
-After using these containers for some time I was curious about compile performance in various environments. And I was right!  
-I tried `cargo auto build` on my project `database_web_ui_on_server` in different environments. I build a few times and find an average.  
-
-18s in container on WSL2 without shared volume  
-8s  in container on WSL2 with shared volume  
-6s  in WSL2  
-
-11s in the container on Debian (dual boot) without shared volume  
-7s  in the container on Debian (dual boot) with shared volume  
-6s  in Debian (dual boot)  
-
-Then I changed the linker to "mold" on Debian. It is 3x faster!  
-The "mold" linker is experimental Linux only. That's ok for me.  
-
-6.84s in container on WSL2 without shared volume  
-5.05s in container on WSL2 with shared volume  
-3.66s  in WSL2  
-
-***4.43s in the container on Debian (dual boot) without shared volume***  
-5.35s in the container on Debian (dual boot) with shared volume  
-3.61s in Debian (dual boot)  
-
-That is a big difference! I decided I will develop Rust projects in Debian (dual boot) without shared volume with the mold linker. The container steals a little performance for itself, but it is not a big deal in that combination. Security is not cheap!
 
 ## Docker and OCI
 
