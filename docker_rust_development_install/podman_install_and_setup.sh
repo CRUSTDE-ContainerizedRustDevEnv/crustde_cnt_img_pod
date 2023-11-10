@@ -8,14 +8,17 @@ echo "\033[0;33m    Bash script to install Podman and setup for rust_dev_pod for
 
 # if Debian inside WSL it needs some special care
 if grep -qi microsoft /proc/version; then    
-  # here I need the Windows profile folder
-  echo "setx.exe WSLENV 'USERPROFILE/p'"
-  setx.exe WSLENV "USERPROFILE/p"
-  echo "default propagation for / in WSL is private, for podman change to shared"
-  findmnt -o PROPAGATION /
-  echo "sudo mount --make-rshared /"
-  sudo mount --make-rshared /
-  findmnt -o PROPAGATION /
+  # get WINUSERPROFILE with powershell, the home folder in Windows and trim the trailing newline
+  WINUSERPROFILE="$(wslpath $(powershell.exe -NoProfile -NonInteractive -Command "\$Env:UserProfile") | tr -d '\r')" 
+  echo WINUSERPROFILE=$WINUSERPROFILE
+  # WINUSERPROFILE should be something like /mnt/c/Users/WinUserName
+
+  if findmnt -o PROPAGATION / | grep -qi private ; then  
+    echo "default propagation for / in WSL is private, for podman must be changed to shared"
+    echo "sudo mount --make-rshared /"
+    sudo mount --make-rshared /
+    findmnt -o PROPAGATION /
+  fi 
 fi
 
 echo " " 
@@ -39,8 +42,8 @@ if [ ! -f ~/.ssh/rustdevuser_key ]; then
   chmod 600 ~/.ssh/rustdevuser_key
   # if WSL, copy rustdevuser_key to windows
   if grep -qi microsoft /proc/version; then    
-    cp -v ~/.ssh/rustdevuser_key $USERPROFILE/.ssh/
-    cp -v ~/.ssh/rustdevuser_key.pub $USERPROFILE/.ssh/
+    cp -v ~/.ssh/rustdevuser_key $WINUSERPROFILE/.ssh/
+    cp -v ~/.ssh/rustdevuser_key.pub $WINUSERPROFILE/.ssh/
   fi
 
 else 
@@ -120,28 +123,48 @@ echo " "
 echo "\033[0;33m    8. Prepare the config file for VSCode SSH: \033[0m"
 echo "\033[0;33m    Check if the word rust_dev_vscode_cnt already exists in the config file. \033[0m"
 
-# create file if it does not exist
-if [ ! -f ~/.ssh/config ]; then
-      echo '' | tee -a ~/.ssh/config
-fi
+# write config for VSCode SSH extension
+if grep -qi microsoft /proc/version; then
+  echo "\033[0;33m    VSCode for Windows \033[0m"
+  # if WSL then use VSCode for Windows. The location is %UserProfile% and they use backslash    
+  write_to_config="false"
+  if [ ! -f $WINUSERPROFILE/.ssh/config ]; then
+    write_to_config="true"
+  else
+    if grep -qi "Host rust_dev_vscode_cnt" "$WINUSERPROFILE/.ssh/config"; then
+      echo "\033[0;33m    VSCode config for SSH already contains rust_dev_vscode_cnt. \033[0m"
+    else
+      write_to_config="true"
+    fi
+  fi
 
-if grep -qi "Host rust_dev_vscode_cnt" "$HOME/.ssh/config"; then
-  echo "\033[0;33m    VSCode config for SSH already exists. \033[0m"
-else
-  echo "\033[0;33m    Add Host rust_dev_vscode_cnt to ~/.ssh/config \033[0m"
-  
-  if grep -qi microsoft /proc/version; then  
-    # in VSCode Windows they use backslash    
+  if [ $write_to_config = "true" ]; then
+    echo "\033[0;33m    Add Host rust_dev_vscode_cnt to $WINUSERPROFILE/.ssh/config \033[0m"
     echo 'Host rust_dev_vscode_cnt
 HostName localhost
 Port 2201
 User rustdevuser
-IdentityFile ~\.ssh\rustdevuser_key
-IdentitiesOnly yes' | tee -a ~/.ssh/config
-echo "| tee -a ~/.ssh/config"
-cp -v ~/.ssh/config $USERPROFILE/.ssh/
+IdentityFile ~\\.ssh\\rustdevuser_key
+IdentitiesOnly yes' | tee -a $WINUSERPROFILE/.ssh/config
+    echo "| tee -a $WINUSERPROFILE/.ssh/config"
+  fi
+
+else
+  echo "\033[0;33m    VSCode for Linux \033[0m"
+  # if not WSL then use VSCode for Debian and they use slash
+  write_to_config="false"
+  if [ ! -f $HOME/.ssh/config ]; then
+    write_to_config="true"
   else
-    # in VSCode Debian they use slash
+    if grep -qi "Host rust_dev_vscode_cnt" "$HOME/.ssh/config"; then
+      echo "\033[0;33m    VSCode config for SSH already contains rust_dev_vscode_cnt. \033[0m"
+    else
+      write_to_config="true"
+    fi
+  fi
+
+  if [ $write_to_config = "true" ]; then
+    echo "\033[0;33m    Add Host rust_dev_vscode_cnt to ~/.ssh/config \033[0m"
     echo 'Host rust_dev_vscode_cnt
 HostName localhost
 Port 2201
@@ -150,7 +173,6 @@ IdentityFile ~/.ssh/rustdevuser_key
 IdentitiesOnly yes' | tee -a ~/.ssh/config
     echo "| tee -a ~/.ssh/config"
   fi
-
 fi
 
 echo " "
