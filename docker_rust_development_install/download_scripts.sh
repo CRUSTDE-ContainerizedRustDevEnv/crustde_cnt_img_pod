@@ -29,35 +29,24 @@ if echo "$PWD" | grep -q '/rustprojects/docker_rust_development_install'; then
     curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/backup_personal_data_from_wsl_to_win.sh --output backup_personal_data_from_wsl_to_win.sh
     echo " 5. restore_personal_data_from_win_to_wsl.sh"
     curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/restore_personal_data_from_win_to_wsl.sh --output restore_personal_data_from_win_to_wsl.sh
-
     echo " 6. etc_ssh_sshd_config.conf"
     curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/etc_ssh_sshd_config.conf --output etc_ssh_sshd_config.conf
-
     echo " 7. podman_install_and_setup.sh"
     curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/podman_install_and_setup.sh --output podman_install_and_setup.sh
+    echo " 8. rust_dev_pod_after_reboot.sh"
+    curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/rust_dev_pod_after_reboot.sh --output rust_dev_pod_after_reboot.sh
+    echo " 9. docker_rust_development_install.md"
+    curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/docker_rust_development_install.md --output docker_rust_development_install.md
 
-    echo " 8. pod_with_rust_vscode/rust_dev_pod_create.sh"
+    echo " 10. pod_with_rust_vscode/rust_dev_pod_create.sh"
     curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/pod_with_rust_vscode/rust_dev_pod_create.sh --output pod_with_rust_vscode/rust_dev_pod_create.sh    
     curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/pod_with_rust_vscode/etc_squid_squid.conf --output pod_with_rust_vscode/etc_squid_squid.conf
+    curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/pod_with_rust_vscode/copy_squid_config_and_restart_cnt.sh --output pod_with_rust_vscode/copy_squid_config_and_restart_cnt.sh
 
-    echo " 9. pod_with_rust_pg_vscode/rust_dev_pod_create.sh"
+    echo " 11. pod_with_rust_pg_vscode/rust_dev_pod_create.sh"
     curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/pod_with_rust_pg_vscode/rust_dev_pod_create.sh --output pod_with_rust_pg_vscode/rust_dev_pod_create.sh
     curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/pod_with_rust_pg_vscode/etc_squid_squid.conf --output pod_with_rust_pg_vscode/etc_squid_squid.conf
-
-    echo " 10. pod_with_rust_pg_vscode/rust_dev_pod_create.sh"
-    curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/pod_with_rust_ts_vscode/rust_dev_pod_create.sh --output pod_with_rust_ts_vscode/rust_dev_pod_create.sh
-    curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/pod_with_rust_ts_vscode/etc_squid_squid.conf --output pod_with_rust_ts_vscode/etc_squid_squid.conf
-    
-
-    echo " 11. pod_with_rust_pg_vscode_with_volume/rust_dev_pod_create.sh"
-    curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/pod_with_rust_pg_vscode_with_volume/rust_dev_pod_create.sh --output pod_with_rust_pg_vscode_with_volume/rust_dev_pod_create.sh
-    curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/pod_with_rust_pg_vscode_with_volume/etc_squid_squid.conf --output pod_with_rust_pg_vscode_with_volume/etc_squid_squid.conf
-
-    echo " 12. rust_dev_pod_after_reboot.sh"
-    curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/rust_dev_pod_after_reboot.sh --output rust_dev_pod_after_reboot.sh
-
-    echo " 13. docker_rust_development_install.md"
-    curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/docker_rust_development_install.md --output docker_rust_development_install.md
+    curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/pod_with_rust_pg_vscode/copy_squid_config_and_restart_cnt.sh --output pod_with_rust_pg_vscode/copy_squid_config_and_restart_cnt.sh
 
     # if both files already exist, don't need this step
     # beware the last ] needs a space before it or it does not work!
