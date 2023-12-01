@@ -115,8 +115,7 @@
         "zdravje",
         "zxvf"
     ],
-    "cSpell.enableFiletypes": [
-        "properties",
-        "shellscript"
-    ]
+    "files.associations": {
+        "LICENSE": "plain text"
+      }
 }

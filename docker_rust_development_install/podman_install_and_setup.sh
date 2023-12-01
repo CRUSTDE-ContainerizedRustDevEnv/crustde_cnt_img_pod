@@ -101,14 +101,18 @@ if grep -qi microsoft /proc/version; then
     echo '[engine]
 cgroup_manager = "cgroupfs"
 events_logger = "file"' | tee -a $HOME/.config/containers/containers.conf
-    
-    echo "\033[0;33m    WSL2 must have tmp in tmpfs, so it can restart correctly after reboot \033[0m"
-    echo "sudo grep -qxF 'none  /tmp  tmpfs  defaults  0 0' /etc/fstab || echo 'none  /tmp  tmpfs  defaults  0 0' | sudo tee -a /etc/fstab"
-    sudo grep -qxF 'none  /tmp  tmpfs  defaults  0 0' /etc/fstab || echo "none  /tmp  tmpfs  defaults  0 0" | sudo tee -a /etc/fstab
-
   fi
+  
+  if grep -qi tmpfs /etc/fstab; then
+    echo "fstab already contains tmpfs"
   else
-    echo "\033[0;33m    6. Podman is NOT inside WSL2. \033[0m"
+    echo "\033[0;33m    WSL2 must have tmp in tmpfs, so it can restart correctly after reboot \033[0m"
+    echo "echo 'none  /tmp  tmpfs  defaults  0 0' | sudo tee -a /etc/fstab"
+    echo "none  /tmp  tmpfs  defaults  0 0" | sudo tee -a /etc/fstab
+  fi
+
+else
+  echo "\033[0;33m    6. Podman is NOT inside WSL2. \033[0m"
 fi
 
 echo " "

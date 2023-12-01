@@ -3,13 +3,13 @@
 **02. Tutorial for Rust development environment inside Linux OCI container. Rust - Hack Without Fear and Trust! (2022-03)**  
 ***version: 3.0  date: 2022-09-06 author: [bestia.dev](https://bestia.dev) repository: [GitHub](https://github.com/bestia-dev/docker_rust_development)***  
 
-![status](https://img.shields.io/badge/maintained-green) 
-![status](https://img.shields.io/badge/ready_for_use-green) 
-[![Lines in md](https://img.shields.io/badge/Lines_in_markdown-932-green.svg)](https://github.com/bestia-dev/docker_rust_development/)
-[![Lines in bash scripts](https://img.shields.io/badge/Lines_in_bash_scripts-1535-blue.svg)](https://github.com/bestia-dev/docker_rust_development/)
+![status](https://img.shields.io/badge/maintained-green)
+ ![status](https://img.shields.io/badge/ready_for_use-green)
+ [![Lines in md](https://img.shields.io/badge/Lines_in_markdown-932-green.svg)](https://github.com/bestia-dev/docker_rust_development/)
+ [![Lines in bash scripts](https://img.shields.io/badge/Lines_in_bash_scripts-1535-blue.svg)](https://github.com/bestia-dev/docker_rust_development/)
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/bestia-dev/docker_rust_development/blob/master/LICENSE)
-![Hits](https://bestia.dev/webpage_hit_counter/get_svg_image/138544014.svg)
+ ![Hits](https://bestia.dev/webpage_hit_counter/get_svg_image/138544014.svg)
 
 Hashtags: #rustlang #buildtool #developmenttool #tutorial #docker #ssh #container #podman #Linux #OCI  
 My projects on GitHub are more like a tutorial than a finished product: [bestia-dev tutorials](https://github.com/bestia-dev/tutorials_rust_wasm).  
@@ -29,7 +29,7 @@ cd ~/rustprojects/docker_rust_development_install;
 # only if curl is not yet installed:
 sudo apt install curl
 curl -Sf -L https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/download_scripts.sh --output download_scripts.sh;
-# you can rewiew the bash script, it only creates dirs, download scripts and suggests what script to run next
+# you can review the bash script, it only creates dirs, download scripts and suggests what script to run next
 cat download_scripts.sh; 
 sh download_scripts.sh;
 ```
@@ -63,7 +63,7 @@ cargo run
 That should work and greet you with "Hello, world!"
 
 4\. After reboot, WSL2 can create some network problems for Podman.  
-No problem for Debian on bare metal. But the script is ok to restart the pod and start the sshd server.
+No problem for Debian on bare metal. But the script is ok to restart the pod and start the sshd server.  
 So use it in both cases.  
 We can simulate the WSL2 reboot in `Powershell in Windows`:
 
@@ -125,7 +125,7 @@ To be meticulously precise, you still have to trust the Windows code, Linux, GNU
 
 ## Docker and OCI
 
-We all call it Docker, but [Docker](https://www.docker.com/) is just a well-known company name with a funny whale logo.
+We all call it Docker, but [Docker](https://www.docker.com/) is just a well-known company name with a funny whale logo.  
 They developed and promoted Linux containers. Then they helped to create an open industry standard around container formats and runtimes. This standard is now called OCI (Open Container Initiative). So the correct name is "Linux OCI containers" and "Linux OCI images". Somebody also calls them just "Linux containers".
 
 There are alternatives to using Docker software that I will explore here.
@@ -187,7 +187,7 @@ Inside the `WSL2 terminal` type:
 podman images
 ```
 
-We have no images for now.
+We have no images for now.  
 The words "image" and "container" are somewhat confusing. Super simplifying: When it runs it is a "container". If it does not run it is an "image". The image is just an "installation file". The containers can be `started` and `stopped` or `attached` and `detached`, but they are `run` only one time.  
 For a test, run a sample container. It is a web server.  
 
@@ -402,8 +402,8 @@ Now in the host system (Linux) you can copy this file (somehow) to your Windows 
 
 I added to the image `rust_dev_cross_img` the target and needed utilities for cross-compiling to Musl.  
 These executables are 100% statically linked and don't need any other dynamic library.  
-Using a container to publish your executable to a server makes distribution and isolation much easier.
-These executables can run on the empty container `scratch`.
+Using a container to publish your executable to a server makes distribution and isolation much easier.  
+These executables can run on the empty container `scratch`.  
 Or on the smallest Linux container images like Alpine (7 MB) or distroless static-debian12 (3 MB).  
 Most of the programs will run just fine with musl. Cross-compile with this:  
 
@@ -530,7 +530,7 @@ cd ~/rustprojects/docker_rust_development/create_and_push_container_images
 sh rust_dev_vscode_img.sh
 ```
 
-This is based on the image `rust_dev_cargo_img` and adds the VSCode server and extensions.
+This is based on the image `rust_dev_cargo_img` and adds the VSCode server and extensions.  
 VSCode is great because of its extensions. Most of these extensions are installed inside the image `rust_dev_vscode_img`:
 
 - streetsidesoftware.code-spell-checker
@@ -674,7 +674,7 @@ cd ~/rustprojects/docker_rust_development/create_and_push_container_images
 sh rust_dev_squid_img.sh
 ```
 
-If you need, you can modify the file `etc_squid_squid.conf` to add more whitelisted domains. Then run `sh rust_dev_squid_img.sh` to build the modified image.
+If you need, you can modify the file `etc_squid_squid.conf` to add more whitelisted domains. Then run `sh rust_dev_squid_img.sh` to build the modified image.  
 You can also add whitelisted domains later when you use the squid container. First modify the file `~/rustprojects/docker_rust_development/create_and_push_container_images/etc_squid_squid.con`. Then copy this file into the squid container:
 
 ```bash
@@ -690,7 +690,7 @@ podman exec rust_dev_squid_cnt cat /var/log/squid/access.log
 podman exec rust_dev_squid_cnt tail -f /var/log/squid/access.log
 ```
 
-Check later, if these env variables are set inside `rust_dev_vscode_cnt` bash terminal.
+Check later, if these env variables are set inside `rust_dev_vscode_cnt` bash terminal.  
 These variables should be set when creating the pod.
 
 ```bash
@@ -725,9 +725,9 @@ Try the SSH connection from WSL2 to the container:
 
 ```bash
 ssh -i ~/.ssh/rustdevuser_key -p 2201 rustdevuser@localhost
-# Choose `yes` to save fingerprint if asked, just the first time.
+# Choose `yes` to save fingerprint if asked, just the first time.  
 # type passphrase
-# should work !
+# should work !  
 # try for example
 ls
 # ls result: rustprojects
@@ -742,9 +742,9 @@ Run in `Windows cmd prompt` to access the container over SSH from Windows:
 ```bash
 # test the ssh connection from Windows cmd prompt
 "C:\WINDOWS\System32\OpenSSH\ssh.exe" -i ~\.ssh\rustdevuser_key -p 2201 rustdevuser@localhost
-# Choose `y` to save fingerprint if asked, just the first time.
+# Choose `y` to save fingerprint if asked, just the first time.  
 # type passphrase
-# should work !
+# should work !  
 # try for example
 ls
 # ls result: rustprojects
@@ -766,7 +766,7 @@ In `container terminal`:
 ```bash
 service ssh stop
 /usr/sbin/sshd -ddd -p 2201
-# now we can see the verbose log when we attach an SSH client to this server. And we can see where is the problem.
+# now we can see the verbose log when we attach an SSH client to this server. And we can see where is the problem.  
 # after debug, start the service, before exit
 service ssh start
 exit
@@ -786,7 +786,7 @@ netstat -tan
 
 ## VSCode
 
-Open VSCode and install the extension `Remote - SSH`.
+Open VSCode and install the extension `Remote - SSH`.  
 In VSCode `F1`, type `ssh` and choose `Remote-SSH: Open SSH configuration File...`.  
 In Debian on bare metal:  
 choose  `~/.ssh/config` and type (if is missing)  
@@ -821,7 +821,7 @@ If we are lucky, everything works and VSCode is now inside the container over SS
 
 ## VSCode terminal
 
-VSCode has an integrated `VSCode terminal`. It has some advantages for developers that the standard `bash terminal` does not have.
+VSCode has an integrated `VSCode terminal`. It has some advantages for developers that the standard `bash terminal` does not have.  
 It is great to use it for everything around code in containers. You can open more than one `VSCode terminal` if you need to. For example, if you run a web server.  
 If the `VSCode terminal` is not opened simply press `Ctrl+j` to open it and the same to close it.  
 Inside the `VSCode terminal`, we will create a sample project:
@@ -937,7 +937,7 @@ git push -u origin main
 ```
 
 Done! Check your GitHub repository.  
-Always push the changes to GitHub. So you can destroy this pod/container and create a new empty one, then pull the code from GitHub and continue developing. Containers are the worst place to have persistent data stored. They can be deleted at any second for any reason.
+Always push the changes to GitHub. So you can destroy this pod/container and create a new empty one, then pull the code from GitHub and continue developing. Containers are the worst place to have persistent data stored. They can be deleted at any second for any reason.  
 Leave VSCode open because the next chapter will continue from here.
 
 ## Existing Rust projects on GitHub
@@ -971,7 +971,7 @@ A good learning example.
 ## After reboot
 
 After reboot, WSL2 can create some network problems for Podman.  
-No problem for Debian on bare metal. But the script is ok to restart the pod and start the sshd server.
+No problem for Debian on bare metal. But the script is ok to restart the pod and start the sshd server.  
 So use it in both cases.  
 We can simulate the WSL2 reboot in `Powershell in Windows`:
 
@@ -996,7 +996,7 @@ In the other direction, we right-click a file in VSCode Explorer and choose `Dow
 
 ## Protect the SSH private key in Windows
 
-In Linux, the private keys inside `~/.ssh` are protected with `chmod 600`.
+In Linux, the private keys inside `~/.ssh` are protected with `chmod 600`.  
 We need to do similarly for the private keys inside Win10 folder `~\.ssh`
 Run in `Powershell terminal` with the standard user:
 
@@ -1019,8 +1019,8 @@ ls
 
 ## Debian shutdown
 
-I got this error on shutdown: "A stop job running..." and it waits for 3 minutes.
-I think it is Podman. I will always shutdown Debian with a script that stops Podman first.
+I got this error on shutdown: "A stop job running..." and it waits for 3 minutes.  
+I think it is Podman. I will always shutdown Debian with a script that stops Podman first.  
 Create a bash script with this text:
 
 ```bash
@@ -1057,8 +1057,8 @@ Warning: The "ssh could not resolve hostname" is a common error. It is not that 
 ## WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED
 
 SSH client remembers the key of the servers in the file `~/.ssh/known_hosts`.  
-If we created a new key for the ephemeral container, we can get the error `REMOTE HOST IDENTIFICATION HAS CHANGED`.
-It is enough to open the file `~/.ssh/known_hosts` and delete the offending line.
+If we created a new key for the ephemeral container, we can get the error `REMOTE HOST IDENTIFICATION HAS CHANGED`.  
+It is enough to open the file `~/.ssh/known_hosts` and delete the offending line.  
 In the `WSL2 terminal` we can use:
 
 ```bash
@@ -1092,7 +1092,7 @@ The same `sh ~/rustprojects/docker_rust_development_install/rust_dev_pod_after_r
 ## PostgreSQL
 
 Some projects need the database PostgreSQL 13. I created a new pod with the command `sh docker_rust_development_install\pod_with_rust_pg_vscode\rust_dev_pod_create.sh`.  
-The same `sh ~/rustprojects/docker_rust_development_install/rust_dev_pod_after_reboot.sh` is used after reboot.
+The same `sh ~/rustprojects/docker_rust_development_install/rust_dev_pod_after_reboot.sh` is used after reboot.  
 I didn't like the pgAdmin administrative tool. I will try DBeaver instead on `localhost:9876`.  
 If you want, you can change the user and passwords in the bash script `rust_dev_pod_create.sh` to something stronger.  
 
@@ -1102,7 +1102,7 @@ Read more about how I use my [Development environment](https://github.com/bestia
 
 ## WSL problems
 
-I still have problems after the WSL reboot.
+I still have problems after the WSL reboot.  
 Some say: The `/tmp` files should be on a temporary filesystem.  
 Here is how I set fstab to mount tmpfs, it works.
 

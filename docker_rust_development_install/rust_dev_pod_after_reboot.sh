@@ -8,8 +8,15 @@ echo "\033[0;33m    Bash script to correctly restart the pod 'sh rust_dev_pod_af
 # WSL2 have some quirks.
 if grep -qi microsoft /proc/version; then    
     echo " "
-    echo "\033[0;33m    You can simulate a reboot in Windows Powershell with: \033[0m"
+    echo "\033[0;33m    You can simulate a WSL Debian reboot in Windows Powershell with: \033[0m"
     echo "\033[0;32m wsl --shutdown  \033[0m"
+
+  if findmnt -o PROPAGATION / | grep -qi private ; then  
+    echo "default propagation for / in WSL is private, for podman must be changed to shared"
+    echo "sudo mount --make-rshared /"
+    sudo mount --make-rshared /
+    findmnt -o PROPAGATION /
+  fi 
 fi
 
 # this will execute on Debian in WSL2 and on bare metal.
