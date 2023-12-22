@@ -6,6 +6,7 @@ echo " "
 echo "\033[0;33m    Bash script to create the pod 'rust_dev_pod': 'sh rust_dev_pod_create.sh' \033[0m"
 echo "\033[0;33m    This special pod is made for the project 'dropbox_backup_to_external_disk' \033[0m"
 echo "\033[0;33m    This adds a mounted volume to /mnt/e/DropBoxBackup2/ and a squid allowed access to dropbox.com. \033[0m"
+echo "\033[0;33m    For testing purposes I will use a folder on my internal disk named d:\mnt_e_DropboxBackup2/ \033[0m"
 echo "\033[0;33m    This 'pod' is made of 2 containers: 'rust_dev_squid_cnt' and 'rust_dev_vscode_cnt' \033[0m"
 echo "\033[0;33m    It contains Rust, cargo, rustc and VSCode development environment' \033[0m"
 echo "\033[0;33m    All outbound network traffic from rust_dev_vscode_cnt goes through the proxy Squid. \033[0m"
@@ -44,12 +45,18 @@ podman cp etc_squid_squid.conf rust_dev_squid_cnt:/etc/squid/squid.conf
 # Permissions can be complex in rootless podman. You need to use 'podman unshare'.
 echo " "
 echo "\033[0;33m    The external disk with Dropbox backup directory must exist. \033[0m"
-ls -al /mnt/e/DropBoxBackup2
+echo "\033[0;33m    ls -al /mnt/d/mnt_e_DropboxBackup2 \033[0m"
+echo "\033[0;33m    --volume /mnt/e/DropBoxBackup2:/mnt/e/DropBoxBackup2:Z \ \033[0m"
 
+# ls -al /mnt/e/DropBoxBackup2
+ls -al /mnt/d/mnt_e_DropboxBackup2
+
+# original option before testing
+# --volume /mnt/e/DropBoxBackup2:/mnt/e/DropBoxBackup2:Z \
 echo " "
 echo "\033[0;33m    Create container rust_dev_vscode_cnt in the pod \033[0m"
 podman create --name rust_dev_vscode_cnt --pod=rust_dev_pod -ti \
---volume /mnt/e/DropBoxBackup2:/mnt/e/DropBoxBackup2:Z \
+--volume /mnt/d/mnt_e_DropBoxBackup2:/mnt/e/DropBoxBackup2:Z \
 docker.io/bestiadev/rust_dev_vscode_img:latest
 
 echo "\033[0;33m    Copy SSH server config \033[0m"
