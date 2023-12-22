@@ -95,7 +95,7 @@ Rust is a fantastic young language that empowers everyone to build reliable and 
 
 Rust programs can do any "potentially harmful" things to your system. That is true for any compiled program, Rust is no exception.
 
-But Rust can do anything also in the compile-time using `build.rs` and `procedural macros`. Even worse, if you open a code editor (like VSCode) with auto-completion (like Rust-analyzer), it will compile the code in the background without you knowing it. And the `build.rs` and `procedural macros` will run and they can do "anything" !
+Rust can do anything also in the compile-time using `build.rs` and `procedural macros`. Even worse, if you open a code editor (like VSCode) with auto-completion (like Rust-analyzer), it will compile the code in the background without you knowing it. And the `build.rs` and `procedural macros` will run and they can do "anything" !
 
 Even if you are very careful and avoid `build.rs` and `procedural macros`, your Rust project will have a lot of crates in the dependency tree. Any of those can surprise you with some "malware". This is called a "supply chain attack".
 
@@ -107,7 +107,7 @@ We need to have layered protection between our computer system and some unknown 
 Let's learn to develop "everything" inside a Linux OCI container and to isolate/sandbox it as much as possible from the underlying system.
 
 I have to acknowledge that Linux OCI Containers are not the perfect sandboxing solution. But I believe that it is "good enough" for my "Rust development environment". I expect that container isolation will get better with time (google, amazon, Intel, OpenStack and IBM are working on it).  
-It is possible to use the same Linux OCI container also inside a virtual machine for better isolation. For example, My main system is Win10. Inside that, I have WSL2, which is a Linux virtual machine. And inside that, I have Linux OCI Containers. But because of compiling performance, I decided to go with a Debian dual boot with Linux OCI containers. My opinionated preferences:  
+It is possible to use the same Linux OCI container also inside a virtual machine for better isolation. For example, My main system is Win10. Inside that, I have WSL2, which is a Linux virtual machine. And inside that, I have Linux OCI Containers. It can just the same work in Debian on bare metal. My opinionated preferences:  
 
 - No files/volumes are shared with the host.  
 - The outbound network is restricted to whitelisted domains by a Squid proxy server.  
@@ -303,7 +303,7 @@ First let's find the rustc version:
 
 ```bash
 rustc --version
-  rustc 1.73.0 
+  rustc 1.74.1 
 ```
 
 Let's create and run a small Rust program:
@@ -344,11 +344,11 @@ and extract only the `mold` binary executable into `~`.
 Copy it as root into `/usr/bin` and adjust ownership and permissions:
 
 ```bash
-podman cp $HOME/mold  rust_dev_vscode_cnt:/usr/bin/
-podman exec --user=root rust_dev_vscode_cnt chown root:root /usr/bin/mold
-podman exec --user=root rust_dev_vscode_cnt chmod 755 /usr/bin/mold
-podman exec --user=root rust_dev_vscode_cnt mkdir -p /home/rustdevuser/.cargo/bin/mold
-podman exec --user=root rust_dev_vscode_cnt ln -s /usr/bin/mold /home/rustdevuser/.cargo/bin/mold/ld
+podman exec --user=root rust_dev_vscode_cnt  curl -L https://github.com/rui314/mold/releases/download/v2.4.0/mold-2.4.0-x86_64-linux.tar.gz --output /tmp/mold.tar.gz
+podman exec --user=root rust_dev_vscode_cnt  tar --no-same-owner -xzv --strip-components=2 -C /usr/bin -f /tmp/mold.tar.gz --wildcards */bin/mold
+podman exec --user=root rust_dev_vscode_cnt rm /tmp/mold.tar.gz
+podman exec --user=root rust_dev_vscode_cnt    chown root:root /usr/bin/mold
+podman exec --user=root rust_dev_vscode_cnt    chmod 755 /usr/bin/mold
 ```
 
 Create or modify the global `config.toml` file that will be used for all rust builds:
@@ -553,14 +553,14 @@ In `host terminal`:
 podman login --username bestiadev docker.io
 # type docker access token
 
-podman push docker.io/bestiadev/rust_dev_cargo_img:cargo-1.73.0
+podman push docker.io/bestiadev/rust_dev_cargo_img:cargo-1.74.1
 podman push docker.io/bestiadev/rust_dev_cargo_img:latest
 
-podman push docker.io/bestiadev/rust_dev_cross_img:cargo-1.73.0
+podman push docker.io/bestiadev/rust_dev_cross_img:cargo-1.74.1
 podman push docker.io/bestiadev/rust_dev_cross_img:latest
 
-podman push docker.io/bestiadev/rust_dev_vscode_img:vscode-1.83.0
-podman push docker.io/bestiadev/rust_dev_vscode_img:cargo-1.73.0
+podman push docker.io/bestiadev/rust_dev_vscode_img:vscode-1.85.1
+podman push docker.io/bestiadev/rust_dev_vscode_img:cargo-1.74.1
 podman push docker.io/bestiadev/rust_dev_vscode_img:latest
 
 podman push docker.io/bestiadev/rust_dev_squid_img:squid-3.5.27-2
@@ -595,9 +595,9 @@ Docker Hub stores compressed images, so they are a third of the size to download
 
 | Image                                    | Label          | Size         | compressed  |
 | ---------------------------------------- | -------------- |------------- | ----------- |
-| docker.io/bestiadev/rust_dev_cargo_img   | cargo-1.73.0   | 1.30 GB      | 0.59 GB     |
-| docker.io/bestiadev/rust_dev_cross_img   | cargo-1.73.0   | 1.70 GB      | 0.57 GB     |
-| docker.io/bestiadev/rust_dev_vscode_img  | cargo-1.73.0   | 0.27 GB      | 0.10 GB     |
+| docker.io/bestiadev/rust_dev_cargo_img   | cargo-1.74.1   | 1.30 GB      | 0.59 GB     |
+| docker.io/bestiadev/rust_dev_cross_img   | cargo-1.74.1   | 1.70 GB      | 0.57 GB     |
+| docker.io/bestiadev/rust_dev_vscode_img  | cargo-1.74.1   | 0.27 GB      | 0.10 GB     |
 
 ## Users keys for SSH
 
