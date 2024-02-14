@@ -1,0 +1,34 @@
+{
+  // .github/github_repository_settings.json5
+  // settings for github repository in json5 format inside the project .github folder
+  // It would be nice to have a Rust program that uses the GitHub API 
+  // that modifies the repository settings when this file is modified.
+  // And creates a new repository with this file.
+  // And exports the GitHub repository settings to this json5 file.
+  // So we can have this settings is plain text style "everything as code" inside our repository for use in automation tasks.
+  // Modifying this settings in the web user interface is terrible and repetitive.
+    repository_details: {
+      general: {
+        description: '02. Tutorial for Rust development environment inside Linux OCI container. Rust - Hack Without Fear and Trust! (2022-03)',
+        website: '',
+        topics: 'maintained ready-for-use',
+        include_in_the_home_page: {
+          releases: true,
+          packages: false,
+          deployments: false,
+        },
+      },
+      settings: {
+        repository_name: 'docker_rust_development',
+        default_branch: 'main',
+        features: {
+          wikis: false,
+          issues: true,
+          sponsorships: false,
+          preserve_this_repository: true,
+          discussions: true,
+          projects: false,
+        },
+      },
+    },
+  }
