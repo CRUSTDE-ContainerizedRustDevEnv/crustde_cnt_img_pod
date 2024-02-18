@@ -8,10 +8,11 @@ echo "\033[0;33m    Bash script to install Podman and setup for rust_dev_pod for
 
 # if Debian inside WSL it needs some special care
 if grep -qi microsoft /proc/version; then    
-  # get WINUSERPROFILE with powershell, the home folder in Windows and trim the trailing newline
-  WINUSERPROFILE="$(wslpath $(powershell.exe -NoProfile -NonInteractive -Command "\$Env:UserProfile") | tr -d '\r')" 
-  echo WINUSERPROFILE=$WINUSERPROFILE
-  # WINUSERPROFILE should be something like /mnt/c/Users/WinUserName
+  # get WSLWINUSERPROFILE
+  win_userprofile="$(cmd.exe /c "<nul set /p=%UserProfile%" 2>/dev/null)"
+  WSLWINUSERPROFILE="$(wslpath $win_userprofile)"
+  echo $WSLWINUSERPROFILE
+  # WSLWINUSERPROFILE should be something like /mnt/c/Users/WinUserName
 
   if findmnt -o PROPAGATION / | grep -qi private ; then  
     echo "default propagation for / in WSL is private, for podman must be changed to shared"
@@ -42,8 +43,8 @@ if [ ! -f ~/.ssh/rustdevuser_key ]; then
   chmod 600 ~/.ssh/rustdevuser_key
   # if WSL, copy rustdevuser_key to windows
   if grep -qi microsoft /proc/version; then    
-    cp -v ~/.ssh/rustdevuser_key $WINUSERPROFILE/.ssh/
-    cp -v ~/.ssh/rustdevuser_key.pub $WINUSERPROFILE/.ssh/
+    cp -v ~/.ssh/rustdevuser_key $WSLWINUSERPROFILE/.ssh/
+    cp -v ~/.ssh/rustdevuser_key.pub $WSLWINUSERPROFILE/.ssh/
   fi
 
 else 
@@ -132,10 +133,10 @@ if grep -qi microsoft /proc/version; then
   echo "\033[0;33m    VSCode for Windows \033[0m"
   # if WSL then use VSCode for Windows. The location is %UserProfile% and they use backslash    
   write_to_config="false"
-  if [ ! -f $WINUSERPROFILE/.ssh/config ]; then
+  if [ ! -f $WSLWINUSERPROFILE/.ssh/config ]; then
     write_to_config="true"
   else
-    if grep -qi "Host rust_dev_vscode_cnt" "$WINUSERPROFILE/.ssh/config"; then
+    if grep -qi "Host rust_dev_vscode_cnt" "$WSLWINUSERPROFILE/.ssh/config"; then
       echo "\033[0;33m    VSCode config for SSH already contains rust_dev_vscode_cnt. \033[0m"
     else
       write_to_config="true"
@@ -143,14 +144,14 @@ if grep -qi microsoft /proc/version; then
   fi
 
   if [ $write_to_config = "true" ]; then
-    echo "\033[0;33m    Add Host rust_dev_vscode_cnt to $WINUSERPROFILE/.ssh/config \033[0m"
+    echo "\033[0;33m    Add Host rust_dev_vscode_cnt to $WSLWINUSERPROFILE/.ssh/config \033[0m"
     echo 'Host rust_dev_vscode_cnt
 HostName localhost
 Port 2201
 User rustdevuser
 IdentityFile ~\\.ssh\\rustdevuser_key
-IdentitiesOnly yes' | tee -a $WINUSERPROFILE/.ssh/config
-    echo "| tee -a $WINUSERPROFILE/.ssh/config"
+IdentitiesOnly yes' | tee -a $WSLWINUSERPROFILE/.ssh/config
+    echo "| tee -a $WSLWINUSERPROFILE/.ssh/config"
   fi
 
 else

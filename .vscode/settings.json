@@ -103,7 +103,7 @@
       "unoptimized",
       "usermod",
       "userns",
-      "USERPROFILE",
+      "userprofile",
       "wais",
       "wasi",
       "wasmtime",
@@ -113,6 +113,7 @@
       "workingdir",
       "WSLENV",
       "wslpath",
+      "WSLWINUSERPROFILE",
       "zdravje",
       "zxvf"
     ],

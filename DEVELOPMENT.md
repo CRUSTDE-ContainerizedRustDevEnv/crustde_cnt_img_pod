@@ -1,6 +1,5 @@
 # Development details
 
-
 ## Install Podman in Debian 12(Bookworm) (on bare metal or in Win10 + WSL2)
 
 [Podman](https://podman.io/) is a **daemonless**, open-source, Linux native tool designed to work with Open Containers Initiative (OCI) Containers and Container Images. Containers under the control of Podman can be run by a **non-privileged user**. The CLI commands of the Podman ***"Container Engine"*** are practically identical to the Docker CLI. Podman relies on an OCI-compliant ***"Container Runtime"*** (runc, crun, runv, etc) to interface with the operating system and create the running containers.
@@ -505,14 +504,15 @@ If we use WSL2, the same keys we will need in Windows because the VSCode client 
 In the `WSL2 terminal`:
 
 ```bash
-setx.exe WSLENV "USERPROFILE/p"
-echo $USERPROFILE/.ssh/rustdevuser_key
-cp -v ~/.ssh/rustdevuser_key $USERPROFILE/.ssh/rustdevuser_key
-cp -v ~/.ssh/rustdevuser_key.pub $USERPROFILE/.ssh/rustdevuser_key.pub
-cp -v -r ~/.ssh/rust_dev_pod_keys $USERPROFILE/.ssh/rust_dev_pod_keys
+win_userprofile="$(cmd.exe /c "<nul set /p=%UserProfile%" 2>/dev/null)"
+WSLWINUSERPROFILE="$(wslpath $win_userprofile)"
+echo $WSLWINUSERPROFILE/.ssh
+cp -v ~/.ssh/rustdevuser_key $WSLWINUSERPROFILE/.ssh/rustdevuser_key
+cp -v ~/.ssh/rustdevuser_key.pub $WSLWINUSERPROFILE/.ssh/rustdevuser_key.pub
+cp -v -r ~/.ssh/rust_dev_pod_keys $WSLWINUSERPROFILE/.ssh/rust_dev_pod_keys
 # check
-ls -la $USERPROFILE/.ssh | grep "rustdevuser"
-ls -la $USERPROFILE/.ssh/rust_dev_pod_keys/etc/ssh
+ls -la $WSLWINUSERPROFILE/.ssh | grep "rustdevuser"
+ls -la $WSLWINUSERPROFILE/.ssh/rust_dev_pod_keys/etc/ssh
 ```
 
 ## Volumes or mount restrictions
@@ -927,15 +927,18 @@ Warning: The "ssh could not resolve hostname" is a common error. It is not that 
 
 ## WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED
 
-SSH client remembers the key of the servers in the file `~/.ssh/known_hosts`.  
+SSH client used in VSCode remembers the key of the servers in the file `~/.ssh/known_hosts`.
 If we created a new key for the ephemeral container, we can get the error `REMOTE HOST IDENTIFICATION HAS CHANGED`.  
 It is enough to open the file `~/.ssh/known_hosts` and delete the offending line.  
+VSCode is a Windows program, so the offending file is in windows `C:\Users\luciano\.ssh\known_hosts`.  
 In the `WSL2 terminal` we can use:
 
 ```bash
 ssh-keygen -f ~/.ssh/known_hosts -R "[localhost]:2201";
-setx.exe WSLENV "USERPROFILE/p";
-ssh-keygen -f $USERPROFILE/.ssh/known_hosts -R "[localhost]:2201";
+win_userprofile="$(cmd.exe /c "<nul set /p=%UserProfile%" 2>/dev/null)"
+WSLWINUSERPROFILE="$(wslpath $win_userprofile)"
+echo $WSLWINUSERPROFILE/.ssh
+ssh-keygen -f $WSLWINUSERPROFILE/.ssh/known_hosts -R "[localhost]:2201";
 ```
 
 ## Double-commander SFTP

@@ -10,9 +10,10 @@ echo "\033[0;33m    Bash script to restore personal data from Windows to WSL2 \0
 # Restore will copy it to Debian in ~/.ssh
 # Later the 'rust_dev_pod_create.sh' will copy this file from Debian into the newly created container.
 
-setx.exe WSLENV "USERPROFILE/p"
-echo $USERPROFILE/.ssh/githubssh1
+win_userprofile="$(cmd.exe /c "<nul set /p=%UserProfile%" 2>/dev/null)"
+WSLWINUSERPROFILE="$(wslpath $win_userprofile)"
+echo $WSLWINUSERPROFILE/.ssh/githubssh1
 
-cp -v $USERPROFILE/.ssh/ ~/.ssh/ 
+cp -v $WSLWINUSERPROFILE/.ssh/ ~/.ssh/ 
 
 echo " "

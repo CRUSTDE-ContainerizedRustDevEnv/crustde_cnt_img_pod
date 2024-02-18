@@ -137,7 +137,7 @@ Read the development details in a separate md file:
 ## Changelog
 
 Read the changelog in a separate md file:  
-[RELEASES.md](RELEASES.md)
+[RELEASES.md](https://github.com/bestia-dev/docker_rust_development/blob/main/RELEASES.md)
 
 ## TODO
 

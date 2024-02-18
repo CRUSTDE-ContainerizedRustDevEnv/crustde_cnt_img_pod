@@ -11,9 +11,6 @@ echo "\033[0;33m    Published inbound network ports are 8001 and 9876 on 'localh
 # repository: https://github.com/bestia-dev/docker_rust_development
 # https://techviewleo.com/how-to-run-postgresql-in-podman-container/
 
-# The script will run in this folder:
-cd ~/rustprojects/docker_rust_development_install/pod_with_rust_pg_vscode/
-
 echo " "
 echo "\033[0;33m    Create pod \033[0m"
 # in a "pod" the "publish port" is tied to the pod and not containers.
@@ -88,7 +85,7 @@ podman exec --user=rustdevuser rust_dev_vscode_cnt cat /etc/ssh/ssh_host_ed25519
 # (O)thers can't read, can't write and can't execute.
 podman exec --user=rustdevuser rust_dev_vscode_cnt chmod 700 /home/rustdevuser/.ssh
 
-echo "\033[0;33m add rustdevuser_key to authorized_keys \033[0m"
+echo "\033[0;33m    add rustdevuser_key to authorized_keys \033[0m"
 podman exec --user=rustdevuser rust_dev_vscode_cnt touch /home/rustdevuser/.ssh/authorized_keys
 # Chmod 600 (chmod a+rwx,u-x,g-rwx,o-rwx) sets permissions so that, 
 # (U)ser / owner can read, can write and can't execute. 
@@ -105,10 +102,15 @@ podman exec --user=root rust_dev_vscode_cnt usermod --password '*' rustdevuser
 echo "\033[0;33m    Git global config \033[0m"
 podman exec --user=rustdevuser rust_dev_vscode_cnt git config --global pull.rebase false
 
-echo "\033[0;33m    Remove the known_hosts for this pod/container. \033[0m"
+echo "\033[0;33m    Remove the known_hosts for this pod/container in Linux and Windows \033[0m"
+echo "\033[0;33m    because VSCode is a Windows program when working in WSL. \033[0m"
 ssh-keygen -f ~/.ssh/known_hosts -R "[localhost]:2201";
+win_userprofile="$(cmd.exe /c "<nul set /p=%UserProfile%" 2>/dev/null)"
+WSLWINUSERPROFILE="$(wslpath $win_userprofile)"
+echo $WSLWINUSERPROFILE/.ssh
+ssh-keygen -f $WSLWINUSERPROFILE/.ssh/known_hosts -R "[localhost]:2201";
 
-echo "\033[0;33m  Copy the personal files, SSH keys for github or publish-to-web,... \033[0m"
+echo "\033[0;33m    Copy the personal files, SSH keys for github or publish-to-web,... \033[0m"
 sh ~/.ssh/rust_dev_pod_keys/personal_keys_and_settings.sh
 
 echo " "
