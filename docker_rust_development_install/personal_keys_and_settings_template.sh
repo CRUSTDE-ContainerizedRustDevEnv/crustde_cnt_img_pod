@@ -49,5 +49,6 @@ podman cp ~/.ssh/sshadd.sh rust_dev_vscode_cnt:/home/rustdevuser/.ssh/sshadd.sh
 
 echo "\033[0;33m    Copy the '~/.ssh/config' from Debian into the container \033[0m"
 podman cp ~/.ssh/rust_dev_pod_keys/config rust_dev_vscode_cnt:/home/rustdevuser/.ssh/config
+podman exec --user=rustdevuser rust_dev_vscode_cnt chmod 600 /home/rustdevuser/.ssh/config
 
 echo " "
