@@ -1,0 +1,10 @@
+
+Host github.com
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/githubssh1
+	
+Host your_webserver
+    HostName your_webserver
+    User git
+    IdentityFile ~/.ssh/webserverssh1
