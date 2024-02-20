@@ -767,6 +767,8 @@ The `VSCode terminal` is still open on the project `rust_dev_hello` from the pre
 
 ## SSH Agent
 
+Read SSH easy here: [ssh_easy.md](ssh_easy.md)
+
 It is comfortable to use the `ssh-agent` to store the passphrase in memory, so we type it only once. The ssh-agent is already started on login in the `~/.bashrc` script.  
 Again attention, that this container has secrets and must not be shared ! Never !  
 In the `VSCode terminal` (Ctrl+j) run:
