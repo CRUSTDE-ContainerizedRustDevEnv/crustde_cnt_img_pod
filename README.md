@@ -1,4 +1,6 @@
-# docker_rust_development
+# CRDE - Containerized Rust Development Environment
+
+Development project name: docker_rust_development
 
 **02. Tutorial for Rust development environment inside Linux OCI container. Rust - Hack Without Fear and Trust! (2022-03)**  
 ***version: 3.0  date: 2022-09-06 author: [bestia.dev](https://bestia.dev) repository: [GitHub](https://github.com/bestia-dev/docker_rust_development)***  
@@ -14,6 +16,8 @@
 
 Hashtags: #rustlang #buildtool #developmenttool #tutorial #docker #ssh #container #podman #Linux #OCI  
 My projects on GitHub are more like a tutorial than a finished product: [bestia-dev tutorials](https://github.com/bestia-dev/tutorials_rust_wasm).  
+
+Be mesmerized by the spiral_of_madness:
 
 ![spiral_of_madness](https://github.com/bestia-dev/docker_rust_development/raw/main/images/spiral_of_madness.png "spiral_of_madness")
 
@@ -101,11 +105,11 @@ Even if you are very careful and avoid `build.rs` and `procedural macros`, your 
 It is very hard to avoid "supply chain attacks" in Rust as things are today. We are just lucky, that the ecosystem is young and small and the malevolent players are waiting for Rust to become more popular. Then they will strike and strike hard. We need to be skeptical about anything that comes from the internet. We need to isolate/sandbox it so it cannot harm our system.  
 
 For a big open-source project, you will not read and understand every line of code. It is impossible because of the sheer size of projects and it is impossible to gain a deep understanding of all the underlying principles, rules and exceptions of everything. And everything is moving and changing fast and continuously. It is impossible to follow all the changes.  
-We need to have layered protection between our computer system and some unknown code. In this project, I propose a containerized development environment that will allow some degree of isolation. And in the same time easy to install, transfer and repeat.  
+We need to have layered protection between our computer system and some unknown code. In this project, I propose `CRDE - Containerized Rust Development Environment` that will allow some degree of isolation. And in the same time easy to install, transfer and repeat.  
 
 Let's learn to develop "everything" inside a Linux OCI container and to isolate/sandbox it as much as possible from the underlying system.
 
-I have to acknowledge that Linux OCI Containers are not the perfect sandboxing solution. But I believe that it is "good enough" for my "Rust development environment". I expect that container isolation will get better with time (google, amazon, Intel, OpenStack and IBM are working on it).  
+I have to acknowledge that Linux OCI Containers are not the perfect sandboxing solution. But I believe that it is "good enough" for my `CRDE - Containerized Rust Development Environment`. I expect that container isolation will get better with time (google, amazon, Intel, OpenStack and IBM are working on it).  
 It is possible to use the same Linux OCI container also inside a virtual machine for better isolation. For example, My main system is Win10. Inside that, I have WSL2, which is a Linux virtual machine. And inside that, I have Linux OCI Containers. It can just the same work in Debian on bare metal. My opinionated preferences:  
 
 - No files/volumes are shared with the host.  
