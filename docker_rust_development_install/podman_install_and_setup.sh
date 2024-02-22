@@ -185,7 +185,7 @@ echo "\033[0;33m    Installing Podman and setup is finished. \033[0m"
 
 echo ""
 echo "\033[0;33m    Now you can create the pod rust_dev_pod. \033[0m"
-echo "\033[0;33m    On first run it will download around 1.2 GB from DockerHub and store it in the cache for later use. \033[0m"
+echo "\033[0;33m    On first run it will download 1.06 GB from DockerHub, unpack to 3.32 GB and store it in the cache folder. \033[0m"
 echo "\033[0;33m    After that, follow the detailed instructions. \033[0m"
 echo "\033[0;32m sh ~/rustprojects/docker_rust_development_install/pod_with_rust_vscode/rust_dev_pod_create.sh \033[0m"
 

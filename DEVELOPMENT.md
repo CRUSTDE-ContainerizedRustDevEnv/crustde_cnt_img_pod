@@ -15,10 +15,15 @@ Podman is available from the Debian12 package manager.
 Let's install it. Open the `WSL2 terminal` and type:
 
 ```bash
+lsb_release -d
+# Description:    Debian GNU/Linux 12 (bookworm)
+cat /etc/debian_version
+# 12.5
 sudo apt update
 sudo apt-get install -y podman
 podman version
-   Version: 3.0.1
+# Client:       Podman Engine
+# Version:      4.3.1
 ```
 
 In WSL2 we see some errors, that don't exist on bare metal.  
@@ -44,7 +49,8 @@ Now you can command again and the result has no errors:
 
 ```bash
 podman version
-# 3.0.1
+# Client:       Podman Engine
+# Version:      4.3.1
 ```
 
 ## Using Podman
@@ -130,7 +136,7 @@ This will create the image `rust_dev_cargo_img`.
 
 The scripts are just bash scripts and are super easy to read, follow, learn and modify. Much easier than Dockerfile. You can even run the commands one by one in the `bash terminal` and inspect the container to debug the building process.
 
-## Rust development in a Linux OCI container
+## CRDE - Containerized Rust Development Environment
 
 There are a lot of benefits to making a development environment in a container.  
 We want that everything is isolated/sandboxed and cannot affect our host system (Debian on bare metal or in WSL2 in Win10).  
@@ -381,6 +387,7 @@ We can also run this wasm program in the WASI playground at <https://runno.dev/w
 
 ## Cross-compile to Wasm/Webassembly
 
+Rust is perfect for compiling to Wasm and run it inside the browser with no javascript at all!  
 I added to the image `rust_dev_cross_img` the utility `wasm-pack` for cross-compiling to Wasm/Webassembly.  
 It is an in-place substitute for the default `cargo` command:
 
@@ -465,9 +472,9 @@ Docker Hub stores compressed images, so they are a third of the size to download
 
 | Image                                    | Label          | Size         | compressed  |
 | ---------------------------------------- | -------------- |------------- | ----------- |
-| docker.io/bestiadev/rust_dev_cargo_img   | cargo-1.76.0   | 1.30 GB      | 0.59 GB     |
-| docker.io/bestiadev/rust_dev_cross_img   | cargo-1.76.0   | 1.70 GB      | 0.57 GB     |
-| docker.io/bestiadev/rust_dev_vscode_img  | cargo-1.76.0   | 0.27 GB      | 0.10 GB     |
+| docker.io/bestiadev/rust_dev_cargo_img   | cargo-1.76.0   | 1.28 GB      | 0.45 GB     |
+| docker.io/bestiadev/rust_dev_cross_img   | cargo-1.76.0   | 3.03 GB      | 0.98 GB     |
+| docker.io/bestiadev/rust_dev_vscode_img  | cargo-1.76.0   | 3.32 GB      | 1.06 GB     |
 
 ## Users keys for SSH
 
