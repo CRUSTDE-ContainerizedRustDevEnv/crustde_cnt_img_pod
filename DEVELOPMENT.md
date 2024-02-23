@@ -653,7 +653,7 @@ exit
 To see the verbose log of the `SSH client` add `-v` like this:  
 
 ```bash
-ssh -i ~/.ssh/githubssh1 -p 2201 rustdevuser@localhost -v
+ssh -i ~/.ssh/github_com_ssh_1 -p 2201 rustdevuser@localhost -v
 ```
 
 To see the listening ports:
@@ -756,7 +756,7 @@ podman exec --user=rustdevuser rust_dev_vscode_cnt git config --global -l
 ```
 
 I like to work with GitHub over SSH and not over HTTPS. I think it is the natural and safe thing for Linux.  
-To make the SSH client work in the container I need the file with the private key for SSH connection to GitHub. I already have this in the file `~/.ssh/githubssh1`. I will copy it into the container with `podman cp`.  
+To make the SSH client work in the container I need the file with the private key for SSH connection to GitHub. I already have this in the file `~/.ssh/github_com_ssh_1`. I will copy it into the container with `podman cp`.  
 Be careful ! This is a secret !  
 It means that this container I cannot share any more with anybody. It is now my private container. I must never make an image from it and share it. Never !
 
@@ -764,9 +764,9 @@ In `host terminal`:
 
 ```bash
 podman exec --user=rustdevuser rust_dev_vscode_cnt ls -la /home/rustdevuser/.ssh
-podman cp ~/.ssh/githubssh1 rust_dev_vscode_cnt:/home/rustdevuser/.ssh/githubssh1
-podman exec --user=rustdevuser rust_dev_vscode_cnt chmod 600 /home/rustdevuser/.ssh/githubssh1
-podman cp ~/.ssh/githubssh1.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/githubssh1.pub
+podman cp ~/.ssh/github_com_ssh_1 rust_dev_vscode_cnt:/home/rustdevuser/.ssh/github_com_ssh_1
+podman exec --user=rustdevuser rust_dev_vscode_cnt chmod 600 /home/rustdevuser/.ssh/github_com_ssh_1
+podman cp ~/.ssh/github_com_ssh_1.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/github_com_ssh_1.pub
 podman exec --user=rustdevuser rust_dev_vscode_cnt ls -la /home/rustdevuser/.ssh
 ```
 
@@ -781,7 +781,7 @@ Again attention, that this container has secrets and must not be shared ! Never 
 In the `VSCode terminal` (Ctrl+j) run:
 
 ```bash
-ssh-add /home/rustdevuser/.ssh/githubssh1
+ssh-add /home/rustdevuser/.ssh/github_com_ssh_1
 # enter your passphrase
 ```
 

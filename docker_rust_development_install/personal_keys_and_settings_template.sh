@@ -9,7 +9,7 @@ echo "\033[0;33m    Bash script to install personal keys and setting into the Ru
 # This script starts as a template with placeholders.
 # The script store_personal_keys_and_settings.sh copies it into the Linux folder '~\.ssh' and rename it to "personal_keys_and_settings.sh".
 # Then it replace the words: 
-# 'info@your.mail', 'your_name', 'githubssh1', 'webserverssh1' and 'your_webserver'
+# 'info@your.mail', 'your_name', 'github_com_ssh_1', 'bestia_dev_ssh_1' and 'your_webserver'
 # with you personal data and file_names.
 # Warning: Once modified, don't share this file with anyone and don't push it to GitHub because it will contain your data.
 # Use the backup_personal_data_from_wsl_to_win.sh to backup this data into Windows folder. So it will be persistent also in 
@@ -27,19 +27,19 @@ podman exec --user=rustdevuser rust_dev_vscode_cnt git config --global -l
 echo "\033[0;33m    podman exec --user=rustdevuser rust_dev_vscode_cnt ls -la /home/rustdevuser/.ssh \033[0m"
 podman exec --user=rustdevuser rust_dev_vscode_cnt ls -la /home/rustdevuser/.ssh
 
-echo "\033[0;33m    podman cp ~/.ssh/githubssh1 rust_dev_vscode_cnt:/home/rustdevuser/.ssh/githubssh1 \033[0m"
-podman cp ~/.ssh/githubssh1 rust_dev_vscode_cnt:/home/rustdevuser/.ssh/githubssh1
-echo "\033[0;33m    podman exec --user=rustdevuser rust_dev_vscode_cnt chmod 600 /home/rustdevuser/.ssh/githubssh1 \033[0m"
-podman exec --user=rustdevuser rust_dev_vscode_cnt chmod 600 /home/rustdevuser/.ssh/githubssh1
-echo "\033[0;33m    podman cp ~/.ssh/githubssh1.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/githubssh1.pub \033[0m"
-podman cp ~/.ssh/githubssh1.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/githubssh1.pub
+echo "\033[0;33m    podman cp ~/.ssh/github_com_ssh_1 rust_dev_vscode_cnt:/home/rustdevuser/.ssh/github_com_ssh_1 \033[0m"
+podman cp ~/.ssh/github_com_ssh_1 rust_dev_vscode_cnt:/home/rustdevuser/.ssh/github_com_ssh_1
+echo "\033[0;33m    podman exec --user=rustdevuser rust_dev_vscode_cnt chmod 600 /home/rustdevuser/.ssh/github_com_ssh_1 \033[0m"
+podman exec --user=rustdevuser rust_dev_vscode_cnt chmod 600 /home/rustdevuser/.ssh/github_com_ssh_1
+echo "\033[0;33m    podman cp ~/.ssh/github_com_ssh_1.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/github_com_ssh_1.pub \033[0m"
+podman cp ~/.ssh/github_com_ssh_1.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/github_com_ssh_1.pub
 
-echo "\033[0;33m    podman cp ~/.ssh/webserverssh1 rust_dev_vscode_cnt:/home/rustdevuser/.ssh/webserverssh1 \033[0m"
-podman cp ~/.ssh/webserverssh1 rust_dev_vscode_cnt:/home/rustdevuser/.ssh/webserverssh1
-echo "\033[0;33m    podman exec --user=rustdevuser rust_dev_vscode_cnt chmod 600 /home/rustdevuser/.ssh/webserverssh1 \033[0m"
-podman exec --user=rustdevuser rust_dev_vscode_cnt chmod 600 /home/rustdevuser/.ssh/webserverssh1
-echo "\033[0;33m    podman cp ~/.ssh/webserverssh1.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/webserverssh1.pub \033[0m"
-podman cp ~/.ssh/webserverssh1.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/webserverssh1.pub
+echo "\033[0;33m    podman cp ~/.ssh/bestia_dev_ssh_1 rust_dev_vscode_cnt:/home/rustdevuser/.ssh/bestia_dev_ssh_1 \033[0m"
+podman cp ~/.ssh/bestia_dev_ssh_1 rust_dev_vscode_cnt:/home/rustdevuser/.ssh/bestia_dev_ssh_1
+echo "\033[0;33m    podman exec --user=rustdevuser rust_dev_vscode_cnt chmod 600 /home/rustdevuser/.ssh/bestia_dev_ssh_1 \033[0m"
+podman exec --user=rustdevuser rust_dev_vscode_cnt chmod 600 /home/rustdevuser/.ssh/bestia_dev_ssh_1
+echo "\033[0;33m    podman cp ~/.ssh/bestia_dev_ssh_1.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/bestia_dev_ssh_1.pub \033[0m"
+podman cp ~/.ssh/bestia_dev_ssh_1.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/bestia_dev_ssh_1.pub
 
 echo "\033[0;33m    podman exec --user=rustdevuser rust_dev_vscode_cnt ls -la /home/rustdevuser/.ssh \033[0m"
 podman exec --user=rustdevuser rust_dev_vscode_cnt ls -la /home/rustdevuser/.ssh
