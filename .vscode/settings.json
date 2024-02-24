@@ -5,6 +5,15 @@
         "titleBar.activeBackground": "#477587",
         "titleBar.inactiveBackground": "#3F758DCC"
       },
+    "spellright.language": [
+        "en"
+    ],
+    "spellright.documentTypes": [
+        "markdown",
+        "latex",
+        "plaintext"
+    ],
+    "rust-analyzer.showUnlinkedFileNotification": false,
     "cSpell.words": [
       "Alla",
       "Anson",
@@ -116,8 +125,5 @@
       "WSLWINUSERPROFILE",
       "zdravje",
       "zxvf"
-    ],
-    "files.associations": {
-        "LICENSE": "plain text"
-      }
+    ]
 }
