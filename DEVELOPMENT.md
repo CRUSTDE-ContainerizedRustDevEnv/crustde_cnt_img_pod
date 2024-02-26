@@ -772,7 +772,7 @@ podman exec --user=rustdevuser rust_dev_vscode_cnt ls -la /home/rustdevuser/.ssh
 
 The `VSCode terminal` is still open on the project `rust_dev_hello` from the previous chapter.
 
-## SSH Agent
+## ssh-agent in Linux bash
 
 Read SSH easy here: [ssh_easy.md](ssh_easy.md)
 
@@ -803,6 +803,22 @@ sshadd
 
 After you enter the passphrase, it will remember it until the terminal is open.  
 When you open the terminal again, you will have to run the script again and enter the passphrase again.
+
+## ssh-agent in Windows powershell
+
+I use VSCode from Windows and connect over SSH to CRDE - Containerized Rust Development Environment.  
+Every time I connect I must input the passcode for my SSH identity.  
+Also windows has ssh-agent and I could use it just the same as in Linux bash.  
+
+Create powershell script  
+`$HOME\.ssh\sshadd.ps1`  
+copied from  
+[sshadd_template.ps1](docker_rust_development_install/win_home_ssh_sshadd_template.ps1)
+
+Recreate the alias on every startup with the powershell script  
+`$HOME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1`  
+copied from  
+[microsoft_powershell_profile_template.ps1](docker_rust_development_install\win_home_documents_powershell_microsoft_powershell_profile_template.ps1)
 
 ## GitHub push
 

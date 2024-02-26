@@ -83,7 +83,7 @@ sh ~/rustprojects/docker_rust_development_install/rust_dev_pod_after_reboot.sh
 podman ps
 ```
 
-If the restart is successful every container will be started a few seconds. It is not enough for containers to be in the status "created". Then just repeat the restart procedure.
+If the restart is successful every container will be started in a few seconds. It is not enough for containers to be in the status "created". Then just repeat the restart procedure.
 
 5\. Eventually you will want to remove the entire pod. Linux OCI containers and pods are ephemeral, which means just temporary. But your code and data must persist. Before destroying the pod/containers, push your changes to GitHub because removing the pod will destroy also all the data that is inside. Be careful!  
 In the `WSL2 terminal`:
