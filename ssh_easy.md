@@ -38,7 +38,7 @@ alias sshadd="echo sh ~/.ssh/sshadd.sh; sh ~/.ssh/sshadd.sh"
 ```
 
 Now you can use `ssh-add` to add your identity to the agent. So you have to write your passcode only once.
-It is even easier if you prepare a little bash script with the data you often use in the file ~/.ssh/sshadd.sh
+It is even easier if you prepare a little bash script with the ssh keys you often use in the file ~/.ssh/sshadd.sh
 
 ```bash
 #!/bin/sh
