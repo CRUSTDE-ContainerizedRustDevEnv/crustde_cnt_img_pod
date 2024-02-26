@@ -2,7 +2,7 @@
 
 Development project name: docker_rust_development
 
-**02. Tutorial for Rust development environment inside Linux OCI container. Rust - Hack Without Fear and Trust! (2022-03)**  
+**02. Tutorial for CRDE - Containerized Rust Development Environment. Rust - Hack Without Fear and Trust! (2022-03)**  
 ***version: 3.0  date: 2022-09-06 author: [bestia.dev](https://bestia.dev) repository: [GitHub](https://github.com/bestia-dev/docker_rust_development)***  
 
  ![maintained](https://img.shields.io/badge/maintained-green)
@@ -46,7 +46,7 @@ This project has also a YouTube video tutorial. Watch it:
 [<img src="https://bestia.dev/youtube/docker_rust_development.jpg" width="400px">](https://bestia.dev/youtube/docker_rust_development.html)
 <!-- markdownlint-enable MD033 -->
 
-Now we can use the `CRDE - Containerized Rust Development Environment` in VSCode.  
+Now we can use `CRDE - Containerized Rust Development Environment` in VSCode.  
 
 1\. Open VSCode and install extension `Remote - SSH`.
 

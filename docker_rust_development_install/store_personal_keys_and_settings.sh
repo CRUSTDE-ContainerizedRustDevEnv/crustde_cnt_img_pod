@@ -1,7 +1,7 @@
 #!/bin/sh
 
 echo " "
-echo "\033[0;33m    Bash script to prepare personal keys and setting for the Rust development container. \033[0m"
+echo "\033[0;33m    Bash script to prepare personal keys and setting for CRDE - Containerized Rust Development Environment. \033[0m"
 echo "\033[0;33m    They will be stored in ~/.ssh \033[0m"
 echo " "
 # store_personal_keys_and_settings.sh

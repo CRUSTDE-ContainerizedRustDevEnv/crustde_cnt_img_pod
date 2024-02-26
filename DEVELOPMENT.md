@@ -105,7 +105,7 @@ You can also remove the image because this was just practiced for learning:
 podman rmi docker.io/library/httpd
 ```
 
-## Buildah for our Rust development images
+## Buildah for CRDE Rust development images
 
 Buildah is a replacement for the `docker build` command. It is easier to incorporate into scripts. It is pronounced exactly as Builder but with a Bostonian accent ;-)
 
@@ -113,7 +113,7 @@ Buildah is a replacement for the `docker build` command. It is easier to incorpo
 
 The Rust official images are on the Docker hub: <https://hub.docker.com/_/rust>
 
-I was surprised by the size of the image. It is big from 500 MB compressed to 1.4 GB uncompressed. But this is the size of rust development tools.
+I was surprised by the size of the image. It is big from 500 MB compressed to 1.4 GB uncompressed. But this is the size of Rust development tools.
 
 I don't like that these images have only the `root` user. I will start from the Debian-12 image and install all I need as a non-privileged user `rustdevuser`.
 
