@@ -50,10 +50,10 @@ echo "   Bash script to add your primary SSH keys to ssh_agent."
 # The keys will expire in 1 hour.
 
 # add if key not yet exists
-ssh-add -l |grep -q `ssh-keygen -lf ~/.ssh/github_com_ssh_1 | awk '{print $2}'` || ssh-add -t 1h -h ~/.ssh/github_com_ssh_1
+ssh-add -l |grep -q `ssh-keygen -lf ~/.ssh/github_com_ssh_1 | awk '{print $2}'` || ssh-add -t 1h ~/.ssh/github_com_ssh_1
 
 # add if key not yet exists
-ssh-add -l |grep -q `ssh-keygen -lf ~/.ssh/bestia_dev_ssh_1 | awk '{print $2}'` || ssh-add -t 1h -h ~/.ssh/bestia_dev_ssh_1
+ssh-add -l |grep -q `ssh-keygen -lf ~/.ssh/bestia_dev_ssh_1 | awk '{print $2}'` || ssh-add -t 1h ~/.ssh/bestia_dev_ssh_1
 
 echo "   List public fingerprints inside ssh-agent:"
 echo "   ssh-add -l"
