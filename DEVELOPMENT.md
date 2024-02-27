@@ -859,7 +859,7 @@ That way, the agent will work correctly.
 
 WARNING!!! Windows ssh-agent cannot accept options like `-c` or `-t 1h`. It will return an cryptic error that is super hard to debug: "Could not add identity "key": agent refused operation". Just don't use any option.  
 
-WARNING!!! Don't use `~` or `$home` or anything similar, because one of the involved programs will sure miss how to expand it. Just write the complete path.
+WARNING!!! Don't use `~` or `$home` or anything similar in windows scripts, because one of the involved programs will sure miss how to expand it. Just write the complete path. This is true also for the .ssh/config file!  
 
 In extreme cases for debugging open `Pwsh as administrator` and run `ssh-agent -d`.
 Then in another `Pwsh` window run a `ssh-add` command.  The debugging works only for one command.

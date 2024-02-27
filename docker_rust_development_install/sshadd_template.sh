@@ -10,10 +10,10 @@ echo "   Add often used SSH key identity to ssh-agent"
 # A confirmation is requested from the user every time the added identities are used for authentication.
 
 # add if key not yet exists for git@github.com
-ssh-add -l |grep -q `ssh-keygen -lf ~/.ssh/github_com_ssh_1 | awk '{print $2}'` || ssh-add -t 1h -c ~/.ssh/github_com_ssh_1.pem
+ssh-add -l |grep -q `ssh-keygen -lf ~/.ssh/github_com_ssh_1 | awk '{print $2}'` || ssh-add -t 1h ~/.ssh/github_com_ssh_1
 
 # add if key not yet exists for luciano_bestia@bestia.dev
-ssh-add -l |grep -q `ssh-keygen -lf ~/.ssh/bestia_dev_ssh_1 | awk '{print $2}'` || ssh-add -t 1h -c ~/.ssh/bestia_dev_ssh_1
+ssh-add -l |grep -q `ssh-keygen -lf ~/.ssh/bestia_dev_ssh_1 | awk '{print $2}'` || ssh-add -t 1h ~/.ssh/bestia_dev_ssh_1
 
 echo "   List public fingerprints inside ssh-agent:"
 echo "   ssh-add -l"
