@@ -808,7 +808,7 @@ When you open the terminal again, you will have to run the script again and ente
 
 I use VSCode from Windows and connect over SSH to CRDE - Containerized Rust Development Environment.  
 Every time I connect I must input the passcode for my SSH identity.  
-Also windows has ssh-agent and I could use it just the same as in Linux bash.  
+Also windows has `ssh-agent` and I could use it just the same as in Linux bash to avoid retyping the passcode every time.  
 
 Create powershell script  
 `$HOME\.ssh\sshadd.ps1`  
@@ -818,7 +818,51 @@ copied from
 Recreate the alias on every startup with the powershell script  
 `$HOME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1`  
 copied from  
-[microsoft_powershell_profile_template.ps1](docker_rust_development_install\win_home_documents_powershell_microsoft_powershell_profile_template.ps1)
+[microsoft_powershell_profile_template.ps1](docker_rust_development_install\win_home_documents_powershell_microsoft_powershell_profile_template.ps1).
+
+Then add your often used identities simply with: 
+
+```powershell
+sshadd
+```
+
+My Win10 `ssh -V` has the version OpenSSH_for_Windows_8.1p1, LibreSSL 3.0.2.
+I will update it to version OpenSSH_for_Windows_9.5p1, LibreSSL 3.8.2 from Winget.
+
+In `Apps & Features` uninstall OpenSSH if exists.
+In `Manage Optional Features` uninstall OpenSSH client and Server. They are some old version anyway. Sadly, it will leave some files behind:  
+Delete the folder `c:\Windows\System32\OpenSSH\`. The owner is TrustedInstaller, so first you have to change the owner to you and then give permission to administrators to Full Control. Then you can finally delete it as administrator.
+
+In Powershell as administrator run:
+
+```powershell
+winget search "openssh beta"
+winget install "openssh beta"
+# Add the folder to windows path:
+$env:Path = 'C:\Program Files\OpenSSH>;' + $env:Path
+ssh -V
+#OpenSSH_for_Windows_9.5p1, LibreSSL 3.8.2
+```
+
+WARNING!!! don't run the agent in Powershell like `ssh-agent`. It will get the illusion that works, but it will be a mess.
+If you are not in Powershell as administrator
+you will get strange errors that are impossible to debug:  
+
+- Could not add identity : agent refused operation  
+- cannot create agent root reg key, ERROR:5  
+- and so on...  
+
+Correctly start it this way:
+In `Services` find `OpenSSH Authentication Agent`,
+`Start` it and change `Startup type` to `Automatic`.
+That way, the agent will work correctly.
+
+WARNING!!! Windows ssh-agent cannot accept options like `-c` or `-t 1h`. It will return an cryptic error that is super hard to debug: "Could not add identity "key": agent refused operation". Just don't use any option.  
+
+WARNING!!! Don't use `~` or `$home` or anything similar, because one of the involved programs will sure miss how to expand it. Just write the complete path.
+
+In extreme cases for debugging open `Pwsh as administrator` and run `ssh-agent -d`.
+Then in another `Pwsh` window run a `ssh-add` command.  The debugging works only for one command.
 
 ## GitHub push
 

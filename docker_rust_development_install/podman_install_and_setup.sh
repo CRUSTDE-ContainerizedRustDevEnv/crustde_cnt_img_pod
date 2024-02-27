@@ -9,8 +9,8 @@ echo "\033[0;33m    Bash script to install Podman and setup for rust_dev_pod for
 # if Debian inside WSL it needs some special care
 if grep -qi microsoft /proc/version; then    
   # get WSLWINUSERPROFILE
-  win_userprofile="$(cmd.exe /c "<nul set /p=%UserProfile%" 2>/dev/null)"
-  WSLWINUSERPROFILE="$(wslpath $win_userprofile)"
+  WINUSERPROFILE="$(cmd.exe /c "<nul set /p=%UserProfile%" 2>/dev/null)"
+  WSLWINUSERPROFILE="$(wslpath $WINUSERPROFILE)"
   echo $WSLWINUSERPROFILE
   # WSLWINUSERPROFILE should be something like /mnt/c/Users/WinUserName
 
@@ -145,12 +145,13 @@ if grep -qi microsoft /proc/version; then
 
   if [ $write_to_config = "true" ]; then
     echo "\033[0;33m    Add Host rust_dev_vscode_cnt to $WSLWINUSERPROFILE/.ssh/config \033[0m"
-    echo 'Host rust_dev_vscode_cnt
-HostName localhost
-Port 2201
-User rustdevuser
-IdentityFile ~\\.ssh\\rustdevuser_key
-IdentitiesOnly yes' | tee -a $WSLWINUSERPROFILE/.ssh/config
+    echo "Host rust_dev_vscode_cnt
+    HostName localhost
+    Port 2201
+    User rustdevuser
+    IdentityFile $WINUSERPROFILE\\.ssh\\rustdevuser_key
+
+" | tee -a $WSLWINUSERPROFILE/.ssh/config
     echo "| tee -a $WSLWINUSERPROFILE/.ssh/config"
   fi
 
