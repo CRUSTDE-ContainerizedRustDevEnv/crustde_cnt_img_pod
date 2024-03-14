@@ -483,7 +483,7 @@ In `host terminal`:
 
 ```bash
 # generate user key
-ssh-keygen -f ~/.ssh/rustdevuser_key -t ed25519 -C "info@my.domain"
+ssh-keygen -f ~/.ssh/localhost_2201_rustdevuser_ssh_1 -t ed25519 -C "info@my.domain"
 # give it a passphrase and remember it, you will need it
 # generate host key
 mkdir -p ~/.ssh/rust_dev_pod_keys/etc/ssh
@@ -492,8 +492,8 @@ ssh-keygen -A -f ~/.ssh/rust_dev_pod_keys
 # check the new files
 # list user keys
 ls -la ~/.ssh | grep "rustdevuser"
-# -rw------- 1 rustdevuser rustdevuser  2655 Apr  3 12:03 rustdevuser_key
-# -rw-r--r-- 1 rustdevuser rustdevuser   569 Apr  3 12:03 rustdevuser_key.pub
+# -rw------- 1 rustdevuser rustdevuser  2655 Apr  3 12:03 localhost_2201_rustdevuser_ssh_1
+# -rw-r--r-- 1 rustdevuser rustdevuser   569 Apr  3 12:03 localhost_2201_rustdevuser_ssh_1.pub
 
 # list host keys
 ls -la ~/.ssh/rust_dev_pod_keys/etc/ssh
@@ -514,8 +514,8 @@ In the `WSL2 terminal`:
 win_userprofile="$(cmd.exe /c "<nul set /p=%UserProfile%" 2>/dev/null)"
 WSLWINUSERPROFILE="$(wslpath $win_userprofile)"
 echo $WSLWINUSERPROFILE/.ssh
-cp -v ~/.ssh/rustdevuser_key $WSLWINUSERPROFILE/.ssh/rustdevuser_key
-cp -v ~/.ssh/rustdevuser_key.pub $WSLWINUSERPROFILE/.ssh/rustdevuser_key.pub
+cp -v ~/.ssh/localhost_2201_rustdevuser_ssh_1 $WSLWINUSERPROFILE/.ssh/localhost_2201_rustdevuser_ssh_1
+cp -v ~/.ssh/localhost_2201_rustdevuser_ssh_1.pub $WSLWINUSERPROFILE/.ssh/localhost_2201_rustdevuser_ssh_1.pub
 cp -v -r ~/.ssh/rust_dev_pod_keys $WSLWINUSERPROFILE/.ssh/rust_dev_pod_keys
 # check
 ls -la $WSLWINUSERPROFILE/.ssh | grep "rustdevuser"
@@ -602,7 +602,7 @@ podman ps -a
 Try the SSH connection from WSL2 to the container:
 
 ```bash
-ssh -i ~/.ssh/rustdevuser_key -p 2201 rustdevuser@localhost
+ssh -i ~/.ssh/localhost_2201_rustdevuser_ssh_1 -p 2201 rustdevuser@localhost
 # Choose `yes` to save fingerprint if asked, just the first time.  
 # type passphrase
 # should work !  
@@ -619,7 +619,7 @@ Run in `Windows cmd prompt` to access the container over SSH from Windows:
 
 ```bash
 # test the ssh connection from Windows cmd prompt
-"C:\WINDOWS\System32\OpenSSH\ssh.exe" -i ~\.ssh\rustdevuser_key -p 2201 rustdevuser@localhost
+"C:\WINDOWS\System32\OpenSSH\ssh.exe" -i ~\.ssh\localhost_2201_rustdevuser_ssh_1 -p 2201 rustdevuser@localhost
 # Choose `y` to save fingerprint if asked, just the first time.  
 # type passphrase
 # should work !  
@@ -653,7 +653,7 @@ exit
 To see the verbose log of the `SSH client` add `-v` like this:  
 
 ```bash
-ssh -i ~/.ssh/github_com_ssh_1 -p 2201 rustdevuser@localhost -v
+ssh -i ~/.ssh/github_com_git_ssh_1 -p 2201 rustdevuser@localhost -v
 ```
 
 To see the listening ports:
@@ -674,7 +674,7 @@ Host rust_dev_vscode_cnt
   HostName localhost
   Port 2201
   User rustdevuser
-  IdentityFile ~/.ssh/rustdevuser_key
+  IdentityFile ~/.ssh/localhost_2201_rustdevuser_ssh_1
   IdentitiesOnly yes
 ```
 
@@ -686,7 +686,7 @@ Host rust_dev_vscode_cnt
   HostName localhost
   Port 2201
   User rustdevuser
-  IdentityFile ~\.ssh\rustdevuser_key
+  IdentityFile ~\.ssh\localhost_2201_rustdevuser_ssh_1
   IdentitiesOnly yes
 ```
 
@@ -756,7 +756,7 @@ podman exec --user=rustdevuser rust_dev_vscode_cnt git config --global -l
 ```
 
 I like to work with GitHub over SSH and not over HTTPS. I think it is the natural and safe thing for Linux.  
-To make the SSH client work in the container I need the file with the private key for SSH connection to GitHub. I already have this in the file `~/.ssh/github_com_ssh_1`. I will copy it into the container with `podman cp`.  
+To make the SSH client work in the container I need the file with the private key for SSH connection to GitHub. I already have this in the file `~/.ssh/github_com_git_ssh_1`. I will copy it into the container with `podman cp`.  
 Be careful ! This is a secret !  
 It means that this container I cannot share any more with anybody. It is now my private container. I must never make an image from it and share it. Never !
 
@@ -764,9 +764,9 @@ In `host terminal`:
 
 ```bash
 podman exec --user=rustdevuser rust_dev_vscode_cnt ls -la /home/rustdevuser/.ssh
-podman cp ~/.ssh/github_com_ssh_1 rust_dev_vscode_cnt:/home/rustdevuser/.ssh/github_com_ssh_1
-podman exec --user=rustdevuser rust_dev_vscode_cnt chmod 600 /home/rustdevuser/.ssh/github_com_ssh_1
-podman cp ~/.ssh/github_com_ssh_1.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/github_com_ssh_1.pub
+podman cp ~/.ssh/github_com_git_ssh_1 rust_dev_vscode_cnt:/home/rustdevuser/.ssh/github_com_git_ssh_1
+podman exec --user=rustdevuser rust_dev_vscode_cnt chmod 600 /home/rustdevuser/.ssh/github_com_git_ssh_1
+podman cp ~/.ssh/github_com_git_ssh_1.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/github_com_git_ssh_1.pub
 podman exec --user=rustdevuser rust_dev_vscode_cnt ls -la /home/rustdevuser/.ssh
 ```
 
@@ -781,7 +781,7 @@ Again attention, that this container has secrets and must not be shared ! Never 
 In the `VSCode terminal` (Ctrl+j) run:
 
 ```bash
-ssh-add /home/rustdevuser/.ssh/github_com_ssh_1
+ssh-add /home/rustdevuser/.ssh/github_com_git_ssh_1
 # enter your passphrase
 ```
 
@@ -1012,7 +1012,7 @@ ssh-keygen -f $WSLWINUSERPROFILE/.ssh/known_hosts -R "[localhost]:2201";
 
 ## Double-commander SFTP
 
-On Debian, I use Double-commander as an alternative to Total-commander on Windows. It has an Ftp functionality that allows SSH and SFTP. But the private key must be PEM/rsa. It does not work with the existing rustdevuser_key which is OpenSSH. I tried to convert the key format, but neither key-gen, OpenSsl nor putty was up to the task. So I decided to make a new private key just for Double-commander.  
+On Debian, I use Double-commander as an alternative to Total-commander on Windows. It has an Ftp functionality that allows SSH and SFTP. But the private key must be PEM/rsa. It does not work with the existing localhost_2201_rustdevuser_ssh_1 which is OpenSSH. I tried to convert the key format, but neither key-gen, OpenSsl nor putty was up to the task. So I decided to make a new private key just for Double-commander.  
 In the DoubleCmd ftp setting, I must enable the "use SSH+SCP protocol (no SFTP)" to make it work.  
 On the host Debian system run:
 

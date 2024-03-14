@@ -65,7 +65,7 @@ echo "\033[0;33m    Copy the files for host keys ed25519 for SSH server in rust_
 podman cp ~/.ssh/rust_dev_pod_keys/etc/ssh/ssh_host_ed25519_key  rust_dev_vscode_cnt:/etc/ssh/ssh_host_ed25519_key
 podman cp ~/.ssh/rust_dev_pod_keys/etc/ssh/ssh_host_ed25519_key.pub  rust_dev_vscode_cnt:/etc/ssh/ssh_host_ed25519_key.pub
 echo "\033[0;33m    Copy the public key of rustdevuser \033[0m"
-podman cp ~/.ssh/rustdevuser_key.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/rustdevuser_key.pub
+podman cp ~/.ssh/localhost_2201_rustdevuser_ssh_1.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/localhost_2201_rustdevuser_ssh_1.pub
 podman cp ~/.ssh/rustdevuser_rsa_key.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/rustdevuser_rsa_key.pub
 
 echo "\033[0;33m    podman pod start \033[0m"
@@ -93,14 +93,14 @@ podman exec --user=rustdevuser rust_dev_vscode_cnt cat /etc/ssh/ssh_host_ed25519
 # (O)thers can't read, can't write and can't execute.
 podman exec --user=rustdevuser rust_dev_vscode_cnt chmod 700 /home/rustdevuser/.ssh
 
-echo "\033[0;33m    add rustdevuser_key to authorized_keys \033[0m"
+echo "\033[0;33m    add localhost_2201_rustdevuser_ssh_1 to authorized_keys \033[0m"
 podman exec --user=rustdevuser rust_dev_vscode_cnt touch /home/rustdevuser/.ssh/authorized_keys
 # Chmod 600 (chmod a+rwx,u-x,g-rwx,o-rwx) sets permissions so that, 
 # (U)ser / owner can read, can write and can't execute. 
 # (G)roup can't read, can't write and can't execute. 
 # (O)thers can't read, can't write and can't execute.
 podman exec --user=rustdevuser rust_dev_vscode_cnt chmod 600 /home/rustdevuser/.ssh/authorized_keys
-podman exec --user=rustdevuser rust_dev_vscode_cnt /bin/sh -c 'cat /home/rustdevuser/.ssh/rustdevuser_key.pub >> /home/rustdevuser/.ssh/authorized_keys'
+podman exec --user=rustdevuser rust_dev_vscode_cnt /bin/sh -c 'cat /home/rustdevuser/.ssh/localhost_2201_rustdevuser_ssh_1.pub >> /home/rustdevuser/.ssh/authorized_keys'
 podman exec --user=rustdevuser rust_dev_vscode_cnt /bin/sh -c 'cat /home/rustdevuser/.ssh/rustdevuser_rsa_key.pub >> /home/rustdevuser/.ssh/authorized_keys'
 
 # echo "\033[0;33m    I have to disable the password for rustdevuser to enable SSH access with public key? Why? \033[0m"

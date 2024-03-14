@@ -2,9 +2,9 @@
 Host github.com
     HostName github.com
     User git
-    IdentityFile ~/.ssh/github_com_ssh_1
+    IdentityFile ~/.ssh/github_com_git_ssh_1
 	
 Host your_webserver
     HostName your_webserver
     User git
-    IdentityFile ~/.ssh/bestia_dev_ssh_1
+    IdentityFile ~/.ssh/bestia_dev_luciano_bestia_ssh_1

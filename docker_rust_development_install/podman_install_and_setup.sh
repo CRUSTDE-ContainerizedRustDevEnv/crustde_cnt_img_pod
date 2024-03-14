@@ -34,21 +34,21 @@ else
 fi
 
 echo " " 
-if [ ! -f ~/.ssh/rustdevuser_key ]; then
-  echo "\033[0;33m    2. Generating rustdevuser_key for the identity of 'rustdevuser'.  \033[0m"
+if [ ! -f ~/.ssh/localhost_2201_rustdevuser_ssh_1 ]; then
+  echo "\033[0;33m    2. Generating localhost_2201_rustdevuser_ssh_1 for the identity of 'rustdevuser'.  \033[0m"
   echo "\033[0;33m    This is done only once. To avoid old crypto-algorithms I will force the new 'ed25519'. \033[0m"
   echo "\033[0;33m    Give it a passphrase and remember it, you will need it. \033[0m"
-  echo "ssh-keygen -f ~/.ssh/rustdevuser_key -t ed25519 -C 'rustdevuser@rust_dev_pod'"
-  ssh-keygen -f ~/.ssh/rustdevuser_key -t ed25519 -C "rustdevuser@rust_dev_pod"
-  chmod 600 ~/.ssh/rustdevuser_key
-  # if WSL, copy rustdevuser_key to windows
+  echo "ssh-keygen -f ~/.ssh/localhost_2201_rustdevuser_ssh_1 -t ed25519 -C 'rustdevuser@rust_dev_pod'"
+  ssh-keygen -f ~/.ssh/localhost_2201_rustdevuser_ssh_1 -t ed25519 -C "rustdevuser@rust_dev_pod"
+  chmod 600 ~/.ssh/localhost_2201_rustdevuser_ssh_1
+  # if WSL, copy localhost_2201_rustdevuser_ssh_1 to windows
   if grep -qi microsoft /proc/version; then    
-    cp -v ~/.ssh/rustdevuser_key $WSLWINUSERPROFILE/.ssh/
-    cp -v ~/.ssh/rustdevuser_key.pub $WSLWINUSERPROFILE/.ssh/
+    cp -v ~/.ssh/localhost_2201_rustdevuser_ssh_1 $WSLWINUSERPROFILE/.ssh/
+    cp -v ~/.ssh/localhost_2201_rustdevuser_ssh_1.pub $WSLWINUSERPROFILE/.ssh/
   fi
 
 else 
-  echo "\033[0;33m    2. SSH key rustdevuser_key already exists. \033[0m"
+  echo "\033[0;33m    2. SSH key localhost_2201_rustdevuser_ssh_1 already exists. \033[0m"
 fi
 
 echo " " 
@@ -149,7 +149,7 @@ if grep -qi microsoft /proc/version; then
     HostName localhost
     Port 2201
     User rustdevuser
-    IdentityFile $WINUSERPROFILE\\.ssh\\rustdevuser_key
+    IdentityFile $WINUSERPROFILE\\.ssh\\localhost_2201_rustdevuser_ssh_1
 
 " | tee -a $WSLWINUSERPROFILE/.ssh/config
     echo "| tee -a $WSLWINUSERPROFILE/.ssh/config"
@@ -175,7 +175,7 @@ else
 HostName localhost
 Port 2201
 User rustdevuser
-IdentityFile ~/.ssh/rustdevuser_key
+IdentityFile ~/.ssh/localhost_2201_rustdevuser_ssh_1
 IdentitiesOnly yes' | tee -a ~/.ssh/config
     echo "| tee -a ~/.ssh/config"
   fi
