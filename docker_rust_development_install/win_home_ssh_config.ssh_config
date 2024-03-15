@@ -2,14 +2,14 @@ Host localhost_2201_rustdevuser_ssh_1
     HostName localhost
     Port 2201
     User rustdevuser
-    IdentityFile ~/.ssh/localhost_2201_rustdevuser_ssh_1
+    IdentityFile //wsl.localhost/Debian/home/luciano/.ssh/localhost_2201_rustdevuser_ssh_1
 
 Host github_com_ssh_1
     HostName github.com
     User git
-    IdentityFile ~/.ssh/github_com_ssh_1
+    IdentityFile //wsl.localhost/Debian/home/luciano/.ssh/github_com_ssh_1
 	
 Host bestia_dev_ssh_1
     HostName bestia.dev
     User luciano_bestia
-    IdentityFile ~/.ssh/bestia_dev_ssh_1
+    IdentityFile //wsl.localhost/Debian/home/luciano/.ssh/bestia_dev_ssh_1

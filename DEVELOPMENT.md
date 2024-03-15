@@ -813,18 +813,24 @@ Also windows has `ssh-agent` and I could use it just the same as in Linux bash t
 **WARNING:** there are many incompatible SSH solutions for windows and it can be a mess if there are more than one solution installed. I chose to use only the ssh-agent.exe that comes with [git for windows](https://git-scm.com/download/win).  
 
 1. First I removed the "OpenSSH components in Optional Features".  
-In `Apps & Features` uninstall OpenSSH if exists.  
 In `Manage Optional Features` uninstall OpenSSH client and Server. They are some old version anyway. Sadly, it will leave some files behind:  
 Delete the folder `c:\Windows\System32\OpenSSH\`. The owner is TrustedInstaller, so first you have to change the owner to you and then give permission to administrators to Full Control. Then you can finally delete it as administrator.
 
-2. I tried and disliked the solution from `winget search "openssh beta"`. Microsoft was so bold to write the private keys into the registry. So they survive a reboot of the system. That is shockingly different from the way ssh-agent works in Linux. Bad Microsoft! Unsecure by default!  
-Uninstalled it with `winget uninstall "openssh beta"`
-
-3. I tried to use ssh from WSL and it didn't work just because the path in windows is different than the path in Linux. If this small difference should be overcome somehow, it would work! Abandoned!
-
-4. Standard ssh-add have some options like -c and -t, but they are not recognized by the windows ssh. Instead of a reasonable error it writes only that the the agent failed. Then you have to guess why and spend a lot of time experimenting. Bad error messages!  
-
+2. I tried and disliked the newer OpenSSH from `winget search "openssh beta"`. Microsoft was so bold to write the private ssh keys into the registry. So they survive a reboot of the system. That is shockingly different from the way ssh-agent works in Linux. Bad Microsoft! Unsecure by default!  
+Uninstalled it with `winget uninstall "openssh beta"`  
 I searched all my C: disk and found only one ssh.exe in "C:\Program Files\Git\usr\bin\ssh.exe". Good.  
+
+3. I tried to use ssh from WSL and it didn't work just because the path of `~/.ssh/config` in windows is different than the path in Linux. If this small difference could be overcome somehow (in the VSCode extension), it would work! Abandoned!
+
+4. I tried to use the git ssh with the config from WSL. It didn't work because the paths inside the config are different in windows then the paths in Linux. Not working!
+
+5. Standard ssh-add have some options like -c and -t, but they are not recognized by the windows ssh. Instead of a reasonable error it writes only that the the agent failed. Then you have to guess why and spend a lot of time experimenting. Bad error messages!  
+
+This worked for me:
+
+I have 2 separate config files for windows and WSL, but use the private keys only from WSL. So I have only one copy of them. In Windows `~\.ssh\config` I used the paths like `//wsl.localhost/Debian/home/luciano/.ssh/key`.  
+
+Warning: Git-bash and SSh-agent must run before VSCode. If a window of VSCode is opened before, it will not use it. Nor the newly opened windows of VSCode. Close all VSCode windows and try again.
 
 I want the ssh-agent to start when I run the git-bash.exe. That is the git-bash console. I wrote a little [~/.bashrc](docker_rust_development_install\win_home_dot_bashrc) file for git-bash in Windows. Maybe it looks confusing, but git-bash treats the windows path in the Linux way. ~ is the home folder and slash / instead of the \ backslash. Smart!  
 Now every time I open the terminal for git-bash ("C:\Program Files\Git\git-bash.exe") it will start the agent if needed and show the command to store the ssh keys.  
@@ -834,11 +840,10 @@ The ssh-agent is a windows background process. It retains the keys in memory unt
 
 In VSCode we can specify the use of our ssh-agent and config files explicitly, to avoid any confusion. In Settings find and set:
 
-"remote.SSH.path": C:\Program Files\Git\git-bash.exe
-"remote.SSH.config": ~/.ssh/config
+"remote.SSH.path": "C:\Program Files\Git\usr\bin\ssh.exe"
+"remote.SSH.config": "C:\Users\luciano\.ssh\config"
 
 This will allow VSCode to use the private ssh keys from the ssh-agent from git-bash. Sweet!  
-VSCode knows how to transform the Linux path into a Windows path.  
 
 ## GitHub push
 
