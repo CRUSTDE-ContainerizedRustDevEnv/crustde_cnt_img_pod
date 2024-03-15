@@ -838,6 +838,7 @@ In VSCode we can specify the use of our ssh-agent and config files explicitly, t
 "remote.SSH.config": ~/.ssh/config
 
 This will allow VSCode to use the private ssh keys from the ssh-agent from git-bash. Sweet!  
+VSCode knows how to transform the Linux path into a Windows path.  
 
 ## GitHub push
 

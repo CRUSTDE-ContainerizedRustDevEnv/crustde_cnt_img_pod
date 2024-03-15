@@ -1,10 +1,9 @@
-
-Host github.com
+Host github_com_ssh_1
     HostName github.com
     User git
     IdentityFile ~/.ssh/github_com_git_ssh_1
 	
-Host your_webserver
-    HostName your_webserver
-    User git
+Host bestia_dev_luciano_bestia_ssh_1
+    HostName bestia.dev
+    User luciano_bestia
     IdentityFile ~/.ssh/bestia_dev_luciano_bestia_ssh_1

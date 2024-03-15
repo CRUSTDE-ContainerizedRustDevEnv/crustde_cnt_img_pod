@@ -6,7 +6,7 @@ It is preferred to use the SSH connection for remote work and for git.
 Write the ssh connection details in ~/.ssh/config:
 
 ```bash
-Host github.com
+Host github_com_git_ssh_1
     HostName github.com
     User git
     IdentityFile ~/.ssh/github_com_git_ssh_1
