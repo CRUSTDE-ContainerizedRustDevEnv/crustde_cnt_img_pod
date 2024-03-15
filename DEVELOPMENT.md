@@ -804,65 +804,40 @@ sshadd
 After you enter the passphrase, it will remember it until the terminal is open.  
 When you open the terminal again, you will have to run the script again and enter the passphrase again.
 
-## ssh-agent in Windows powershell
+## ssh-agent in Windows
 
 I use VSCode from Windows and connect over SSH to CRDE - Containerized Rust Development Environment.  
 Every time I connect I must input the passcode for my SSH identity.  
 Also windows has `ssh-agent` and I could use it just the same as in Linux bash to avoid retyping the passcode every time.  
 
-Create powershell script  
-`$HOME\.ssh\sshadd.ps1`  
-copied from  
-[sshadd_template.ps1](docker_rust_development_install/win_home_ssh_sshadd_template.ps1)
+**WARNING:** there are many incompatible SSH solutions for windows and it can be a mess if there are more than one solution installed. I chose to use only the ssh-agent.exe that comes with [git for windows](https://git-scm.com/download/win).  
 
-Recreate the alias on every startup with the powershell script  
-`$HOME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1`  
-copied from  
-[microsoft_powershell_profile_template.ps1](docker_rust_development_install\win_home_documents_powershell_microsoft_powershell_profile_template.ps1).
-
-Then add your often used identities simply with: 
-
-```powershell
-sshadd
-```
-
-My Win10 `ssh -V` has the version OpenSSH_for_Windows_8.1p1, LibreSSL 3.0.2.
-I will update it to version OpenSSH_for_Windows_9.5p1, LibreSSL 3.8.2 from Winget.
-
-In `Apps & Features` uninstall OpenSSH if exists.
+1. First I removed the "OpenSSH components in Optional Features".  
+In `Apps & Features` uninstall OpenSSH if exists.  
 In `Manage Optional Features` uninstall OpenSSH client and Server. They are some old version anyway. Sadly, it will leave some files behind:  
 Delete the folder `c:\Windows\System32\OpenSSH\`. The owner is TrustedInstaller, so first you have to change the owner to you and then give permission to administrators to Full Control. Then you can finally delete it as administrator.
 
-In Powershell as administrator run:
+2. I tried and disliked the solution from `winget search "openssh beta"`. Microsoft was so bold to write the private keys into the registry. So they survive a reboot of the system. That is shockingly different from the way ssh-agent works in Linux. Bad Microsoft! Unsecure by default!  
+Uninstalled it with `winget uninstall "openssh beta"`
 
-```powershell
-winget search "openssh beta"
-winget install "openssh beta"
-# Add the folder to windows path:
-$env:Path = 'C:\Program Files\OpenSSH>;' + $env:Path
-ssh -V
-#OpenSSH_for_Windows_9.5p1, LibreSSL 3.8.2
-```
+3. I tried to use ssh from WSL and it didn't work just because the path in windows is different than the path in Linux. If this small difference should be overcome somehow, it would work! Abandoned!
 
-WARNING!!! don't run the agent in Powershell like `ssh-agent`. It will get the illusion that works, but it will be a mess.
-If you are not in Powershell as administrator
-you will get strange errors that are impossible to debug:  
+4. Standard ssh-add have some options like -c and -t, but they are not recognized by the windows ssh. Instead of a reasonable error it writes only that the the agent failed. Then you have to guess why and spend a lot of time experimenting. Bad error messages!  
 
-- Could not add identity : agent refused operation  
-- cannot create agent root reg key, ERROR:5  
-- and so on...  
+I searched all my C: disk and found only one ssh.exe in "C:\Program Files\Git\usr\bin\ssh.exe". Good.  
 
-Correctly start it this way:
-In `Services` find `OpenSSH Authentication Agent`,
-`Start` it and change `Startup type` to `Automatic`.
-That way, the agent will work correctly.
+I want the ssh-agent to start when I run the git-bash.exe. That is the git-bash console. I wrote a little [~/.bashrc](docker_rust_development_install\win_home_dot_bashrc) file for git-bash in Windows. Maybe it looks confusing, but git-bash treats the windows path in the Linux way. ~ is the home folder and slash / instead of the \ backslash. Smart!  
+Now every time I open the terminal for git-bash ("C:\Program Files\Git\git-bash.exe") it will start the agent if needed and show the command to store the ssh keys.  
+The ssh-agent is a windows background process. It retains the keys in memory until we stop the process or command a `ssh-add -D`. ANd most important, it cannot survive a reboot of any kind.  
 
-WARNING!!! Windows ssh-agent cannot accept options like `-c` or `-t 1h`. It will return an cryptic error that is super hard to debug: "Could not add identity "key": agent refused operation". Just don't use any option.  
+## VSCode uses the ssh-agent
 
-WARNING!!! Don't use `~` or `$home` or anything similar in windows scripts, because one of the involved programs will sure miss how to expand it. Just write the complete path. This is true also for the .ssh/config file!  
+In VSCode we can specify the use of our ssh-agent and config files explicitly, to avoid any confusion. In Settings find and set:
 
-In extreme cases for debugging open `Pwsh as administrator` and run `ssh-agent -d`.
-Then in another `Pwsh` window run a `ssh-add` command.  The debugging works only for one command.
+"remote.SSH.path": C:\Program Files\Git\git-bash.exe
+"remote.SSH.config": ~/.ssh/config
+
+This will allow VSCode to use the private ssh keys from the ssh-agent from git-bash. Sweet!  
 
 ## GitHub push
 
