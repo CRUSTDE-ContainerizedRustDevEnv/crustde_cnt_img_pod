@@ -1,0 +1,15 @@
+Host localhost_2201_rustdevuser_ssh_1
+    HostName localhost
+    Port 2201
+    User rustdevuser
+    IdentityFile ~/.ssh/localhost_2201_rustdevuser_ssh_1
+
+Host github_com_ssh_1
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/github_com_git_ssh_1
+	
+Host bestia_dev_luciano_bestia_ssh_1
+    HostName bestia.dev
+    User luciano_bestia
+    IdentityFile ~/.ssh/bestia_dev_luciano_bestia_ssh_1
