@@ -8,12 +8,6 @@ echo "\033[0;33m    Bash script to install Podman and setup for rust_dev_pod for
 
 # if Debian inside WSL it needs some special care
 if grep -qi microsoft /proc/version; then    
-  # get WSLWINUSERPROFILE
-  WINUSERPROFILE="$(cmd.exe /c "<nul set /p=%UserProfile%" 2>/dev/null)"
-  WSLWINUSERPROFILE="$(wslpath $WINUSERPROFILE)"
-  echo $WSLWINUSERPROFILE
-  # WSLWINUSERPROFILE should be something like /mnt/c/Users/WinUserName
-
   if findmnt -o PROPAGATION / | grep -qi private ; then  
     echo "default propagation for / in WSL is private, for podman must be changed to shared"
     echo "sudo mount --make-rshared /"
@@ -41,12 +35,6 @@ if [ ! -f ~/.ssh/localhost_2201_rustdevuser_ssh_1 ]; then
   echo "ssh-keygen -f ~/.ssh/localhost_2201_rustdevuser_ssh_1 -t ed25519 -C 'rustdevuser@rust_dev_pod'"
   ssh-keygen -f ~/.ssh/localhost_2201_rustdevuser_ssh_1 -t ed25519 -C "rustdevuser@rust_dev_pod"
   chmod 600 ~/.ssh/localhost_2201_rustdevuser_ssh_1
-  # if WSL, copy localhost_2201_rustdevuser_ssh_1 to windows
-  if grep -qi microsoft /proc/version; then    
-    cp -v ~/.ssh/localhost_2201_rustdevuser_ssh_1 $WSLWINUSERPROFILE/.ssh/
-    cp -v ~/.ssh/localhost_2201_rustdevuser_ssh_1.pub $WSLWINUSERPROFILE/.ssh/
-  fi
-
 else 
   echo "\033[0;33m    2. SSH key localhost_2201_rustdevuser_ssh_1 already exists. \033[0m"
 fi
@@ -129,56 +117,28 @@ echo "\033[0;33m    8. Prepare the config file for VSCode SSH: \033[0m"
 echo "\033[0;33m    Check if the word rust_dev_vscode_cnt already exists in the config file. \033[0m"
 
 # write config for VSCode SSH extension
-if grep -qi microsoft /proc/version; then
-  echo "\033[0;33m    VSCode for Windows \033[0m"
-  # if WSL then use VSCode for Windows. The location is %UserProfile% and they use backslash    
-  write_to_config="false"
-  if [ ! -f $WSLWINUSERPROFILE/.ssh/config ]; then
-    write_to_config="true"
-  else
-    if grep -qi "Host rust_dev_vscode_cnt" "$WSLWINUSERPROFILE/.ssh/config"; then
-      echo "\033[0;33m    VSCode config for SSH already contains rust_dev_vscode_cnt. \033[0m"
-    else
-      write_to_config="true"
-    fi
-  fi
-
-  if [ $write_to_config = "true" ]; then
-    echo "\033[0;33m    Add Host rust_dev_vscode_cnt to $WSLWINUSERPROFILE/.ssh/config \033[0m"
-    echo "Host rust_dev_vscode_cnt
-    HostName localhost
-    Port 2201
-    User rustdevuser
-    IdentityFile $WINUSERPROFILE\\.ssh\\localhost_2201_rustdevuser_ssh_1
-
-" | tee -a $WSLWINUSERPROFILE/.ssh/config
-    echo "| tee -a $WSLWINUSERPROFILE/.ssh/config"
-  fi
-
+echo "\033[0;33m    VSCode for Linux \033[0m"
+# if not WSL then use VSCode for Debian and they use slash
+write_to_config="false"
+if [ ! -f $HOME/.ssh/config ]; then
+  write_to_config="true"
 else
-  echo "\033[0;33m    VSCode for Linux \033[0m"
-  # if not WSL then use VSCode for Debian and they use slash
-  write_to_config="false"
-  if [ ! -f $HOME/.ssh/config ]; then
-    write_to_config="true"
+  if grep -qi "Host localhost_2201_rustdevuser_ssh_1" "$HOME/.ssh/config"; then
+    echo "\033[0;33m    VSCode config for SSH already contains rust_dev_vscode_cnt. \033[0m"
   else
-    if grep -qi "Host rust_dev_vscode_cnt" "$HOME/.ssh/config"; then
-      echo "\033[0;33m    VSCode config for SSH already contains rust_dev_vscode_cnt. \033[0m"
-    else
-      write_to_config="true"
-    fi
+    write_to_config="true"
   fi
+fi
 
-  if [ $write_to_config = "true" ]; then
-    echo "\033[0;33m    Add Host rust_dev_vscode_cnt to ~/.ssh/config \033[0m"
-    echo 'Host rust_dev_vscode_cnt
+if [ $write_to_config = "true" ]; then
+  echo "\033[0;33m    Add Host localhost_2201_rustdevuser_ssh_1 to ~/.ssh/config \033[0m"
+  echo 'Host localhost_2201_rustdevuser_ssh_1
 HostName localhost
 Port 2201
 User rustdevuser
 IdentityFile ~/.ssh/localhost_2201_rustdevuser_ssh_1
 IdentitiesOnly yes' | tee -a ~/.ssh/config
-    echo "| tee -a ~/.ssh/config"
-  fi
+  echo "| tee -a ~/.ssh/config"
 fi
 
 echo " "

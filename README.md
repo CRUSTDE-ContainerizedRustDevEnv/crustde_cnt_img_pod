@@ -147,6 +147,8 @@ Read the changelog in a separate md file:
 
 ## TODO
 
+known-host in windows must be deleted manually.
+
 Nothing on my mind right now.  
 
 ## Open-source and free as a beer

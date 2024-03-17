@@ -65,6 +65,7 @@
       "microxml",
       "mkdir",
       "msecnd",
+      "MSYS",
       "mtxr",
       "multiling",
       "Nazdravlje",
@@ -72,6 +73,7 @@
       "OLDIMAGEPATH",
       "passcode",
       "Passw",
+      "PATHCONV",
       "pgadmin",
       "pkill",
       "plantuml",
@@ -114,7 +116,6 @@
       "unoptimized",
       "usermod",
       "userns",
-      "userprofile",
       "wais",
       "wasi",
       "wasmtime",
@@ -125,7 +126,6 @@
       "workingdir",
       "WSLENV",
       "wslpath",
-      "WSLWINUSERPROFILE",
       "zdravje",
       "zxvf"
     ]

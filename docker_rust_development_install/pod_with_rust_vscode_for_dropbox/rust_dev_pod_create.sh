@@ -109,10 +109,6 @@ podman exec --user=rustdevuser rust_dev_vscode_cnt git config --global pull.reba
 echo "\033[0;33m    Remove the known_hosts for this pod/container in Linux and Windows \033[0m"
 echo "\033[0;33m    because VSCode is a Windows program when working in WSL. \033[0m"
 ssh-keygen -f ~/.ssh/known_hosts -R "[localhost]:2201";
-win_userprofile="$(cmd.exe /c "<nul set /p=%UserProfile%" 2>/dev/null)"
-WSLWINUSERPROFILE="$(wslpath $win_userprofile)"
-echo $WSLWINUSERPROFILE/.ssh
-ssh-keygen -f $WSLWINUSERPROFILE/.ssh/known_hosts -R "[localhost]:2201";
 
 echo "\033[0;33m    Copy the personal files, SSH keys for github or publish-to-web,... \033[0m"
 sh ~/.ssh/rust_dev_pod_keys/personal_keys_and_settings.sh

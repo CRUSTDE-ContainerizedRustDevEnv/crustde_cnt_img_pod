@@ -3,6 +3,8 @@
 echo " "
 echo "\033[0;33m    Bash script to restore personal data from Windows to WSL2 \033[0m"
 
+# TODO: this must be changed and run from the host (Windows)
+
 # restore_personal_data_from_win_to_WSL.sh
 # repository: https://github.com/bestia-dev/docker_rust_development
 

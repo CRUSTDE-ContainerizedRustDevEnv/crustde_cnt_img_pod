@@ -507,21 +507,6 @@ ls -la ~/.ssh/rust_dev_pod_keys/etc/ssh
 # -rw-r--r-- 1 rustdevuser rustdevuser  567 Apr  4 10:44 ssh_host_rsa_key.pub
 ```
 
-If we use WSL2, the same keys we will need in Windows because the VSCode client works in Windows. We will copy them.  
-In the `WSL2 terminal`:
-
-```bash
-win_userprofile="$(cmd.exe /c "<nul set /p=%UserProfile%" 2>/dev/null)"
-WSLWINUSERPROFILE="$(wslpath $win_userprofile)"
-echo $WSLWINUSERPROFILE/.ssh
-cp -v ~/.ssh/localhost_2201_rustdevuser_ssh_1 $WSLWINUSERPROFILE/.ssh/localhost_2201_rustdevuser_ssh_1
-cp -v ~/.ssh/localhost_2201_rustdevuser_ssh_1.pub $WSLWINUSERPROFILE/.ssh/localhost_2201_rustdevuser_ssh_1.pub
-cp -v -r ~/.ssh/rust_dev_pod_keys $WSLWINUSERPROFILE/.ssh/rust_dev_pod_keys
-# check
-ls -la $WSLWINUSERPROFILE/.ssh | grep "rustdevuser"
-ls -la $WSLWINUSERPROFILE/.ssh/rust_dev_pod_keys/etc/ssh
-```
-
 ## Volumes or mount restrictions
 
 I don't want that the container can access any file on my local system.  
@@ -670,7 +655,7 @@ In Debian on bare metal:
 choose  `~/.ssh/config` and type (if is missing)  
 
 ```bash
-Host rust_dev_vscode_cnt
+Host localhost_2201_rustdevuser_ssh_1
   HostName localhost
   Port 2201
   User rustdevuser
@@ -682,7 +667,7 @@ In Windows +WSL2:
 choose  `c:\users\user_name\ssh\config` and type (if is missing)
 
 ```bash
-Host rust_dev_vscode_cnt
+Host localhost_2201_rustdevuser_ssh_1
   HostName localhost
   Port 2201
   User rustdevuser
@@ -726,13 +711,21 @@ cargo run
 That should work and greet you with "Hello, world!".  
 Leave VSCode open because the next chapter will continue from here.
 
-## Open the VSCode project from the command line
+## Open the VSCode project from git-bash in Windows
 
-You can call directly an existing VSCode project inside the container from the Linux host over SSH like this:
+You can call directly an existing VSCode project inside the CRDE container from the Linux host when VSCode is installed in Linux
 
 ```bash
-code --remote ssh-remote+rust_dev_vscode_cnt /home/rustdevuser/rustprojects
+code --remote ssh-remote+localhost_2201_rustdevuser_ssh_1 /home/rustdevuser/rustprojects
 ```
+
+or from the Windows git-bash when VSCode is installed in Windows:
+
+```bash
+MSYS_NO_PATHCONV=1 code --remote ssh-remote+localhost_2201_rustdevuser_ssh_1 /home/rustdevuser/rustprojects
+```
+
+The MSYS_NO_PATHCONV is used to disable the translation of Linux path with Windows paths. git-bash does that by default.
 
 ## GitHub in the container
 
@@ -804,100 +797,6 @@ sshadd
 After you enter the passphrase, it will remember it until the terminal is open.  
 When you open the terminal again, you will have to run the script again and enter the passphrase again.
 
-## ssh-agent in Windows
-
-In VSCode from Windows I also use SSH for:
-
-- I connect over SSH to CRDE - Containerized Rust Development Environment
-- I push to GitHub over SSH  
-
-Every time I connect I must input the passcode for my SSH identity.  
-Windows has also`ssh-agent` and I could use it just the same as in Linux bash to avoid retyping the passcode every time.  
-I chose to use only the `ssh-agent.exe` that comes with [git for windows](https://git-scm.com/download/win).  
-
-This configuration worked for me:
-
-I have 2 separate config files for Windows and WSL, but I use only the private keys from WSL. So I don't have to copy them into Windows.  
-In Linux [~\.ssh\config](docker_rust_development_install\wsl_ssh_config.ssh_config) I used the paths like `~/.ssh/key`.  
-In Windows [~\.ssh\config](docker_rust_development_install\win_home_ssh_config.ssh_config) I used the paths like `//wsl.localhost/Debian/home/luciano/.ssh/key`.  
-
-In VSCode I specify the use of our ssh-agent and config files explicitly, to avoid any confusion.  
-In Settings find and set:
-
-"remote.SSH.path": "C:\Program Files\Git\usr\bin\ssh.exe"
-"remote.SSH.config": "C:\Users\luciano\.ssh\config"
-
-This will allow VSCode to use the private ssh keys from the ssh-agent from git-bash. Sweet!  
-
-Warning: Git-bash and SSh-agent must run before VSCode. If a window of VSCode is opened before, it will not use it. Nor the newly opened windows of VSCode. Close all VSCode windows and try again.
-
-**WARNING:** there are many incompatible SSH solutions for windows and it can be a mess if there are more than one solution installed. I chose to use only the `ssh-agent.exe` that comes with [git for windows](https://git-scm.com/download/win).  
-
-1. First I removed the "OpenSSH components in Optional Features".  
-In `Manage Optional Features` uninstall OpenSSH client and Server. They are some old version anyway. Sadly, it will leave some files behind:  
-Delete the folder `c:\Windows\System32\OpenSSH\`. The owner is TrustedInstaller, so first you have to change the owner to you and then give permission to administrators to Full Control. Then you can finally delete it as administrator.
-
-2. I tried and disliked the newer OpenSSH from `winget search "openssh beta"`. Microsoft was so bold to store the private ssh keys "unprotected" into the registry. So they survive a reboot of the system. That is shockingly different from the way ssh-agent works in Linux. Bad Microsoft! Unsecure by default!  
-Uninstalled it with `winget uninstall "openssh beta"`  
-Check if the folder `c:\Program Files\OpenSSH` does not exist.  
-
-3. I tried to use ssh from WSL and it didn't work just because the path of `~/.ssh/config` in windows is different than the path in Linux. If this small difference could be overcome somehow (in the VSCode extension), it would probably work! Abandoned!
-
-4. I tried to use the git-bash ssh with the config from WSL. It didn't work because the paths inside the config are different in windows then the paths in Linux. Not working!
-
-5. Standard ssh-add have some options like -c and -t, but they are not recognized by the windows ssh. Instead of a reasonable error it writes only that the the agent failed. Then you have to guess why and spend a lot of time experimenting. Bad error messages!  
-
-6. Check if git for windows didn't change the default ssh executable.
-If misconfigured, this could disallow VSCode to push to GitHub.  
-
-```bash
-git config --get core.sshCommand
-```
-
-This must return "empty".  
-And check that the env variable GIT_SSH is not set in git-bash.
-
-```bash
-echo $GIT_SSH
-```
-
-This must return "empty".
-
-7. To be sure, I searched all my C: disk and found only one ssh.exe in "C:\Program Files\Git\usr\bin\ssh.exe". Good.  
-
-## .bashrc for git-bash
-
-I want the ssh-agent to start when I run the git-bash.exe. That is the git-bash console. I wrote a little [~/.bashrc](docker_rust_development_install\win_home_dot_bashrc) file for git-bash in Windows. Maybe it looks confusing, but git-bash treats the windows path in the Linux way. ~ is the home folder and slash / instead of the \ backslash. Smart!  
-Now every time I open the terminal for git-bash ("C:\Program Files\Git\git-bash.exe") it will start the agent if needed and show the command to store the ssh keys.  
-The ssh-agent is a windows background process. It retains the keys in memory until we stop the process or command a `ssh-add -D`. ANd most important, it cannot survive a reboot of any kind.  
-
-## VSCode uses the ssh-agent
-
-In VSCode I tried to use the windows Cmd and Powershell terminals. It is awful.  
-I will rather use the "Git Bash" and feel at home.  
-File - Preferences -Settings
-terminal.integrated.profiles.windows
-
-Edit in setting.json:
-
-```json
-    "terminal.integrated.profiles.windows": {
-...
-        },
-        "Git Bash": {
-            "source": "Git Bash",
-            "path": "C:\\Program Files\\Git\\bin\\bash.exe"
-        }
-    },
- "terminal.integrated.automationProfile.windows": {
-  "path":  "C:\\Program Files\\Git\\bin\\bash.exe"
- },
-    "terminal.integrated.defaultProfile.windows": "Git Bash"
-}
-```
-
- 
-
 ## GitHub push
 
 Open `github.com` in the browser and sign in, click `New` and create a new repository named `rust_dev_hello`.  
@@ -968,29 +867,6 @@ If the restart is successful every container will be started a few seconds. It i
 It is easy to copy files from Win10 to the VSCode project inside the container just with drag&drop.  
 In the other direction, we right-click a file in VSCode Explorer and choose `Download` and then a download folder. It works for entire folders too.
 
-## Protect the SSH private key in Windows
-
-In Linux, the private keys inside `~/.ssh` are protected with `chmod 600`.  
-We need to do similarly for the private keys inside Win10 folder `~\.ssh`
-Run in `Powershell terminal` with the standard user:
-
-```PowerShell
-cd ~/.ssh
-ls
-# Set Key File Variable:
-  New-Variable -Name Key -Value "$env:UserProfile\.ssh\id_rsa"
-# Remove Inheritance:
-  Icacls $Key /c /t /Inheritance:d
-# Set Ownership to Owner:
-  Icacls $Key /c /t /grant ${env:UserName}:F
-# Remove All Users, except for Owner:
-  Icacls $Key  /c /t /Remove Administrator BUILTIN\Administrators BUILTIN Everyone System Users
-# Verify:
-  Icacls $Key
-# Remove Variable:
-  Remove-Variable -Name Key
-```
-
 ## Debian shutdown
 
 I got this error on shutdown: "A stop job running..." and it waits for 3 minutes.  
@@ -1038,10 +914,6 @@ In the `WSL2 terminal` we can use:
 
 ```bash
 ssh-keygen -f ~/.ssh/known_hosts -R "[localhost]:2201";
-win_userprofile="$(cmd.exe /c "<nul set /p=%UserProfile%" 2>/dev/null)"
-WSLWINUSERPROFILE="$(wslpath $win_userprofile)"
-echo $WSLWINUSERPROFILE/.ssh
-ssh-keygen -f $WSLWINUSERPROFILE/.ssh/known_hosts -R "[localhost]:2201";
 ```
 
 ## Double-commander SFTP

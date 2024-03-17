@@ -1,8 +1,10 @@
 # SSH easy
 
-## Use SSH connection for remote work and git
+## Use SSH connection in Linux for remote work and git
 
-It is preferred to use the SSH connection for remote work and for git.  
+It is recommended to use the ~/.ssh/config file to assign explicitly one ssh key to one ssh server.  
+If not, ssh-agent will send all the keys to the server and the server could refute the connection because of too many bad keys.
+
 Write the ssh connection details in ~/.ssh/config:
 
 ```bash
