@@ -105,7 +105,7 @@ You can also remove the image because this was just practiced for learning:
 podman rmi docker.io/library/httpd
 ```
 
-## Buildah for CRDE Rust development images
+## Buildah for CRUSTDE Rust development images
 
 Buildah is a replacement for the `docker build` command. It is easier to incorporate into scripts. It is pronounced exactly as Builder but with a Bostonian accent ;-)
 
@@ -136,7 +136,7 @@ This will create the image `rust_dev_cargo_img`.
 
 The scripts are just bash scripts and are super easy to read, follow, learn and modify. Much easier than Dockerfile. You can even run the commands one by one in the `bash terminal` and inspect the container to debug the building process.
 
-## CRDE - Containerized Rust Development Environment
+## CRUSTDE - Containerized Rust Development Environment
 
 There are a lot of benefits to making a development environment in a container.  
 We want that everything is isolated/sandboxed and cannot affect our host system (Debian on bare metal or in WSL2 in Win10).  
@@ -713,7 +713,7 @@ Leave VSCode open because the next chapter will continue from here.
 
 ## Open the VSCode project from git-bash in Windows
 
-You can call directly an existing VSCode project inside the CRDE container from the Linux host when VSCode is installed in Linux
+You can call directly an existing VSCode project inside the CRUSTDE container from the Linux host when VSCode is installed in Linux
 
 ```bash
 code --remote ssh-remote+localhost_2201_rustdevuser_ssh_1 /home/rustdevuser/rustprojects

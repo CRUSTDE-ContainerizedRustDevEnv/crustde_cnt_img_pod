@@ -1,7 +1,7 @@
 #!/bin/sh
 
 echo " "
-echo "\033[0;33m    Bash script to install personal keys and setting into CRDE - Containerized Rust Development Environment. \033[0m"
+echo "\033[0;33m    Bash script to install personal keys and setting into CRUSTDE - Containerized Rust Development Environment. \033[0m"
 
 # personal_keys_and_settings_template.sh
 # repository: https://github.com/bestia-dev/docker_rust_development

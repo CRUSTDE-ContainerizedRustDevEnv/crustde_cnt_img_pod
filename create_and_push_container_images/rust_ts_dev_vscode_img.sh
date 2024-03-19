@@ -7,7 +7,7 @@ echo "\033[0;33m    Bash script to build the docker image for development in Rus
 echo "\033[0;33m    Name of the image: rust_ts_dev_vscode_img \033[0m"
 # repository: https://github.com/bestia-dev/docker_rust_development
 
-echo "\033[0;33m    Container image for CRDE - Containerized Rust Development Environment with VSCode and typescript. \033[0m"
+echo "\033[0;33m    Container image for CRUSTDE - Containerized Rust Development Environment with VSCode and typescript. \033[0m"
 echo "\033[0;33m    This is based on rust_dev_vscode_img and adds Typescript. \033[0m"
 
 echo " "

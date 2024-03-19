@@ -5,7 +5,7 @@
 
 echo " "
 echo "\033[0;33m    Bash script to download all scripts needed to setup the  \033[0m"
-echo "\033[0;33m    CRDE - Containerized Rust Development Environment \033[0m"
+echo "\033[0;33m    CRUSTDE - Containerized Rust Development Environment \033[0m"
 
 if echo "$PWD" | grep -q '/rustprojects/docker_rust_development_install'; then
     # download_scripts.sh
