@@ -5,7 +5,7 @@
 echo " "
 echo "\033[0;33m    Bash script to build Alpine image to test execute hello_world with and without musl. \033[0m"
 echo "\033[0;33m    Name of the image: alpine_hello_world_img \033[0m"
-# repository: https://github.com/bestia-dev/docker_rust_development
+# repository: https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/docker_rust_development
 
 echo " "
 echo "\033[0;33m    Rust can cross compile with statically link to the musl library. \033[0m"
@@ -38,7 +38,7 @@ docker.io/library/alpine
 buildah config \
 --author=github.com/bestia-dev \
 --label name=alpine_hello_world_img \
---label source=github.com/bestia-dev/docker_rust_development \
+--label source=github.com/CRUSTDE-Containerized-Rust-Dev-Env/docker_rust_development \
 alpine_hello_world_img
 
 echo "\033[0;33m    Copy the executable binary file statically linked to musl.  \033[0m"

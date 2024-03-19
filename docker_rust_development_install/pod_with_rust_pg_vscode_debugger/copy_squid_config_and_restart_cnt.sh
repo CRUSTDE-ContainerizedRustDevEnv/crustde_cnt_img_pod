@@ -3,7 +3,7 @@
 echo " "
 echo "\033[0;33m    Copy and reload modified squid config file. \033[0m"
 echo "\033[0;33m    The script will use the files in the Working directory. \033[0m"
-# repository: https://github.com/bestia-dev/docker_rust_development
+# repository: https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/docker_rust_development
 
 echo " "
 echo "\033[0;33m    Copy squid.conf for customized ACL proxy permissions \033[0m"

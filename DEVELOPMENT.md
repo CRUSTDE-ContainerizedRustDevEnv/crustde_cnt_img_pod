@@ -6,7 +6,7 @@
 
 I already wrote some information on how to install and use the combination of Win10 + WSL2 + Debian12(Bookworm):
 
-<https://github.com/bestia-dev/win10_wsl2_debian11>
+<https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/win10_wsl2_debian11>
 
 Podman is available from the Debian12 package manager.
 
@@ -308,7 +308,7 @@ scratch
 buildah config \
 --author=github.com/bestia-dev \
 --label name=scratch_hello_world_img \
---label source=github.com/bestia-dev/docker_rust_development \
+--label source=github.com/CRUSTDE-Containerized-Rust-Dev-Env/docker_rust_development \
 scratch_hello_world_img
 
 buildah copy scratch_hello_world_img  ~/rustprojects/rust_dev_hello/musl/rust_dev_hello /rust_dev_hello
@@ -332,7 +332,7 @@ docker.io/library/alpine
 buildah config \
 --author=github.com/bestia-dev \
 --label name=alpine_hello_world_img \
---label source=github.com/bestia-dev/docker_rust_development \
+--label source=github.com/CRUSTDE-Containerized-Rust-Dev-Env/docker_rust_development \
 alpine_hello_world_img
 
 buildah copy alpine_hello_world_img  ~/rustprojects/rust_dev_hello/musl/rust_dev_hello /usr/bin/rust_dev_hello
@@ -358,7 +358,7 @@ gcr.io/distroless/static-debian12
 buildah config \
 --author=github.com/bestia-dev \
 --label name=distroless_hello_world_img \
---label source=github.com/bestia-dev/docker_rust_development \
+--label source=github.com/CRUSTDE-Containerized-Rust-Dev-Env/docker_rust_development \
 distroless_hello_world_img
 
 buildah copy distroless_hello_world_img  ~/rustprojects/rust_dev_hello/musl/rust_dev_hello /usr/bin/rust_dev_hello
@@ -730,7 +730,7 @@ The MSYS_NO_PATHCONV is used to disable the translation of Linux path with Windo
 ## GitHub in the container
 
 Download the template for the bash script from here:  
-[personal_keys_and_settings.sh](https://github.com/bestia-dev/docker_rust_development/blob/main/docker_rust_development_install/personal_keys_and_settings_template.sh)  
+[personal_keys_and_settings.sh](https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/docker_rust_development/blob/main/docker_rust_development_install/personal_keys_and_settings_template.sh)  
 into Debian folder `~\.ssh`. It contains all the steps explained below. First, rename it to personal_keys_and_settings.sh. You have to personalize it with your personal data.  
 Run in `host terminal`:
 
@@ -778,7 +778,7 @@ ssh-add /home/rustdevuser/.ssh/github_com_git_ssh_1
 # enter your passphrase
 ```
 
-You can download the template [sshadd_template.sh](https://github.com/bestia-dev/docker_rust_development/blob/main/docker_rust_development_install/sshadd_template.sh) from GitHub and save it into the Debian folder `~/.ssh`. Rename it to `sshadd.sh` and personalize it with your SSH key file names.  
+You can download the template [sshadd_template.sh](https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/docker_rust_development/blob/main/docker_rust_development_install/sshadd_template.sh) from GitHub and save it into the Debian folder `~/.ssh`. Rename it to `sshadd.sh` and personalize it with your SSH key file names.  
 Run in `host Terminal`:
 
 ```bash
@@ -947,7 +947,7 @@ If you want, you can change the user and passwords in the bash script `rust_dev_
 
 ## Read more
 
-Read more about how I use my [Development environment](https://github.com/bestia-dev/development_environment).  
+Read more about how I use my [Development environment](https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/development_environment).  
 
 ## WSL problems
 

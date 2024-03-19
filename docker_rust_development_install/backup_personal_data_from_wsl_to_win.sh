@@ -6,7 +6,7 @@ echo "\033[0;33m    Bash script to backup personal data from WSL2 to windows \03
 # TODO: this must be changed and run from the host (Windows)
 
 # backup_personal_data_from_wsl_to_win.sh
-# repository: https://github.com/bestia-dev/docker_rust_development
+# repository: https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/docker_rust_development
 
 # This backup of personal data can then survive the reset of the WSL2 virtual machine.
 

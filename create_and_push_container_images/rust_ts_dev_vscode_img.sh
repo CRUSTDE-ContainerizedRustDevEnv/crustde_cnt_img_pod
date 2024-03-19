@@ -5,7 +5,7 @@
 echo " "
 echo "\033[0;33m    Bash script to build the docker image for development in Rust with VSCode and typescript. \033[0m"
 echo "\033[0;33m    Name of the image: rust_ts_dev_vscode_img \033[0m"
-# repository: https://github.com/bestia-dev/docker_rust_development
+# repository: https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/docker_rust_development
 
 echo "\033[0;33m    Container image for CRUSTDE - Containerized Rust Development Environment with VSCode and typescript. \033[0m"
 echo "\033[0;33m    This is based on rust_dev_vscode_img and adds Typescript. \033[0m"
@@ -43,7 +43,7 @@ buildah config \
 --author=github.com/bestia-dev \
 --label name=rust_ts_dev_vscode_img \
 --label version=typescript-4.7.4 \
---label source=github.com/bestia-dev/docker_rust_development \
+--label source=github.com/CRUSTDE-Containerized-Rust-Dev-Env/docker_rust_development \
 rust_ts_dev_vscode_img
 
 echo " "

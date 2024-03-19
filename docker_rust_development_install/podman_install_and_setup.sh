@@ -4,7 +4,7 @@ echo " "
 echo "\033[0;33m    Bash script to install Podman and setup for rust_dev_pod for development in Rust with VSCode. \033[0m"
 
 # podman_install_and_setup.sh
-# repository: https://github.com/bestia-dev/docker_rust_development
+# repository: https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/docker_rust_development
 
 # if Debian inside WSL it needs some special care
 if grep -qi microsoft /proc/version; then    

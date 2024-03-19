@@ -9,7 +9,7 @@ echo "\033[0;33m    CRUSTDE - Containerized Rust Development Environment \033[0m
 
 if echo "$PWD" | grep -q '/rustprojects/docker_rust_development_install'; then
     # download_scripts.sh
-    # repository: https://github.com/bestia-dev/docker_rust_development
+    # repository: https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/docker_rust_development
     echo " "
     echo "\033[0;33m    1. Creating dir structure in ~/rustprojects/docker_rust_development_install \033[0m"
     mkdir -p pod_with_rust_vscode
@@ -20,33 +20,33 @@ if echo "$PWD" | grep -q '/rustprojects/docker_rust_development_install'; then
     echo " "
     echo "\033[0;33m    2. Downloading all scripts from github \033[0m"
     echo " 1. personal_keys_and_settings_template.sh"
-    curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/personal_keys_and_settings_template.sh --output personal_keys_and_settings_template.sh
+    curl -L -sSf https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/docker_rust_development/raw/main/docker_rust_development_install/personal_keys_and_settings_template.sh --output personal_keys_and_settings_template.sh
     echo " 2. sshadd_template.sh"
-    curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/sshadd_template.sh --output sshadd_template.sh
+    curl -L -sSf https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/docker_rust_development/raw/main/docker_rust_development_install/sshadd_template.sh --output sshadd_template.sh
     echo " 3. store_personal_keys_and_settings.sh"
-    curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/store_personal_keys_and_settings.sh --output store_personal_keys_and_settings.sh
+    curl -L -sSf https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/docker_rust_development/raw/main/docker_rust_development_install/store_personal_keys_and_settings.sh --output store_personal_keys_and_settings.sh
     echo " 4. backup_personal_data_from_wsl_to_win.sh"
-    curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/backup_personal_data_from_wsl_to_win.sh --output backup_personal_data_from_wsl_to_win.sh
+    curl -L -sSf https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/docker_rust_development/raw/main/docker_rust_development_install/backup_personal_data_from_wsl_to_win.sh --output backup_personal_data_from_wsl_to_win.sh
     echo " 5. restore_personal_data_from_win_to_wsl.sh"
-    curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/restore_personal_data_from_win_to_wsl.sh --output restore_personal_data_from_win_to_wsl.sh
+    curl -L -sSf https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/docker_rust_development/raw/main/docker_rust_development_install/restore_personal_data_from_win_to_wsl.sh --output restore_personal_data_from_win_to_wsl.sh
     echo " 6. etc_ssh_sshd_config.conf"
-    curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/etc_ssh_sshd_config.conf --output etc_ssh_sshd_config.conf
+    curl -L -sSf https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/docker_rust_development/raw/main/docker_rust_development_install/etc_ssh_sshd_config.conf --output etc_ssh_sshd_config.conf
     echo " 7. podman_install_and_setup.sh"
-    curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/podman_install_and_setup.sh --output podman_install_and_setup.sh
+    curl -L -sSf https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/docker_rust_development/raw/main/docker_rust_development_install/podman_install_and_setup.sh --output podman_install_and_setup.sh
     echo " 8. rust_dev_pod_after_reboot.sh"
-    curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/rust_dev_pod_after_reboot.sh --output rust_dev_pod_after_reboot.sh
+    curl -L -sSf https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/docker_rust_development/raw/main/docker_rust_development_install/rust_dev_pod_after_reboot.sh --output rust_dev_pod_after_reboot.sh
     echo " 9. docker_rust_development_install.md"
-    curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/docker_rust_development_install.md --output docker_rust_development_install.md
+    curl -L -sSf https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/docker_rust_development/raw/main/docker_rust_development_install/docker_rust_development_install.md --output docker_rust_development_install.md
 
     echo " 10. pod_with_rust_vscode/rust_dev_pod_create.sh"
-    curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/pod_with_rust_vscode/rust_dev_pod_create.sh --output pod_with_rust_vscode/rust_dev_pod_create.sh    
-    curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/pod_with_rust_vscode/etc_squid_squid.conf --output pod_with_rust_vscode/etc_squid_squid.conf
-    curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/pod_with_rust_vscode/copy_squid_config_and_restart_cnt.sh --output pod_with_rust_vscode/copy_squid_config_and_restart_cnt.sh
+    curl -L -sSf https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/docker_rust_development/raw/main/docker_rust_development_install/pod_with_rust_vscode/rust_dev_pod_create.sh --output pod_with_rust_vscode/rust_dev_pod_create.sh    
+    curl -L -sSf https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/docker_rust_development/raw/main/docker_rust_development_install/pod_with_rust_vscode/etc_squid_squid.conf --output pod_with_rust_vscode/etc_squid_squid.conf
+    curl -L -sSf https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/docker_rust_development/raw/main/docker_rust_development_install/pod_with_rust_vscode/copy_squid_config_and_restart_cnt.sh --output pod_with_rust_vscode/copy_squid_config_and_restart_cnt.sh
 
     echo " 11. pod_with_rust_pg_vscode/rust_dev_pod_create.sh"
-    curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/pod_with_rust_pg_vscode/rust_dev_pod_create.sh --output pod_with_rust_pg_vscode/rust_dev_pod_create.sh
-    curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/pod_with_rust_pg_vscode/etc_squid_squid.conf --output pod_with_rust_pg_vscode/etc_squid_squid.conf
-    curl -L -sSf https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/pod_with_rust_pg_vscode/copy_squid_config_and_restart_cnt.sh --output pod_with_rust_pg_vscode/copy_squid_config_and_restart_cnt.sh
+    curl -L -sSf https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/docker_rust_development/raw/main/docker_rust_development_install/pod_with_rust_pg_vscode/rust_dev_pod_create.sh --output pod_with_rust_pg_vscode/rust_dev_pod_create.sh
+    curl -L -sSf https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/docker_rust_development/raw/main/docker_rust_development_install/pod_with_rust_pg_vscode/etc_squid_squid.conf --output pod_with_rust_pg_vscode/etc_squid_squid.conf
+    curl -L -sSf https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/docker_rust_development/raw/main/docker_rust_development_install/pod_with_rust_pg_vscode/copy_squid_config_and_restart_cnt.sh --output pod_with_rust_pg_vscode/copy_squid_config_and_restart_cnt.sh
 
     # if both files already exist, don't need this step
     # beware the last ] needs a space before it or it does not work!
@@ -86,7 +86,7 @@ else
     echo "\033[0;32m mkdir -p ~/rustprojects/docker_rust_development_install; \033[0m"
     echo "\033[0;32m cd ~/rustprojects/docker_rust_development_install; \033[0m"
     # -S show errors  -f fail-early -L redirect
-    echo "\033[0;32m curl -Sf -L https://github.com/bestia-dev/docker_rust_development/raw/main/docker_rust_development_install/download_scripts.sh --output download_scripts.sh; \033[0m"
+    echo "\033[0;32m curl -Sf -L https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/docker_rust_development/raw/main/docker_rust_development_install/download_scripts.sh --output download_scripts.sh; \033[0m"
     echo "\033[0;33m    You can read the bash script, it only creates dirs, download scripts and suggests what script to run next \033[0m"
     echo "\033[0;32m cat download_scripts.sh; \033[0m"
     echo "\033[0;33m    Run with sh that aliases to dash and not bash in Debian. \033[0m"

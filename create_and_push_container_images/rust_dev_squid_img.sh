@@ -3,7 +3,7 @@
 echo " "
 echo "\033[0;33m    Bash script to build the docker image for the Squid proxy server \033[0m"
 echo "\033[0;33m    Name of the image: rust_dev_squid_img \033[0m"
-# repository: https://github.com/bestia-dev/docker_rust_development
+# repository: https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/docker_rust_development
 
 echo "\033[0;33m    Squid proxy for restricting outbound network access of containers in the same 'pod'. \033[0m"
 echo "\033[0;33m    Modifies the squid.conf file of the official Squid image. \033[0m"
@@ -36,7 +36,7 @@ buildah config \
 --author=github.com/bestia-dev \
 --label name=rust_dev_squid_img \
 --label version=squid-3.5.27-2 \
---label source=github.com/bestia-dev/docker_rust_development \
+--label source=github.com/CRUSTDE-Containerized-Rust-Dev-Env/docker_rust_development \
 rust_dev_squid_img
 
 echo " "
