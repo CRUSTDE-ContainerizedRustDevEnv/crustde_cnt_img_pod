@@ -31,7 +31,7 @@ echo " "
 mkdir -p ~/.ssh/rust_dev_pod_keys/
 
 cp personal_keys_and_settings_template.sh ~/.ssh/rust_dev_pod_keys/personal_keys_and_settings.sh
-cp sshadd_template.sh ~/.ssh/sshadd.sh
+cp sshadd_template.sh ~/.ssh/rust_dev_pod_keys/sshadd.sh
 cp ssh_config.ssh_config ~/.ssh/rust_dev_pod_keys/config
 
 sed -i.bak "s/info@your.mail/$1/g" ~/.ssh/rust_dev_pod_keys/personal_keys_and_settings.sh
@@ -41,12 +41,12 @@ sed -i.bak "s/your_webserver/$4/g" ~/.ssh/rust_dev_pod_keys/personal_keys_and_se
 sed -i.bak "s/your_username/$5/g" ~/.ssh/rust_dev_pod_keys/personal_keys_and_settings.sh
 sed -i.bak "s/your_key_for_webserver_ssh_1/$6/g" ~/.ssh/rust_dev_pod_keys/personal_keys_and_settings.sh
 
-sed -i.bak "s/info@your.mail/$1/g" ~/.ssh/sshadd.sh
-sed -i.bak "s/your_gitname/$2/g" ~/.ssh/sshadd.sh
-sed -i.bak "s/github_com_git_ssh_1/$3/g" ~/.ssh/sshadd.sh
-sed -i.bak "s/your_webserver/$4/g" ~/.ssh/sshadd.sh
-sed -i.bak "s/your_username/$5/g" ~/.ssh/sshadd.sh
-sed -i.bak "s/your_key_for_webserver_ssh_1/$6/g" ~/.ssh/sshadd.sh
+sed -i.bak "s/info@your.mail/$1/g" ~/.ssh/rust_dev_pod_keys/sshadd.sh
+sed -i.bak "s/your_gitname/$2/g" ~/.ssh/rust_dev_pod_keys/sshadd.sh
+sed -i.bak "s/github_com_git_ssh_1/$3/g" ~/.ssh/rust_dev_pod_keys/sshadd.sh
+sed -i.bak "s/your_webserver/$4/g" ~/.ssh/rust_dev_pod_keys/sshadd.sh
+sed -i.bak "s/your_username/$5/g" ~/.ssh/rust_dev_pod_keys/sshadd.sh
+sed -i.bak "s/your_key_for_webserver_ssh_1/$6/g" ~/.ssh/rust_dev_pod_keys/sshadd.sh
 
 sed -i.bak "s/info@your.mail/$1/g" ~/.ssh/rust_dev_pod_keys/config
 sed -i.bak "s/your_gitname/$2/g" ~/.ssh/rust_dev_pod_keys/config
