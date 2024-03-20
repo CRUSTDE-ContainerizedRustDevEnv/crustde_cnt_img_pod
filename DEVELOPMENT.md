@@ -867,6 +867,36 @@ If the restart is successful every container will be started a few seconds. It i
 It is easy to copy files from Win10 to the VSCode project inside the container just with drag&drop.  
 In the other direction, we right-click a file in VSCode Explorer and choose `Download` and then a download folder. It works for entire folders too.
 
+## File manager Total Commander
+
+Total Commander runs in Windows. It can be used to manage the files and folders in the container over SSH: copy, move, rename, edit, compare, sync,...  
+Install the plugin SFTP from <https://www.ghisler.com/plugins.htm>.  
+In "Network Neighborhood" choose "Secure FTP". Create new connection:
+
+```conf
+Connect to: localhost:2201/~
+User name: rustdevuser
+Password: passcode of the private key
+Protect password with password manager: yes
+Public key: \\wsl.localhost\Debian\home\luciano\.ssh\localhost_2201_rustdevuser_ssh_1.pub
+Private key: \\wsl.localhost\Debian\home\luciano\.ssh\localhost_2201_rustdevuser_ssh_1
+Use SCP for data transfer: yes
+Use SCP for everything: yes
+```
+
+In the same fashion we can use TotalCmd to manage the files on our web server over SSH:
+
+```conf
+Connect to: bestia.dev
+User name: luciano_bestia
+Password: passcode of the private key
+Protect password with password manager: yes
+Public key: //wsl.localhost/Debian/home/luciano/.ssh/bestia_dev_luciano_bestia_ssh_1.pub
+Private key: //wsl.localhost/Debian/home/luciano/.ssh/bestia_dev_luciano_bestia_ssh_1
+Use SCP for data transfer: no
+Use SCP for everything: no
+```
+
 ## Debian shutdown
 
 I got this error on shutdown: "A stop job running..." and it waits for 3 minutes.  
