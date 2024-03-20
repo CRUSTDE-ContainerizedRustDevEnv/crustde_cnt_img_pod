@@ -59,10 +59,7 @@ if echo "$PWD" | grep -q '/rustprojects/docker_rust_development_install'; then
         echo "\033[0;33m    Modify accordingly to your locations and run these commands. \033[0m"
         echo "\033[0;32m mkdir ~/.ssh; \033[0m"
         echo "\033[0;32m chmod 700 ~/.ssh; \033[0m"
-        echo "\033[0;32m # copy your private and public key files into ~/.ssh \033[0m"
-        echo "\033[0;32m # Secure the private keys \033[0m"
-        echo "\033[0;32m chmod 600 ~/.ssh/github_com_git_ssh_1; \033[0m"
-        echo "\033[0;32m chmod 600 ~/.ssh/your_webserver_your_username_ssh_1; \033[0m"
+        echo "\033[0;32m   Copy your private and public key files into ~/.ssh \033[0m"
         
         echo " "
         echo "\033[0;33m    4. Now you can run the first script with 5 parameters.  \033[0m"

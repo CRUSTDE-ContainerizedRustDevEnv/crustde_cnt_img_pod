@@ -14,7 +14,7 @@ echo " "
 
 # mandatory arguments
 if [ ! "$1" ] || [ ! "$2" ] || [ ! "$3" ] || [ ! "$4" ] || [ ! "$5" ]; then
-  echo "\033[0;31m    Error: All 6 arguments must be provided ! \033[0m"
+  echo "\033[0;31m    Error: All 5 arguments must be provided ! \033[0m"
   echo "    Usage:"
   echo "\033[0;32m sh store_personal_keys_and_settings.sh info@your.mail your_gitname github_com_git_ssh_1 your_webserver your_username \033[0m"
   exit 1;
@@ -25,6 +25,7 @@ echo "your_gitname: $2";
 echo "github_com_git_ssh_1: $3";
 echo "your_webserver: $4";
 echo "your_username: $5";
+
 echo " "
 
 mkdir -p ~/.ssh/rust_dev_pod_keys/
