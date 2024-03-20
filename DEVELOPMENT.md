@@ -906,10 +906,11 @@ Warning: The "ssh could not resolve hostname" is a common error. It is not that 
 
 ## WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED
 
-SSH client used in VSCode remembers the key of the servers in the file `~/.ssh/known_hosts`.
+SSH client used in VSCode remembers the fingerprint of the servers in the file `~/.ssh/known_hosts`.
 If we created a new key for the ephemeral container, we can get the error `REMOTE HOST IDENTIFICATION HAS CHANGED`.  
 It is enough to open the file `~/.ssh/known_hosts` and delete the offending line.  
 VSCode is a Windows program, so the offending file is in windows `C:\Users\luciano\.ssh\known_hosts`.  
+It is hard to recognize the line. Rename the file to known_hosts.bak and retry to connect. It will recreate the file `known_hosts`.  
 In the `WSL2 terminal` we can use:
 
 ```bash

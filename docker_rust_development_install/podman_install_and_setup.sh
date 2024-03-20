@@ -143,6 +143,11 @@ fi
 echo " "
 echo "\033[0;33m    Installing Podman and setup is finished. \033[0m"
 
+echo " "
+echo "\033[0;33m    VSCode uses the file ~/.ssh/known_hosts to allow or disallow SSH connection to a server. Also to CRUSTDE container. \033[0m"
+echo "\033[0;33m    If it finds some old fingerprint from the server it will just error on connection without telling the cause. \033[0m"
+echo "\033[0;33m    Try renaming the file to known_hosts.bak and VSCode will just ask if the new fingerprint are correct and create a new known_hosts file. \033[0m"
+
 echo ""
 echo "\033[0;33m    Now you can create the pod rust_dev_pod. \033[0m"
 echo "\033[0;33m    On first run it will download 1.06 GB from DockerHub, unpack to 3.32 GB and store it in the cache folder. \033[0m"

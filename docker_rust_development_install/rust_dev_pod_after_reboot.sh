@@ -48,6 +48,10 @@ echo "\033[0;33m    It will ask for the ssh passphrase. \033[0m"
 echo "\033[0;33m    The command will block the bash until VSCode is opened. Use Ctrl+z to unblock bash. \033[0m"
 
 echo " "
+echo "\033[0;33m    If VSCode cannot connect to the container, it is 99% blame on the .ssh/known_host file. \033[0m"
+echo "\033[0;33m    There is an old fingerprint of the server. Rename the file to known_hosts.bak and retry. \033[0m"
+
+echo " "
 echo "\033[0;33m    Squid restricts connections to very few whitelisted internet places.  \033[0m"
 echo "\033[0;33m    If you need to allow more, modify the etc_squid_squid.conf file then execute: \033[0m"
 echo "\033[0;32m sh copy_squid_config_and_restart_cnt.sh  \033[0m"

@@ -106,8 +106,8 @@ podman exec --user=root rust_dev_vscode_cnt usermod --password '*' rustdevuser
 echo "\033[0;33m    Git global config \033[0m"
 podman exec --user=rustdevuser rust_dev_vscode_cnt git config --global pull.rebase false
 
-echo "\033[0;33m    Remove the known_hosts for this pod/container in Linux and Windows \033[0m"
-echo "\033[0;33m    because VSCode is a Windows program when working in WSL. \033[0m"
+echo "\033[0;33m    Remove the known_hosts for this pod/container in Linux. \033[0m"
+echo "\033[0;33m    Remove the offending lines in Windows known_hosts manually. \033[0m"
 ssh-keygen -f ~/.ssh/known_hosts -R "[localhost]:2201";
 
 echo "\033[0;33m    Copy the personal files, SSH keys for github or publish-to-web,... \033[0m"
