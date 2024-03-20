@@ -69,7 +69,7 @@ if echo "$PWD" | grep -q '/rustprojects/docker_rust_development_install'; then
         echo "\033[0;33m    Change the parameters with your personal data. They are needed for the container.  \033[0m"
         echo "\033[0;33m    The files will be stored in ~/.ssh for later use. \033[0m"
         echo "\033[0;33m    Then follow the instructions from the next script. \033[0m"
-        echo "\033[0;32m sh store_personal_keys_and_settings.sh info@your.mail your_name github_com_git_ssh_1 your_webserver_your_username_ssh_1 your_webserver; \033[0m"
+        echo "\033[0;32m sh store_personal_keys_and_settings.sh info@your.mail your_gitname github_com_git_ssh_1 your_webserver your_username; \033[0m"
     fi
 else
     echo " "

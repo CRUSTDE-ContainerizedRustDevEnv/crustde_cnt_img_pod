@@ -9,7 +9,7 @@ echo "\033[0;33m    Bash script to install personal keys and setting into CRUSTD
 # This script starts as a template with placeholders.
 # The script store_personal_keys_and_settings.sh copies it into the Linux folder '~\.ssh' and rename it to "personal_keys_and_settings.sh".
 # Then it replace the words: 
-# 'info@your.mail', 'your_name', 'github_com_git_ssh_1', 'your_webserver_your_username_ssh_1' and 'your_webserver'
+# 'info@your.mail', 'your_gitname', 'github_com_git_ssh_1', 'your_webserver', 'your_username'
 # with you personal data and file_names.
 # Warning: Once modified, don't share this file with anyone and don't push it to GitHub because it will contain your data.
 # Copy this data into Windows folder. So it will be persistent also in the event that the WSL2 is reset.
@@ -18,8 +18,8 @@ echo " "
 echo "\033[0;33m    Set git personal information inside the container \033[0m"
 echo "\033[0;33m    podman exec --user=rustdevuser rust_dev_vscode_cnt git config --global user.email 'info@your.mail' \033[0m"
 podman exec --user=rustdevuser rust_dev_vscode_cnt git config --global user.email "info@your.mail"
-echo "\033[0;33m    podman exec --user=rustdevuser rust_dev_vscode_cnt git config --global user.name 'your_name' \033[0m"
-podman exec --user=rustdevuser rust_dev_vscode_cnt git config --global user.name "your_name"
+echo "\033[0;33m    podman exec --user=rustdevuser rust_dev_vscode_cnt git config --global user.name 'your_gitname' \033[0m"
+podman exec --user=rustdevuser rust_dev_vscode_cnt git config --global user.name "your_gitname"
 echo "\033[0;33m    podman exec --user=rustdevuser rust_dev_vscode_cnt git config --global -l \033[0m"
 podman exec --user=rustdevuser rust_dev_vscode_cnt git config --global -l
 

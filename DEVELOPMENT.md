@@ -744,7 +744,7 @@ In `host terminal`:
 
 ```bash
 podman exec --user=rustdevuser rust_dev_vscode_cnt git config --global user.email "info@your.mail"
-podman exec --user=rustdevuser rust_dev_vscode_cnt git config --global user.name "your_name"
+podman exec --user=rustdevuser rust_dev_vscode_cnt git config --global user.name "your_gitname"
 podman exec --user=rustdevuser rust_dev_vscode_cnt git config --global -l
 ```
 

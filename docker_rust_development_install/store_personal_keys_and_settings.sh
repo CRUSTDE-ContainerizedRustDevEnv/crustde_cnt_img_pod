@@ -9,19 +9,19 @@ echo " "
 
 # Copy the file personal_keys_and_settings_template.sh into ~/.ssh/rust_dev_pod_keys/personal_keys_and_settings.sh
 # There replace the words: 
-# 'info@your.mail', 'your_name', 'github_com_git_ssh_1', 'your_webserver_your_username_ssh_1', 'your_webserver'
+# 'info@your.mail', 'your_gitname', 'github_com_git_ssh_1', 'your_webserver', 'your_username'
 # Call this script with 5 parameters.
 
 # mandatory arguments
 if [ ! "$1" ] || [ ! "$2" ] || [ ! "$3" ] || [ ! "$4" ] || [ ! "$5" ]; then
   echo "\033[0;31m    Error: All 6 arguments must be provided ! \033[0m"
   echo "    Usage:"
-  echo "\033[0;32m sh store_personal_keys_and_settings.sh info@your.mail your_name github_com_git_ssh_1 your_webserver your_username \033[0m"
+  echo "\033[0;32m sh store_personal_keys_and_settings.sh info@your.mail your_gitname github_com_git_ssh_1 your_webserver your_username \033[0m"
   exit 1;
 fi
 
 echo "info@your.mail: $1";
-echo "your_name: $2";
+echo "your_gitname: $2";
 echo "github_com_git_ssh_1: $3";
 echo "your_webserver: $4";
 echo "your_username: $5";
@@ -34,19 +34,19 @@ cp sshadd_template.sh ~/.ssh/sshadd.sh
 cp ssh_config.ssh_config ~/.ssh/rust_dev_pod_keys/config
 
 sed -i.bak "s/info@your.mail/$1/g" ~/.ssh/rust_dev_pod_keys/personal_keys_and_settings.sh
-sed -i.bak "s/your_name/$2/g" ~/.ssh/rust_dev_pod_keys/personal_keys_and_settings.sh
+sed -i.bak "s/your_gitname/$2/g" ~/.ssh/rust_dev_pod_keys/personal_keys_and_settings.sh
 sed -i.bak "s/github_com_git_ssh_1/$3/g" ~/.ssh/rust_dev_pod_keys/personal_keys_and_settings.sh
 sed -i.bak "s/your_webserver/$4/g" ~/.ssh/rust_dev_pod_keys/personal_keys_and_settings.sh
 sed -i.bak "s/your_username/$5/g" ~/.ssh/rust_dev_pod_keys/personal_keys_and_settings.sh
 
 sed -i.bak "s/info@your.mail/$1/g" ~/.ssh/sshadd.sh
-sed -i.bak "s/your_name/$2/g" ~/.ssh/sshadd.sh
+sed -i.bak "s/your_gitname/$2/g" ~/.ssh/sshadd.sh
 sed -i.bak "s/github_com_git_ssh_1/$3/g" ~/.ssh/sshadd.sh
 sed -i.bak "s/your_webserver/$4/g" ~/.ssh/sshadd.sh
 sed -i.bak "s/your_username/$5/g" ~/.ssh/sshadd.sh
 
 sed -i.bak "s/info@your.mail/$1/g" ~/.ssh/rust_dev_pod_keys/config
-sed -i.bak "s/your_name/$2/g" ~/.ssh/rust_dev_pod_keys/config
+sed -i.bak "s/your_gitname/$2/g" ~/.ssh/rust_dev_pod_keys/config
 sed -i.bak "s/github_com_git_ssh_1/$3/g" ~/.ssh/rust_dev_pod_keys/config
 sed -i.bak "s/your_webserver/$4/g" ~/.ssh/rust_dev_pod_keys/config
 sed -i.bak "s/your_username/$5/g" ~/.ssh/rust_dev_pod_keys/config
