@@ -131,14 +131,13 @@ else
 fi
 
 if [ $write_to_config = "true" ]; then
-  echo "\033[0;33m    Add Host localhost_2201_rustdevuser_ssh_1 to ~/.ssh/config \033[0m"
+  echo "\033[0;33m    Add manually Host localhost_2201_rustdevuser_ssh_1 to config with 'nano ~/.ssh/config' \033[0m"
   echo 'Host localhost_2201_rustdevuser_ssh_1
 HostName localhost
 Port 2201
 User rustdevuser
 IdentityFile ~/.ssh/localhost_2201_rustdevuser_ssh_1
-IdentitiesOnly yes' | tee -a ~/.ssh/config
-  echo "| tee -a ~/.ssh/config"
+'
 fi
 
 echo " "

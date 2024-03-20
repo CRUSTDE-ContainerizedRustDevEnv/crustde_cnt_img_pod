@@ -12,8 +12,7 @@ echo "\033[0;33m    Bash script to install personal keys and setting into CRUSTD
 # 'info@your.mail', 'your_name', 'github_com_git_ssh_1', 'bestia_dev_luciano_bestia_ssh_1' and 'your_webserver'
 # with you personal data and file_names.
 # Warning: Once modified, don't share this file with anyone and don't push it to GitHub because it will contain your data.
-# Use the backup_personal_data_from_wsl_to_win.sh to backup this data into Windows folder. So it will be persistent also in 
-# the event that the WSL2 is reset.
+# Copy this data into Windows folder. So it will be persistent also in the event that the WSL2 is reset.
 
 echo " "
 echo "\033[0;33m    Set git personal information inside the container \033[0m"
