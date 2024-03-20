@@ -44,6 +44,8 @@ sed -i.bak "s/github_com_git_ssh_1/$3/g" ~/.ssh/sshadd.sh
 sed -i.bak "s/bestia_dev_luciano_bestia_ssh_1/$4/g" ~/.ssh/sshadd.sh
 
 sed -i.bak "s/your_webserver/$5/g" ~/.ssh/rust_dev_pod_keys/config
+sed -i.bak "s/github_com_git_ssh_1/$3/g" ~/.ssh/rust_dev_pod_keys/config
+sed -i.bak "s/bestia_dev_luciano_bestia_ssh_1/$4/g" ~/.ssh/rust_dev_pod_keys/config
 
 echo "\033[0;33m    Now you can install podman and setup the keys rust_dev_pod_keys."
 echo "\033[0;32m sh podman_install_and_setup.sh \033[0m"
