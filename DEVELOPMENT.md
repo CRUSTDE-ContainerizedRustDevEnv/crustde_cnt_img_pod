@@ -887,12 +887,12 @@ Use SCP for everything: yes
 In the same fashion we can use TotalCmd to manage the files on our web server over SSH:
 
 ```conf
-Connect to: bestia.dev
-User name: luciano_bestia
+Connect to: your_server
+User name: your_username
 Password: passcode of the private key
 Protect password with password manager: yes
-Public key: //wsl.localhost/Debian/home/luciano/.ssh/bestia_dev_luciano_bestia_ssh_1.pub
-Private key: //wsl.localhost/Debian/home/luciano/.ssh/bestia_dev_luciano_bestia_ssh_1
+Public key: //wsl.localhost/Debian/home/luciano/.ssh/your_webserver_your_username_ssh_1.pub
+Private key: //wsl.localhost/Debian/home/luciano/.ssh/your_webserver_your_username_ssh_1
 Use SCP for data transfer: no
 Use SCP for everything: no
 ```
