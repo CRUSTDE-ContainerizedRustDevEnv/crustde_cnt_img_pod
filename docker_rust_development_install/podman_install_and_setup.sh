@@ -113,40 +113,22 @@ curl -s  https://registry-1.docker.io/v2/ > /dev/null
 echo "\033[0;33m    That's it. The server certificate is now locally recognized. \033[0m"
 
 echo " "
-echo "\033[0;33m    8. Prepare the config file for VSCode SSH: \033[0m"
-echo "\033[0;33m    Check if the word rust_dev_vscode_cnt already exists in the config file. \033[0m"
-
-# write config for VSCode SSH extension
-echo "\033[0;33m    VSCode for Linux \033[0m"
-# if not WSL then use VSCode for Debian and they use slash
-write_to_config="false"
-if [ ! -f $HOME/.ssh/config ]; then
-  write_to_config="true"
-else
-  if grep -qi "Host localhost_2201_rustdevuser_ssh_1" "$HOME/.ssh/config"; then
-    echo "\033[0;33m    VSCode config for SSH already contains rust_dev_vscode_cnt. \033[0m"
-  else
-    write_to_config="true"
-  fi
-fi
-
-if [ $write_to_config = "true" ]; then
-  echo "\033[0;33m    Add manually Host localhost_2201_rustdevuser_ssh_1 to config with 'nano ~/.ssh/config' \033[0m"
-  echo 'Host localhost_2201_rustdevuser_ssh_1
-HostName localhost
-Port 2201
-User rustdevuser
-IdentityFile ~/.ssh/localhost_2201_rustdevuser_ssh_1
+echo "\033[0;33m    8. Prepare the config file for VSCode SSH. \033[0m"
+echo "\033[0;33m    If needed add manually to ~/.ssh/config (Windows or Linux, where VSCode is installed) \033[0m"
+echo 'Host localhost_2201_rustdevuser_ssh_1
+   HostName localhost
+   Port 2201
+   User rustdevuser
+   IdentityFile ~/.ssh/localhost_2201_rustdevuser_ssh_1
 '
-fi
-
-echo " "
-echo "\033[0;33m    Installing Podman and setup is finished. \033[0m"
 
 echo " "
 echo "\033[0;33m    VSCode uses the file ~/.ssh/known_hosts to allow or disallow SSH connection to a server. Also to CRUSTDE container. \033[0m"
 echo "\033[0;33m    If it finds some old fingerprint from the server it will just error on connection without telling the cause. \033[0m"
 echo "\033[0;33m    Try renaming the file to known_hosts.bak and VSCode will just ask if the new fingerprint are correct and create a new known_hosts file. \033[0m"
+
+echo " "
+echo "\033[0;33m    Installing Podman and setup is finished. \033[0m"
 
 echo ""
 echo "\033[0;33m    Now you can create the pod rust_dev_pod. \033[0m"
