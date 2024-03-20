@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# ~/.ssh/sshadd.sh
+# ~/.ssh/sshadd.sh for container
 # Inside this template, replace the words github_com_git_ssh_1 and your_key_for_webserver_ssh_1 
 # with your identity file names for the ssh private key.
 
