@@ -55,18 +55,18 @@ if echo "$PWD" | grep -q '/rustprojects/docker_rust_development_install'; then
         echo " " 
         echo "\033[0;33m    3. Inside ~/.ssh you will need 2 keys, one to access Github and the second to access your web server virtual machine. \033[0m"
         echo "\033[0;33m    You should already have these keys in your encrypted vault and you just need to copy them into the ~/.ssh folder. \033[0m"
-        echo "\033[0;33m    I will call these keys github_com_git_ssh_1 and your_webserver_your_username_ssh_1, but you can have other names. \033[0m"
+        echo "\033[0;33m    I will call these keys github_com_git_ssh_1 and your_key_for_webserver_ssh_1, but you can have other names. \033[0m"
         echo "\033[0;33m    Modify accordingly to your locations and run these commands. \033[0m"
         echo "\033[0;32m mkdir ~/.ssh; \033[0m"
         echo "\033[0;32m chmod 700 ~/.ssh; \033[0m"
-        echo "\033[0;32m   Copy your private and public key files into ~/.ssh \033[0m"
+        echo "\033[0;33m   Copy your private and public key files into ~/.ssh \033[0m"
         
         echo " "
-        echo "\033[0;33m    4. Now you can run the first script with 5 parameters.  \033[0m"
+        echo "\033[0;33m    4. Now you can run the first script with 6 parameters.  \033[0m"
         echo "\033[0;33m    Change the parameters with your personal data. They are needed for the container.  \033[0m"
         echo "\033[0;33m    The files will be stored in ~/.ssh for later use. \033[0m"
         echo "\033[0;33m    Then follow the instructions from the next script. \033[0m"
-        echo "\033[0;32m sh store_personal_keys_and_settings.sh info@your.mail your_gitname github_com_git_ssh_1 your_webserver your_username; \033[0m"
+        echo "\033[0;32m sh store_personal_keys_and_settings.sh info@your.mail your_gitname github_com_git_ssh_1 your_webserver your_username your_key_for_webserver_ssh_1; \033[0m"
     fi
 else
     echo " "

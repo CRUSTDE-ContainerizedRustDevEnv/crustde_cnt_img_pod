@@ -33,12 +33,12 @@ podman exec --user=rustdevuser rust_dev_vscode_cnt chmod 600 /home/rustdevuser/.
 echo "\033[0;33m    podman cp ~/.ssh/github_com_git_ssh_1.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/github_com_git_ssh_1.pub \033[0m"
 podman cp ~/.ssh/github_com_git_ssh_1.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/github_com_git_ssh_1.pub
 
-echo "\033[0;33m    podman cp ~/.ssh/your_webserver_your_username_ssh_1 rust_dev_vscode_cnt:/home/rustdevuser/.ssh/your_webserver_your_username_ssh_1 \033[0m"
-podman cp ~/.ssh/your_webserver_your_username_ssh_1 rust_dev_vscode_cnt:/home/rustdevuser/.ssh/your_webserver_your_username_ssh_1
-echo "\033[0;33m    podman exec --user=rustdevuser rust_dev_vscode_cnt chmod 600 /home/rustdevuser/.ssh/your_webserver_your_username_ssh_1 \033[0m"
-podman exec --user=rustdevuser rust_dev_vscode_cnt chmod 600 /home/rustdevuser/.ssh/your_webserver_your_username_ssh_1
-echo "\033[0;33m    podman cp ~/.ssh/your_webserver_your_username_ssh_1.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/your_webserver_your_username_ssh_1.pub \033[0m"
-podman cp ~/.ssh/your_webserver_your_username_ssh_1.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/your_webserver_your_username_ssh_1.pub
+echo "\033[0;33m    podman cp ~/.ssh/your_key_for_webserver_ssh_1 rust_dev_vscode_cnt:/home/rustdevuser/.ssh/your_key_for_webserver_ssh_1 \033[0m"
+podman cp ~/.ssh/your_key_for_webserver_ssh_1 rust_dev_vscode_cnt:/home/rustdevuser/.ssh/your_key_for_webserver_ssh_1
+echo "\033[0;33m    podman exec --user=rustdevuser rust_dev_vscode_cnt chmod 600 /home/rustdevuser/.ssh/your_key_for_webserver_ssh_1 \033[0m"
+podman exec --user=rustdevuser rust_dev_vscode_cnt chmod 600 /home/rustdevuser/.ssh/your_key_for_webserver_ssh_1
+echo "\033[0;33m    podman cp ~/.ssh/your_key_for_webserver_ssh_1.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/your_key_for_webserver_ssh_1.pub \033[0m"
+podman cp ~/.ssh/your_key_for_webserver_ssh_1.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/your_key_for_webserver_ssh_1.pub
 
 echo "\033[0;33m    podman exec --user=rustdevuser rust_dev_vscode_cnt ls -la /home/rustdevuser/.ssh \033[0m"
 podman exec --user=rustdevuser rust_dev_vscode_cnt ls -la /home/rustdevuser/.ssh

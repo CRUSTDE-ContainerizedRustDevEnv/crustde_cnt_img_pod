@@ -891,8 +891,8 @@ Connect to: your_server
 User name: your_username
 Password: passcode of the private key
 Protect password with password manager: yes
-Public key: //wsl.localhost/Debian/home/luciano/.ssh/your_webserver_your_username_ssh_1.pub
-Private key: //wsl.localhost/Debian/home/luciano/.ssh/your_webserver_your_username_ssh_1
+Public key: //wsl.localhost/Debian/home/luciano/.ssh/your_key_for_webserver_ssh_1.pub
+Private key: //wsl.localhost/Debian/home/luciano/.ssh/your_key_for_webserver_ssh_1
 Use SCP for data transfer: no
 Use SCP for everything: no
 ```
