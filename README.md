@@ -51,51 +51,15 @@ This project has also a YouTube video tutorial. Watch it:
 [<img src="https://bestia.dev/youtube/docker_rust_development.jpg" width="400px">](https://bestia.dev/youtube/docker_rust_development.html)
 <!-- markdownlint-enable MD033 -->
 
-Now we can use `CRUSTDE - Containerized Rust Development Environment` in VSCode.  
-
-1\. Open VSCode and install extension `Remote - SSH`.
-
-2\. Then in VSCode `F1`, type `ssh` and choose `Remote-SSH: Connect to Host...` and choose `rust_dev_vscode_cnt`.  
-Choose `Linux` if asked, just the first time.  
-Type your passphrase.  
-If we are lucky, everything works and you are now inside the container over SSH.
-
-3\. In the `VSCode terminal` create a simple Rust project and run it:
+Now we can use `CRUSTDE - Containerized Rust Development Environment` from VSCode. The extension `Remote SSH` must be installed. The `~/.ssh/config`
+must be set as shown by the installation scripts.  
+Open `git-bash` terminal and run VSCode to open a folder inside the container:
 
 ```bash
-cd ~/rustprojects
-cargo new rust_dev_hello
-cd rust_dev_hello
-cargo run
+MSYS_NO_PATHCONV=1 code --remote ssh-remote+localhost_2201_rustdevuser_ssh_1 /home/rustdevuser/rustprojects
 ```
 
-That should work and greet you with "Hello, world!"
-
-4\. After reboot, WSL2 can create some network problems for Podman.  
-No problem for Debian on bare metal. But the script is ok to restart the pod and start the `sshd server`.  
-So use it in both cases.  
-We can simulate the WSL2 reboot in `Powershell in Windows`:
-
-```powershell
-wsl --shutdown 
-```
-
-Before entering any Podman command we need first to clean some temporary files, restart the pod and restart the SSH server.  
-In the `host terminal` restart the pod after reboot:
-
-```bash
-sh ~/rustprojects/docker_rust_development_install/rust_dev_pod_after_reboot.sh
-podman ps
-```
-
-If the restart is successful every container will be started in a few seconds. It is not enough for containers to be in the status "created". Then just repeat the restart procedure.
-
-5\. Eventually you will want to remove the entire pod. Linux OCI containers and pods are ephemeral, which means just temporary. But your code and data must persist. Before destroying the pod/containers, push your changes to GitHub because removing the pod will destroy also all the data that is inside. Be careful!  
-In the `WSL2 terminal`:
-
-```bash
-podman pod rm -f rust_dev_pod 
-```
+If VSCode cannot connect to the container 99% is to blame the `~/.ssh/known_hosts` file. Try to rename it to `known_hosts.bak` and retry.
 
 ## Motivation
 
