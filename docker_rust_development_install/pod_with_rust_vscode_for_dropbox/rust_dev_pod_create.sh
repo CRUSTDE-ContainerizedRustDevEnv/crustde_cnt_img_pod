@@ -113,8 +113,8 @@ ssh-keygen -f ~/.ssh/known_hosts -R "[localhost]:2201";
 echo "\033[0;33m    Copy the personal files, SSH keys for github or publish-to-web,... \033[0m"
 sh ~/.ssh/rust_dev_pod_keys/personal_keys_and_settings.sh
 
-echo "\033[0;33m    Fill the ~/.ssh/known_hosts with public fingerprints from github.com \033[0m"
-podman exec --user=rustdevuser rust_dev_vscode_cnt /bin/sh -c 'ssh-keyscan -H github.com >> ~/.ssh/known_hosts'
+# echo "\033[0;33m    Fill the ~/.ssh/known_hosts with public fingerprints from github.com \033[0m"
+# podman exec --user=rustdevuser rust_dev_vscode_cnt /bin/sh -c 'ssh-keyscan -H github.com >> ~/.ssh/known_hosts'
 
 echo " "
 echo "\033[0;33m    To start this 'pod' it is mandatory to run this bash script (after every reboot just once):  \033[0m"
