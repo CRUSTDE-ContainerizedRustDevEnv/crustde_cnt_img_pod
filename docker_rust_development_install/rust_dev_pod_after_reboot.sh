@@ -47,7 +47,7 @@ echo "\033[0;32m MSYS_NO_PATHCONV=1 code --remote ssh-remote+localhost_2201_rust
 echo "\033[0;33m    It will ask for the ssh passphrase. \033[0m"
 
 echo " "
-echo "\033[0;33m    If VSCode cannot connect to the container, it is 99% blame on the .ssh/known_host file. \033[0m"
+echo "\033[0;33m    If VSCode cannot connect to the container, it is 99% blame on the ~/.ssh/known_hosts file. \033[0m"
 echo "\033[0;33m    There is an old fingerprint of the server. Rename the file to known_hosts.bak and retry. \033[0m"
 
 echo " "
@@ -56,7 +56,7 @@ echo "\033[0;33m    If you need to allow more, modify the etc_squid_squid.conf f
 echo "\033[0;32m sh copy_squid_config_and_restart_cnt.sh  \033[0m"
 
 echo " "
-echo "\033[0;33m    Be sure to push your code to GitHub frequently because sometimes containers just stop to work. \033[0m"
+echo "\033[0;33m    Be sure to push your code to GitHub frequently because sometimes containers just stop working. \033[0m"
 echo "\033[0;33m    You can delete the pod and ALL of the DATA it contains: \033[0m"
 echo "\033[0;32m podman pod rm -f rust_dev_pod \033[0m"
 
