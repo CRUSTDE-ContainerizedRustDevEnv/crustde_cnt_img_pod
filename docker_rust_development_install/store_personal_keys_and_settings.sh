@@ -32,7 +32,7 @@ mkdir -p ~/.ssh/rust_dev_pod_keys/
 
 cp personal_keys_and_settings_template.sh ~/.ssh/rust_dev_pod_keys/personal_keys_and_settings.sh
 cp sshadd_template.sh ~/.ssh/sshadd.sh
-cp ssh_config_template ~/.ssh/rust_dev_pod_keys/config
+cp ssh_config.ssh_config ~/.ssh/rust_dev_pod_keys/config
 
 sed -i.bak "s/info@your.mail/$1/g" ~/.ssh/rust_dev_pod_keys/personal_keys_and_settings.sh
 sed -i.bak "s/your_name/$2/g" ~/.ssh/rust_dev_pod_keys/personal_keys_and_settings.sh
