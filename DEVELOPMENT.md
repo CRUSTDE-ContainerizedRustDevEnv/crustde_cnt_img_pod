@@ -887,7 +887,7 @@ Use SCP for everything: yes
 In the same fashion we can use TotalCmd to manage the files on our web server over SSH:
 
 ```conf
-Connect to: your_server
+Connect to: your_webserver
 User name: your_username
 Password: passcode of the private key
 Protect password with password manager: yes

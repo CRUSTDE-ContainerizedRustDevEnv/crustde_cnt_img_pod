@@ -18,7 +18,7 @@ cat ~/.ssh/config | grep -q "~/.ssh/your_key_for_webserver_ssh_1" || echo "The ~
 # add if key not yet exist in ssh-agent for git@github.com
 ssh-add -l | grep -q `ssh-keygen -lf ~/.ssh/github_com_git_ssh_1 | awk '{print $2}'` || ssh-add -t 1h ~/.ssh/github_com_git_ssh_1
 
-# add if key not yet exist in ssh-agent for your_username@your_server
+# add if key not yet exist in ssh-agent for your_username@your_webserver
 ssh-add -l | grep -q `ssh-keygen -lf ~/.ssh/your_key_for_webserver_ssh_1 | awk '{print $2}'` || ssh-add -t 1h ~/.ssh/your_key_for_webserver_ssh_1
 
 echo "  \033[33m The keys are set to expire in 1 hour. \033[0m"

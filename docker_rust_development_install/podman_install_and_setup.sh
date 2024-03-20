@@ -114,7 +114,14 @@ echo "\033[0;33m    That's it. The server certificate is now locally recognized.
 
 echo " "
 echo "\033[0;33m    8. Prepare the config file for VSCode SSH. \033[0m"
-echo "\033[0;33m    If needed add manually to ~/.ssh/config (Windows or Linux, where VSCode is installed) \033[0m"
+echo "\033[0;33m    If needed add manually to ~/.ssh/config in Windows \033[0m"
+echo 'Host localhost_2201_rustdevuser_ssh_1
+   HostName localhost
+   Port 2201
+   User rustdevuser
+   IdentityFile //wsl.localhost/Debian/home/luciano/.ssh/localhost_2201_rustdevuser_ssh_1
+'
+echo "\033[0;33m    If needed add manually to ~/.ssh/config in Linux \033[0m"
 echo 'Host localhost_2201_rustdevuser_ssh_1
    HostName localhost
    Port 2201
@@ -134,7 +141,8 @@ echo ""
 echo "\033[0;33m    Now you can create the pod rust_dev_pod. \033[0m"
 echo "\033[0;33m    On first run it will download 1.06 GB from DockerHub, unpack to 3.32 GB and store it in the cache folder. \033[0m"
 echo "\033[0;33m    After that, follow the detailed instructions. \033[0m"
-echo "\033[0;32m sh ~/rustprojects/docker_rust_development_install/pod_with_rust_vscode/rust_dev_pod_create.sh \033[0m"
+echo "\033[0;32m cd ~/rustprojects/docker_rust_development_install/pod_with_rust_vscode \033[0m"
+echo "\033[0;32m sh rust_dev_pod_create.sh \033[0m"
 
 echo ""
 echo "\033[0;33m    Check if the containers are started correctly \033[0m"

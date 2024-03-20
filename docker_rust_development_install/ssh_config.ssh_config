@@ -4,6 +4,6 @@ Host github_com_git_ssh_1
     IdentityFile ~/.ssh/github_com_git_ssh_1
 	
 Host your_key_for_webserver_ssh_1
-    HostName your_server
+    HostName your_webserver
     User your_username
     IdentityFile ~/.ssh/your_key_for_webserver_ssh_1
