@@ -40,33 +40,21 @@ else
 fi
 
 echo " " 
-if [ ! -f ~/.ssh/rustdevuser_rsa_key ]; then
-  echo "\033[0;33m    3. Generating rustdevuser_rsa_key for the identity of 'rustdevuser'  \033[0m"
-  echo "\033[0;33m    because dbl_commander cannot use the ed25519 key. \033[0m"
-  echo "\033[0;33m    Give it the same passphrase and remember it, you will need it. \033[0m"
-  echo "ssh-keygen -t rsa -b 4096 -m PEM -C rustdevuser@rust_dev_pod -f ~/.ssh/rustdevuser_rsa_key"
-  ssh-keygen -t rsa -b 4096 -m PEM -C rustdevuser@rust_dev_pod -f ~/.ssh/rustdevuser_rsa_key
-  chmod 600 $HOME/.ssh/rustdevuser_rsa_key
-else 
-  echo "\033[0;33m    3. SSH key rustdevuser_rsa_key already exists. \033[0m"
-fi
-
-echo " " 
 if [ ! -f ~/.ssh/rust_dev_pod_keys/etc/ssh/ssh_host_ed25519_key ]; then
-  echo "\033[0;33m    4. Generating ssh_host_ed25519_key for 'SSH server' identity of the container. \033[0m"
+  echo "\033[0;33m    3. Generating ssh_host_ed25519_key for 'SSH server' identity of the container. \033[0m"
   echo "ssh-keygen -A -f ~/.ssh/rust_dev_pod_keys"
   ssh-keygen -A -f ~/.ssh/rust_dev_pod_keys  
 else 
-  echo "\033[0;33m    4. SSH key ssh_host_ed25519_key already exists. \033[0m"
+  echo "\033[0;33m    3. SSH key ssh_host_ed25519_key already exists. \033[0m"
 fi
 
 echo " " 
 if ! [ -x "$(command -v podman)" ]; then
-  echo "\033[0;33m    5. Installing Podman: \033[0m"
+  echo "\033[0;33m    4. Installing Podman: \033[0m"
   echo "sudo apt-get install -y podman"
   sudo apt-get install -y podman
 else
-  echo "\033[0;33m    5. Podman is already installed. \033[0m"
+  echo "\033[0;33m    4. Podman is already installed. \033[0m"
 fi
 
 echo " " 
