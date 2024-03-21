@@ -992,4 +992,3 @@ echo "none  /tmp  tmpfs  defaults  0 0" | sudo tee -a /etc/fstab
 sudo mkdir /tmp
 sudo chmod 1777 /tmp
 ```
-
