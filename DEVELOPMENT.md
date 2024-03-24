@@ -713,19 +713,13 @@ Leave VSCode open because the next chapter will continue from here.
 
 ## Open the VSCode project from git-bash in Windows
 
-You can call directly an existing VSCode project inside the CRUSTDE container from the Linux host when VSCode is installed in Linux
-
-```bash
-code --remote ssh-remote+localhost_2201_rustdevuser_ssh_1 /home/rustdevuser/rustprojects
-```
-
-or from the Windows git-bash when VSCode is installed in Windows:
+You can connect to an existing VSCode project inside the CRUSTDE container from the host:
 
 ```bash
 MSYS_NO_PATHCONV=1 code --remote ssh-remote+localhost_2201_rustdevuser_ssh_1 /home/rustdevuser/rustprojects
 ```
 
-The MSYS_NO_PATHCONV is used to disable the translation of Linux path with Windows paths. git-bash does that by default.
+In Windows `git-bash`, the MSYS_NO_PATHCONV is used to disable the default path conversion.
 
 ## GitHub in the container
 

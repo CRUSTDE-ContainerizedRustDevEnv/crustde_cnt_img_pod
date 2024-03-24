@@ -40,11 +40,9 @@ echo "\033[0;33m    The prompt should change to: rustdevuser@rust_dev_pod:~$ \03
 echo "\033[0;32m exit \033[0m"
 
 echo " "
-echo "\033[0;33m    You can open VSCode directly on an existing project inside the container from the Linux host: \033[0m"
-echo "\033[0;32m code --remote ssh-remote+localhost_2201_rustdevuser_ssh_1 /home/rustdevuser/rustprojects \033[0m"
-echo "\033[0;33m    Or from git-bash in Windows: \033[0m"
+echo "\033[0;33m    You can connect VSCode to an existing project inside the container from the host: \033[0m"
 echo "\033[0;32m MSYS_NO_PATHCONV=1 code --remote ssh-remote+localhost_2201_rustdevuser_ssh_1 /home/rustdevuser/rustprojects \033[0m"
-echo "\033[0;33m    It will ask for the ssh passphrase. \033[0m"
+echo "\033[0;33m    In Windows 'git-bash', the MSYS_NO_PATHCONV is used to disable the default path conversion. \033[0m"
 
 echo " "
 echo "\033[0;33m    If VSCode cannot connect to the container, it is 99% blame on the ~/.ssh/known_hosts file. \033[0m"
