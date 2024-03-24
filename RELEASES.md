@@ -11,9 +11,9 @@ The TODO section is part of the [README.md](https://github.com/CRUSTDE-Container
 
 ## 2024-02-13 3ff4aa2
 
-docker pull bestiadev/rust_dev_cargo_img:cargo-1.76.0  
-docker pull bestiadev/rust_dev_cross_img:cargo-1.76.0  
-docker pull bestiadev/rust_dev_vscode_img:vscode-1.86.1  
+docker pull bestiadev/rust_dev_cargo_img:cargo-1.77.0  
+docker pull bestiadev/rust_dev_cross_img:cargo-1.77.0  
+docker pull bestiadev/rust_dev_vscode_img:vscode-1.87.2  
 
 ## 2023-12-21 6555455
 
