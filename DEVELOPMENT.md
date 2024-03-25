@@ -123,16 +123,16 @@ In the bash terminal pull the image from the Docker hub:
 podman pull docker.io/library/debian:bookworm-slim
 ```
 
-I wrote the bash script `rust_dev_cargo_img.sh`
+I wrote the bash script `crustde_cargo_img.sh`
 
 Run it with
 
 ```bash
-cd ~/rustprojects/docker_rust_development/create_and_push_container_images 
-sh rust_dev_cargo_img.sh
+cd ~/rustprojects/crustde_cnt_img_pod/create_and_push_container_images 
+sh crustde_cargo_img.sh
 ```
 
-This will create the image `rust_dev_cargo_img`.
+This will create the image `crustde_cargo_img`.
 
 The scripts are just bash scripts and are super easy to read, follow, learn and modify. Much easier than Dockerfile. You can even run the commands one by one in the `bash terminal` and inspect the container to debug the building process.
 
@@ -144,13 +144,13 @@ We also don't want to make any changes to our system because of Rust tools or ou
 We can have simultaneously more containers, each with a different version of Rust or a different toolchain with all the necessary configuration and tools. We can easily transfer the container to another system or another developer and use it exactly as it is configured. Effortlessly.  
 We can save/export the container into an image with the source code and the exact state of all developer tools for a particular app version. Then years later we can still work on it for some security patches without the fear that new tools will break the old source code.  
 You will see that everybody uses `podman run`, but this is essentially 4 commands in one: `pull` the image from a repository, `create` the container, `start` or `attach` to the container and exec the bash in interactive mode. I like to use these commands separately because it makes more sense for learning.  
-Create the container with a fixed name `rust_dev_cargo_cnt`:
+Create the container with a fixed name `crustde_cargo_cnt`:
 
---name - the container name will be `rust_dev_cargo_cnt`  
+--name - the container name will be `crustde_cargo_cnt`  
 -ti - we will use the container interactively in the terminal  
 
 ```bash
-podman create -ti --name rust_dev_cargo_cnt docker.io/bestiadev/rust_dev_cargo_img:latest
+podman create -ti --name crustde_cargo_cnt docker.io/bestiadev/crustde_cargo_img:latest
 ```
 
 We can list the existing containers with:
@@ -162,14 +162,14 @@ podman ps -a
 Now we can start the container:
 
 ```bash
-podman start rust_dev_cargo_cnt
+podman start crustde_cargo_cnt
 ```
 
 Open the bash to interact with the `container terminal`:  
 -it - interactive terminal
 
 ```bash
-podman exec -it rust_dev_cargo_cnt bash
+podman exec -it crustde_cargo_cnt bash
 ```
 
 We are now inside the `container terminal` and we can use `cargo`, `rustup` and other rust tools. The files we create will be inside the container. We are `rustdevuser` inside this container, so we will put our rustprojects in the `/home/rustdevuser/rustprojects` directory.  
@@ -186,8 +186,8 @@ Let's create and run a small Rust program:
 
 ```bash
 cd ~/rustprojects
-cargo new rust_dev_hello
-cd rust_dev_hello
+cargo new crustde_hello
+cd crustde_hello
 cargo run
 ```
 
@@ -200,13 +200,13 @@ exit
 
 When we exited the container we returned to the `host terminal` of the Debian host.  
 The container still exists and is still running. Check with `podman ps -a`.  
-To interact with it again, repeat the previous command `podman exec -it rust_dev_cargo_cnt bash`.  
+To interact with it again, repeat the previous command `podman exec -it crustde_cargo_cnt bash`.  
 This container does not work with VSCode and we will not need it anymore. If you use another editor, you can use this image/container as a base for your image/container for your editor.
 
 Remove the container with:
 
 ```bash
-podman rm rust_dev_cargo_cnt -f
+podman rm crustde_cargo_cnt -f
 ```
 
 ## How to install the "mold linker"
@@ -220,11 +220,11 @@ and extract only the `mold` binary executable into `~`.
 Copy it as root into `/usr/bin` and adjust ownership and permissions:
 
 ```bash
-podman exec --user=root rust_dev_vscode_cnt  curl -L https://github.com/rui314/mold/releases/download/v2.30.0/mold-2.30.0-x86_64-linux.tar.gz --output /tmp/mold.tar.gz
-podman exec --user=root rust_dev_vscode_cnt  tar --no-same-owner -xzv --strip-components=2 -C /usr/bin -f /tmp/mold.tar.gz --wildcards */bin/mold
-podman exec --user=root rust_dev_vscode_cnt rm /tmp/mold.tar.gz
-podman exec --user=root rust_dev_vscode_cnt    chown root:root /usr/bin/mold
-podman exec --user=root rust_dev_vscode_cnt    chmod 755 /usr/bin/mold
+podman exec --user=root crustde_vscode_cnt  curl -L https://github.com/rui314/mold/releases/download/v2.30.0/mold-2.30.0-x86_64-linux.tar.gz --output /tmp/mold.tar.gz
+podman exec --user=root crustde_vscode_cnt  tar --no-same-owner -xzv --strip-components=2 -C /usr/bin -f /tmp/mold.tar.gz --wildcards */bin/mold
+podman exec --user=root crustde_vscode_cnt rm /tmp/mold.tar.gz
+podman exec --user=root crustde_vscode_cnt    chown root:root /usr/bin/mold
+podman exec --user=root crustde_vscode_cnt    chmod 755 /usr/bin/mold
 ```
 
 Create or modify the global `config.toml` file that will be used for all rust builds:
@@ -242,20 +242,20 @@ rustflags = ["-C", "link-arg=-B/home/rustdevuser/.cargo/bin/mold"]
 
 ## Linux Oci image for cross-compile to Linux, Windows, WASI and WASM
 
-I wrote the bash script `rust_dev_cross_img.sh`
+I wrote the bash script `crustde_cross_img.sh`
 
 Run it with
 
 ```bash
-cd ~/rustprojects/docker_rust_development/create_and_push_container_images 
-sh rust_dev_cross_img.sh
+cd ~/rustprojects/crustde_cnt_img_pod/create_and_push_container_images 
+sh crustde_cross_img.sh
 ```
 
-This will create the image `rust_dev_cross_img`.
+This will create the image `crustde_cross_img`.
 
 ## Cross-compile for Windows
 
-I added to the image `rust_dev_cross_img` the target and needed utilities for cross-compiling to Windows.  
+I added to the image `crustde_cross_img` the target and needed utilities for cross-compiling to Windows.  
 It is nice for some programs to compile the executables both for Linux and Windows.  
 This is now simple to cross-compile with this command:  
 
@@ -265,18 +265,18 @@ cargo build --target x86_64-pc-windows-gnu
 
 The result will be in the folder `target/x86_64-pc-windows-gnu/debug`.  
 You can then copy this file from the container to the host system.  
-Run inside the host system (example for the simple rust_dev_hello project):  
+Run inside the host system (example for the simple crustde_hello project):  
 
 ```bash
-mkdir -p ~/rustprojects/rust_dev_hello/win
-podman cp rust_dev_cross_cnt:/home/rustdevuser/rustprojects/rust_dev_hello/target/x86_64-pc-windows-gnu/debug/rust_dev_hello.exe ~/rustprojects/rust_dev_hello/win/rust_dev_hello.exe
+mkdir -p ~/rustprojects/crustde_hello/win
+podman cp crustde_cross_cnt:/home/rustdevuser/rustprojects/crustde_hello/target/x86_64-pc-windows-gnu/debug/crustde_hello.exe ~/rustprojects/crustde_hello/win/crustde_hello.exe
 ```
 
 Now in the host system (Linux) you can copy this file (somehow) to your Windows system and run it there. It works.
 
 ## Cross-compile for Musl (standalone executable 100% statically linked)
 
-I added to the image `rust_dev_cross_img` the target and needed utilities for cross-compiling to Musl.  
+I added to the image `crustde_cross_img` the target and needed utilities for cross-compiling to Musl.  
 These executables are 100% statically linked and don't need any other dynamic library.  
 Using a container to publish your executable to a server makes distribution and isolation much easier.  
 These executables can run on the empty container `scratch`.  
@@ -289,11 +289,11 @@ cargo build --target x86_64-unknown-linux-musl
 
 The result will be in the folder `target/x86_64-unknown-linux-musl/debug`.  
 You can then copy this file from the container to the host system.  
-Run inside the host system (example for the simple rust_dev_hello project):
+Run inside the host system (example for the simple crustde_hello project):
 
 ```bash
-mkdir -p ~/rustprojects/rust_dev_hello/musl
-podman cp rust_dev_cross_cnt:/home/rustdevuser/rustprojects/rust_dev_hello/target/x86_64-unknown-linux-musl/debug/rust_dev_hello ~/rustprojects/rust_dev_hello/musl/rust_dev_hello
+mkdir -p ~/rustprojects/crustde_hello/musl
+podman cp crustde_cross_cnt:/home/rustdevuser/rustprojects/crustde_hello/target/x86_64-unknown-linux-musl/debug/crustde_hello ~/rustprojects/crustde_hello/musl/crustde_hello
 ```
 
 First let's make an empty `scratch` container with only this executable:  
@@ -308,16 +308,16 @@ scratch
 buildah config \
 --author=github.com/bestia-dev \
 --label name=scratch_hello_world_img \
---label source=github.com/CRUSTDE-Containerized-Rust-Dev-Env/docker_rust_development \
+--label source=github.com/CRUSTDE-Containerized-Rust-Dev-Env/crustde_cnt_img_pod \
 scratch_hello_world_img
 
-buildah copy scratch_hello_world_img  ~/rustprojects/rust_dev_hello/musl/rust_dev_hello /rust_dev_hello
+buildah copy scratch_hello_world_img  ~/rustprojects/crustde_hello/musl/crustde_hello /crustde_hello
 
 buildah commit scratch_hello_world_img docker.io/bestiadev/scratch_hello_world_img
 
 # now run the container and executable
 
-podman run scratch_hello_world_img /rust_dev_hello
+podman run scratch_hello_world_img /crustde_hello
 ```
 
 We can create also a small Alpine container and copy this executable into it.  
@@ -332,18 +332,18 @@ docker.io/library/alpine
 buildah config \
 --author=github.com/bestia-dev \
 --label name=alpine_hello_world_img \
---label source=github.com/CRUSTDE-Containerized-Rust-Dev-Env/docker_rust_development \
+--label source=github.com/CRUSTDE-Containerized-Rust-Dev-Env/crustde_cnt_img_pod \
 alpine_hello_world_img
 
-buildah copy alpine_hello_world_img  ~/rustprojects/rust_dev_hello/musl/rust_dev_hello /usr/bin/rust_dev_hello
-buildah run --user root  alpine_hello_world_img    chown root:root /usr/bin/rust_dev_hello
-buildah run --user root  alpine_hello_world_img    chmod 755 /usr/bin/rust_dev_hello
+buildah copy alpine_hello_world_img  ~/rustprojects/crustde_hello/musl/crustde_hello /usr/bin/crustde_hello
+buildah run --user root  alpine_hello_world_img    chown root:root /usr/bin/crustde_hello
+buildah run --user root  alpine_hello_world_img    chmod 755 /usr/bin/crustde_hello
 
 buildah commit alpine_hello_world_img docker.io/bestiadev/alpine_hello_world_img
 
 # now run the container and executable
 
-podman run alpine_hello_world_img /usr/bin/rust_dev_hello
+podman run alpine_hello_world_img /usr/bin/crustde_hello
 ```
 
 The commands are similar for distroless static.  
@@ -358,16 +358,16 @@ gcr.io/distroless/static-debian12
 buildah config \
 --author=github.com/bestia-dev \
 --label name=distroless_hello_world_img \
---label source=github.com/CRUSTDE-Containerized-Rust-Dev-Env/docker_rust_development \
+--label source=github.com/CRUSTDE-Containerized-Rust-Dev-Env/crustde_cnt_img_pod \
 distroless_hello_world_img
 
-buildah copy distroless_hello_world_img  ~/rustprojects/rust_dev_hello/musl/rust_dev_hello /usr/bin/rust_dev_hello
+buildah copy distroless_hello_world_img  ~/rustprojects/crustde_hello/musl/crustde_hello /usr/bin/crustde_hello
 
 buildah commit distroless_hello_world_img docker.io/bestiadev/distroless_hello_world_img
 
 # now run the container and executable
 
-podman run distroless_hello_world_img /usr/bin/rust_dev_hello
+podman run distroless_hello_world_img /usr/bin/crustde_hello
 ```
 
 There is an example of this code in the folder `test_cross_compile`.
@@ -376,11 +376,11 @@ You can use this image for distribution of the program to your server. It is onl
 
 ## Cross-compile to Wasi
 
-I added to the image `rust_dev_cross_img` the target `wasm32-wasi` for cross-compiling to Wasi and the CLI wasmtime to run wasi programs.  
+I added to the image `crustde_cross_img` the target `wasm32-wasi` for cross-compiling to Wasi and the CLI wasmtime to run wasi programs.  
 
 ```bash
 cargo build --target wasm32-wasi
-wasmtime ./target/wasm32-wasi/debug/rust_dev_hello.wasm upper world
+wasmtime ./target/wasm32-wasi/debug/crustde_hello.wasm upper world
 ```
 
 We can also run this wasm program in the WASI playground at <https://runno.dev/wasi>.  
@@ -388,7 +388,7 @@ We can also run this wasm program in the WASI playground at <https://runno.dev/w
 ## Cross-compile to Wasm/Webassembly
 
 Rust is perfect for compiling to Wasm and run it inside the browser with no javascript at all!  
-I added to the image `rust_dev_cross_img` the utility `wasm-pack` for cross-compiling to Wasm/Webassembly.  
+I added to the image `crustde_cross_img` the utility `wasm-pack` for cross-compiling to Wasm/Webassembly.  
 It is an in-place substitute for the default `cargo` command:
 
 ```bash
@@ -400,15 +400,15 @@ wasm-pack build --release --target web
 I use VSCode as my primary code editor in Windows and in Debian GUI.  
 I will install the `Remote SSH` extension for remote development. That is very broadly usable. We need to create an image that contains the VSCode server and extensions.
 
-In the `host terminal` run the bash script `rust_dev_vscode_img.sh` It will create the image `rust_dev_vscode_img`.
+In the `host terminal` run the bash script `crustde_vscode_img.sh` It will create the image `crustde_vscode_img`.
 
 ```bash
-cd ~/rustprojects/docker_rust_development/create_and_push_container_images 
-sh rust_dev_vscode_img.sh
+cd ~/rustprojects/crustde_cnt_img_pod/create_and_push_container_images 
+sh crustde_vscode_img.sh
 ```
 
-This is based on the image `rust_dev_cargo_img` and adds the VSCode server and extensions.  
-VSCode is great because of its extensions. Most of these extensions are installed inside the image `rust_dev_vscode_img`:
+This is based on the image `crustde_cargo_img` and adds the VSCode server and extensions.  
+VSCode is great because of its extensions. Most of these extensions are installed inside the image `crustde_vscode_img`:
 
 - streetsidesoftware.code-spell-checker
 - rust-lang.rust-analyzer
@@ -417,31 +417,31 @@ VSCode is great because of its extensions. Most of these extensions are installe
 - lonefy.vscode-js-css-html-formatter
 - serayuzgur.crates
 
-Other extensions you can add manually through VSCode, but then it is not repeatable. Better is to modify the script and recreate the image `rust_dev_vscode_img.sh`.
+Other extensions you can add manually through VSCode, but then it is not repeatable. Better is to modify the script and recreate the image `crustde_vscode_img.sh`.
 
 ## Push the image to the Docker hub
 
 I signed in to hub.docker.com.  
 In Account Settings - Security I created an access token. This is the password for `podman login`. It is needed only once.  
-Then I created a new image repository with the name `rust_dev_vscode_img` and tagged it as the `latest`. Docker is helping with the push command syntax. I use `Podman`, so I just renamed `Docker` to `Podman`. The same for `rust_dev_squid_img`.  
+Then I created a new image repository with the name `crustde_vscode_img` and tagged it as the `latest`. Docker is helping with the push command syntax. I use `Podman`, so I just renamed `Docker` to `Podman`. The same for `crustde_squid_img`.  
 In `host terminal`:
 
 ```bash
 podman login --username bestiadev docker.io
 # type docker access token
 
-podman push docker.io/bestiadev/rust_dev_cargo_img:cargo-1.77.0
-podman push docker.io/bestiadev/rust_dev_cargo_img:latest
+podman push docker.io/bestiadev/crustde_cargo_img:cargo-1.77.0
+podman push docker.io/bestiadev/crustde_cargo_img:latest
 
-podman push docker.io/bestiadev/rust_dev_cross_img:cargo-1.77.0
-podman push docker.io/bestiadev/rust_dev_cross_img:latest
+podman push docker.io/bestiadev/crustde_cross_img:cargo-1.77.0
+podman push docker.io/bestiadev/crustde_cross_img:latest
 
-podman push docker.io/bestiadev/rust_dev_vscode_img:vscode-1.87.2
-podman push docker.io/bestiadev/rust_dev_vscode_img:cargo-1.77.0
-podman push docker.io/bestiadev/rust_dev_vscode_img:latest
+podman push docker.io/bestiadev/crustde_vscode_img:vscode-1.87.2
+podman push docker.io/bestiadev/crustde_vscode_img:cargo-1.77.0
+podman push docker.io/bestiadev/crustde_vscode_img:latest
 
-podman push docker.io/bestiadev/rust_dev_squid_img:squid-3.5.27-2
-podman push docker.io/bestiadev/rust_dev_squid_img:latest
+podman push docker.io/bestiadev/crustde_squid_img:squid-3.5.27-2
+podman push docker.io/bestiadev/crustde_squid_img:latest
 ```
 
 It takes some time to upload more than 3 GB with my slow internet connection.
@@ -452,7 +452,7 @@ Sometimes you need to do something as `root`.
 You don't need to use `sudo`. It is not installed. Just open the container `bash` as `root` user.  
 
 ```bash
-podman exec -it --user root rust_dev_vscode_cnt bash
+podman exec -it --user root crustde_vscode_cnt bash
 ```
 
 ## Image sizes
@@ -472,9 +472,9 @@ Docker Hub stores compressed images, so they are a third of the size to download
 
 | Image                                    | Label          | Size         | compressed  |
 | ---------------------------------------- | -------------- |------------- | ----------- |
-| docker.io/bestiadev/rust_dev_cargo_img   | cargo-1.77.0   | 1.28 GB      | 0.45 GB     |
-| docker.io/bestiadev/rust_dev_cross_img   | cargo-1.77.0   | 3.03 GB      | 0.98 GB     |
-| docker.io/bestiadev/rust_dev_vscode_img  | cargo-1.77.0   | 3.32 GB      | 1.06 GB     |
+| docker.io/bestiadev/crustde_cargo_img   | cargo-1.77.0   | 1.28 GB      | 0.45 GB     |
+| docker.io/bestiadev/crustde_cross_img   | cargo-1.77.0   | 3.03 GB      | 0.98 GB     |
+| docker.io/bestiadev/crustde_vscode_img  | cargo-1.77.0   | 3.32 GB      | 1.06 GB     |
 
 ## Users keys for SSH
 
@@ -486,8 +486,8 @@ In `host terminal`:
 ssh-keygen -f ~/.ssh/localhost_2201_rustdevuser_ssh_1 -t ed25519 -C "info@my.domain"
 # give it a passphrase and remember it, you will need it
 # generate host key
-mkdir -p ~/.ssh/rust_dev_pod_keys/etc/ssh
-ssh-keygen -A -f ~/.ssh/rust_dev_pod_keys
+mkdir -p ~/.ssh/crustde_pod_keys/etc/ssh
+ssh-keygen -A -f ~/.ssh/crustde_pod_keys
 
 # check the new files
 # list user keys
@@ -496,7 +496,7 @@ ls -la ~/.ssh | grep "rustdevuser"
 # -rw-r--r-- 1 rustdevuser rustdevuser   569 Apr  3 12:03 localhost_2201_rustdevuser_ssh_1.pub
 
 # list host keys
-ls -la ~/.ssh/rust_dev_pod_keys/etc/ssh
+ls -la ~/.ssh/crustde_pod_keys/etc/ssh
 # -rw------- 1 rustdevuser rustdevuser 1381 Apr  4 10:44 ssh_host_dsa_key
 # -rw-r--r-- 1 rustdevuser rustdevuser  603 Apr  4 10:44 ssh_host_dsa_key.pub
 # -rw------- 1 rustdevuser rustdevuser  505 Apr  4 10:44 ssh_host_ecdsa_key
@@ -528,32 +528,32 @@ Some malware could want to "call home" and I will try to disable this.
 What I need is a "proxy" or "transparent proxy". I will use the leading open-source proxy `Squid`, but in a container.  
 It can restrict both HTTP and HTTPS outbound traffic to a given set of Internet domains while being fully transparent for instances in the private subnet.  
 <https://aws.amazon.com/blogs/security/how-to-add-dns-filtering-to-your-nat-instance-with-squid/>  
-I want to use this proxy for the container `rust_dev_vscode_cnt`. Container-to-container networking can be complex.  
+I want to use this proxy for the container `crustde_vscode_cnt`. Container-to-container networking can be complex.  
 Podman works with `pods`, that make networking easy. This is usually the simplest approach for two rootless containers to communicate. Putting them in a `pod` allows them to communicate directly over `localhost`.  
 First, create a modified image for Squid:
 
 ```bash
-cd ~/rustprojects/docker_rust_development/create_and_push_container_images 
-sh rust_dev_squid_img.sh
+cd ~/rustprojects/crustde_cnt_img_pod/create_and_push_container_images 
+sh crustde_squid_img.sh
 ```
 
-If you need, you can modify the file `etc_squid_squid.conf` to add more whitelisted domains. Then run `sh rust_dev_squid_img.sh` to build the modified image.  
-You can also add whitelisted domains later when you use the squid container. First modify the file `~/rustprojects/docker_rust_development/create_and_push_container_images/etc_squid_squid.con`. Then copy this file into the squid container:
+If you need, you can modify the file `etc_squid_squid.conf` to add more whitelisted domains. Then run `sh crustde_squid_img.sh` to build the modified image.  
+You can also add whitelisted domains later when you use the squid container. First modify the file `~/rustprojects/crustde_cnt_img_pod/create_and_push_container_images/etc_squid_squid.con`. Then copy this file into the squid container:
 
 ```bash
-podman cp ~/rustprojects/docker_rust_development/create_and_push_container_images/etc_squid_squid.conf rust_dev_squid_cnt:/etc/squid/squid.conf
+podman cp ~/rustprojects/crustde_cnt_img_pod/create_and_push_container_images/etc_squid_squid.conf crustde_squid_cnt:/etc/squid/squid.conf
 # Finally restart the squid container
-podman restart rust_dev_squid_cnt
+podman restart crustde_squid_cnt
 ```
 
 Watch the squid log if the access has been denied to some domains:
 
 ```bash
-podman exec rust_dev_squid_cnt cat /var/log/squid/access.log
-podman exec rust_dev_squid_cnt tail -f /var/log/squid/access.log
+podman exec crustde_squid_cnt cat /var/log/squid/access.log
+podman exec crustde_squid_cnt tail -f /var/log/squid/access.log
 ```
 
-Check later, if these env variables are set inside `rust_dev_vscode_cnt` bash terminal.  
+Check later, if these env variables are set inside `crustde_vscode_cnt` bash terminal.  
 These variables should be set when creating the pod.
 
 ```bash
@@ -566,13 +566,13 @@ export all_proxy='http://localhost:3128'
 
 ## One pod with 2 containers
 
-Podman and Kubernetes have the concept of pods, where more containers are tightly coupled. Here we will have the `rust_dev_vscode_cnt` that will use `rust_dev_squid_cnt` as a proxy. From the outside, the pod is like one entity with one address. All the network communication goes through the pod. Inside the pod, everything is in the `localhost` address. That makes it easy to configure.  
-Inside the container `rust_dev_vscode_cnt` I want that everything goes through the proxy. These env variables should do that: `http_proxy`, `https_proxy`,`all_proxy`.  
-Run the bash script to create a new pod `rust_dev_pod` with proxy settings:
+Podman and Kubernetes have the concept of pods, where more containers are tightly coupled. Here we will have the `crustde_vscode_cnt` that will use `crustde_squid_cnt` as a proxy. From the outside, the pod is like one entity with one address. All the network communication goes through the pod. Inside the pod, everything is in the `localhost` address. That makes it easy to configure.  
+Inside the container `crustde_vscode_cnt` I want that everything goes through the proxy. These env variables should do that: `http_proxy`, `https_proxy`,`all_proxy`.  
+Run the bash script to create a new pod `crustde_pod` with proxy settings:
 
 ```bash
-cd ~/rustprojects/docker_rust_development/docker_rust_development_install/pod_with_rust_vscode 
-sh rust_dev_pod_create.sh
+cd ~/rustprojects/crustde_cnt_img_pod/crustde_install/pod_with_rust_vscode 
+sh crustde_pod_create.sh
 ```
 
 The pod is now running:
@@ -621,7 +621,7 @@ Sometimes it is needed to debug the connection to the `ssh server` because the n
 From the `host terminal`, I enter the `container terminal` as `root`:  
 
 ```bash
-podman exec -it --user=root  rust_dev_vscode_cnt bash
+podman exec -it --user=root  crustde_vscode_cnt bash
 ```
 
 In `container terminal`:
@@ -677,7 +677,7 @@ Host localhost_2201_rustdevuser_ssh_1
 
 The big difference is only / or \ for the file path. Bad Windows!  
 Save and close.  
-Then in VSCode `F1`, type `ssh` and choose `Remote-SSH: Connect to Host...` and choose `rust_dev_vscode_cnt`.  
+Then in VSCode `F1`, type `ssh` and choose `Remote-SSH: Connect to Host...` and choose `crustde_vscode_cnt`.  
 Choose `Linux` and yes for the fingerprint if asked, just the first time.  
 Type your passphrase.  
 If we are lucky, everything works and VSCode is now inside the container over SSH.  
@@ -691,16 +691,16 @@ Inside the `VSCode terminal`, we will create a sample project:
 
 ```bash
 cd ~/rustprojects
-cargo new rust_dev_hello
+cargo new crustde_hello
 ```
 
 This easy command opens a new VSCode window exactly for this project/folder inside the container:
 
 ```bash
-code rust_dev_hello
+code crustde_hello
 ```
 
-A new VSCode window will open for the `rust_dev_hello` project. Because of the SSH communication, it asks for the passphrase again. You can close now all other VSCode windows.
+A new VSCode window will open for the `crustde_hello` project. Because of the SSH communication, it asks for the passphrase again. You can close now all other VSCode windows.
 
 Build and run the project in the `VSCode terminal`:
 
@@ -724,12 +724,12 @@ In Windows `git-bash`, the MSYS_NO_PATHCONV is used to disable the default path 
 ## GitHub in the container
 
 Download the template for the bash script from here:  
-[personal_keys_and_settings.sh](https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/docker_rust_development/blob/main/docker_rust_development_install/personal_keys_and_settings_template.sh)  
+[personal_keys_and_settings.sh](https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/crustde_cnt_img_pod/blob/main/crustde_install/personal_keys_and_settings_template.sh)  
 into Debian folder `~\.ssh`. It contains all the steps explained below. First, rename it to personal_keys_and_settings.sh. You have to personalize it with your personal data.  
 Run in `host terminal`:
 
 ```bash
-sh ~/.ssh/rust_dev_pod_keys/personal_keys_and_settings.sh
+sh ~/.ssh/crustde_pod_keys/personal_keys_and_settings.sh
 ```
 
 Manually step-by-step instructions that are inside the `personal_keys_and_settings.sh`.  
@@ -737,9 +737,9 @@ Git inside the container does not yet have your information, that it needs.
 In `host terminal`:
 
 ```bash
-podman exec --user=rustdevuser rust_dev_vscode_cnt git config --global user.email "info@your.mail"
-podman exec --user=rustdevuser rust_dev_vscode_cnt git config --global user.name "your_gitname"
-podman exec --user=rustdevuser rust_dev_vscode_cnt git config --global -l
+podman exec --user=rustdevuser crustde_vscode_cnt git config --global user.email "info@your.mail"
+podman exec --user=rustdevuser crustde_vscode_cnt git config --global user.name "your_gitname"
+podman exec --user=rustdevuser crustde_vscode_cnt git config --global -l
 ```
 
 I like to work with GitHub over SSH and not over HTTPS. I think it is the natural and safe thing for Linux.  
@@ -750,14 +750,14 @@ It means that this container I cannot share any more with anybody. It is now my 
 In `host terminal`:
 
 ```bash
-podman exec --user=rustdevuser rust_dev_vscode_cnt ls -la /home/rustdevuser/.ssh
-podman cp ~/.ssh/github_com_git_ssh_1 rust_dev_vscode_cnt:/home/rustdevuser/.ssh/github_com_git_ssh_1
-podman exec --user=rustdevuser rust_dev_vscode_cnt chmod 600 /home/rustdevuser/.ssh/github_com_git_ssh_1
-podman cp ~/.ssh/github_com_git_ssh_1.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/github_com_git_ssh_1.pub
-podman exec --user=rustdevuser rust_dev_vscode_cnt ls -la /home/rustdevuser/.ssh
+podman exec --user=rustdevuser crustde_vscode_cnt ls -la /home/rustdevuser/.ssh
+podman cp ~/.ssh/github_com_git_ssh_1 crustde_vscode_cnt:/home/rustdevuser/.ssh/github_com_git_ssh_1
+podman exec --user=rustdevuser crustde_vscode_cnt chmod 600 /home/rustdevuser/.ssh/github_com_git_ssh_1
+podman cp ~/.ssh/github_com_git_ssh_1.pub crustde_vscode_cnt:/home/rustdevuser/.ssh/github_com_git_ssh_1.pub
+podman exec --user=rustdevuser crustde_vscode_cnt ls -la /home/rustdevuser/.ssh
 ```
 
-The `VSCode terminal` is still open on the project `rust_dev_hello` from the previous chapter.
+The `VSCode terminal` is still open on the project `crustde_hello` from the previous chapter.
 
 ## ssh-agent in Linux bash
 
@@ -772,11 +772,11 @@ ssh-add /home/rustdevuser/.ssh/github_com_git_ssh_1
 # enter your passphrase
 ```
 
-You can download the template [sshadd_template.sh](https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/docker_rust_development/blob/main/docker_rust_development_install/sshadd_template.sh) from GitHub and save it into the Debian folder `~/.ssh`. Rename it to `sshadd.sh` and personalize it with your SSH key file names.  
+You can download the template [sshadd_template.sh](https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/crustde_cnt_img_pod/blob/main/crustde_install/sshadd_template.sh) from GitHub and save it into the Debian folder `~/.ssh`. Rename it to `sshadd.sh` and personalize it with your SSH key file names.  
 Run in `host Terminal`:
 
 ```bash
-podman cp ~/.ssh/sshadd.sh rust_dev_vscode_cnt:/home/rustdevuser/.ssh/sshadd.sh  
+podman cp ~/.ssh/sshadd.sh crustde_vscode_cnt:/home/rustdevuser/.ssh/sshadd.sh  
 ```
 
 You will then run inside the `VSCode terminal` for each window/project separately:
@@ -793,13 +793,13 @@ When you open the terminal again, you will have to run the script again and ente
 
 ## GitHub push
 
-Open `github.com` in the browser and sign in, click `New` and create a new repository named `rust_dev_hello`.  
+Open `github.com` in the browser and sign in, click `New` and create a new repository named `crustde_hello`.  
 GitHub is user-friendly and shows the standard commands we need to run. Choose SSH commands and not HTTPS or CLI. You will find commands similar to the commands below.  
 In VSCode click on the `Source control` and click `Initialize`, then type the commit-msg "init" and click `Commit`.  
 Then in `VSCode terminal` run:
 
 ```bash
-git remote add origin git@github.com:bestia-dev/rust_dev_hello.git
+git remote add origin git@github.com:bestia-dev/crustde_hello.git
 git push -u origin main
 ```
 
@@ -811,7 +811,7 @@ Leave VSCode open because the next chapter will continue from here.
 
 You probably already have a Rust project on GitHub. You want to continue its development inside the container.  
 For example, we will use my PWA+WebAssembly/WASM project `rust_wasm_pwa_minimal_clock`, which needs to forward port 8001 because our project needs a web server. That is fairly common. I am not a fan of autoForward `automagic` in VSCode, so I disable it in `File-Preferences-Settings` search `remote.autoForwardPorts` and uncheck it to false.  
-We will continue to use the existing `VSCode terminal`, which is already opened in the folder `/home/rustdevuser/rustprojects/rust_dev_hello`. Just to practice.  
+We will continue to use the existing `VSCode terminal`, which is already opened in the folder `/home/rustdevuser/rustprojects/crustde_hello`. Just to practice.  
 Run the commands to clone the repository from GitHub and open a new VSCode window. We already have the SSH private key and `ssh-agent` running:
 
 ```bash
@@ -850,7 +850,7 @@ Before entering any Podman command we need first to clean some temporary files, 
 In `host terminal`:
 
 ```bash
-sh ~/rustprojects/docker_rust_development_install/rust_dev_pod_after_reboot.sh
+sh ~/rustprojects/crustde_install/crustde_pod_after_reboot.sh
 podman ps
 ```
 
@@ -948,9 +948,9 @@ In the DoubleCmd ftp setting, I must enable the "use SSH+SCP protocol (no SFTP)"
 On the host Debian system run:
 
 ```bash
-ssh-keygen -t rsa -b 4096 -m PEM -C rustdevuser@rust_dev_pod -f /home/rustdevuser/.ssh/rustdevuser_rsa_key
-podman cp ~/.ssh/rustdevuser_rsa_key.pub rust_dev_vscode_cnt:/home/rustdevuser/.ssh/rustdevuser_rsa_key.pub
-podman exec --user=rustdevuser rust_dev_vscode_cnt /bin/sh -c 'cat /home/rustdevuser/.ssh/rustdevuser_rsa_key.pub >> /home/rustdevuser/.ssh/authorized_keys'
+ssh-keygen -t rsa -b 4096 -m PEM -C rustdevuser@crustde_pod -f /home/rustdevuser/.ssh/rustdevuser_rsa_key
+podman cp ~/.ssh/rustdevuser_rsa_key.pub crustde_vscode_cnt:/home/rustdevuser/.ssh/rustdevuser_rsa_key.pub
+podman exec --user=rustdevuser crustde_vscode_cnt /bin/sh -c 'cat /home/rustdevuser/.ssh/rustdevuser_rsa_key.pub >> /home/rustdevuser/.ssh/authorized_keys'
 ssh-keyscan -p 2201 -H 127.0.0.1 >> ~/.ssh/known_hosts
 ```
 
@@ -960,15 +960,15 @@ Now I can use this key for Double-commander SFTP.
 
 Some projects need the typescript compiler `tsc`. First, we need to install nodejs with npm to install typescript. That is a lot of installation. This is because I don't want it in my default container. For typescript, I created a new container image: `rust_ts_dev_image`.  
 The bash script `sh rust_ts_dev_image.sh` will create the new image with typescript.  
-Then we can use `sh docker_rust_development_install\pod_with_rust_ts_vscode\rust_dev_pod_create.sh.sh` to create the Podman pod with typescript.  
-The same `sh ~/rustprojects/docker_rust_development_install/rust_dev_pod_after_reboot.sh` is used after reboot.  
+Then we can use `sh crustde_install\pod_with_rust_ts_vscode\crustde_pod_create.sh.sh` to create the Podman pod with typescript.  
+The same `sh ~/rustprojects/crustde_install/crustde_pod_after_reboot.sh` is used after reboot.  
 
 ## PostgreSQL
 
-Some projects need the database PostgreSQL 13. I created a new pod with the command `sh docker_rust_development_install\pod_with_rust_pg_vscode\rust_dev_pod_create.sh`.  
-The same `sh ~/rustprojects/docker_rust_development_install/rust_dev_pod_after_reboot.sh` is used after reboot.  
+Some projects need the database PostgreSQL 13. I created a new pod with the command `sh crustde_install\pod_with_rust_pg_vscode\crustde_pod_create.sh`.  
+The same `sh ~/rustprojects/crustde_install/crustde_pod_after_reboot.sh` is used after reboot.  
 I didn't like the pgAdmin administrative tool. I will try DBeaver instead on `localhost:9876`.  
-If you want, you can change the user and passwords in the bash script `rust_dev_pod_create.sh` to something stronger.  
+If you want, you can change the user and passwords in the bash script `crustde_pod_create.sh` to something stronger.  
 
 ## Read more
 

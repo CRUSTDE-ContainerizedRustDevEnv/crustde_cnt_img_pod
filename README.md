@@ -2,29 +2,29 @@
 
 # CRUSTDE - Containerized Rust Development Environment
 
-Development project name: docker_rust_development
+Development project name: crustde_cnt_img_pod
 
 **02. Tutorial for CRUSTDE - Containerized Rust Development Environment. Rust - Hack Without Fear and Trust! (2022-03)**  
-***version: 3.0  date: 2022-09-06 author: [bestia.dev](https://bestia.dev) repository: [GitHub](https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/docker_rust_development)***  
+***version: 3.0  date: 2022-09-06 author: [bestia.dev](https://bestia.dev) repository: [GitHub](https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/crustde_cnt_img_pod)***  
 
  ![maintained](https://img.shields.io/badge/maintained-green)
  ![ready_for_use](https://img.shields.io/badge/ready_for_use-green)
 
  ![logo](https://raw.githubusercontent.com/CRUSTDE-Containerized-Rust-Dev-Env/CRUSTDE-Containerized-Rust-Dev-Env/main/images/crustde_250x250.png)
- docker_rust_development is a member of the [CRUSTDE-Containerized-Rust-Dev-Env](https://github.com/orgs/CRUSTDE-Containerized-Rust-Dev-Env/repositories?q=sort%3Aname-asc) project.
+ crustde_cnt_img_pod is a member of the [CRUSTDE-Containerized-Rust-Dev-Env](https://github.com/orgs/CRUSTDE-Containerized-Rust-Dev-Env/repositories?q=sort%3Aname-asc) project.
 
- [![Lines in md](https://img.shields.io/badge/Lines_in_markdown-932-green.svg)](https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/docker_rust_development/)
- [![Lines in bash scripts](https://img.shields.io/badge/Lines_in_bash_scripts-1535-blue.svg)](https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/docker_rust_development/)
+ [![Lines in md](https://img.shields.io/badge/Lines_in_markdown-932-green.svg)](https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/crustde_cnt_img_pod/)
+ [![Lines in bash scripts](https://img.shields.io/badge/Lines_in_bash_scripts-1535-blue.svg)](https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/crustde_cnt_img_pod/)
 
- [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/docker_rust_development/blob/master/LICENSE)
- ![docker_rust_development](https://bestia.dev/webpage_hit_counter/get_svg_image/138544014.svg)
+ [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/crustde_cnt_img_pod/blob/master/LICENSE)
+ ![crustde_cnt_img_pod](https://bestia.dev/webpage_hit_counter/get_svg_image/138544014.svg)
 
 Hashtags: #rustlang #buildtool #developmenttool #tutorial #docker #ssh #container #podman #Linux #OCI  
 My projects on GitHub are more like a tutorial than a finished product: [bestia-dev tutorials](https://github.com/bestia-dev/tutorials_rust_wasm).  
 
 Be mesmerized by the spiral_of_madness:
 
-![spiral_of_madness](https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/docker_rust_development/raw/main/images/spiral_of_madness.png "spiral_of_madness")
+![spiral_of_madness](https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/crustde_cnt_img_pod/raw/main/images/spiral_of_madness.png "spiral_of_madness")
 
 ## Try it
 
@@ -34,11 +34,11 @@ First download and run the download_scripts.sh. This script will download the re
 After downloading, you can inspect them to see exactly what they are doing. There are a lot of comments and descriptions inside to make it easy to understand and follow. A more detailed explanation is in this [DEVELOPMENT.md](DEVELOPMENT.md).  
 
 ```bash
-mkdir -p ~/rustprojects/docker_rust_development_install;
-cd ~/rustprojects/docker_rust_development_install;
+mkdir -p ~/rustprojects/crustde_install;
+cd ~/rustprojects/crustde_install;
 # only if curl is not yet installed:
 sudo apt install curl
-curl -Sf -L https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/docker_rust_development/raw/main/docker_rust_development_install/download_scripts.sh --output download_scripts.sh;
+curl -Sf -L https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/crustde_cnt_img_pod/raw/main/crustde_install/download_scripts.sh --output download_scripts.sh;
 # you can review the bash script, it only creates dirs, download scripts and suggests what script to run next
 cat download_scripts.sh; 
 sh download_scripts.sh;
@@ -48,7 +48,7 @@ Every script will show step-by-step instructions on what to do next. That's it!
 
 This project has also a YouTube video tutorial. Watch it:
 <!-- markdownlint-disable MD033 -->
-[<img src="https://bestia.dev/youtube/docker_rust_development.jpg" width="400px">](https://bestia.dev/youtube/docker_rust_development.html)
+[<img src="https://bestia.dev/youtube/crustde_cnt_img_pod.jpg" width="400px">](https://bestia.dev/youtube/crustde_cnt_img_pod.html)
 <!-- markdownlint-enable MD033 -->
 
 Now we can use `CRUSTDE - Containerized Rust Development Environment` from VSCode. The extension `Remote SSH` must be installed. The `~/.ssh/config`
@@ -105,12 +105,12 @@ There are alternatives to using Docker software that I will explore here.
 ## Development details
 
 Read the development details in a separate md file:  
-[DEVELOPMENT.md](https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/docker_rust_development/blob/main/DEVELOPMENT.md)
+[DEVELOPMENT.md](https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/crustde_cnt_img_pod/blob/main/DEVELOPMENT.md)
 
 ## Changelog
 
 Read the changelog in a separate md file:  
-[RELEASES.md](https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/docker_rust_development/blob/main/RELEASES.md)
+[RELEASES.md](https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/crustde_cnt_img_pod/blob/main/RELEASES.md)
 
 ## TODO
 

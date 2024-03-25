@@ -5,7 +5,7 @@
 echo " "
 echo "\033[0;33m    Bash script to build scratch image to test execute hello_world with and without musl. \033[0m"
 echo "\033[0;33m    Name of the image: scratch_hello_world_img \033[0m"
-# repository: https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/docker_rust_development
+# repository: https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/crustde_cnt_img_pod
 
 echo " "
 echo "\033[0;33m    Rust can cross compile with statically link to the musl library. \033[0m"
@@ -38,14 +38,14 @@ scratch
 buildah config \
 --author=github.com/bestia-dev \
 --label name=scratch_hello_world_img \
---label source=github.com/CRUSTDE-Containerized-Rust-Dev-Env/docker_rust_development \
+--label source=github.com/CRUSTDE-Containerized-Rust-Dev-Env/crustde_cnt_img_pod \
 scratch_hello_world_img
 
 echo "\033[0;33m    Copy the executable binary file statically linked to musl.  \033[0m"
-buildah copy scratch_hello_world_img  'rust_dev_hello_musl' '/usr/bin/rust_dev_hello_musl'
+buildah copy scratch_hello_world_img  'crustde_hello_musl' '/usr/bin/crustde_hello_musl'
 
 echo "\033[0;33m    Copy the executable binary file dynamically linked to glibc. It will fail to run.  \033[0m"
-buildah copy scratch_hello_world_img  'rust_dev_hello_glibc' '/usr/bin/rust_dev_hello_glibc'
+buildah copy scratch_hello_world_img  'crustde_hello_glibc' '/usr/bin/crustde_hello_glibc'
 
 echo " "
 echo "\033[0;33m    Finally save/commit the image named scratch_hello_world_img \033[0m"
@@ -54,7 +54,7 @@ buildah commit scratch_hello_world_img docker.io/bestiadev/scratch_hello_world_i
 echo " "
 echo "\033[0;33m    Command to start the container and the program: \033[0m"
 echo "\033[0;33m    The first executable will run normally because of musl. \033[0m"
-echo "\033[0;32m podman run scratch_hello_world_img /usr/bin/rust_dev_hello_musl \033[0m"
+echo "\033[0;32m podman run scratch_hello_world_img /usr/bin/crustde_hello_musl \033[0m"
 echo "\033[0;33m    The second executable will fail because the glibc is missing in scratch. \033[0m"
-echo "\033[0;32m podman run scratch_hello_world_img /usr/bin/rust_dev_hello_glibc \033[0m"
+echo "\033[0;32m podman run scratch_hello_world_img /usr/bin/crustde_hello_glibc \033[0m"
 echo " "
