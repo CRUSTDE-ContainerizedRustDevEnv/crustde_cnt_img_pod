@@ -5,7 +5,7 @@ This project does not adhere to [Semantic Versioning](https://semver.org/spec/v2
 I regularly create new container images when new version of cargo and rustc are released.  
 The container images are published to [dockerhub](https://hub.docker.com/).  
 The ongoing changes that are not released, are visible in the git commits and github pull requests.  
-The TODO section is part of the [README.md](https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/crustde_cnt_img_pod).  
+The TODO section is part of the [README.md](https://github.com/CRUSTDE-Containerized-Rust-DevEnv/crustde_cnt_img_pod).  
 
 ## Unreleased
 

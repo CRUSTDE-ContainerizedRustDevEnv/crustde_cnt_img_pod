@@ -3,7 +3,7 @@
 echo " "
 echo "\033[0;33m    Bash script to correctly restart the pod 'sh crustde_pod_after_reboot.sh' \033[0m"
 
-# repository: https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/crustde_cnt_img_pod
+# repository: https://github.com/CRUSTDE-Containerized-Rust-DevEnv/crustde_cnt_img_pod
 
 # WSL2 have some quirks.
 if grep -qi microsoft /proc/version; then    

@@ -9,7 +9,7 @@ echo "\033[0;33m    CRUSTDE - Containerized Rust Development Environment \033[0m
 
 if echo "$PWD" | grep -q '/rustprojects/crustde_install'; then
     # download_scripts.sh
-    # repository: https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/crustde_cnt_img_pod
+    # repository: https://github.com/CRUSTDE-Containerized-Rust-DevEnv/crustde_cnt_img_pod
 
     # empty the folder, because curl don't overwrite files
     rm -rf *
@@ -22,25 +22,25 @@ if echo "$PWD" | grep -q '/rustprojects/crustde_install'; then
     echo " "
     echo "\033[0;33m    2. Downloading all scripts from github \033[0m"
     echo " 1. personal_keys_and_settings_template.sh"
-    curl -L -sSf https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/crustde_cnt_img_pod/raw/main/crustde_install/personal_keys_and_settings_template.sh --output personal_keys_and_settings_template.sh
+    curl -L -sSf https://github.com/CRUSTDE-Containerized-Rust-DevEnv/crustde_cnt_img_pod/raw/main/crustde_install/personal_keys_and_settings_template.sh --output personal_keys_and_settings_template.sh
     echo " 2. sshadd_template.sh"
-    curl -L -sSf https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/crustde_cnt_img_pod/raw/main/crustde_install/sshadd_template.sh --output sshadd_template.sh
+    curl -L -sSf https://github.com/CRUSTDE-Containerized-Rust-DevEnv/crustde_cnt_img_pod/raw/main/crustde_install/sshadd_template.sh --output sshadd_template.sh
     echo " 3. ssh_config.ssh_config"
-    curl -L -sSf https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/crustde_cnt_img_pod/raw/main/crustde_install/ssh_config.ssh_config --output ssh_config.ssh_config
+    curl -L -sSf https://github.com/CRUSTDE-Containerized-Rust-DevEnv/crustde_cnt_img_pod/raw/main/crustde_install/ssh_config.ssh_config --output ssh_config.ssh_config
     echo " 4. store_personal_keys_and_settings.sh"
-    curl -L -sSf https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/crustde_cnt_img_pod/raw/main/crustde_install/store_personal_keys_and_settings.sh --output store_personal_keys_and_settings.sh
+    curl -L -sSf https://github.com/CRUSTDE-Containerized-Rust-DevEnv/crustde_cnt_img_pod/raw/main/crustde_install/store_personal_keys_and_settings.sh --output store_personal_keys_and_settings.sh
     echo " 5. etc_ssh_sshd_config.conf"
-    curl -L -sSf https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/crustde_cnt_img_pod/raw/main/crustde_install/etc_ssh_sshd_config.conf --output etc_ssh_sshd_config.conf
+    curl -L -sSf https://github.com/CRUSTDE-Containerized-Rust-DevEnv/crustde_cnt_img_pod/raw/main/crustde_install/etc_ssh_sshd_config.conf --output etc_ssh_sshd_config.conf
     echo " 6. podman_install_and_setup.sh"
-    curl -L -sSf https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/crustde_cnt_img_pod/raw/main/crustde_install/podman_install_and_setup.sh --output podman_install_and_setup.sh
+    curl -L -sSf https://github.com/CRUSTDE-Containerized-Rust-DevEnv/crustde_cnt_img_pod/raw/main/crustde_install/podman_install_and_setup.sh --output podman_install_and_setup.sh
     echo " 7. crustde_pod_after_reboot.sh"
-    curl -L -sSf https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/crustde_cnt_img_pod/raw/main/crustde_install/crustde_pod_after_reboot.sh --output crustde_pod_after_reboot.sh
+    curl -L -sSf https://github.com/CRUSTDE-Containerized-Rust-DevEnv/crustde_cnt_img_pod/raw/main/crustde_install/crustde_pod_after_reboot.sh --output crustde_pod_after_reboot.sh
     echo " 8. crustde_install.md"
-    curl -L -sSf https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/crustde_cnt_img_pod/raw/main/crustde_install/crustde_install.md --output crustde_install.md
+    curl -L -sSf https://github.com/CRUSTDE-Containerized-Rust-DevEnv/crustde_cnt_img_pod/raw/main/crustde_install/crustde_install.md --output crustde_install.md
     echo " 9. pod_with_rust_vscode/crustde_pod_create.sh"
-    curl -L -sSf https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/crustde_cnt_img_pod/raw/main/crustde_install/pod_with_rust_vscode/crustde_pod_create.sh --output pod_with_rust_vscode/crustde_pod_create.sh    
-    curl -L -sSf https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/crustde_cnt_img_pod/raw/main/crustde_install/pod_with_rust_vscode/etc_squid_squid.conf --output pod_with_rust_vscode/etc_squid_squid.conf
-    curl -L -sSf https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/crustde_cnt_img_pod/raw/main/crustde_install/pod_with_rust_vscode/copy_squid_config_and_restart_cnt.sh --output pod_with_rust_vscode/copy_squid_config_and_restart_cnt.sh
+    curl -L -sSf https://github.com/CRUSTDE-Containerized-Rust-DevEnv/crustde_cnt_img_pod/raw/main/crustde_install/pod_with_rust_vscode/crustde_pod_create.sh --output pod_with_rust_vscode/crustde_pod_create.sh    
+    curl -L -sSf https://github.com/CRUSTDE-Containerized-Rust-DevEnv/crustde_cnt_img_pod/raw/main/crustde_install/pod_with_rust_vscode/etc_squid_squid.conf --output pod_with_rust_vscode/etc_squid_squid.conf
+    curl -L -sSf https://github.com/CRUSTDE-Containerized-Rust-DevEnv/crustde_cnt_img_pod/raw/main/crustde_install/pod_with_rust_vscode/copy_squid_config_and_restart_cnt.sh --output pod_with_rust_vscode/copy_squid_config_and_restart_cnt.sh
 
     # if both files already exist, don't need this step
     # beware the last ] needs a space before it or it does not work!
@@ -75,7 +75,7 @@ else
     echo "\033[0;32m mkdir -p ~/rustprojects/crustde_install; \033[0m"
     echo "\033[0;32m cd ~/rustprojects/crustde_install; \033[0m"
     # -S show errors  -f fail-early -L redirect
-    echo "\033[0;32m curl -Sf -L https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/crustde_cnt_img_pod/raw/main/crustde_install/download_scripts.sh --output download_scripts.sh; \033[0m"
+    echo "\033[0;32m curl -Sf -L https://github.com/CRUSTDE-Containerized-Rust-DevEnv/crustde_cnt_img_pod/raw/main/crustde_install/download_scripts.sh --output download_scripts.sh; \033[0m"
     echo "\033[0;33m    You can read the bash script, it only creates dirs, download scripts and suggests what script to run next \033[0m"
     echo "\033[0;32m cat download_scripts.sh; \033[0m"
     echo "\033[0;33m    Run with sh that aliases to dash and not bash in Debian. \033[0m"

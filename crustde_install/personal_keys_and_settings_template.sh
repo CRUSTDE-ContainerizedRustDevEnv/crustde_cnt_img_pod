@@ -4,7 +4,7 @@ echo " "
 echo "\033[0;33m    Bash script to install personal keys and setting into CRUSTDE - Containerized Rust Development Environment. \033[0m"
 
 # personal_keys_and_settings_template.sh
-# repository: https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/crustde_cnt_img_pod
+# repository: https://github.com/CRUSTDE-Containerized-Rust-DevEnv/crustde_cnt_img_pod
 
 # This script starts as a template with placeholders.
 # The script store_personal_keys_and_settings.sh copies it into the Linux folder '~\.ssh' and rename it to "personal_keys_and_settings.sh".

@@ -4,7 +4,7 @@ echo " "
 echo "\033[0;33m    Bash script to install Podman and setup for crustde_pod for development in Rust with VSCode. \033[0m"
 
 # podman_install_and_setup.sh
-# repository: https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/crustde_cnt_img_pod
+# repository: https://github.com/CRUSTDE-Containerized-Rust-DevEnv/crustde_cnt_img_pod
 
 # if Debian inside WSL it needs some special care
 if grep -qi microsoft /proc/version; then    

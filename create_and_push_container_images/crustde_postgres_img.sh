@@ -3,7 +3,7 @@
 echo " "
 echo "\033[0;33m    Bash script to build the docker image for the postgres database server \033[0m"
 echo "\033[0;33m    Name of the image: crustde_postgres_img \033[0m"
-# repository: https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/crustde_cnt_img_pod
+# repository: https://github.com/CRUSTDE-Containerized-Rust-DevEnv/crustde_cnt_img_pod
 
 echo "\033[0;33m    postgres image on docker hub has 8 layers. \033[0m"
 echo "\033[0;33m    I don't know if this is too much and affects performance, \033[0m"
@@ -37,7 +37,7 @@ buildah config \
 --author=github.com/bestia-dev \
 --label name=crustde_postgres_img \
 --label version=postgres13 \
---label source=github.com/CRUSTDE-Containerized-Rust-Dev-Env/crustde_cnt_img_pod \
+--label source=github.com/CRUSTDE-Containerized-Rust-DevEnv/crustde_cnt_img_pod \
 crustde_postgres_img
 
 echo " "

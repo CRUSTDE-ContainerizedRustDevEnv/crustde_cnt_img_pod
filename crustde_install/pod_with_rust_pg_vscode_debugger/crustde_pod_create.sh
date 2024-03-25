@@ -8,7 +8,7 @@ echo "\033[0;33m    This 'pod' is made of 3 containers: 'crustde_squid_cnt', 'cr
 echo "\033[0;33m    It contains Rust, cargo, rustc, VSCode development environment' and postgreSQL \033[0m"
 echo "\033[0;33m    All outbound network traffic from crustde_vscode_cnt goes through the proxy Squid. \033[0m"
 echo "\033[0;33m    Published inbound network ports are 8001 and 9876 on 'localhost' \033[0m"
-# repository: https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/crustde_cnt_img_pod
+# repository: https://github.com/CRUSTDE-Containerized-Rust-DevEnv/crustde_cnt_img_pod
 # https://techviewleo.com/how-to-run-postgresql-in-podman-container/
 
 # The script will run in this folder:
@@ -32,7 +32,7 @@ podman pod create \
 -p 127.0.0.1:9876:80/tcp \
 --label name=crustde_pod \
 --label version=1.0 \
---label source=github.com/CRUSTDE-Containerized-Rust-Dev-Env/crustde_cnt_img_pod \
+--label source=github.com/CRUSTDE-Containerized-Rust-DevEnv/crustde_cnt_img_pod \
 --label author=github.com/bestia-dev \
 --name crustde_pod
 

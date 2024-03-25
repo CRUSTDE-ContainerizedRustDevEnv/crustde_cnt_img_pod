@@ -5,7 +5,7 @@ echo "\033[0;33m    Bash script to prepare personal keys and setting for CRUSTDE
 echo "\033[0;33m    They will be stored in ~/.ssh \033[0m"
 echo " "
 # store_personal_keys_and_settings.sh
-# repository: https://github.com/CRUSTDE-Containerized-Rust-Dev-Env/crustde_cnt_img_pod
+# repository: https://github.com/CRUSTDE-Containerized-Rust-DevEnv/crustde_cnt_img_pod
 
 # Copy the file personal_keys_and_settings_template.sh into ~/.ssh/crustde_pod_keys/personal_keys_and_settings.sh
 # There replace the words: 
