@@ -8,7 +8,7 @@ echo "\033[0;33m    This 'pod' is made of 3 containers: 'crustde_squid_cnt', 'cr
 echo "\033[0;33m    It contains Rust, cargo, rustc, VSCode development environment' and postgreSQL \033[0m"
 echo "\033[0;33m    All outbound network traffic from crustde_vscode_cnt goes through the proxy Squid. \033[0m"
 echo "\033[0;33m    Published inbound network ports are 8001 and 9876 on 'localhost' \033[0m"
-# repository: https://github.com/CRUSTDE-Containerized-Rust-DevEnv/crustde_cnt_img_pod
+# repository: https://github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod
 # https://techviewleo.com/how-to-run-postgresql-in-podman-container/
 
 echo " "
@@ -24,7 +24,7 @@ podman pod create \
 -p 127.0.0.1:9876:80/tcp \
 --label name=crustde_pod \
 --label version=1.0 \
---label source=github.com/CRUSTDE-Containerized-Rust-DevEnv/crustde_cnt_img_pod \
+--label source=github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod \
 --label author=github.com/bestia-dev \
 --name crustde_pod
 
@@ -57,7 +57,7 @@ echo "\033[0;33m    Copy the files for host keys ed25519 for SSH server in crust
 podman cp ~/.ssh/crustde_pod_keys/etc/ssh/ssh_host_ed25519_key  crustde_vscode_cnt:/etc/ssh/ssh_host_ed25519_key
 podman cp ~/.ssh/crustde_pod_keys/etc/ssh/ssh_host_ed25519_key.pub  crustde_vscode_cnt:/etc/ssh/ssh_host_ed25519_key.pub
 echo "\033[0;33m    Copy the public keys of rustdevuser \033[0m"
-podman cp ~/.ssh/localhost_2201_rustdevuser_ssh_1.pub crustde_vscode_cnt:/home/rustdevuser/.ssh/localhost_2201_rustdevuser_ssh_1.pub
+podman cp ~/.ssh/crustde_rustdevuser_ssh_1.pub crustde_vscode_cnt:/home/rustdevuser/.ssh/crustde_rustdevuser_ssh_1.pub
 
 echo "\033[0;33m    podman pod start \033[0m"
 podman pod start crustde_pod
@@ -84,14 +84,14 @@ podman exec --user=rustdevuser crustde_vscode_cnt cat /etc/ssh/ssh_host_ed25519_
 # (O)thers can't read, can't write and can't execute.
 podman exec --user=rustdevuser crustde_vscode_cnt chmod 700 /home/rustdevuser/.ssh
 
-echo "\033[0;33m    add localhost_2201_rustdevuser_ssh_1 to authorized_keys \033[0m"
+echo "\033[0;33m    add crustde_rustdevuser_ssh_1 to authorized_keys \033[0m"
 podman exec --user=rustdevuser crustde_vscode_cnt touch /home/rustdevuser/.ssh/authorized_keys
 # Chmod 600 (chmod a+rwx,u-x,g-rwx,o-rwx) sets permissions so that, 
 # (U)ser / owner can read, can write and can't execute. 
 # (G)roup can't read, can't write and can't execute. 
 # (O)thers can't read, can't write and can't execute.
 podman exec --user=rustdevuser crustde_vscode_cnt chmod 600 /home/rustdevuser/.ssh/authorized_keys
-podman exec --user=rustdevuser crustde_vscode_cnt /bin/sh -c 'cat /home/rustdevuser/.ssh/localhost_2201_rustdevuser_ssh_1.pub >> /home/rustdevuser/.ssh/authorized_keys'
+podman exec --user=rustdevuser crustde_vscode_cnt /bin/sh -c 'cat /home/rustdevuser/.ssh/crustde_rustdevuser_ssh_1.pub >> /home/rustdevuser/.ssh/authorized_keys'
 
 # echo "\033[0;33m    I have to disable the password for rustdevuser to enable SSH access with public key? Why? \033[0m"
 podman exec --user=root crustde_vscode_cnt usermod --password '*' rustdevuser

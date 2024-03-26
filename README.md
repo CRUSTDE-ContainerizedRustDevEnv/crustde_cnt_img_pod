@@ -5,18 +5,18 @@
 Development project name: crustde_cnt_img_pod
 
 **02. Tutorial for CRUSTDE - Containerized Rust Development Environment. Rust - Hack Without Fear and Trust! (2022-03)**  
-***version: 3.0  date: 2022-09-06 author: [bestia.dev](https://bestia.dev) repository: [GitHub](https://github.com/CRUSTDE-Containerized-Rust-DevEnv/crustde_cnt_img_pod)***  
+***version: 3.0  date: 2022-09-06 author: [bestia.dev](https://bestia.dev) repository: [GitHub](https://github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod)***  
 
  ![maintained](https://img.shields.io/badge/maintained-green)
  ![ready_for_use](https://img.shields.io/badge/ready_for_use-green)
 
- ![logo](https://raw.githubusercontent.com/CRUSTDE-Containerized-Rust-DevEnv/CRUSTDE-Containerized-Rust-DevEnv/main/images/crustde_250x250.png)
- crustde_cnt_img_pod is a member of the [CRUSTDE-Containerized-Rust-DevEnv](https://github.com/orgs/CRUSTDE-Containerized-Rust-DevEnv/repositories?q=sort%3Aname-asc) project.
+ ![logo](https://raw.githubusercontent.com/CRUSTDE-ContainerizedRustDevEnv/CRUSTDE-ContainerizedRustDevEnv/main/images/crustde_250x250.png)
+ crustde_cnt_img_pod is a member of the [CRUSTDE-ContainerizedRustDevEnv](https://github.com/orgs/CRUSTDE-ContainerizedRustDevEnv/repositories?q=sort%3Aname-asc) project.
 
- [![Lines in md](https://img.shields.io/badge/Lines_in_markdown-932-green.svg)](https://github.com/CRUSTDE-Containerized-Rust-DevEnv/crustde_cnt_img_pod/)
- [![Lines in bash scripts](https://img.shields.io/badge/Lines_in_bash_scripts-1535-blue.svg)](https://github.com/CRUSTDE-Containerized-Rust-DevEnv/crustde_cnt_img_pod/)
+ [![Lines in md](https://img.shields.io/badge/Lines_in_markdown-932-green.svg)](https://github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod/)
+ [![Lines in bash scripts](https://img.shields.io/badge/Lines_in_bash_scripts-1535-blue.svg)](https://github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod/)
 
- [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/CRUSTDE-Containerized-Rust-DevEnv/crustde_cnt_img_pod/blob/master/LICENSE)
+ [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod/blob/master/LICENSE)
  ![crustde_cnt_img_pod](https://bestia.dev/webpage_hit_counter/get_svg_image/138544014.svg)
 
 Hashtags: #rustlang #buildtool #developmenttool #tutorial #docker #ssh #container #podman #Linux #OCI  
@@ -24,7 +24,7 @@ My projects on GitHub are more like a tutorial than a finished product: [bestia-
 
 Be mesmerized by the spiral_of_madness:
 
-![spiral_of_madness](https://github.com/CRUSTDE-Containerized-Rust-DevEnv/crustde_cnt_img_pod/raw/main/images/spiral_of_madness.png "spiral_of_madness")
+![spiral_of_madness](https://github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod/raw/main/images/spiral_of_madness.png "spiral_of_madness")
 
 ## Try it
 
@@ -38,7 +38,7 @@ mkdir -p ~/rustprojects/crustde_install;
 cd ~/rustprojects/crustde_install;
 # only if curl is not yet installed:
 sudo apt install curl
-curl -Sf -L https://github.com/CRUSTDE-Containerized-Rust-DevEnv/crustde_cnt_img_pod/raw/main/crustde_install/download_scripts.sh --output download_scripts.sh;
+curl -Sf -L https://github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod/raw/main/crustde_install/download_scripts.sh --output download_scripts.sh;
 # you can review the bash script, it only creates dirs, download scripts and suggests what script to run next
 cat download_scripts.sh; 
 sh download_scripts.sh;
@@ -56,7 +56,7 @@ must be set as shown by the installation scripts.
 Open `git-bash` terminal and run VSCode to open a folder inside the container:
 
 ```bash
-MSYS_NO_PATHCONV=1 code --remote ssh-remote+localhost_2201_rustdevuser_ssh_1 /home/rustdevuser/rustprojects
+MSYS_NO_PATHCONV=1 code --remote ssh-remote+crustde_rustdevuser_ssh_1 /home/rustdevuser/rustprojects
 ```
 
 If VSCode cannot connect to the container 99% is to blame the `~/.ssh/known_hosts` file. Try to rename it to `known_hosts.bak` and retry.
@@ -105,12 +105,12 @@ There are alternatives to using Docker software that I will explore here.
 ## Development details
 
 Read the development details in a separate md file:  
-[DEVELOPMENT.md](https://github.com/CRUSTDE-Containerized-Rust-DevEnv/crustde_cnt_img_pod/blob/main/DEVELOPMENT.md)
+[DEVELOPMENT.md](https://github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod/blob/main/DEVELOPMENT.md)
 
 ## Changelog
 
 Read the changelog in a separate md file:  
-[RELEASES.md](https://github.com/CRUSTDE-Containerized-Rust-DevEnv/crustde_cnt_img_pod/blob/main/RELEASES.md)
+[RELEASES.md](https://github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod/blob/main/RELEASES.md)
 
 ## TODO
 

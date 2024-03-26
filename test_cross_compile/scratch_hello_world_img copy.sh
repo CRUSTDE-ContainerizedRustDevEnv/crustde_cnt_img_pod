@@ -5,7 +5,7 @@
 echo " "
 echo "\033[0;33m    Bash script to build scratch image to test execute hello_world with and without musl. \033[0m"
 echo "\033[0;33m    Name of the image: scratch_hello_world_img \033[0m"
-# repository: https://github.com/CRUSTDE-Containerized-Rust-DevEnv/crustde_cnt_img_pod
+# repository: https://github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod
 
 echo " "
 echo "\033[0;33m    Rust can cross compile with statically link to the musl library. \033[0m"
@@ -38,7 +38,7 @@ scratch
 buildah config \
 --author=github.com/bestia-dev \
 --label name=scratch_hello_world_img \
---label source=github.com/CRUSTDE-Containerized-Rust-DevEnv/crustde_cnt_img_pod \
+--label source=github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod \
 scratch_hello_world_img
 
 echo "\033[0;33m    Copy the executable binary file statically linked to musl.  \033[0m"

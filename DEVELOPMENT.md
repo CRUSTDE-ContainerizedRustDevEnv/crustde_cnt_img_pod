@@ -6,7 +6,7 @@
 
 I already wrote some information on how to install and use the combination of Win10 + WSL2 + Debian12(Bookworm):
 
-<https://github.com/CRUSTDE-Containerized-Rust-DevEnv/win10_wsl2_debian11>
+<https://github.com/CRUSTDE-ContainerizedRustDevEnv/win10_wsl2_debian11>
 
 Podman is available from the Debian12 package manager.
 
@@ -308,7 +308,7 @@ scratch
 buildah config \
 --author=github.com/bestia-dev \
 --label name=scratch_hello_world_img \
---label source=github.com/CRUSTDE-Containerized-Rust-DevEnv/crustde_cnt_img_pod \
+--label source=github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod \
 scratch_hello_world_img
 
 buildah copy scratch_hello_world_img  ~/rustprojects/crustde_hello/musl/crustde_hello /crustde_hello
@@ -332,7 +332,7 @@ docker.io/library/alpine
 buildah config \
 --author=github.com/bestia-dev \
 --label name=alpine_hello_world_img \
---label source=github.com/CRUSTDE-Containerized-Rust-DevEnv/crustde_cnt_img_pod \
+--label source=github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod \
 alpine_hello_world_img
 
 buildah copy alpine_hello_world_img  ~/rustprojects/crustde_hello/musl/crustde_hello /usr/bin/crustde_hello
@@ -358,7 +358,7 @@ gcr.io/distroless/static-debian12
 buildah config \
 --author=github.com/bestia-dev \
 --label name=distroless_hello_world_img \
---label source=github.com/CRUSTDE-Containerized-Rust-DevEnv/crustde_cnt_img_pod \
+--label source=github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod \
 distroless_hello_world_img
 
 buildah copy distroless_hello_world_img  ~/rustprojects/crustde_hello/musl/crustde_hello /usr/bin/crustde_hello
@@ -483,7 +483,7 @@ In `host terminal`:
 
 ```bash
 # generate user key
-ssh-keygen -f ~/.ssh/localhost_2201_rustdevuser_ssh_1 -t ed25519 -C "info@my.domain"
+ssh-keygen -f ~/.ssh/crustde_rustdevuser_ssh_1 -t ed25519 -C "info@my.domain"
 # give it a passphrase and remember it, you will need it
 # generate host key
 mkdir -p ~/.ssh/crustde_pod_keys/etc/ssh
@@ -492,8 +492,8 @@ ssh-keygen -A -f ~/.ssh/crustde_pod_keys
 # check the new files
 # list user keys
 ls -la ~/.ssh | grep "rustdevuser"
-# -rw------- 1 rustdevuser rustdevuser  2655 Apr  3 12:03 localhost_2201_rustdevuser_ssh_1
-# -rw-r--r-- 1 rustdevuser rustdevuser   569 Apr  3 12:03 localhost_2201_rustdevuser_ssh_1.pub
+# -rw------- 1 rustdevuser rustdevuser  2655 Apr  3 12:03 crustde_rustdevuser_ssh_1
+# -rw-r--r-- 1 rustdevuser rustdevuser   569 Apr  3 12:03 crustde_rustdevuser_ssh_1.pub
 
 # list host keys
 ls -la ~/.ssh/crustde_pod_keys/etc/ssh
@@ -587,7 +587,7 @@ podman ps -a
 Try the SSH connection from WSL2 to the container:
 
 ```bash
-ssh -i ~/.ssh/localhost_2201_rustdevuser_ssh_1 -p 2201 rustdevuser@localhost
+ssh -i ~/.ssh/crustde_rustdevuser_ssh_1 -p 2201 rustdevuser@localhost
 # Choose `yes` to save fingerprint if asked, just the first time.  
 # type passphrase
 # should work !  
@@ -604,7 +604,7 @@ Run in `Windows cmd prompt` to access the container over SSH from Windows:
 
 ```bash
 # test the ssh connection from Windows cmd prompt
-"C:\WINDOWS\System32\OpenSSH\ssh.exe" -i ~\.ssh\localhost_2201_rustdevuser_ssh_1 -p 2201 rustdevuser@localhost
+"C:\WINDOWS\System32\OpenSSH\ssh.exe" -i ~\.ssh\crustde_rustdevuser_ssh_1 -p 2201 rustdevuser@localhost
 # Choose `y` to save fingerprint if asked, just the first time.  
 # type passphrase
 # should work !  
@@ -655,11 +655,11 @@ In Debian on bare metal:
 choose  `~/.ssh/config` and type (if is missing)  
 
 ```bash
-Host localhost_2201_rustdevuser_ssh_1
+Host crustde_rustdevuser_ssh_1
   HostName localhost
   Port 2201
   User rustdevuser
-  IdentityFile ~/.ssh/localhost_2201_rustdevuser_ssh_1
+  IdentityFile ~/.ssh/crustde_rustdevuser_ssh_1
   IdentitiesOnly yes
 ```
 
@@ -667,11 +667,11 @@ In Windows +WSL2:
 choose  `c:\users\user_name\ssh\config` and type (if is missing)
 
 ```bash
-Host localhost_2201_rustdevuser_ssh_1
+Host crustde_rustdevuser_ssh_1
   HostName localhost
   Port 2201
   User rustdevuser
-  IdentityFile ~\.ssh\localhost_2201_rustdevuser_ssh_1
+  IdentityFile ~\.ssh\crustde_rustdevuser_ssh_1
   IdentitiesOnly yes
 ```
 
@@ -716,7 +716,7 @@ Leave VSCode open because the next chapter will continue from here.
 You can connect to an existing VSCode project inside the CRUSTDE container from the host:
 
 ```bash
-MSYS_NO_PATHCONV=1 code --remote ssh-remote+localhost_2201_rustdevuser_ssh_1 /home/rustdevuser/rustprojects
+MSYS_NO_PATHCONV=1 code --remote ssh-remote+crustde_rustdevuser_ssh_1 /home/rustdevuser/rustprojects
 ```
 
 In Windows `git-bash`, the MSYS_NO_PATHCONV is used to disable the default path conversion.
@@ -724,7 +724,7 @@ In Windows `git-bash`, the MSYS_NO_PATHCONV is used to disable the default path 
 ## GitHub in the container
 
 Download the template for the bash script from here:  
-[personal_keys_and_settings.sh](https://github.com/CRUSTDE-Containerized-Rust-DevEnv/crustde_cnt_img_pod/blob/main/crustde_install/personal_keys_and_settings_template.sh)  
+[personal_keys_and_settings.sh](https://github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod/blob/main/crustde_install/personal_keys_and_settings_template.sh)  
 into Debian folder `~\.ssh`. It contains all the steps explained below. First, rename it to personal_keys_and_settings.sh. You have to personalize it with your personal data.  
 Run in `host terminal`:
 
@@ -772,7 +772,7 @@ ssh-add /home/rustdevuser/.ssh/github_com_git_ssh_1
 # enter your passphrase
 ```
 
-You can download the template [sshadd_template.sh](https://github.com/CRUSTDE-Containerized-Rust-DevEnv/crustde_cnt_img_pod/blob/main/crustde_install/sshadd_template.sh) from GitHub and save it into the Debian folder `~/.ssh`. Rename it to `sshadd.sh` and personalize it with your SSH key file names.  
+You can download the template [sshadd_template.sh](https://github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod/blob/main/crustde_install/sshadd_template.sh) from GitHub and save it into the Debian folder `~/.ssh`. Rename it to `sshadd.sh` and personalize it with your SSH key file names.  
 Run in `host Terminal`:
 
 ```bash
@@ -872,8 +872,8 @@ Connect to: localhost:2201/~
 User name: rustdevuser
 Password: passcode of the private key
 Protect password with password manager: yes
-Public key: \\wsl.localhost\Debian\home\luciano\.ssh\localhost_2201_rustdevuser_ssh_1.pub
-Private key: \\wsl.localhost\Debian\home\luciano\.ssh\localhost_2201_rustdevuser_ssh_1
+Public key: \\wsl.localhost\Debian\home\luciano\.ssh\crustde_rustdevuser_ssh_1.pub
+Private key: \\wsl.localhost\Debian\home\luciano\.ssh\crustde_rustdevuser_ssh_1
 Use SCP for data transfer: yes
 Use SCP for everything: yes
 ```
@@ -943,7 +943,7 @@ ssh-keygen -f ~/.ssh/known_hosts -R "[localhost]:2201";
 
 ## Double-commander SFTP
 
-On Debian, I use Double-commander as an alternative to Total-commander on Windows. It has an Ftp functionality that allows SSH and SFTP. But the private key must be PEM/rsa. It does not work with the existing localhost_2201_rustdevuser_ssh_1 which is OpenSSH. I tried to convert the key format, but neither key-gen, OpenSsl nor putty was up to the task. So I decided to make a new private key just for Double-commander.  
+On Debian, I use Double-commander as an alternative to Total-commander on Windows. It has an Ftp functionality that allows SSH and SFTP. But the private key must be PEM/rsa. It does not work with the existing crustde_rustdevuser_ssh_1 which is OpenSSH. I tried to convert the key format, but neither key-gen, OpenSsl nor putty was up to the task. So I decided to make a new private key just for Double-commander.  
 In the DoubleCmd ftp setting, I must enable the "use SSH+SCP protocol (no SFTP)" to make it work.  
 On the host Debian system run:
 
@@ -972,7 +972,7 @@ If you want, you can change the user and passwords in the bash script `crustde_p
 
 ## Read more
 
-Read more about how I use my [Development environment](https://github.com/CRUSTDE-Containerized-Rust-DevEnv/windows_reinstall).  
+Read more about how I use my [Development environment](https://github.com/CRUSTDE-ContainerizedRustDevEnv/windows_reinstall).  
 
 ## WSL problems
 

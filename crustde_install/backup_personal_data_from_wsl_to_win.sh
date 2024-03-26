@@ -6,7 +6,7 @@ echo "\033[0;33m    Bash script to backup personal data from WSL2 to windows \03
 # TODO: this must be changed and run from the host (Windows)
 
 # backup_personal_data_from_wsl_to_win.sh
-# repository: https://github.com/CRUSTDE-Containerized-Rust-DevEnv/crustde_cnt_img_pod
+# repository: https://github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod
 
 # This backup of personal data can then survive the reset of the WSL2 virtual machine.
 

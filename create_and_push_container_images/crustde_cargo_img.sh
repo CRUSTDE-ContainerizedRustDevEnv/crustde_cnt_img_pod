@@ -5,7 +5,7 @@
 echo " "
 echo "\033[0;33m    Bash script to build the docker image for development in Rust. \033[0m"
 echo "\033[0;33m    Name of the image: crustde_cargo_img \033[0m"
-# repository: https://github.com/CRUSTDE-Containerized-Rust-DevEnv/crustde_cnt_img_pod
+# repository: https://github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod
 
 echo " "
 echo "\033[0;33m    I want a sandbox that cannot compromise my local system. \033[0m"
@@ -13,7 +13,7 @@ echo "\033[0;33m    No shared volumes. All the files and folders will be inside 
 echo "\033[0;33m    Containers are not perfect sandboxes, but are good enough. \033[0m"
 echo "\033[0;33m    Containers images can be recreated easily, coherently and repeatedly with new versions of tools. \033[0m"
 echo "\033[0;33m    I want also to limit the network ports and addresses inbound and outbound. \033[0m"
-echo "\033[0;33m    Open source code MIT: https://github.com/CRUSTDE-Containerized-Rust-DevEnv/crustde_cnt_img_pod \033[0m"
+echo "\033[0;33m    Open source code MIT: https://github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod \033[0m"
 
 echo " "
 echo "\033[0;33m    FIRST !!! \033[0m"
@@ -54,7 +54,7 @@ buildah config \
 --author=github.com/bestia-dev \
 --label name=crustde_cargo_img \
 --label version=cargo-1.77.0 \
---label source=github.com/CRUSTDE-Containerized-Rust-DevEnv/crustde_cnt_img_pod \
+--label source=github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod \
 crustde_cargo_img
 
 echo " "

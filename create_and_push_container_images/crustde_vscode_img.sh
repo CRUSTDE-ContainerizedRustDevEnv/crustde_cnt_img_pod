@@ -5,7 +5,7 @@
 echo " "
 echo "\033[0;33m    Bash script to build the docker image for development in Rust with VSCode. \033[0m"
 echo "\033[0;33m    Name of the image: crustde_vscode_img \033[0m"
-# repository: https://github.com/CRUSTDE-Containerized-Rust-DevEnv/crustde_cnt_img_pod
+# repository: https://github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod
 
 echo "\033[0;33m    Container image for CRUSTDE - Containerized Rust Development Environment with VSCode. \033[0m"
 echo "\033[0;33m    This is based on crustde_cross_img and adds VSCode and extensions. \033[0m"
@@ -44,7 +44,7 @@ buildah config \
 --author=github.com/bestia-dev \
 --label name=crustde_vscode_img \
 --label version=vscode-1.87.2 \
---label source=github.com/CRUSTDE-Containerized-Rust-DevEnv/crustde_cnt_img_pod \
+--label source=github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod \
 crustde_vscode_img
 
 echo " "

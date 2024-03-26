@@ -4,7 +4,7 @@ echo " "
 echo "\033[0;33m    Bash script to install Podman and setup for crustde_pod for development in Rust with VSCode. \033[0m"
 
 # podman_install_and_setup.sh
-# repository: https://github.com/CRUSTDE-Containerized-Rust-DevEnv/crustde_cnt_img_pod
+# repository: https://github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod
 
 # if Debian inside WSL it needs some special care
 if grep -qi microsoft /proc/version; then    
@@ -28,15 +28,15 @@ else
 fi
 
 echo " " 
-if [ ! -f ~/.ssh/localhost_2201_rustdevuser_ssh_1 ]; then
-  echo "\033[0;33m    2. Generating localhost_2201_rustdevuser_ssh_1 for the identity of 'rustdevuser'.  \033[0m"
+if [ ! -f ~/.ssh/crustde_rustdevuser_ssh_1 ]; then
+  echo "\033[0;33m    2. Generating crustde_rustdevuser_ssh_1 for the identity of 'rustdevuser'.  \033[0m"
   echo "\033[0;33m    This is done only once. To avoid old crypto-algorithms I will force the new 'ed25519'. \033[0m"
   echo "\033[0;33m    Give it a passphrase and remember it, you will need it. \033[0m"
-  echo "ssh-keygen -f ~/.ssh/localhost_2201_rustdevuser_ssh_1 -t ed25519 -C 'rustdevuser@crustde_pod'"
-  ssh-keygen -f ~/.ssh/localhost_2201_rustdevuser_ssh_1 -t ed25519 -C "rustdevuser@crustde_pod"
-  chmod 600 ~/.ssh/localhost_2201_rustdevuser_ssh_1
+  echo "ssh-keygen -f ~/.ssh/crustde_rustdevuser_ssh_1 -t ed25519 -C 'rustdevuser@crustde_pod'"
+  ssh-keygen -f ~/.ssh/crustde_rustdevuser_ssh_1 -t ed25519 -C "rustdevuser@crustde_pod"
+  chmod 600 ~/.ssh/crustde_rustdevuser_ssh_1
 else 
-  echo "\033[0;33m    2. SSH key localhost_2201_rustdevuser_ssh_1 already exists. \033[0m"
+  echo "\033[0;33m    2. SSH key crustde_rustdevuser_ssh_1 already exists. \033[0m"
 fi
 
 echo " " 
@@ -103,18 +103,18 @@ echo "\033[0;33m    That's it. The server certificate is now locally recognized.
 echo " "
 echo "\033[0;33m    8. Prepare the config file for VSCode SSH. \033[0m"
 echo "\033[0;33m    If needed add manually to ~/.ssh/config in Windows \033[0m"
-echo 'Host localhost_2201_rustdevuser_ssh_1
+echo 'Host crustde_rustdevuser_ssh_1
    HostName localhost
    Port 2201
    User rustdevuser
-   IdentityFile //wsl.localhost/Debian/home/luciano/.ssh/localhost_2201_rustdevuser_ssh_1
+   IdentityFile //wsl.localhost/Debian/home/luciano/.ssh/crustde_rustdevuser_ssh_1
 '
 echo "\033[0;33m    If needed add manually to ~/.ssh/config in Linux \033[0m"
-echo 'Host localhost_2201_rustdevuser_ssh_1
+echo 'Host crustde_rustdevuser_ssh_1
    HostName localhost
    Port 2201
    User rustdevuser
-   IdentityFile ~/.ssh/localhost_2201_rustdevuser_ssh_1
+   IdentityFile ~/.ssh/crustde_rustdevuser_ssh_1
 '
 
 echo " "

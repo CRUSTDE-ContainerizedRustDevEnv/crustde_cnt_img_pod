@@ -7,7 +7,7 @@
 echo "  \033[33m Add often used SSH identity private keys to ssh-agent \033[0m"
 echo " "
 echo "  \033[33m The ssh-agent should be started already on login inside the ~/.bashrc script. \033[0m"
-echo "  \033[33m <https://github.com/CRUSTDE-Containerized-Rust-DevEnv/crustde_cnt_img_pod/blob/main/ssh_easy.md> \033[0m"
+echo "  \033[33m <https://github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod/blob/main/ssh_easy.md> \033[0m"
 echo "  \033[33m It is recommended to use the ~/.ssh/config file to assign explicitly one ssh key to one ssh server. \033[0m"
 echo "  \033[33m If not, ssh-agent will send all the keys to the server and the server could refute the connection because of too many bad keys. \033[0m"
 

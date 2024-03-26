@@ -6,7 +6,7 @@ echo "\033[0;33m    Bash script to restore personal data from Windows to WSL2 \0
 # TODO: this must be changed and run from the host (Windows)
 
 # restore_personal_data_from_win_to_WSL.sh
-# repository: https://github.com/CRUSTDE-Containerized-Rust-DevEnv/crustde_cnt_img_pod
+# repository: https://github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod
 
 # The backup of personal data could survive the reset of the WSL2 virtual machine.
 # Restore will copy it to Debian in ~/.ssh

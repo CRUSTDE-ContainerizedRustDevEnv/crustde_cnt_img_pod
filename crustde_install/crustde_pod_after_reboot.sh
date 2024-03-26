@@ -3,7 +3,7 @@
 echo " "
 echo "\033[0;33m    Bash script to correctly restart the pod 'sh crustde_pod_after_reboot.sh' \033[0m"
 
-# repository: https://github.com/CRUSTDE-Containerized-Rust-DevEnv/crustde_cnt_img_pod
+# repository: https://github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod
 
 # WSL2 have some quirks.
 if grep -qi microsoft /proc/version; then    
@@ -34,14 +34,14 @@ podman ps -a
 
 echo " "
 echo "\033[0;33m    Fast ssh connection test from terminal: \033[0m"
-echo "\033[0;32m ssh -i ~/.ssh/localhost_2201_rustdevuser_ssh_1 -p 2201 rustdevuser@localhost \033[0m"
+echo "\033[0;32m ssh -i ~/.ssh/crustde_rustdevuser_ssh_1 -p 2201 rustdevuser@localhost \033[0m"
 echo "\033[0;33m    Enter passphrase. \033[0m"
 echo "\033[0;33m    The prompt should change to: rustdevuser@crustde_pod:~$ \033[0m"
 echo "\033[0;32m exit \033[0m"
 
 echo " "
 echo "\033[0;33m    You can connect VSCode to an existing project inside the container from the host: \033[0m"
-echo "\033[0;32m MSYS_NO_PATHCONV=1 code --remote ssh-remote+localhost_2201_rustdevuser_ssh_1 /home/rustdevuser/rustprojects \033[0m"
+echo "\033[0;32m MSYS_NO_PATHCONV=1 code --remote ssh-remote+crustde_rustdevuser_ssh_1 /home/rustdevuser/rustprojects \033[0m"
 echo "\033[0;33m    In Windows 'git-bash', the MSYS_NO_PATHCONV is used to disable the default path conversion. \033[0m"
 
 echo " "
