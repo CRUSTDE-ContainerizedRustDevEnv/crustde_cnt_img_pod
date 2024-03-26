@@ -10,7 +10,7 @@ Development project name: crustde_cnt_img_pod
  ![maintained](https://img.shields.io/badge/maintained-green)
  ![ready_for_use](https://img.shields.io/badge/ready_for_use-green)
 
- ![logo](https://raw.githubusercontent.com/CRUSTDE-ContainerizedRustDevEnv/CRUSTDE-ContainerizedRustDevEnv/main/images/crustde_250x250.png)
+ ![logo](https://raw.githubusercontent.com/CRUSTDE-ContainerizedRustDevEnv/CRUSTDE_Containerized_Rust_DevEnv/main/images/crustde_250x250.png)
  crustde_cnt_img_pod is a member of the [CRUSTDE-ContainerizedRustDevEnv](https://github.com/orgs/CRUSTDE-ContainerizedRustDevEnv/repositories?q=sort%3Aname-asc) project.
 
  [![Lines in md](https://img.shields.io/badge/Lines_in_markdown-932-green.svg)](https://github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod/)
