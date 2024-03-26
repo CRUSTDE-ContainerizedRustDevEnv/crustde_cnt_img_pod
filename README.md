@@ -5,7 +5,7 @@
 Development project name: crustde_cnt_img_pod
 
 **02. Tutorial for CRUSTDE - Containerized Rust Development Environment. Rust - Hack Without Fear and Trust! (2022-03)**  
-***version: 3.0  date: 2022-09-06 author: [bestia.dev](https://bestia.dev) repository: [GitHub](https://github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod)***  
+***version: 2024.326.1347  date: 2024-03-26 author: [bestia.dev](https://bestia.dev) repository: [GitHub](https://github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod)***  
 
  ![maintained](https://img.shields.io/badge/maintained-green)
  ![ready_for_use](https://img.shields.io/badge/ready_for_use-green)
