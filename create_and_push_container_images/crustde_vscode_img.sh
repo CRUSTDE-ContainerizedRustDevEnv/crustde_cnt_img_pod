@@ -101,7 +101,8 @@ printf "\033[0;32m podman push docker.io/bestiadev/crustde_vscode_img:vscode-1.8
 printf "\033[0;32m podman push docker.io/bestiadev/crustde_vscode_img:cargo-1.77.0 \033[0m\n"
 printf "\033[0;32m podman push docker.io/bestiadev/crustde_vscode_img:latest \033[0m\n"
 
-printf " \n"
 printf "\033[0;33m    This image is used solely inside the pod 'crustde_pod'. \033[0m\n"
-printf "\033[0;33m    The command 'sh crustde_pod_create.sh' inside the directory '~/rustprojects/crustde_cnt_img_pod/crustde_install' creates the pod. \033[0m\n"
+printf "\033[0;32m cd ~/rustprojects/crustde_cnt_img_pod/crustde_install \033[0m\n"
+printf "\033[0;32m sh crustde_pod_create.sh \033[0m\n"
+
 printf " \n"
