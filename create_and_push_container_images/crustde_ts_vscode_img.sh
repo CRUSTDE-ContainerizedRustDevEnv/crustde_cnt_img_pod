@@ -94,7 +94,7 @@ printf "\033[0;32m podman push docker.io/bestiadev/crustde_vscode_img:latest \03
 
 printf " \n"
 printf "\033[0;33m    This image is used solely inside the pod 'crustde_pod'. \033[0m\n"
-printf "\033[0;32m cd ~/rustprojects/crustde_cnt_img_pod/crustde_install \033[0m\n"
+printf "\033[0;32m cd ../crustde_install \033[0m\n"
 printf "\033[0;32m sh crustde_pod_create.sh \033[0m\n"
 
 printf " \n"

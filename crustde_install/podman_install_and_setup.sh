@@ -129,7 +129,7 @@ printf "\n"
 printf "\033[0;33m    Now you can create the pod crustde_pod. \033[0m\n"
 printf "\033[0;33m    On first run it will download 1.06 GB from DockerHub, unpack to 3.32 GB and store it in the cache folder. \033[0m\n"
 printf "\033[0;33m    After that, follow the detailed instructions. \033[0m\n"
-printf "\033[0;32m cd ~/rustprojects/crustde_install/pod_with_rust_vscode \033[0m\n"
+printf "\033[0;32m cd pod_with_rust_vscode \033[0m\n"
 printf "\033[0;32m sh crustde_pod_create.sh \033[0m\n"
 
 printf "\n"

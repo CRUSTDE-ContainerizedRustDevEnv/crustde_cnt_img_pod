@@ -64,7 +64,7 @@ printf "\033[0;32m podman push docker.io/bestiadev/crustde_squid_img:latest \033
 
 printf " \n"
 printf "\033[0;33m    To create the 'pod' with 'crustde_squid_cnt' and 'crustde_vscode_cnt' use something similar to: \033[0m\n"
-printf "\033[0;32m cd ~/rustprojects/crustde_install/pod_with_rust_vscode  \033[0m\n"
+printf "\033[0;32m cd ../crustde_install/pod_with_rust_vscode  \033[0m\n"
 printf "\033[0;32m sh crustde_pod_create.sh \033[0m\n"
 
 printf " \n"
