@@ -716,6 +716,8 @@ Leave VSCode open because the next chapter will continue from here.
 You can connect to an existing VSCode project inside the CRUSTDE container from the host bash or git-bash:
 
 ```bash
+# Use sshadd to store the private key for SSH connections
+sshadd
 MSYS_NO_PATHCONV=1 code --remote ssh-remote+crustde_rustdevuser_ssh_1 /home/rustdevuser/rustprojects
 ```
 
