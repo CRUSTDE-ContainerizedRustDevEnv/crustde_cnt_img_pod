@@ -899,11 +899,11 @@ Create a bash script with this text:
 
 ```bash
 #!/bin/sh
-echo 'podman pod stop --all'
+printf "podman pod stop --all\n"
 podman pod stop --all
-echo 'podman stop --all'
+printf "podman stop --all\n"
 podman stop --all
-echo 'sudo shutdown -h now'
+printf "sudo shutdown -h now\n"
 sudo shutdown -h now
 ```
 
@@ -916,7 +916,7 @@ sh ~/shut.sh
 In ~/.bashrc add these lines, then use just the short command `shut`:
 
 ```bash
-echo "For correct shutdown that stops podman use the command 'shut'"
+printf "For correct shutdown that stops podman use the command 'shut'\n"
 alias shut="sh ~/shut.sh"
 ```
 
@@ -981,7 +981,7 @@ Some say: The `/tmp` files should be on a temporary filesystem.
 Here is how I set fstab to mount tmpfs, it works.
 
 ```bash
-echo "none  /tmp  tmpfs  defaults  0 0" | sudo tee -a /etc/fstab
+printf "none  /tmp  tmpfs  defaults  0 0\n" | sudo tee -a /etc/fstab
 # create /tmp folder if not exist
 sudo mkdir /tmp
 sudo chmod 1777 /tmp

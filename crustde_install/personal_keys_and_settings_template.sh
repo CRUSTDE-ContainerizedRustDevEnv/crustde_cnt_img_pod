@@ -1,7 +1,7 @@
 #!/bin/sh
 
-echo " "
-echo "\033[0;33m    Bash script to install personal keys and setting into CRUSTDE - Containerized Rust Development Environment. \033[0m"
+printf " \n"
+printf "\033[0;33m    Bash script to install personal keys and setting into CRUSTDE - Containerized Rust Development Environment. \033[0m\n"
 
 # personal_keys_and_settings_template.sh
 # repository: https://github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod
@@ -14,40 +14,40 @@ echo "\033[0;33m    Bash script to install personal keys and setting into CRUSTD
 # Warning: Once modified, don't share this file with anyone and don't push it to GitHub because it will contain your data.
 # Copy this data into Windows folder. So it will be persistent also in the event that the WSL2 is reset.
 
-echo " "
-echo "\033[0;33m    Set git personal information inside the container \033[0m"
-echo "\033[0;33m    podman exec --user=rustdevuser crustde_vscode_cnt git config --global user.email 'info@your.mail' \033[0m"
+printf " \n"
+printf "\033[0;33m    Set git personal information inside the container \033[0m\n"
+printf "\033[0;33m    podman exec --user=rustdevuser crustde_vscode_cnt git config --global user.email 'info@your.mail' \033[0m\n"
 podman exec --user=rustdevuser crustde_vscode_cnt git config --global user.email "info@your.mail"
-echo "\033[0;33m    podman exec --user=rustdevuser crustde_vscode_cnt git config --global user.name 'your_gitname' \033[0m"
+printf "\033[0;33m    podman exec --user=rustdevuser crustde_vscode_cnt git config --global user.name 'your_gitname' \033[0m\n"
 podman exec --user=rustdevuser crustde_vscode_cnt git config --global user.name "your_gitname"
-echo "\033[0;33m    podman exec --user=rustdevuser crustde_vscode_cnt git config --global -l \033[0m"
+printf "\033[0;33m    podman exec --user=rustdevuser crustde_vscode_cnt git config --global -l \033[0m\n"
 podman exec --user=rustdevuser crustde_vscode_cnt git config --global -l
 
-echo "\033[0;33m    podman exec --user=rustdevuser crustde_vscode_cnt ls -la /home/rustdevuser/.ssh \033[0m"
+printf "\033[0;33m    podman exec --user=rustdevuser crustde_vscode_cnt ls -la /home/rustdevuser/.ssh \033[0m\n"
 podman exec --user=rustdevuser crustde_vscode_cnt ls -la /home/rustdevuser/.ssh
 
-echo "\033[0;33m    podman cp ~/.ssh/github_com_git_ssh_1 crustde_vscode_cnt:/home/rustdevuser/.ssh/github_com_git_ssh_1 \033[0m"
+printf "\033[0;33m    podman cp ~/.ssh/github_com_git_ssh_1 crustde_vscode_cnt:/home/rustdevuser/.ssh/github_com_git_ssh_1 \033[0m\n"
 podman cp ~/.ssh/github_com_git_ssh_1 crustde_vscode_cnt:/home/rustdevuser/.ssh/github_com_git_ssh_1
-echo "\033[0;33m    podman exec --user=rustdevuser crustde_vscode_cnt chmod 600 /home/rustdevuser/.ssh/github_com_git_ssh_1 \033[0m"
+printf "\033[0;33m    podman exec --user=rustdevuser crustde_vscode_cnt chmod 600 /home/rustdevuser/.ssh/github_com_git_ssh_1 \033[0m\n"
 podman exec --user=rustdevuser crustde_vscode_cnt chmod 600 /home/rustdevuser/.ssh/github_com_git_ssh_1
-echo "\033[0;33m    podman cp ~/.ssh/github_com_git_ssh_1.pub crustde_vscode_cnt:/home/rustdevuser/.ssh/github_com_git_ssh_1.pub \033[0m"
+printf "\033[0;33m    podman cp ~/.ssh/github_com_git_ssh_1.pub crustde_vscode_cnt:/home/rustdevuser/.ssh/github_com_git_ssh_1.pub \033[0m\n"
 podman cp ~/.ssh/github_com_git_ssh_1.pub crustde_vscode_cnt:/home/rustdevuser/.ssh/github_com_git_ssh_1.pub
 
-echo "\033[0;33m    podman cp ~/.ssh/your_key_for_webserver_ssh_1 crustde_vscode_cnt:/home/rustdevuser/.ssh/your_key_for_webserver_ssh_1 \033[0m"
+printf "\033[0;33m    podman cp ~/.ssh/your_key_for_webserver_ssh_1 crustde_vscode_cnt:/home/rustdevuser/.ssh/your_key_for_webserver_ssh_1 \033[0m\n"
 podman cp ~/.ssh/your_key_for_webserver_ssh_1 crustde_vscode_cnt:/home/rustdevuser/.ssh/your_key_for_webserver_ssh_1
-echo "\033[0;33m    podman exec --user=rustdevuser crustde_vscode_cnt chmod 600 /home/rustdevuser/.ssh/your_key_for_webserver_ssh_1 \033[0m"
+printf "\033[0;33m    podman exec --user=rustdevuser crustde_vscode_cnt chmod 600 /home/rustdevuser/.ssh/your_key_for_webserver_ssh_1 \033[0m\n"
 podman exec --user=rustdevuser crustde_vscode_cnt chmod 600 /home/rustdevuser/.ssh/your_key_for_webserver_ssh_1
-echo "\033[0;33m    podman cp ~/.ssh/your_key_for_webserver_ssh_1.pub crustde_vscode_cnt:/home/rustdevuser/.ssh/your_key_for_webserver_ssh_1.pub \033[0m"
+printf "\033[0;33m    podman cp ~/.ssh/your_key_for_webserver_ssh_1.pub crustde_vscode_cnt:/home/rustdevuser/.ssh/your_key_for_webserver_ssh_1.pub \033[0m\n"
 podman cp ~/.ssh/your_key_for_webserver_ssh_1.pub crustde_vscode_cnt:/home/rustdevuser/.ssh/your_key_for_webserver_ssh_1.pub
 
-echo "\033[0;33m    podman exec --user=rustdevuser crustde_vscode_cnt ls -la /home/rustdevuser/.ssh \033[0m"
+printf "\033[0;33m    podman exec --user=rustdevuser crustde_vscode_cnt ls -la /home/rustdevuser/.ssh \033[0m\n"
 podman exec --user=rustdevuser crustde_vscode_cnt ls -la /home/rustdevuser/.ssh
 
-echo "\033[0;33m    Copy the '~/.ssh/crustde_pod_keys/sshadd.sh' from Debian into the container \033[0m"
+printf "\033[0;33m    Copy the '~/.ssh/crustde_pod_keys/sshadd.sh' from Debian into the container \033[0m\n"
 podman cp ~/.ssh/crustde_pod_keys/sshadd.sh crustde_vscode_cnt:/home/rustdevuser/.ssh/sshadd.sh
 
-echo "\033[0;33m    Copy the '~/.ssh/crustde_pod_keys/config' from Debian into the container \033[0m"
+printf "\033[0;33m    Copy the '~/.ssh/crustde_pod_keys/config' from Debian into the container \033[0m\n"
 podman cp ~/.ssh/crustde_pod_keys/config crustde_vscode_cnt:/home/rustdevuser/.ssh/config
 podman exec --user=rustdevuser crustde_vscode_cnt chmod 600 /home/rustdevuser/.ssh/config
 
-echo " "
+printf " \n"

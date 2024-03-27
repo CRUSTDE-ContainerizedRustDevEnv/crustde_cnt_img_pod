@@ -37,7 +37,7 @@ After downloading, you can inspect them to see exactly what they are doing. Ther
 mkdir -p ~/rustprojects/crustde_install;
 cd ~/rustprojects/crustde_install;
 # only if curl is not yet installed:
-sudo apt install curl
+sudo apt install -y curl
 curl -Sf -L https://github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod/raw/main/crustde_install/download_scripts.sh --output download_scripts.sh;
 # you can review the bash script, it only creates dirs, download scripts and suggests what script to run next
 cat download_scripts.sh; 

@@ -35,7 +35,7 @@ if [ -f "${SSH_ENV}" ]; then
 else
     start_agent;
 fi
-echo "Use the global command 'sshadd' to simply add your SSH keys to ssh-agent $SSH_AGENT_PID."
+printf "Use the global command 'sshadd' to simply add your SSH keys to ssh-agent $SSH_AGENT_PID.\n"
 alias sshadd="echo sh ~/.ssh/sshadd.sh; sh ~/.ssh/sshadd.sh"
 ```
 
@@ -45,7 +45,7 @@ It is even easier if you prepare a little bash script with the ssh keys you ofte
 ```bash
 #!/bin/sh
 
-echo "   Bash script to add your private SSH keys to ssh_agent."
+printf "   Bash script to add your private SSH keys to ssh_agent.\n"
 # The ssh-agent is started already on login inside the ~/.bashrc script.
 # Replace the words github_com_git_ssh_1 and your_key_for_webserver_ssh_1 with your file names.
 # The keys are restricted only to explicit servers/hosts in the ~/.ssh/config file.
@@ -57,10 +57,10 @@ ssh-add -l |grep -q `ssh-keygen -lf ~/.ssh/github_com_git_ssh_1 | awk '{print $2
 # add if key not yet exists
 ssh-add -l |grep -q `ssh-keygen -lf ~/.ssh/your_key_for_webserver_ssh_1 | awk '{print $2}'` || ssh-add -t 1h ~/.ssh/your_key_for_webserver_ssh_1
 
-echo "   List public fingerprints inside ssh-agent:"
-echo "   ssh-add -l"
+printf "   List public fingerprints inside ssh-agent:\n"
+printf "   ssh-add -l\n"
 ssh-add -l
 
-echo " "
+printf " \n"
 
 ```
