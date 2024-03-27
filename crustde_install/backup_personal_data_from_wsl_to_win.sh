@@ -12,7 +12,7 @@ printf "\033[0;33m    Bash script to backup personal data from WSL2 to windows \
 
 win_userprofile="$(cmd.exe /c "<nul set /p=%UserProfile%" 2>/dev/null)"
 WSLWINUSERPROFILE="$(wslpath $win_userprofile)"
-echo $WSLWINUSERPROFILE/.ssh
+printf "$WSLWINUSERPROFILE/.ssh\n"
 
 # TODO: compress is more user friendly
 cp -v ~/.ssh/ $WSLWINUSERPROFILE/.ssh/

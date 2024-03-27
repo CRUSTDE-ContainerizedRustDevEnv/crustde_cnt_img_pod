@@ -36,7 +36,7 @@ else
     start_agent;
 fi
 printf "Use the global command 'sshadd' to simply add your SSH keys to ssh-agent $SSH_AGENT_PID.\n"
-alias sshadd="echo sh ~/.ssh/sshadd.sh; sh ~/.ssh/sshadd.sh"
+alias sshadd="printf 'sh ~/.ssh/sshadd.sh\n'; sh ~/.ssh/sshadd.sh"
 ```
 
 Now you can use `ssh-add` to add your identity to the agent. So you have to write your passcode only once.  

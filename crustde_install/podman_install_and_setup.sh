@@ -71,20 +71,20 @@ if grep -qi microsoft /proc/version; then
   else
     printf "mkdir -p $HOME/.config/containers\n"
     mkdir -p $HOME/.config/containers
-    echo '  [engine]
+    printf '  [engine]
     cgroup_manager = "cgroupfs"
-    events_logger = "file"'
+    events_logger = "file"\n'
     printf " | tee -a $HOME/.config/containers/containers.conf\n"
-    echo '[engine]
+    printf '[engine]
 cgroup_manager = "cgroupfs"
-events_logger = "file"' | tee -a $HOME/.config/containers/containers.conf
+events_logger = "file"\n' | tee -a $HOME/.config/containers/containers.conf
   fi
   
   if grep -qi tmpfs /etc/fstab; then
     printf "fstab already contains tmpfs\n"
   else
     printf "\033[0;33m    WSL2 must have tmp in tmpfs, so it can restart correctly after reboot \033[0m\n"
-    printf "echo 'none  /tmp  tmpfs  defaults  0 0' | sudo tee -a /etc/fstab\n"
+    printf "printf 'none  /tmp  tmpfs  defaults  0 0\n' | sudo tee -a /etc/fstab\n"
     printf "none  /tmp  tmpfs  defaults  0 0\n" | sudo tee -a /etc/fstab
   fi
 

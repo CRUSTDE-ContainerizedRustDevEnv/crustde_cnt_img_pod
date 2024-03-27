@@ -116,7 +116,7 @@ printf "\033[0;33m    Rustup wants to add the ~/.cargo/bin to PATH. But it needs
 printf "\033[0;33m    Add the PATH to ~/.cargo/bin manually \033[0m\n"
 OLDIMAGEPATH=$(buildah run crustde_cargo_img printenv PATH)
 buildah config --env PATH=/home/rustdevuser/.cargo/bin:$OLDIMAGEPATH crustde_cargo_img
-buildah run crustde_cargo_img /bin/sh -c 'echo $PATH'
+buildah run crustde_cargo_img /bin/sh -c 'printf "$PATH\n"'
 
 printf " \n"
 printf "\033[0;33m    Debian version \033[0m\n"
@@ -140,7 +140,7 @@ buildah run crustde_cargo_img /bin/sh -c 'psql --version'
 
 # this probably is not necessary, if rust-analyzer can call rust-lang.org
 # buildah config --env RUST_SRC_PATH=/home/rustdevuser/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library crustde_cargo_img
-# buildah run crustde_cargo_img /bin/sh -c 'echo $RUST_SRC_PATH'
+# buildah run crustde_cargo_img /bin/sh -c 'printf "$RUST_SRC_PATH\n"'
 
 printf " \n"
 printf "\033[0;33m    Add rust-src for debugging \033[0m\n"

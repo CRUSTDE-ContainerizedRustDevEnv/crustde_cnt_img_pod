@@ -14,7 +14,7 @@ printf "\033[0;33m    Bash script to restore personal data from Windows to WSL2 
 
 win_userprofile="$(cmd.exe /c "<nul set /p=%UserProfile%" 2>/dev/null)"
 WSLWINUSERPROFILE="$(wslpath $win_userprofile)"
-echo $WSLWINUSERPROFILE/.ssh/github_com_git_ssh_1
+printf "$WSLWINUSERPROFILE/.ssh/github_com_git_ssh_1"
 
 cp -v $WSLWINUSERPROFILE/.ssh/ ~/.ssh/ 
 

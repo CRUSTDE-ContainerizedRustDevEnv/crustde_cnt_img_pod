@@ -17,7 +17,7 @@ cd ~/rustprojects/crustde_install/pod_with_rust_pg_vscode_debugger/
 # For debugging the ASLR (address space layout randomization)
 # should be disabled before running the container
 printf "\033[0;33m    Disable ASLR for debugging \033[0m\n"
-echo 0 | sudo tee /proc/sys/kernel/randomize_va_space
+printf "0\n" | sudo tee /proc/sys/kernel/randomize_va_space
 
 printf " \n"
 printf "\033[0;33m    Create pod \033[0m\n"
@@ -75,7 +75,7 @@ printf "\033[0;33m    podman pod start \033[0m\n"
 podman pod start crustde_pod
 
 printf "\033[0;33m    Add env var for proxy settings \033[0m\n"
-# echo a newline to avoid appending to the last line.
+# printf a newline to avoid appending to the last line.
 podman exec --user=rustdevuser  crustde_vscode_cnt /bin/sh -c 'printf "\n" >>  ~/.bashrc'
 podman exec --user=rustdevuser  crustde_vscode_cnt /bin/sh -c 'printf "export http_proxy=\"http://localhost:3128\"\n" >>  ~/.bashrc'
 podman exec --user=rustdevuser  crustde_vscode_cnt /bin/sh -c 'printf "export https_proxy=\"http://localhost:3128\"\n" >>  ~/.bashrc'

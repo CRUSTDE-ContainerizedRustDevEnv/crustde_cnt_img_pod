@@ -68,7 +68,7 @@ printf "\033[0;33m    podman pod start \033[0m\n"
 podman pod start crustde_pod
 
 printf "\033[0;33m    Add env var for proxy settings \033[0m\n"
-# echo a newline to avoid appending to the last line.
+# printf a newline to avoid appending to the last line.
 podman exec --user=rustdevuser  crustde_vscode_cnt /bin/sh -c 'printf "\n" >>  ~/.bashrc'
 podman exec --user=rustdevuser  crustde_vscode_cnt /bin/sh -c 'printf "export http_proxy=\"http://localhost:3128\"\n" >>  ~/.bashrc'
 podman exec --user=rustdevuser  crustde_vscode_cnt /bin/sh -c 'printf "export https_proxy=\"http://localhost:3128\"\n" >>  ~/.bashrc'
