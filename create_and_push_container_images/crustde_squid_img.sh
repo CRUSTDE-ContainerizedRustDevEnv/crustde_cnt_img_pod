@@ -63,9 +63,9 @@ printf "\033[0;32m podman push docker.io/bestiadev/crustde_squid_img:squid-3.5.2
 printf "\033[0;32m podman push docker.io/bestiadev/crustde_squid_img:latest \033[0m\n"
 
 printf " \n"
-printf "\033[0;33m    To create the 'pod' with 'crustde_squid_cnt' and 'crustde_vscode_cnt' use something similar to: \033[0m\n"
-printf "\033[0;32m cd ../crustde_install/pod_with_rust_vscode  \033[0m\n"
-printf "\033[0;32m sh crustde_pod_create.sh \033[0m\n"
+printf "\033[0;33m    This image is used solely inside the pod 'crustde_pod'. \033[0m\n"
+printf "\033[0;33m    Follow the instructions to install the CRUSTDE pod: \033[0m\n"
+printf "\033[0;32m https://github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod \033[0m\n"
 
 printf " \n"
 printf "\033[0;33m    Open VSCode, press F1, type 'ssh' and choose 'Remote-SSH: Connect to Host...' and choose 'crustde_vscode_cnt' \033[0m\n" 
@@ -76,4 +76,5 @@ printf "\033[0;32m curl --proxy 127.0.0.1:3128 http://httpbin.org/ip \033[0m\n"
 printf "origin: 127.0.0.1, 46.123.241.93\n"
 printf "\033[0;32m curl --proxy 127.0.0.1:3128 http://google.com \033[0m\n"
 printf "curl: (7) Failed to connect to 127.0.0.1 port 3128: Connection refused\n"
+
 printf " \n"

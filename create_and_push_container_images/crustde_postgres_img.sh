@@ -60,3 +60,8 @@ printf "\033[0;32m podman push docker.io/bestiadev/crustde_postgres_img:postgres
 printf "\033[0;32m podman push docker.io/bestiadev/crustde_postgres_img:latest \033[0m\n"
 
 printf " \n"
+printf "\033[0;33m    This image is used solely inside the pod 'crustde_pod'. \033[0m\n"
+printf "\033[0;33m    Follow the instructions to install the CRUSTDE pod: \033[0m\n"
+printf "\033[0;32m https://github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod \033[0m\n"
+
+printf " \n"
