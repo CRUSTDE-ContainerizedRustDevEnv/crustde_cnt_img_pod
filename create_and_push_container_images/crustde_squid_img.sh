@@ -68,13 +68,15 @@ printf "\033[0;33m    Follow the instructions to install the CRUSTDE pod: \033[0
 printf "\033[0;32m https://github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod \033[0m\n"
 
 printf " \n"
-printf "\033[0;33m    Open VSCode, press F1, type 'ssh' and choose 'Remote-SSH: Connect to Host...' and choose 'crustde_vscode_cnt' \033[0m\n" 
+printf "\033[0;33m    After creating the pod, open VSCode, press F1, type 'ssh' and choose 'Remote-SSH: Connect to Host...' and choose 'crustde_vscode_cnt' \033[0m\n" 
 printf "\033[0;33m    Type the passphrase. This will open a new VSCode window attached to the container. \033[0m\n"
 printf "\033[0;33m    Open the VSCode terminal with Ctrl+J \033[0m\n"
 printf "\033[0;33m    Try the if the proxy restrictions work: \033[0m\n"
 printf "\033[0;32m curl --proxy 127.0.0.1:3128 http://httpbin.org/ip \033[0m\n"
+printf "The answer shohuld be:\n"
 printf "origin: 127.0.0.1, 46.123.241.93\n"
 printf "\033[0;32m curl --proxy 127.0.0.1:3128 http://google.com \033[0m\n"
+printf "The answer shohuld be:\n"
 printf "curl: (7) Failed to connect to 127.0.0.1 port 3128: Connection refused\n"
 
 printf " \n"
