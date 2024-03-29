@@ -13,8 +13,8 @@ Development project name: crustde_cnt_img_pod
  ![logo](https://raw.githubusercontent.com/CRUSTDE-ContainerizedRustDevEnv/CRUSTDE_Containerized_Rust_DevEnv/main/images/crustde_250x250.png)
  crustde_cnt_img_pod is a member of the [CRUSTDE-ContainerizedRustDevEnv](https://github.com/orgs/CRUSTDE-ContainerizedRustDevEnv/repositories?q=sort%3Aname-asc) project.
 
- [![Lines in md](https://img.shields.io/badge/Lines_in_markdown-932-green.svg)](https://github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod/)
- [![Lines in bash scripts](https://img.shields.io/badge/Lines_in_bash_scripts-1535-blue.svg)](https://github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod/)
+ [![Lines in md](https://img.shields.io/badge/Lines_in_markdown-1204-green.svg)](https://github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod/)
+ [![Lines in bash scripts](https://img.shields.io/badge/Lines_in_bash_scripts-2293-blue.svg)](https://github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod/)
 
  [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod/blob/master/LICENSE)
  ![crustde_cnt_img_pod](https://bestia.dev/webpage_hit_counter/get_svg_image/138544014.svg)
