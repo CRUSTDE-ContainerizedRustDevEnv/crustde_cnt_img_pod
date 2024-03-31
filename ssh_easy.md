@@ -15,7 +15,7 @@ Host github.com
     IdentitiesOnly yes
 ```
 
-In the ~/.bashrc file start the agent in the background:
+In the ~/.bashrc file start the ssh-agent in the background:
 
 ```bash
 SSH_ENV="$HOME/.ssh/agent-environment"

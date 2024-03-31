@@ -476,7 +476,7 @@ Docker Hub stores compressed images, so they are a third of the size to download
 | docker.io/bestiadev/crustde_cross_img   | cargo-1.77.0   | 3.03 GB      | 0.98 GB     |
 | docker.io/bestiadev/crustde_vscode_img  | cargo-1.77.0   | 3.32 GB      | 1.06 GB     |
 
-## Users keys for SSH
+## User and server keys for SSH
 
 We need to create 2 SSH keys, one for the `SSH server` identity `host key` of the container and the other for the identity of `rustdevuser`. This is done only once. To avoid old cryptographic algorithms I will force the new `ed25519`.  
 In `host terminal`:
@@ -763,10 +763,14 @@ The `VSCode terminal` is still open on the project `crustde_hello` from the prev
 
 ## ssh-agent in Linux bash
 
+Every time I connect over SSH I must input the passcode for my SSH identity. Even `git push` works over SSH, so every time I have to input the password. This is great for security, but it is an awful user experience. You can choose to be less secure with some ssh keys and be more productive with ssh-agent. Your choice.  
+
+Git comes with `ssh-agent` and I could use it just the same as in Linux bash to avoid retyping the passcode every time. ssh-agent asks for the passcode only once and then stores securely the unencrypted private key in memory.  
+
 Read SSH easy here: [ssh_easy.md](ssh_easy.md)
 
-It is comfortable to use the `ssh-agent` to store the passphrase in memory, so we type it only once. The ssh-agent is already started on login in the `~/.bashrc` script.  
-Again attention, that this container has secrets and must not be shared ! Never !  
+The ssh-agent is already started on login in the `~/.bashrc` script.  
+Again attention, that this container has secrets now and must not be shared ! Never !  
 In the `VSCode terminal` (Ctrl+j) run:
 
 ```bash
@@ -790,7 +794,7 @@ sshadd
 # if you add the alias into ~/.bashrc
 ```
 
-After you enter the passphrase, it will remember it until the terminal is open.  
+After you enter the passphrase, it will remember it until the terminal is open or you remove the key from the agent with `ssh-add -D`.  
 When you open the terminal again, you will have to run the script again and enter the passphrase again.
 
 ## GitHub push

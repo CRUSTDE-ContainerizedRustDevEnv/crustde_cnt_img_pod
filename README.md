@@ -55,7 +55,7 @@ must be set as shown by the installation scripts.
 Open `git-bash` terminal and run VSCode to open a folder inside the container:
 
 ```bash
-# Use the global command 'sshadd' to simply add your private SSH keys to ssh-agent
+# Use the global command 'sshadd' to simply add your private SSH key for crustde_rustdevuser to ssh-agent
 sshadd
 MSYS_NO_PATHCONV=1 code --remote ssh-remote+crustde_rustdevuser /home/rustdevuser/rustprojects
 ```
