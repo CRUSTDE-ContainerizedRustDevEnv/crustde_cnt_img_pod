@@ -763,39 +763,7 @@ The `VSCode terminal` is still open on the project `crustde_hello` from the prev
 
 ## ssh-agent in Linux bash
 
-Every time I connect over SSH I must input the passcode for my SSH identity. Even `git push` works over SSH, so every time I have to input the password. This is great for security, but it is an awful user experience. You can choose to be less secure with some ssh keys and be more productive with ssh-agent. Your choice.  
-
-Git comes with `ssh-agent` and I could use it just the same as in Linux bash to avoid retyping the passcode every time. ssh-agent asks for the passcode only once and then stores securely the unencrypted private key in memory.  
-
 Read SSH easy here: [ssh_easy.md](ssh_easy.md)
-
-The ssh-agent is already started on login in the `~/.bashrc` script.  
-Again attention, that this container has secrets now and must not be shared ! Never !  
-In the `VSCode terminal` (Ctrl+j) run:
-
-```bash
-ssh-add /home/rustdevuser/.ssh/github_com_git_ssh_1
-# enter your passphrase
-```
-
-You can download the template [sshadd_template.sh](https://github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod/blob/main/crustde_install/sshadd_template.sh) from GitHub and save it into the Debian folder `~/.ssh`. Rename it to `sshadd.sh` and personalize it with your SSH key file names.  
-Run in `host Terminal`:
-
-```bash
-podman cp ~/.ssh/sshadd.sh crustde_vscode_cnt:/home/rustdevuser/.ssh/sshadd.sh  
-```
-
-You will then run inside the `VSCode terminal` for each window/project separately:
-
-```bash
-sh ~/.ssh/sshadd.sh
-# or simply
-sshadd
-# if you add the alias into ~/.bashrc
-```
-
-After you enter the passphrase, it will remember it until the terminal is open or you remove the key from the agent with `ssh-add -D`.  
-When you open the terminal again, you will have to run the script again and enter the passphrase again.
 
 ## GitHub push
 
