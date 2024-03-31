@@ -57,7 +57,7 @@ Open `git-bash` terminal and run VSCode to open a folder inside the container:
 ```bash
 # Use the global command 'sshadd' to simply add your private SSH keys to ssh-agent
 sshadd
-MSYS_NO_PATHCONV=1 code --remote ssh-remote+crustde_rustdevuser_ssh_1 /home/rustdevuser/rustprojects
+MSYS_NO_PATHCONV=1 code --remote ssh-remote+crustde_rustdevuser /home/rustdevuser/rustprojects
 ```
 
 If VSCode cannot connect to the container 99% is to blame the `~/.ssh/known_hosts` file. Try to rename it to `known_hosts.bak` and retry.

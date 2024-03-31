@@ -1,9 +1,11 @@
-Host github_com_git_ssh_1
+Host github.com
     HostName github.com
     User git
     IdentityFile ~/.ssh/github_com_git_ssh_1
+    IdentitiesOnly yes
 	
-Host your_key_for_webserver_ssh_1
+Host your_webserver
     HostName your_webserver
     User your_username
     IdentityFile ~/.ssh/your_key_for_webserver_ssh_1
+    IdentitiesOnly yes

@@ -8,10 +8,11 @@ If not, ssh-agent will send all the keys to the server and the server could refu
 Write the ssh connection details in ~/.ssh/config:
 
 ```bash
-Host github_com_git_ssh_1
+Host github.com
     HostName github.com
     User git
     IdentityFile ~/.ssh/github_com_git_ssh_1
+    IdentitiesOnly yes
 ```
 
 In the ~/.bashrc file start the agent in the background:
