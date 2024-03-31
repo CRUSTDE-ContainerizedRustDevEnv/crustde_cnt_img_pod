@@ -844,7 +844,7 @@ In "Network Neighborhood" choose "Secure FTP". Create new connection:
 ```conf
 Connect to: localhost:2201/~
 User name: rustdevuser
-Password: passcode of the private key
+Password: passphrase of the private key
 Protect password with password manager: yes
 Public key: \\wsl.localhost\Debian\home\luciano\.ssh\crustde_rustdevuser_ssh_1.pub
 Private key: \\wsl.localhost\Debian\home\luciano\.ssh\crustde_rustdevuser_ssh_1
@@ -857,7 +857,7 @@ In the same fashion we can use TotalCmd to manage the files on our web server ov
 ```conf
 Connect to: your_webserver
 User name: your_username
-Password: passcode of the private key
+Password: passphrase of the private key
 Protect password with password manager: yes
 Public key: //wsl.localhost/Debian/home/luciano/.ssh/your_key_for_webserver_ssh_1.pub
 Private key: //wsl.localhost/Debian/home/luciano/.ssh/your_key_for_webserver_ssh_1

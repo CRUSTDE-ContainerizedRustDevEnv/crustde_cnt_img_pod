@@ -17,9 +17,9 @@ Host github.com
 
 ## ssh-agent
 
-Every time I connect over SSH I must input the passcode for my SSH identity. Even `git push` works over SSH, so every time I have to input the password. This is great for security, but it is an awful user experience. You can choose to be less secure with some ssh keys and be more productive with ssh-agent. Be aware of the risks. Your choice.  
+Every time I connect over SSH I must input the passphrasese for my SSH identity. Even `git push` works over SSH, so every time I have to input the password. This is great for security, but it is an awful user experience. You can choose to be less secure with some ssh keys and be more productive with ssh-agent. Be aware of the risks. Your choice.  
 
-Git comes with `ssh-agent` and I could use it to avoid retyping the passcode every time. ssh-agent asks for the passcode only once and then stores securely the unencrypted private key in memory.  
+Git comes with `ssh-agent` and I could use it to avoid retyping the passphrase every time. ssh-agent asks for thpassphrasede only once and then stores securely the unencrypted private key in memory.  
 
 In the ~/.bashrc file start the ssh-agent in the background:
 
@@ -46,7 +46,7 @@ printf "Use the global command 'sshadd' to simply add your SSH keys to ssh-agent
 alias sshadd="printf 'sh ~/.ssh/sshadd.sh\n'; sh ~/.ssh/sshadd.sh"
 ```
 
-Now you can use `ssh-add` to add your identity to the agent. So you have to write your passcode only once.  
+Now you can use `ssh-add` to add your identity to the agent. So you have to write your passphrase only once.  
 It is even easier if you prepare a little bash script with the ssh keys you often use in the file `~/.ssh/sshadd.sh`
 
 ```bash
