@@ -9,11 +9,17 @@ The TODO section is part of the [README.md](https://github.com/CRUSTDE-Container
 
 ## Unreleased
 
+## 2024-04-09
+
+docker pull bestiadev/crustde_cargo_img:cargo-1.77. 1  
+docker pull bestiadev/crustde_cross_img:cargo-1.77. 1  
+docker pull bestiadev/crustde_vscode_img:vscode-1.88. 0  
+
 ## 2024-02-13 3ff4aa2
 
-docker pull bestiadev/crustde_cargo_img:cargo-1.77.0  
-docker pull bestiadev/crustde_cross_img:cargo-1.77.0  
-docker pull bestiadev/crustde_vscode_img:vscode-1.87.2  
+docker pull bestiadev/crustde_cargo_img:cargo-1.77. 0  
+docker pull bestiadev/crustde_cross_img:cargo-1.77. 0  
+docker pull bestiadev/crustde_vscode_img:vscode-1.87. 2  
 
 ## 2023-12-21 6555455
 
