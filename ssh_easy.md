@@ -2,10 +2,10 @@
 
 ## Use SSH connection in Linux for remote work and git
 
-It is recommended to use the ~/.ssh/config file to assign explicitly one ssh key to one ssh server.  
-If not, ssh-agent will send all the keys to the server and the server could refute the connection because of too many bad keys.
+It is recommended to use the `~/.ssh/config` file to assign explicitly one SSH key to one SSH server.  
+If not, SSH will send all the keys to the server and the server could refute the connection because of too many bad keys.
 
-Write the ssh connection details in ~/.ssh/config:
+Write the SSH connection details in `~/.ssh/config`:
 
 ```bash
 Host github.com
@@ -15,13 +15,15 @@ Host github.com
     IdentitiesOnly yes
 ```
 
+The IdentitiesOnly yes is required to prevent the SSH default behavior of sending the identity file matching the default filename for each protocol. If you have a file named `~/.ssh/id_rsa` that will get tried BEFORE your `~/.ssh/github` without this option.
+
 ## ssh-agent
 
-Every time I connect over SSH I must input the passphrasese for my SSH identity. Even `git push` works over SSH, so every time I have to input the password. This is great for security, but it is an awful user experience. You can choose to be less secure with some ssh keys and be more productive with ssh-agent. Be aware of the risks. Your choice.  
+Every time I connect over SSH I must input the passphrases for my SSH identity. Even `git push` works over SSH, so every time I have to input the password. This is great for security, but it is an awful user experience. You can choose to be less secure with some SSH keys and be more productive with ssh-agent. Be aware of the risks. Your choice.  
 
-Git comes with `ssh-agent` and I could use it to avoid retyping the passphrase every time. ssh-agent asks for thpassphrasede only once and then stores securely the unencrypted private key in memory.  
+Git comes with `ssh-agent` and I could use it to avoid retyping the passphrase every time. ssh-agent asks for the passphrase only once and then stores securely the unencrypted private key in memory.  
 
-In the ~/.bashrc file start the ssh-agent in the background:
+In the `~/.bashrc` file start the ssh-agent in the background:
 
 ```bash
 SSH_ENV="$HOME/.ssh/agent-environment"
