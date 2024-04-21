@@ -179,7 +179,7 @@ First let's find the rustc version:
 
 ```bash
 rustc --version
-  rustc 1.77.1 
+  rustc 1.77.2 
 ```
 
 Let's create and run a small Rust program:
@@ -430,14 +430,14 @@ In `host terminal`:
 podman login --username bestiadev docker.io
 # type docker access token
 
-podman push docker.io/bestiadev/crustde_cargo_img:cargo-1.77.1
+podman push docker.io/bestiadev/crustde_cargo_img:cargo-1.77.2
 podman push docker.io/bestiadev/crustde_cargo_img:latest
 
-podman push docker.io/bestiadev/crustde_cross_img:cargo-1.77.1
+podman push docker.io/bestiadev/crustde_cross_img:cargo-1.77.2
 podman push docker.io/bestiadev/crustde_cross_img:latest
 
-podman push docker.io/bestiadev/crustde_vscode_img:vscode-1.88.0
-podman push docker.io/bestiadev/crustde_vscode_img:cargo-1.77.1
+podman push docker.io/bestiadev/crustde_vscode_img:vscode-1.88.1
+podman push docker.io/bestiadev/crustde_vscode_img:cargo-1.77.2
 podman push docker.io/bestiadev/crustde_vscode_img:latest
 
 podman push docker.io/bestiadev/crustde_squid_img:squid-3.5.27-2
@@ -472,9 +472,9 @@ Docker Hub stores compressed images, so they are a third of the size to download
 
 | Image                                    | Label          | Size         | compressed  |
 | ---------------------------------------- | -------------- |------------- | ----------- |
-| docker.io/bestiadev/crustde_cargo_img   | cargo-1.77.1   | 1.28 GB      | 0.45 GB     |
-| docker.io/bestiadev/crustde_cross_img   | cargo-1.77.1   | 3.03 GB      | 0.98 GB     |
-| docker.io/bestiadev/crustde_vscode_img  | cargo-1.77.1   | 3.32 GB      | 1.06 GB     |
+| docker.io/bestiadev/crustde_cargo_img   | cargo-1.77.2   | 1.28 GB      | 0.45 GB     |
+| docker.io/bestiadev/crustde_cross_img   | cargo-1.77.2   | 3.03 GB      | 0.98 GB     |
+| docker.io/bestiadev/crustde_vscode_img  | cargo-1.77.2   | 3.32 GB      | 1.06 GB     |
 
 ## User and server keys for SSH
 

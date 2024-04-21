@@ -5,8 +5,8 @@ These version numbers should be replaced with a simple "search and replace all".
 
 Rustc and cargo version
 <https://github.com/rust-lang/rust/releases>
-old version: 1.77.1
-new version: 1.77.1
+old version: 1.77.2
+new version: 1.77.2
 
 Rustup version changes rarely:
 <https://github.com/rust-lang/rustup/tags>
@@ -25,14 +25,14 @@ new version: 2.30.0
 
 sccache version
 <https://github.com/mozilla/sccache/releases>
-old version: 0.7.7
-new version: 0.7.7
+old version: 0.8.0
+new version: 0.8.0
 
 VSCode version:
 <https://github.com/microsoft/vscode/releases>
-old version: 1.88.0
-new version: 1.88.0
+old version: 1.88.1
+new version: 1.88.1
 
 VSCode hash:
-old hash: 5c3e652f63e798a5ac2f31ffd0d863669328dc4c
-new hash: 5c3e652f63e798a5ac2f31ffd0d863669328dc4c
+old hash: e170252f762678dec6ca2cc69aba1570769a5d39
+new hash: e170252f762678dec6ca2cc69aba1570769a5d39

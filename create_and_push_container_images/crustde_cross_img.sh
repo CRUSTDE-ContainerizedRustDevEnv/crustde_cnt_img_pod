@@ -38,7 +38,7 @@ docker.io/bestiadev/crustde_cargo_img:latest
 buildah config \
 --author=github.com/bestia-dev \
 --label name=crustde_cross_img \
---label version=cargo-1.77.1 \
+--label version=cargo-1.77.2 \
 --label source=github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod \
 crustde_cross_img
 
@@ -67,14 +67,14 @@ buildah run crustde_cross_img /bin/sh -c 'curl https://wasmtime.dev/install.sh -
 printf " \n"
 printf "\033[0;33m    Finally save/commit the image named crustde_cross_img \033[0m\n"
 buildah commit crustde_cross_img docker.io/bestiadev/crustde_cross_img:latest
-buildah tag docker.io/bestiadev/crustde_cross_img:latest docker.io/bestiadev/crustde_cross_img:cargo-1.77.1
+buildah tag docker.io/bestiadev/crustde_cross_img:latest docker.io/bestiadev/crustde_cross_img:cargo-1.77.2
 
 printf " \n"
 printf "\033[0;33m    Upload the new image to docker hub. \033[0m\n"
 printf "\033[0;33m    First you need to store the credentials with: \033[0m\n"
 printf "\033[0;32m podman login --username bestiadev docker.io \033[0m\n"
 printf "\033[0;33m    then type docker access token. \033[0m\n"
-printf "\033[0;32m podman push docker.io/bestiadev/crustde_cross_img:cargo-1.77.1 \033[0m\n"
+printf "\033[0;32m podman push docker.io/bestiadev/crustde_cross_img:cargo-1.77.2 \033[0m\n"
 printf "\033[0;32m podman push docker.io/bestiadev/crustde_cross_img:latest \033[0m\n"
 
 printf " \n"
