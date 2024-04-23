@@ -462,7 +462,7 @@ I added in the image a lot of useful tools:
 
 - faster linking with mold,
 - sccache to cache artifacts,
-- crate.io-index is already downloaded in the image,
+- crates.io-index is already downloaded in the image,
 - rust-src for debugging
 - cargo-auto for task automation
 - cross-compile to Windows, Musl, Wasi and Wasm/WebAssembly,
