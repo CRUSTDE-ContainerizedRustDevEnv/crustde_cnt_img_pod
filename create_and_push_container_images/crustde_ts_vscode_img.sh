@@ -84,13 +84,10 @@ buildah tag docker.io/bestiadev/rust_ts_dev_vscode_img:latest docker.io/bestiade
 
 printf " \n"
 printf "\033[0;33m    Upload the new image to docker hub. \033[0m\n"
-printf "\033[0;33m    First you need to store the credentials with: \033[0m\n"
-printf "\033[0;32m podman login --username bestiadev docker.io \033[0m\n"
-printf "\033[0;33m    then type docker access token. \033[0m\n"
-printf "\033[0;32m podman push docker.io/bestiadev/rust_ts_dev_vscode_img:typescript-4.7.4 \033[0m\n"
-printf "\033[0;32m podman push docker.io/bestiadev/rust_ts_dev_vscode_img:vscode-1.88.1 \033[0m\n"
-printf "\033[0;32m podman push docker.io/bestiadev/crustde_vscode_img:cargo-1.77.2 \033[0m\n"
-printf "\033[0;32m podman push docker.io/bestiadev/crustde_vscode_img:latest \033[0m\n"
+printf "\033[0;32m podman_ssh_auth push docker.io/bestiadev/rust_ts_dev_vscode_img:typescript-4.7.4 \033[0m\n"
+printf "\033[0;32m podman_ssh_auth push docker.io/bestiadev/rust_ts_dev_vscode_img:vscode-1.88.1 \033[0m\n"
+printf "\033[0;32m podman_ssh_auth push docker.io/bestiadev/crustde_vscode_img:cargo-1.77.2 \033[0m\n"
+printf "\033[0;32m podman_ssh_auth push docker.io/bestiadev/crustde_vscode_img:latest \033[0m\n"
 
 printf " \n"
 printf "\033[0;33m    This image is used solely inside the pod 'crustde_pod'. \033[0m\n"
