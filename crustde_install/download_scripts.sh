@@ -70,7 +70,7 @@ if printf "$PWD\n" | grep -q '/rustprojects/crustde_install'; then
     fi
 else
     printf " \n"
-    printf "\033[0;33m    You are not in the correct directory ~/rustprojects/crustde_install \033[0m\n"
+    printf "\033[0;31m    You are not in the correct directory ~/rustprojects/crustde_install \033[0m\n"
     printf "\033[0;33m    Run the commands to create the directory, cd and download the script. \033[0m\n"
     printf "\033[0;32m mkdir -p ~/rustprojects/crustde_install; \033[0m\n"
     printf "\033[0;32m cd ~/rustprojects/crustde_install; \033[0m\n"

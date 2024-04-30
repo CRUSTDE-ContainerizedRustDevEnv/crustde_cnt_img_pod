@@ -423,24 +423,24 @@ Other extensions you can add manually through VSCode, but then it is not repeata
 
 I signed in to hub.docker.com.  
 In Account Settings - Security I created an access token. This is the secret token for `podman login`. It is needed only once.  
-WARNING: `podman login` stores the secret token in plain text in `${XDG_RUNTIME_DIR}/containers/auth.json`. That is not good for security. I created a small CLI to encrypt this secret with an SSH private key: [podman_ssh_auth](https://github.com/CRUSTDE-ContainerizedRustDevEnv/podman_ssh_auth). Instead of `podman push` use `podman_ssh_auth push`.
+WARNING: `podman login` stores the secret token in plain text in `${XDG_RUNTIME_DIR}/containers/auth.json`. That is not good for security. I created a small CLI to encrypt this secret with an SSH private key: [ssh_auth_podman_push](https://github.com/CRUSTDE-ContainerizedRustDevEnv/ssh_auth_podman_push). Instead of `podman push` use `ssh_auth_podman_push`.
  
 In `host terminal`:
 
 ```bash
 cd  ~/rustprojects/crustde_cnt_img_pod/create_and_push_container_images
-./podman_ssh_auth push docker.io/bestiadev/crustde_cargo_img:cargo-1.77.2
-./podman_ssh_auth push docker.io/bestiadev/crustde_cargo_img:latest
+./ssh_auth_podman_push docker.io/bestiadev/crustde_cargo_img:cargo-1.77.2
+./ssh_auth_podman_push docker.io/bestiadev/crustde_cargo_img:latest
 
-./podman_ssh_auth push docker.io/bestiadev/crustde_cross_img:cargo-1.77.2
-./podman_ssh_auth push docker.io/bestiadev/crustde_cross_img:latest
+./ssh_auth_podman_push docker.io/bestiadev/crustde_cross_img:cargo-1.77.2
+./ssh_auth_podman_push docker.io/bestiadev/crustde_cross_img:latest
 
-./podman_ssh_auth push docker.io/bestiadev/crustde_vscode_img:vscode-1.88.1
-./podman_ssh_auth push docker.io/bestiadev/crustde_vscode_img:cargo-1.77.2
-./podman_ssh_auth push docker.io/bestiadev/crustde_vscode_img:latest
+./ssh_auth_podman_push docker.io/bestiadev/crustde_vscode_img:vscode-1.88.1
+./ssh_auth_podman_push docker.io/bestiadev/crustde_vscode_img:cargo-1.77.2
+./ssh_auth_podman_push docker.io/bestiadev/crustde_vscode_img:latest
 
-./podman_ssh_auth push docker.io/bestiadev/crustde_squid_img:squid-3.5.27-2
-./podman_ssh_auth push docker.io/bestiadev/crustde_squid_img:latest
+./ssh_auth_podman_push docker.io/bestiadev/crustde_squid_img:squid-3.5.27-2
+./ssh_auth_podman_push docker.io/bestiadev/crustde_squid_img:latest
 ```
 
 It takes some time to upload more than 3 GB with my slow internet connection.

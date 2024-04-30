@@ -56,8 +56,8 @@ buildah tag docker.io/bestiadev/crustde_squid_img:latest docker.io/bestiadev/cru
 
 printf " \n"
 printf "\033[0;33m    Upload the new image to docker hub. \033[0m\n"
-printf "\033[0;32m ./podman_ssh_auth push docker.io/bestiadev/crustde_squid_img:squid-3.5.27-2 \033[0m\n"
-printf "\033[0;32m ./podman_ssh_auth push docker.io/bestiadev/crustde_squid_img:latest \033[0m\n"
+printf "\033[0;32m ./ssh_auth_podman_push docker.io/bestiadev/crustde_squid_img:squid-3.5.27-2 \033[0m\n"
+printf "\033[0;32m ./ssh_auth_podman_push docker.io/bestiadev/crustde_squid_img:latest \033[0m\n"
 
 printf " \n"
 printf "\033[0;33m    This image is used solely inside the pod 'crustde_pod'. \033[0m\n"

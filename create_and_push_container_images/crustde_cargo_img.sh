@@ -207,8 +207,8 @@ buildah tag docker.io/bestiadev/crustde_cargo_img:latest docker.io/bestiadev/cru
 
 printf " \n"
 printf "\033[0;33m    Upload the new image to docker hub. \033[0m\n"
-printf "\033[0;32m ./podman_ssh_auth push docker.io/bestiadev/crustde_cargo_img:cargo-1.77.2 \033[0m\n"
-printf "\033[0;32m ./podman_ssh_auth push docker.io/bestiadev/crustde_cargo_img:latest \033[0m\n"
+printf "\033[0;32m ./ssh_auth_podman_push docker.io/bestiadev/crustde_cargo_img:cargo-1.77.2 \033[0m\n"
+printf "\033[0;32m ./ssh_auth_podman_push docker.io/bestiadev/crustde_cargo_img:latest \033[0m\n"
 
 printf " \n"
 printf "\033[0;33m    To create the container 'crustde_cargo_cnt' use: \033[0m\n"
