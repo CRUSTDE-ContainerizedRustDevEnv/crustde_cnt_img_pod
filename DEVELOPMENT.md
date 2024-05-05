@@ -179,7 +179,7 @@ First let's find the rustc version:
 
 ```bash
 rustc --version
-  rustc 1.77.2 
+#  rustc 1.78.0 
 ```
 
 Let's create and run a small Rust program:
@@ -220,7 +220,7 @@ and extract only the `mold` binary executable into `~`.
 Copy it as root into `/usr/bin` and adjust ownership and permissions:
 
 ```bash
-podman exec --user=root crustde_vscode_cnt  curl -L https://github.com/rui314/mold/releases/download/v2.30.0/mold-2.30.0-x86_64-linux.tar.gz --output /tmp/mold.tar.gz
+podman exec --user=root crustde_vscode_cnt  curl -L https://github.com/rui314/mold/releases/download/v2.31.0/mold-2.31.0-x86_64-linux.tar.gz --output /tmp/mold.tar.gz
 podman exec --user=root crustde_vscode_cnt  tar --no-same-owner -xzv --strip-components=2 -C /usr/bin -f /tmp/mold.tar.gz --wildcards */bin/mold
 podman exec --user=root crustde_vscode_cnt rm /tmp/mold.tar.gz
 podman exec --user=root crustde_vscode_cnt    chown root:root /usr/bin/mold
@@ -429,14 +429,14 @@ In `host terminal`:
 
 ```bash
 cd  ~/rustprojects/crustde_cnt_img_pod/create_and_push_container_images
-./ssh_auth_podman_push docker.io/bestiadev/crustde_cargo_img:cargo-1.77.2
+./ssh_auth_podman_push docker.io/bestiadev/crustde_cargo_img:cargo-1.78.0
 ./ssh_auth_podman_push docker.io/bestiadev/crustde_cargo_img:latest
 
-./ssh_auth_podman_push docker.io/bestiadev/crustde_cross_img:cargo-1.77.2
+./ssh_auth_podman_push docker.io/bestiadev/crustde_cross_img:cargo-1.78.0
 ./ssh_auth_podman_push docker.io/bestiadev/crustde_cross_img:latest
 
-./ssh_auth_podman_push docker.io/bestiadev/crustde_vscode_img:vscode-1.88.1
-./ssh_auth_podman_push docker.io/bestiadev/crustde_vscode_img:cargo-1.77.2
+./ssh_auth_podman_push docker.io/bestiadev/crustde_vscode_img:vscode-1.89.0
+./ssh_auth_podman_push docker.io/bestiadev/crustde_vscode_img:cargo-1.78.0
 ./ssh_auth_podman_push docker.io/bestiadev/crustde_vscode_img:latest
 
 ./ssh_auth_podman_push docker.io/bestiadev/crustde_squid_img:squid-3.5.27-2
@@ -471,9 +471,9 @@ Docker Hub stores compressed images, so they are a third of the size to download
 
 | Image                                    | Label          | Size         | compressed  |
 | ---------------------------------------- | -------------- |------------- | ----------- |
-| docker.io/bestiadev/crustde_cargo_img   | cargo-1.77.2   | 1.28 GB      | 0.45 GB     |
-| docker.io/bestiadev/crustde_cross_img   | cargo-1.77.2   | 3.03 GB      | 0.98 GB     |
-| docker.io/bestiadev/crustde_vscode_img  | cargo-1.77.2   | 3.32 GB      | 1.06 GB     |
+| docker.io/bestiadev/crustde_cargo_img   | cargo-1.78.0   | 1.28 GB      | 0.45 GB     |
+| docker.io/bestiadev/crustde_cross_img   | cargo-1.78.0   | 3.03 GB      | 0.98 GB     |
+| docker.io/bestiadev/crustde_vscode_img  | cargo-1.78.0   | 3.32 GB      | 1.06 GB     |
 
 ## User and server keys for SSH
 
