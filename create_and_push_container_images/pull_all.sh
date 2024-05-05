@@ -1,4 +1,4 @@
-# ~/rustprojects/pull_all.sh
+#!/bin/sh
 
 cur_dir="/home/rustdevuser/rustprojects"
 

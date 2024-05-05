@@ -98,6 +98,7 @@ buildah run crustde_cargo_img /bin/sh -c 'mkdir -vp ~/rustprojects'
 
 # copy file pull_all.sh
 buildah copy crustde_cargo_img './pull_all.sh' '~/rustprojects/pull_all.sh'
+buildah copy crustde_cargo_img './tar_gzip_for_transfer_to_win.sh' '~/rustprojects/tar_gzip_for_transfer_to_win.sh'
 
 buildah run crustde_cargo_img /bin/sh -c 'mkdir -vp ~/.ssh'
 buildah run crustde_cargo_img /bin/sh -c 'chmod 700 ~/.ssh'
