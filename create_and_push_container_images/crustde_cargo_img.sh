@@ -96,9 +96,10 @@ printf " \n"
 printf " \n"
 buildah run crustde_cargo_img /bin/sh -c 'mkdir -vp ~/rustprojects'
 
-# copy file pull_all.sh
+# copy files pull_all.sh, tar_gzip_backup_to_win.sh and tar_gzip_restore_from_win.sh
 buildah copy crustde_cargo_img './pull_all.sh' '~/rustprojects/pull_all.sh'
-buildah copy crustde_cargo_img './tar_gzip_for_transfer_to_win.sh' '~/rustprojects/tar_gzip_for_transfer_to_win.sh'
+buildah copy crustde_cargo_img './tar_gzip_backup_to_win.sh' '~/rustprojects/tar_gzip_backup_to_win.sh'
+buildah copy crustde_cargo_img './tar_gzip_restore_from_win.sh' '~/rustprojects/tar_gzip_restore_from_win.sh'
 
 buildah run crustde_cargo_img /bin/sh -c 'mkdir -vp ~/.ssh'
 buildah run crustde_cargo_img /bin/sh -c 'chmod 700 ~/.ssh'
