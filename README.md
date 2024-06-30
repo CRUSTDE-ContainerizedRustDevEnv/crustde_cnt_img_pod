@@ -57,7 +57,7 @@ This project has also a YouTube video tutorial. Watch it:
 
 Now we can use `CRUSTDE - Containerized Rust Development Environment` from VSCode. The extension `Remote SSH` must be installed. The `~/.ssh/config`
 must be set as shown by the installation scripts.  
-Open `git-bash` terminal and run VSCode to open a folder inside the container:
+Open `Windows git-bash` terminal and run VSCode to open a folder inside the container:
 
 ```bash
 # Use the global command 'sshadd' to simply add your private SSH key for crustde_rustdevuser to ssh-agent
@@ -65,7 +65,7 @@ sshadd
 MSYS_NO_PATHCONV=1 code --remote ssh-remote+crustde_rustdevuser /home/rustdevuser/rustprojects
 ```
 
-If VSCode cannot connect to the container 99% is to blame the `~/.ssh/known_hosts` file. Try to rename it to `known_hosts.bak` and retry.
+In `Windows git-bash`, the MSYS_NO_PATHCONV is used to disable the default path conversion. Beware the difference between slash and backslash. If VSCode cannot connect to the container 99% is to blame the `~/.ssh/known_hosts` file. Try to rename it to `known_hosts.bak` and retry.
 
 ## Motivation
 

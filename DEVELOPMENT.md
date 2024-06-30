@@ -1,12 +1,43 @@
 # Development details
 
-## Install Podman in Debian 12(Bookworm) (on bare metal or in Win10 + WSL2)
+## Debian 12 (Bookworm)
 
-[Podman](https://podman.io/) is a **daemonless**, open-source, Linux native tool designed to work with Open Containers Initiative (OCI) Containers and Container Images. Containers under the control of Podman can be run by a **non-privileged user**. The CLI commands of the Podman ***"Container Engine"*** are practically identical to the Docker CLI. Podman relies on an OCI-compliant ***"Container Runtime"*** (runc, crun, runv, etc) to interface with the operating system and create the running containers.
-
+The project `crustde_cnt_img_pod` is developed on Debian 12 (Bookworm).  
+Debian can be installed on bare metal or inside Win10+WSL2.  
+I personally develop it on my Win10 laptop, but I tested it once on bare metal Debian and it worked great.  
 I already wrote some information on how to install and use the combination of Win10 + WSL2 + Debian12(Bookworm):
 
 <https://github.com/CRUSTDE-ContainerizedRustDevEnv/win10_wsl2_debian11>
+
+## Project crustde_cnt_img_pod
+
+The project remote repository is on GitHub, you can clone it in Debian bash terminal:
+
+```bash
+mkdir ~/rustprojects
+cd ~/rustprojects
+git clone git@github.com:CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod.git
+```
+
+## VSCode in Win10
+
+I use VSCode in Win10 as my code editor. I can access files and folders inside WSL2+Debian from Win10 with path like this:
+
+```bash
+\\wsl.localhost\Debian\home\luciano\rustprojects
+```
+
+In Win10 I have installed [git with Windows git-bash](https://git-scm.com/downloads), so I can use bash commands straight from my Win10. To open this project `crustde_cnt_img_pod` inside WSL2+Debian I type in `Windows git-bash`:
+
+```bash
+MSYS_NO_PATHCONV=1 code //wsl.localhost/Debian/home/luciano/rustprojects/crustde_cnt_img_pod/
+```
+
+In `Windows git-bash`, the MSYS_NO_PATHCONV is used to disable the default path conversion. Beware the difference between slash and backslash.
+
+## Install Podman in Debian 12(Bookworm)
+
+[Podman](https://podman.io/) is a **daemonless**, open-source, Linux native tool designed to work with Open Containers Initiative (OCI) Containers and Container Images. Containers under the control of Podman can be run by a **non-privileged user**. The CLI commands of the Podman ***"Container Engine"*** are practically identical to the Docker CLI. Podman relies on an OCI-compliant ***"Container Runtime"*** (runc, crun, runv, etc) to interface with the operating system and create the running containers.
 
 Podman is available from the Debian12 package manager.
 
@@ -710,9 +741,9 @@ cargo run
 That should work and greet you with "Hello, world!".  
 Leave VSCode open because the next chapter will continue from here.
 
-## Open the VSCode project from git-bash in Windows
+## Open the VSCode remote project from Windows git-bash
 
-You can connect to an existing VSCode project inside the CRUSTDE container from the host bash or git-bash:
+You can connect to an existing VSCode project inside the CRUSTDE container from the host bash or `Windows git-bash`:
 
 ```bash
 # Use the global command 'sshadd' to simply add your private SSH keys to ssh-agent
@@ -720,7 +751,7 @@ sshadd
 MSYS_NO_PATHCONV=1 code --remote ssh-remote+crustde_rustdevuser /home/rustdevuser/rustprojects
 ```
 
-In Windows `git-bash`, the MSYS_NO_PATHCONV is used to disable the default path conversion.
+In `Windows git-bash`, the MSYS_NO_PATHCONV is used to disable the default path conversion. Beware the difference between slash and backslash.  
 
 ## GitHub in the container
 
