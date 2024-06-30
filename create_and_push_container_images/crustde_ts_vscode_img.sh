@@ -13,8 +13,8 @@ printf "\033[0;33m    This is based on crustde_vscode_img and adds Typescript. \
 printf " \n"
 printf "\033[0;33m    FIRST !!! \033[0m\n"
 printf "\033[0;33m    Search and replace in this bash script: \033[0m\n"
-printf "\033[0;33m    Version of rustc: 1.78.0 \033[0m\n"
-printf "\033[0;33m    Version of vscode: 1.89.0 \033[0m\n"
+printf "\033[0;33m    Version of rustc: 1.79.0 \033[0m\n"
+printf "\033[0;33m    Version of vscode: 1.90.2 \033[0m\n"
 printf "\033[0;33m    Version of typescript: 4.7.4 \033[0m\n"
 
 printf "\033[0;33m    To build the image, run in bash with: \033[0m\n"
@@ -37,7 +37,7 @@ printf " \n"
 printf "\033[0;33m    Create new 'buildah container' named rust_ts_dev_vscode_img from crustde_vscode_img \033[0m\n"
 set -o errexit
 
-buildah from --name rust_ts_dev_vscode_img docker.io/bestiadev/crustde_vscode_img:vscode-1.89.0
+buildah from --name rust_ts_dev_vscode_img docker.io/bestiadev/crustde_vscode_img:vscode-1.90.2
 
 buildah config \
 --author=github.com/bestia-dev \
@@ -79,14 +79,14 @@ printf "\033[0;33m    Finally save/commit the image named rust_ts_dev_vscode_img
 buildah commit rust_ts_dev_vscode_img docker.io/bestiadev/rust_ts_dev_vscode_img:latest
 
 buildah tag docker.io/bestiadev/rust_ts_dev_vscode_img:latest docker.io/bestiadev/rust_ts_dev_vscode_img:typescript-4.7.4
-buildah tag docker.io/bestiadev/rust_ts_dev_vscode_img:latest docker.io/bestiadev/rust_ts_dev_vscode_img:vscode-1.89.0
-buildah tag docker.io/bestiadev/rust_ts_dev_vscode_img:latest docker.io/bestiadev/rust_ts_dev_vscode_img:cargo-1.78.0
+buildah tag docker.io/bestiadev/rust_ts_dev_vscode_img:latest docker.io/bestiadev/rust_ts_dev_vscode_img:vscode-1.90.2
+buildah tag docker.io/bestiadev/rust_ts_dev_vscode_img:latest docker.io/bestiadev/rust_ts_dev_vscode_img:cargo-1.79.0
 
 printf " \n"
 printf "\033[0;33m    Upload the new image to docker hub. \033[0m\n"
 printf "\033[0;32m ./ssh_auth_podman_push docker.io/bestiadev/rust_ts_dev_vscode_img:typescript-4.7.4 \033[0m\n"
-printf "\033[0;32m ./ssh_auth_podman_push docker.io/bestiadev/rust_ts_dev_vscode_img:vscode-1.89.0 \033[0m\n"
-printf "\033[0;32m ./ssh_auth_podman_push docker.io/bestiadev/crustde_vscode_img:cargo-1.78.0 \033[0m\n"
+printf "\033[0;32m ./ssh_auth_podman_push docker.io/bestiadev/rust_ts_dev_vscode_img:vscode-1.90.2 \033[0m\n"
+printf "\033[0;32m ./ssh_auth_podman_push docker.io/bestiadev/crustde_vscode_img:cargo-1.79.0 \033[0m\n"
 printf "\033[0;32m ./ssh_auth_podman_push docker.io/bestiadev/crustde_vscode_img:latest \033[0m\n"
 
 printf " \n"
