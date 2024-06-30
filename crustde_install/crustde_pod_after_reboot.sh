@@ -41,13 +41,13 @@ printf "\033[0;32m exit \033[0m\n"
 
 printf " \n"
 printf "\033[0;33m    You can connect VSCode to an existing project inside the container from the host bash or Windows git-bash: \033[0m\n"
-printf "\033[0;33m    # Use the global command 'sshadd' to simply add your private SSH keys to ssh-agent \033[0m\n"
+printf "\033[0;33m    Use the global command 'sshadd' to simply add your private SSH keys to ssh-agent \033[0m\n"
 printf "\033[0;32m sshadd \033[0m\n"
 printf "\033[0;32m MSYS_NO_PATHCONV=1 code --remote ssh-remote+crustde_rustdevuser /home/rustdevuser/rustprojects \033[0m\n"
 printf "\033[0;33m    In 'Windows git-bash', the MSYS_NO_PATHCONV is used to disable the default path conversion. \033[0m\n"
 
 printf " \n"
-printf "\033[0;33m    If VSCode cannot connect to the container, it is 99% blame on the ~/.ssh/known_hosts file. \033[0m\n"
+printf "\033[0;33m    If VSCode cannot connect to the container, it is 99%% blame on the ~/.ssh/known_hosts file. \033[0m\n"
 printf "\033[0;33m    There is an old fingerprint of the server. Rename the file to known_hosts.bak and retry. \033[0m\n"
 
 printf " \n"
