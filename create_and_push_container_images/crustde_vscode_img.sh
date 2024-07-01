@@ -79,7 +79,6 @@ buildah run crustde_vscode_img /bin/sh -c '~/.vscode-server/bin/5437499feb04f7a5
 buildah run crustde_vscode_img /bin/sh -c '~/.vscode-server/bin/5437499feb04f7a586f677b155b039bc2b3669eb/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension ms-vscode.live-server'
 buildah run crustde_vscode_img /bin/sh -c '~/.vscode-server/bin/5437499feb04f7a586f677b155b039bc2b3669eb/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension mtxr.sqltools'
 buildah run crustde_vscode_img /bin/sh -c '~/.vscode-server/bin/5437499feb04f7a586f677b155b039bc2b3669eb/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension mtxr.sqltools-driver-pg'
-buildah run crustde_vscode_img /bin/sh -c '~/.vscode-server/bin/5437499feb04f7a586f677b155b039bc2b3669eb/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension znck.grammarly'
 
 printf " \n"
 printf "\033[0;33m    Remove unwanted files \033[0m\n"

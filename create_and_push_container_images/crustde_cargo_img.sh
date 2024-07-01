@@ -145,7 +145,7 @@ buildah run crustde_cargo_img /bin/sh -c '/home/rustdevuser/.cargo/bin/rustc --v
 printf "\033[0;33m    psql version \033[0m\n"
 buildah run crustde_cargo_img /bin/sh -c 'psql --version'
 # The default PostgreSQL 15 is available to install on Debian 12 bookworm Linux.
-# psql (PostgreSQL) 15.5 (Debian 15.5-0+deb12u1)
+# psql (PostgreSQL) 15.7 (Debian 15.7-0+deb12u1)
 
 # this probably is not necessary, if rust-analyzer can call rust-lang.org
 # buildah config --env RUST_SRC_PATH=/home/rustdevuser/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library crustde_cargo_img

@@ -9,10 +9,12 @@ The TODO section is part of the [README.md](https://github.com/CRUSTDE-Container
 
 ## Unreleased
 
-## 2024-06-30
+## 2024-07-01
 
-not yet: docker pull bestiadev/crustde_postgres_img:postgres15  
-not yet: docker pull bestiadev/crustde_cargo_img:cargo-1.79. 0 
+docker pull bestiadev/crustde_postgres_img:postgres15  
+docker pull bestiadev/crustde_cargo_img:cargo-1.79. 0  
+docker pull bestiadev/crustde_cross_img:cargo-1.79. 0  
+docker pull bestiadev/crustde_vscode_img:vscode-1.90. 2  
 
 ## 2024-04-09
 

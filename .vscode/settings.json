@@ -86,6 +86,7 @@
         "pkill",
         "plantuml",
         "podman",
+        "postgres",
         "printenv",
         "procps",
         "Prost",
