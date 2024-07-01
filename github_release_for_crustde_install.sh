@@ -9,3 +9,4 @@ printf "\033[0;33m    tar -zcvf crustde_install.tar.gz crustde_install \033[0m\n
 tar -zcvf crustde_install.tar.gz crustde_install
 
 printf "\033[0;33m    Now create a Release on GitHub and upload the file 'crustde_install.tar.gz'. \033[0m\n"
+printf "\033[0;32m https://github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod/releases \033[0m\n"
