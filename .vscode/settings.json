@@ -29,6 +29,7 @@
         "bindgen",
         "Buildah",
         "buildtool",
+        "cacher",
         "certssh",
         "cgroupfs",
         "clippy",

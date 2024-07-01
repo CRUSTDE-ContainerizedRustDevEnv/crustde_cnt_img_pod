@@ -58,6 +58,11 @@ buildah config \
 crustde_cargo_img
 
 printf " \n"
+printf "\033[0;33m    Set proxy for apt-get to apt-cacher-ng on host for faster apt package download \033[0m\n"
+printf "\033[0;33m    Ip adress for Buildah Gateway/Host: 10.0.2.2 \033[0m\n"
+buildah copy crustde_cargo_img './02proxy' '/etc/apt/apt.conf.d/02proxy'
+
+printf " \n"
 printf "\033[0;33m    Debian apt update and upgrade \033[0m\n"
 buildah run crustde_cargo_img    apt -y update
 buildah run crustde_cargo_img    apt -y full-upgrade
@@ -186,6 +191,9 @@ printf " \n"
 printf "\033[0;33m    Remove unwanted files \033[0m\n"
 buildah run --user root crustde_cargo_img    apt -y autoremove
 buildah run --user root crustde_cargo_img    apt -y clean
+
+printf "\033[0;33m    Remove proxy for apt-get to apt-cacher-ng on host \033[0m\n"
+buildah run --user root crustde_cargo_img /bin/sh -c 'rm /etc/apt/apt.conf.d/02proxy'
 
 printf " \n"
 printf "\033[0;33m    Finally save/commit the image named crustde_cargo_img \033[0m\n"

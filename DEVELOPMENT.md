@@ -9,7 +9,7 @@ I already wrote some information on how to install and use the combination of Wi
 
 <https://github.com/CRUSTDE-ContainerizedRustDevEnv/win10_wsl2_debian11>
 
-## Project crustde_cnt_img_pod
+## Repository crustde_cnt_img_pod
 
 The project remote repository is on GitHub, you can clone it in Debian bash terminal:
 
@@ -34,6 +34,31 @@ MSYS_NO_PATHCONV=1 code //wsl.localhost/Debian/home/luciano/rustprojects/crustde
 ```
 
 In `Windows git-bash`, the MSYS_NO_PATHCONV is used to disable the default path conversion. Beware the difference between slash and backslash.
+
+## apt-cacher-ng
+
+[Apt-Cacher-NG](https://www.tecmint.com/apt-cache-server-in-ubuntu/) is an apt cache proxy. It is used to cache the downloaded packages locally on your server.  
+This comes handy when creating images with Buildah that need many apt packages and the internet connection is not fabulous. In the host/server Debian run: 
+
+```bash
+sudo apt-get install apt-cacher-ng -y
+# there is not need to change the configuration
+sudo nano /etc/apt-cacher-ng/acng.conf
+```
+
+In the container/client add the proxy for `apt`:
+
+```bash
+sudo nano /etc/apt/apt.conf.d/02proxy
+```
+
+Add a line like this:
+
+```bash
+Acquire::http::Proxy "http://10.0.2.2:3142";
+```
+
+The special ip address `10.0.2.2` is for the Gateway/Host.
 
 ## Install Podman in Debian 12(Bookworm)
 
