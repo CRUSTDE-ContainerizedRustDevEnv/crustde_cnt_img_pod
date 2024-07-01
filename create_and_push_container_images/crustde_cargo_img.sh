@@ -92,13 +92,19 @@ printf "\033[0;33m    Install tidy HTML - corrects and cleans up HTML and XML \0
 buildah run crustde_cargo_img    apt-get install -y tidy
 
 printf " \n"
+printf "\033[0;33m    Create non-root user 'rustdevuser' and home folder. \033[0m\n"
+buildah run crustde_cargo_img    useradd -ms /bin/bash rustdevuser
 
 printf " \n"
+printf "\033[0;33m    Use rustdevuser for all subsequent commands. \033[0m\n"
+buildah config --user rustdevuser crustde_cargo_img
+buildah config --workingdir /home/rustdevuser crustde_cargo_img
 
 # If needed, the user can be forced for a buildah command:
 # buildah run  --user root crustde_cargo_img    apt-get install -y --no-install-recommends build-essential
 
 printf " \n"
+printf "\033[0;33m    Configure rustdevuser things \033[0m\n"
 buildah run crustde_cargo_img /bin/sh -c 'mkdir -vp ~/rustprojects'
 
 # copy files pull_all.sh
@@ -118,6 +124,7 @@ buildah run crustde_cargo_img /bin/sh -c 'curl https://sh.rustup.rs -sSf | sh -s
 printf "\033[0;33m    Rustup wants to add the ~/.cargo/bin to PATH. But it needs to force bash reboot and that does not work in buildah. \033[0m\n"
 printf "\033[0;33m    Add the PATH to ~/.cargo/bin manually \033[0m\n"
 OLDIMAGEPATH=$(buildah run crustde_cargo_img printenv PATH)
+buildah config --env PATH=/home/rustdevuser/.cargo/bin:$OLDIMAGEPATH crustde_cargo_img
 buildah run crustde_cargo_img /bin/sh -c 'printf "$PATH\n"'
 
 printf " \n"
@@ -132,6 +139,7 @@ buildah run crustde_cargo_img /bin/sh -c 'rustup --version'
 # rustup 1.27.1 
 
 printf "\033[0;33m    rustc version \033[0m\n"
+buildah run crustde_cargo_img /bin/sh -c '/home/rustdevuser/.cargo/bin/rustc --version'
 # rustc 1.79.0 
 
 printf "\033[0;33m    psql version \033[0m\n"
@@ -140,6 +148,7 @@ buildah run crustde_cargo_img /bin/sh -c 'psql --version'
 # psql (PostgreSQL) 15.5 (Debian 15.5-0+deb12u1)
 
 # this probably is not necessary, if rust-analyzer can call rust-lang.org
+# buildah config --env RUST_SRC_PATH=/home/rustdevuser/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library crustde_cargo_img
 # buildah run crustde_cargo_img /bin/sh -c 'printf "$RUST_SRC_PATH\n"'
 
 printf " \n"
@@ -148,6 +157,7 @@ buildah run crustde_cargo_img /bin/sh -c 'rustup component add rust-src'
 
 printf " \n"
 printf "\033[0;33m    Remove the toolchain docs because they are 610MB big \033[0m\n"
+buildah run crustde_cargo_img /bin/sh -c 'rm -rf /home/rustdevuser/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/share/doc'
 
 printf " \n"
 printf "\033[0;33m    Install 'mold linker' 2.32.1. It is 3x faster. \033[0m\n"
@@ -160,6 +170,8 @@ buildah run --user root  crustde_cargo_img    chmod 755 /usr/bin/mold
 
 printf " \n"
 printf "\033[0;33m    With GCC advise to use a workaround to -fuse-ld \033[0m\n"
+buildah run crustde_cargo_img    mkdir /home/rustdevuser/.cargo/bin/mold
+buildah run crustde_cargo_img    ln -s /usr/bin/mold /home/rustdevuser/.cargo/bin/mold/ld
 
 printf " \n"
 printf "\033[0;33m    Install cargo-auto. \033[0m\n"
@@ -183,9 +195,14 @@ buildah run crustde_cargo_img /bin/sh -c 'printf "alias ll=\"ls -l\"\n" >> ~/.ba
 
 printf " \n"
 printf "\033[0;33m    Add ssh-agent to .bashrc \033[0m\n"
+buildah run crustde_cargo_img /bin/sh -c 'mkdir /home/rustdevuser/.ssh/crustde_pod_keys'
+buildah copy crustde_cargo_img 'bashrc.conf' '/home/rustdevuser/.ssh/crustde_pod_keys/bashrc.conf'
+buildah run crustde_cargo_img /bin/sh -c 'cat /home/rustdevuser/.ssh/crustde_pod_keys/bashrc.conf >> ~/.bashrc'
 
 printf " \n"
 printf "\033[0;33m    Copy file cargo_config.toml because of 'mold linker' and sccache \033[0m\n"
+buildah copy crustde_cargo_img 'cargo_config.toml' '/home/rustdevuser/.cargo/config.toml'
+buildah run --user root crustde_cargo_img    chown rustdevuser:rustdevuser /home/rustdevuser/.cargo/config.toml
 
 printf " \n"
 printf "\033[0;33m    Remove unwanted files \033[0m\n"
