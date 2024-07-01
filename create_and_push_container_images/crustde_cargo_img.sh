@@ -84,7 +84,7 @@ buildah run crustde_cargo_img    apt-get install -y procps
 printf "\033[0;33m    Install pkg-config and libssl-dev are needed by the crate reqwest to work with TLS/SSL. \033[0m\n"
 buildah run crustde_cargo_img    apt-get install -y pkg-config
 buildah run crustde_cargo_img    apt-get install -y libssl-dev
-printf "\033[0;33m    Install postgres client for postgres 13. \033[0m\n"
+printf "\033[0;33m    Install postgres client for postgresql. \033[0m\n"
 buildah run crustde_cargo_img    apt-get install -y postgresql-client
 printf "\033[0;33m    Install lsb_release for Debian version \033[0m\n"
 buildah run crustde_cargo_img    apt-get install -y lsb-release

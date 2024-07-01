@@ -28,15 +28,15 @@ printf "\033[0;33m    Create new 'buildah container' named crustde_postgres_img 
 set -o errexit
 buildah from \
 --name crustde_postgres_img \
-docker.io/library/postgres:13
+docker.io/library/postgres:15
 
-printf "\033[0;33m    podman image tree docker.io/library/postgres:13 \033[0m\n"
-podman image tree docker.io/library/postgres:13
+printf "\033[0;33m    podman image tree docker.io/library/postgres:15 \033[0m\n"
+podman image tree docker.io/library/postgres:15
 
 buildah config \
 --author=github.com/bestia-dev \
 --label name=crustde_postgres_img \
---label version=postgres13 \
+--label version=postgres15 \
 --label source=github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod \
 crustde_postgres_img
 
@@ -49,11 +49,11 @@ printf " \n"
 printf "\033[0;33m    Finally save/commit the image named crustde_postgres_img \033[0m\n"
 buildah commit --squash crustde_postgres_img docker.io/bestiadev/crustde_postgres_img:latest
 
-buildah tag docker.io/bestiadev/crustde_postgres_img:latest docker.io/bestiadev/crustde_postgres_img:postgres13
+buildah tag docker.io/bestiadev/crustde_postgres_img:latest docker.io/bestiadev/crustde_postgres_img:postgres15
 
 printf " \n"
 printf "\033[0;33m    Upload the new image to docker hub. \033[0m\n"
-printf "\033[0;32m ./ssh_auth_podman_push docker.io/bestiadev/crustde_postgres_img:postgres13 \033[0m\n"
+printf "\033[0;32m ./ssh_auth_podman_push docker.io/bestiadev/crustde_postgres_img:postgres15 \033[0m\n"
 printf "\033[0;32m ./ssh_auth_podman_push docker.io/bestiadev/crustde_postgres_img:latest \033[0m\n"
 
 printf " \n"
