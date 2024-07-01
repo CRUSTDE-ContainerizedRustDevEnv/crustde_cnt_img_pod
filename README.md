@@ -30,8 +30,10 @@ Be mesmerized by the spiral_of_madness:
 
 The installation is just a bunch of bash scripts.  
 The scripts are for the Debian OS. Debian can be installed on bare metal or inside Win10+WSL2.  
-First download and run the download_scripts.sh. This script will download the rest of the scripts.  
-After downloading, you can inspect them to see exactly what they are doing. There are a lot of comments and descriptions inside to make it easy to understand and follow. A more detailed explanation is in this [DEVELOPMENT.md](DEVELOPMENT.md).  
+First download and run the `download_scripts.sh`. This script will download the rest of the scripts.  
+After downloading, you can inspect the scripts to see exactly what they are doing. There are a lot of comments and descriptions inside to make it easy to understand and follow. A more detailed explanation is in this [DEVELOPMENT.md](DEVELOPMENT.md).  
+
+Run in Debian bash terminal:
 
 ```bash
 printf "\033[0;33m    Create empty folder for the scripts. \033[0m\n"
