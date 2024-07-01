@@ -34,6 +34,7 @@ else
     printf "\033[0;33m    2. Unpack the tar gzip \033[0m\n"
     printf "\033[0;33m    tar -xzv --strip-components=1 -f crustde_install.tar.gz \033[0m\n"
     tar -xzv --strip-components=1 -f crustde_install.tar.gz
+    rm crustde_install.tar.gz
 
     # if both files already exist, don't need this step
     # beware the last ] needs a space before it or it does not work!
