@@ -38,7 +38,7 @@ In `Windows git-bash`, the MSYS_NO_PATHCONV is used to disable the default path 
 ## apt-cacher-ng
 
 [Apt-Cacher-NG](https://www.tecmint.com/apt-cache-server-in-ubuntu/) is an apt cache proxy. It is used to cache the downloaded packages locally on your server.  
-This comes handy when creating images with Buildah that need many apt packages and the internet connection is not fabulous. In the host/server Debian run: 
+This comes handy when creating images with Buildah that need many apt packages and the internet connection is not fabulous. In the host/server Debian run:
 
 ```bash
 sudo apt-get install apt-cacher-ng -y

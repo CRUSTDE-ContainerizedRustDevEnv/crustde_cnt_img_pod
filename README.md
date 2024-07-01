@@ -36,6 +36,7 @@ After downloading, you can inspect the scripts to see exactly what they are doin
 Run in Debian bash terminal:
 
 ```bash
+printf "\n"
 printf "\033[0;33m    Create empty folder for the scripts. \033[0m\n"
 rm -r ~/rustprojects/crustde_install;
 mkdir -p ~/rustprojects/crustde_install;
@@ -49,6 +50,7 @@ printf "\033[0;32m cat download_scripts.sh; \033[0m\n"
 printf "\033[0;33m    Finally, you can run this to download all scripts: \033[0m\n"
 printf "\033[0;32m sh download_scripts.sh; \033[0m\n"
 printf "\033[0;33m    Run with sh that aliases to dash and not bash in Debian. \033[0m\n"
+printf "\n"
 ```
 
 Every script will show step-by-step instructions on what to do next. That's it!  
@@ -59,7 +61,9 @@ This project has also a YouTube video tutorial. Watch it:
 
 Now we can use `CRUSTDE - Containerized Rust Development Environment` from VSCode. The extension `Remote SSH` must be installed. The `~/.ssh/config`
 must be set as shown by the installation scripts.  
-Open the `Windows git-bash` terminal and run VSCode to open a folder inside the container:
+Run VSCode to open a folder inside the container.
+
+Run in `Windows git-bash` terminal:
 
 ```bash
 # Use the global command 'sshadd' to simply add your private SSH key for crustde_rustdevuser to ssh-agent

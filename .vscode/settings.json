@@ -18,6 +18,7 @@
     },
     "rust-analyzer.showUnlinkedFileNotification": false,
     "cSpell.words": [
+        "acng",
         "Alla",
         "Anson",
         "ASLR",
