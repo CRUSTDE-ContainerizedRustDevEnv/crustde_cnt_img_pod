@@ -34,14 +34,16 @@ First download and run the download_scripts.sh. This script will download the re
 After downloading, you can inspect them to see exactly what they are doing. There are a lot of comments and descriptions inside to make it easy to understand and follow. A more detailed explanation is in this [DEVELOPMENT.md](DEVELOPMENT.md).  
 
 ```bash
+printf "\033[0;33m    Create empty folder for the scripts. \033[0m\n"
 rm -r ~/rustprojects/crustde_install;
 mkdir -p ~/rustprojects/crustde_install;
 cd ~/rustprojects/crustde_install;
-# only if curl is not yet installed:
+printf "\033[0;33m    Install curl only if curl is not yet installed. \033[0m\n"
 sudo apt install -y curl
 curl -Sf -L https://github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod/raw/main/crustde_install/download_scripts.sh --output download_scripts.sh;
-# you can review the bash script, it only creates dirs, download scripts and suggests what script to run next
-# cat download_scripts.sh; 
+
+printf "\033[0;33m    You can review the bash script, it only creates dirs, download scripts and suggests what script to run next. \033[0m\n"
+printf "\033[0;32m cat download_scripts.sh; \033[0m\n"
 printf "\033[0;33m    Finally, you can run this to download all scripts: \033[0m\n"
 printf "\033[0;32m sh download_scripts.sh; \033[0m\n"
 printf "\033[0;33m    Run with sh that aliases to dash and not bash in Debian. \033[0m\n"
