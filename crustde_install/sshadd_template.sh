@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # ~/.ssh/sshadd.sh for container
-# Inside this template, replace the words github_com_git_ssh_1 and your_key_for_webserver_ssh_1 
+# Inside this template, replace the words github_com_bestia_dev_git_ssh_1 and your_key_for_webserver_ssh_1 
 # with your identity file names for the ssh private key.
 
 printf " \n"
@@ -16,12 +16,12 @@ printf "  \033[33m If not, ssh-agent will send all the keys to the server and th
 
 printf " \n"
 # check the content of ~/.ssh/config if it contains all the ssh keys
-cat ~/.ssh/config | grep -q "~/.ssh/github_com_git_ssh_1" || printf "  \033[31m The ~/.ssh/config does not contain the identity ~/.ssh/github_com_git_ssh_1. \033[0m\n"
+cat ~/.ssh/config | grep -q "~/.ssh/github_com_bestia_dev_git_ssh_1" || printf "  \033[31m The ~/.ssh/config does not contain the identity ~/.ssh/github_com_bestia_dev_git_ssh_1. \033[0m\n"
 cat ~/.ssh/config | grep -q "~/.ssh/your_key_for_webserver_ssh_1" || printf "  \033[31m The ~/.ssh/config does not contain the identity ~/.ssh/your_key_for_webserver_ssh_1. \033[0m\n"
 
 if [ $# -eq 0 ] || [ $1 = "github" ]; then
     # add if key not yet exist in ssh-agent for git@github.com
-    ssh-add -l | grep -q `ssh-keygen -lf ~/.ssh/github_com_git_ssh_1 | awk '{print $2}'` || (printf "  \033[33m github \033[0m\n" & ssh-add -t 1h ~/.ssh/github_com_git_ssh_1)
+    ssh-add -l | grep -q `ssh-keygen -lf ~/.ssh/github_com_bestia_dev_git_ssh_1 | awk '{print $2}'` || (printf "  \033[33m github \033[0m\n" & ssh-add -t 1h ~/.ssh/github_com_bestia_dev_git_ssh_1)
 fi
 
 if [ $# -eq 0 ] || [ $1 = "your_webserver" ]; then
