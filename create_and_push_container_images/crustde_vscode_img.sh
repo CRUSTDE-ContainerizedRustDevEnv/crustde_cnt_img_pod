@@ -13,9 +13,9 @@ printf "\033[0;33m    This is based on crustde_cross_img and adds VSCode and ext
 printf " \n"
 printf "\033[0;33m    FIRST !!! \033[0m\n"
 printf "\033[0;33m    Search and replace in this bash script: \033[0m\n"
-printf "\033[0;33m    Version of rustc: 1.79.0 \033[0m\n"
-printf "\033[0;33m    Version of vscode: 1.90.2 \033[0m\n"
-printf "\033[0;33m    Commit hash of VSCode: 5437499feb04f7a586f677b155b039bc2b3669eb \033[0m\n"
+printf "\033[0;33m    Version of rustc: 1.81.0 \033[0m\n"
+printf "\033[0;33m    Version of vscode: 1.93.1 \033[0m\n"
+printf "\033[0;33m    Commit hash of VSCode: 38c31bc77e0dd6ae88a4e9cc93428cc27a56ba40 \033[0m\n"
 
 printf "\033[0;33m    To build the image, run in bash with: \033[0m\n"
 printf "\033[0;33m sh crustde_vscode_img.sh \033[0m\n"
@@ -38,12 +38,12 @@ set -o errexit
 
 buildah from \
 --name crustde_vscode_img \
-docker.io/bestiadev/crustde_cross_img:cargo-1.79.0
+docker.io/bestiadev/crustde_cross_img:cargo-1.81.0
 
 buildah config \
 --author=github.com/bestia-dev \
 --label name=crustde_vscode_img \
---label version=vscode-1.90.2 \
+--label version=vscode-1.93.1 \
 --label source=github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod \
 crustde_vscode_img
 
@@ -64,21 +64,21 @@ buildah run --user root crustde_vscode_img    apt-get install -y openssh-server
 printf " \n"
 printf "\033[0;33m    Download vscode-server. Be sure the commit_sha of the server and client is the same: \033[0m\n"
 printf "\033[0;33m    In VSCode client open Help-About or in the terminal 'code --version' \033[0m\n" 
-printf "\033[0;33m    version vscode 1.90.2 \033[0m\n"
-printf "\033[0;33m    5437499feb04f7a586f677b155b039bc2b3669eb \033[0m\n"
-buildah run crustde_vscode_img /bin/sh -c 'mkdir -vp ~/.vscode-server/bin/5437499feb04f7a586f677b155b039bc2b3669eb'
+printf "\033[0;33m    version vscode 1.93.1 \033[0m\n"
+printf "\033[0;33m    38c31bc77e0dd6ae88a4e9cc93428cc27a56ba40 \033[0m\n"
+buildah run crustde_vscode_img /bin/sh -c 'mkdir -vp ~/.vscode-server/bin/38c31bc77e0dd6ae88a4e9cc93428cc27a56ba40'
 buildah run crustde_vscode_img /bin/sh -c 'mkdir -vp ~/.vscode-server/extensions'
-buildah run crustde_vscode_img /bin/sh -c 'curl -L https://update.code.visualstudio.com/commit:5437499feb04f7a586f677b155b039bc2b3669eb/server-linux-x64/stable --output /tmp/vscode-server-linux-x64.tar.gz'
-buildah run crustde_vscode_img /bin/sh -c 'tar --no-same-owner -xzv --strip-components=1 -C ~/.vscode-server/bin/5437499feb04f7a586f677b155b039bc2b3669eb -f /tmp/vscode-server-linux-x64.tar.gz'
+buildah run crustde_vscode_img /bin/sh -c 'curl -L https://update.code.visualstudio.com/commit:38c31bc77e0dd6ae88a4e9cc93428cc27a56ba40/server-linux-x64/stable --output /tmp/vscode-server-linux-x64.tar.gz'
+buildah run crustde_vscode_img /bin/sh -c 'tar --no-same-owner -xzv --strip-components=1 -C ~/.vscode-server/bin/38c31bc77e0dd6ae88a4e9cc93428cc27a56ba40 -f /tmp/vscode-server-linux-x64.tar.gz'
 buildah run crustde_vscode_img /bin/sh -c 'rm /tmp/vscode-server-linux-x64.tar.gz'
-buildah run crustde_vscode_img /bin/sh -c '~/.vscode-server/bin/5437499feb04f7a586f677b155b039bc2b3669eb/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension streetsidesoftware.code-spell-checker'
-buildah run crustde_vscode_img /bin/sh -c '~/.vscode-server/bin/5437499feb04f7a586f677b155b039bc2b3669eb/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension rust-lang.rust-analyzer'
-buildah run crustde_vscode_img /bin/sh -c '~/.vscode-server/bin/5437499feb04f7a586f677b155b039bc2b3669eb/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension davidanson.vscode-markdownlint'
-buildah run crustde_vscode_img /bin/sh -c '~/.vscode-server/bin/5437499feb04f7a586f677b155b039bc2b3669eb/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension dotjoshjohnson.xml'
-buildah run crustde_vscode_img /bin/sh -c '~/.vscode-server/bin/5437499feb04f7a586f677b155b039bc2b3669eb/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension serayuzgur.crates'
-buildah run crustde_vscode_img /bin/sh -c '~/.vscode-server/bin/5437499feb04f7a586f677b155b039bc2b3669eb/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension ms-vscode.live-server'
-buildah run crustde_vscode_img /bin/sh -c '~/.vscode-server/bin/5437499feb04f7a586f677b155b039bc2b3669eb/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension mtxr.sqltools'
-buildah run crustde_vscode_img /bin/sh -c '~/.vscode-server/bin/5437499feb04f7a586f677b155b039bc2b3669eb/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension mtxr.sqltools-driver-pg'
+buildah run crustde_vscode_img /bin/sh -c '~/.vscode-server/bin/38c31bc77e0dd6ae88a4e9cc93428cc27a56ba40/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension streetsidesoftware.code-spell-checker'
+buildah run crustde_vscode_img /bin/sh -c '~/.vscode-server/bin/38c31bc77e0dd6ae88a4e9cc93428cc27a56ba40/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension rust-lang.rust-analyzer'
+buildah run crustde_vscode_img /bin/sh -c '~/.vscode-server/bin/38c31bc77e0dd6ae88a4e9cc93428cc27a56ba40/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension davidanson.vscode-markdownlint'
+buildah run crustde_vscode_img /bin/sh -c '~/.vscode-server/bin/38c31bc77e0dd6ae88a4e9cc93428cc27a56ba40/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension dotjoshjohnson.xml'
+buildah run crustde_vscode_img /bin/sh -c '~/.vscode-server/bin/38c31bc77e0dd6ae88a4e9cc93428cc27a56ba40/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension serayuzgur.crates'
+buildah run crustde_vscode_img /bin/sh -c '~/.vscode-server/bin/38c31bc77e0dd6ae88a4e9cc93428cc27a56ba40/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension ms-vscode.live-server'
+buildah run crustde_vscode_img /bin/sh -c '~/.vscode-server/bin/38c31bc77e0dd6ae88a4e9cc93428cc27a56ba40/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension mtxr.sqltools'
+buildah run crustde_vscode_img /bin/sh -c '~/.vscode-server/bin/38c31bc77e0dd6ae88a4e9cc93428cc27a56ba40/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension mtxr.sqltools-driver-pg'
 
 printf " \n"
 printf "\033[0;33m    Remove unwanted files \033[0m\n"
@@ -88,13 +88,13 @@ buildah run --user root crustde_vscode_img    apt -y clean
 printf " \n"
 printf "\033[0;33m    Finally save/commit the image named crustde_vscode_img \033[0m\n"
 buildah commit crustde_vscode_img docker.io/bestiadev/crustde_vscode_img:latest
-buildah tag docker.io/bestiadev/crustde_vscode_img:latest docker.io/bestiadev/crustde_vscode_img:vscode-1.90.2
-buildah tag docker.io/bestiadev/crustde_vscode_img:latest docker.io/bestiadev/crustde_vscode_img:cargo-1.79.0
+buildah tag docker.io/bestiadev/crustde_vscode_img:latest docker.io/bestiadev/crustde_vscode_img:vscode-1.93.1
+buildah tag docker.io/bestiadev/crustde_vscode_img:latest docker.io/bestiadev/crustde_vscode_img:cargo-1.81.0
 
 printf " \n"
 printf "\033[0;33m    Upload the new image to docker hub. \033[0m\n"
-printf "\033[0;32m ./ssh_auth_podman_push docker.io/bestiadev/crustde_vscode_img:vscode-1.90.2 \033[0m\n"
-printf "\033[0;32m ./ssh_auth_podman_push docker.io/bestiadev/crustde_vscode_img:cargo-1.79.0 \033[0m\n"
+printf "\033[0;32m ./ssh_auth_podman_push docker.io/bestiadev/crustde_vscode_img:vscode-1.93.1 \033[0m\n"
+printf "\033[0;32m ./ssh_auth_podman_push docker.io/bestiadev/crustde_vscode_img:cargo-1.81.0 \033[0m\n"
 printf "\033[0;32m ./ssh_auth_podman_push docker.io/bestiadev/crustde_vscode_img:latest \033[0m\n"
 
 printf " \n"
