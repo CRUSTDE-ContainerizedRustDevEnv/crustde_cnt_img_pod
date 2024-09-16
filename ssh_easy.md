@@ -11,7 +11,7 @@ Write the SSH connection details in `~/.ssh/config`:
 Host github.com
     HostName github.com
     User git
-    IdentityFile ~/.ssh/github_com_bestia_dev_git_ssh_1v_git_ssh_1v_git_ssh_1
+    IdentityFile ~/.ssh/github_com_bestia_dev_git_ssh_1
     IdentitiesOnly yes
 ```
 
