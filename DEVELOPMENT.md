@@ -38,7 +38,10 @@ In `Windows git-bash`, the MSYS_NO_PATHCONV is used to disable the default path 
 ## apt-cacher-ng
 
 [Apt-Cacher-NG](https://www.tecmint.com/apt-cache-server-in-ubuntu/) is an apt cache proxy. It is used to cache the downloaded packages locally on your server.  
-This comes handy when creating images with Buildah that need many apt packages and the internet connection is not fabulous. In the host/server Debian run:
+This comes handy when creating images with Buildah that need many apt packages and the internet connection is not fabulous.  
+I use it just when creating the container images. There is a lot of apt-get going on and this little proxy makes it so much smoother. But after that I delete the acng.conf file to not interfere when I do other things.
+
+In the host/server Debian run:
 
 ```bash
 sudo apt-get install apt-cacher-ng -y
@@ -59,6 +62,12 @@ Acquire::http::Proxy "http://10.0.2.2:3142";
 ```
 
 The special ip address `10.0.2.2` is for the Gateway/Host.
+
+Before running the scripts to create images, run apt-cacher-ng in WSL Debian bash:
+
+```bash
+sudo apt-cacher-ng
+```
 
 ## Install Podman in Debian 12(Bookworm)
 

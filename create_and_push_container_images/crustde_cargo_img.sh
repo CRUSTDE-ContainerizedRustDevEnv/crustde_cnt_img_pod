@@ -24,6 +24,13 @@ printf "\033[0;33m    Version of rustc: 1.81.0 \033[0m\n"
 printf "\033[0;33m    Version of sccache: 0.8.1 \033[0m\n"
 
 printf " \n"
+printf "\033[0;33m    Proxy for apt-get ! \033[0m\n"
+printf "\033[0;33m    While creating a new container image there is a lot of apt-get. Really a lot. \033[0m\n"
+printf "\033[0;33m    I like to use 'apt-cacher-ng' to cache the files and eventually repeat the image creation. \033[0m\n"
+printf "\033[0;33m    Create the file '/etc/apt/apt.conf.d/02proxy' with content 'Acquire::http::Proxy "http://10.0.2.2:3142";' \033[0m\n"
+printf "\033[0;33m    Restart the proxy with 'sudo apt-cacher-ng' \033[0m\n"
+
+printf " \n"
 printf "\033[0;33m    To build the image, run in bash with: \033[0m\n"
 printf "\033[0;33m sh crustde_cargo_img.sh \033[0m\n"
 
