@@ -27,7 +27,7 @@ printf " \n"
 printf "\033[0;33m    Restore finished. \033[0m\n"
 printf "\033[0;33m    Run VSCode to connect to CRUSTDE rustprojects: \033[0m\n"
 printf "\033[0;32m sshadd \033[0m\n"
-printf "\033[0;32m MSYS_NO_PATHCONV=1 code --remote ssh-remote+crustde_rustdevuser /home/rustdevuser/rustprojects  \033[0m\n"
+printf "\033[0;32m MSYS_NO_PATHCONV=1 code --remote ssh-remote+crustde /home/rustdevuser/rustprojects  \033[0m\n"
 
 printf "\033[0;33m    In VSCode terminal pull all from remote repository: \033[0m\n"
 printf "\033[0;32m sshadd \033[0m\n"

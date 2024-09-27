@@ -782,7 +782,7 @@ You can connect to an existing VSCode project inside the CRUSTDE container from 
 ```bash
 # Use the global command 'sshadd' to simply add your private SSH keys to ssh-agent
 sshadd
-MSYS_NO_PATHCONV=1 code --remote ssh-remote+crustde_rustdevuser /home/rustdevuser/rustprojects
+MSYS_NO_PATHCONV=1 code --remote ssh-remote+crustde /home/rustdevuser/rustprojects
 ```
 
 In `Windows git-bash`, the MSYS_NO_PATHCONV is used to disable the default path conversion. Beware the difference between slash and backslash.  

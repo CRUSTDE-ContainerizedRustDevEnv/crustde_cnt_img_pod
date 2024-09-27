@@ -68,7 +68,7 @@ Run in `Windows git-bash` terminal:
 ```bash
 # Use the global command 'sshadd' to simply add your private SSH key for 'crustde' to ssh-agent
 sshadd
-MSYS_NO_PATHCONV=1 code --remote ssh-remote+crustde_rustdevuser /home/rustdevuser/rustprojects
+MSYS_NO_PATHCONV=1 code --remote ssh-remote+crustde /home/rustdevuser/rustprojects
 ```
 
 In `Windows git-bash`, the MSYS_NO_PATHCONV is used to disable the default path conversion. Beware the difference between slash and backslash. If VSCode cannot connect to the container 99% is to blame the `~/.ssh/known_hosts` file. Try to rename it to `known_hosts.bak` and retry.
