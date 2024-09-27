@@ -66,7 +66,7 @@ Run VSCode to open a folder inside the container.
 Run in `Windows git-bash` terminal:
 
 ```bash
-# Use the global command 'sshadd' to simply add your private SSH key for crustde_rustdevuser to ssh-agent
+# Use the global command 'sshadd' to simply add your private SSH key for 'crustde' to ssh-agent
 sshadd
 MSYS_NO_PATHCONV=1 code --remote ssh-remote+crustde_rustdevuser /home/rustdevuser/rustprojects
 ```

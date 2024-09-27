@@ -719,7 +719,7 @@ In Debian on bare metal:
 choose  `~/.ssh/config` and type (if is missing)  
 
 ```bash
-Host crustde_rustdevuser
+Host crustde
   HostName localhost
   Port 2201
   User rustdevuser
@@ -731,7 +731,7 @@ In Windows +WSL2:
 choose  `c:\users\user_name\ssh\config` and type (if is missing)
 
 ```bash
-Host crustde_rustdevuser
+Host crustde
   HostName localhost
   Port 2201
   User rustdevuser

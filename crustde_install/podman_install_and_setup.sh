@@ -103,7 +103,7 @@ printf "\033[0;33m    That's it. The server certificate is now locally recognize
 printf " \n"
 printf "\033[0;33m    8. Prepare the config file for VSCode SSH. \033[0m\n"
 printf "\033[0;33m    If needed add manually to ~/.ssh/config in Windows \033[0m\n"
-printf "Host crustde_rustdevuser
+printf "Host crustde
    HostName localhost
    Port 2201
    User rustdevuser
@@ -111,7 +111,7 @@ printf "Host crustde_rustdevuser
    IdentitiesOnly yes
 "
 printf "\033[0;33m    If needed add manually to ~/.ssh/config in Linux \033[0m\n"
-printf "Host crustde_rustdevuser
+printf "Host crustde
    HostName localhost
    Port 2201
    User rustdevuser

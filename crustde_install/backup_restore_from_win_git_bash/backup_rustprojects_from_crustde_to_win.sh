@@ -14,13 +14,13 @@ printf "\033[0;32m sshadd \033[0m\n"
 printf "\033[0;32m MSYS_NO_PATHCONV=1 sh //wsl.localhost/Debian/home/luciano/rustprojects/crustde_install/backup_restore_from_win_git_bash/backup_rustprojects_from_crustde_to_win.sh \033[0m\n"
 printf " \n"
 
-printf "\033[0;33m    ssh rustdevuser@crustde_rustdevuser 'tar -czvf crustde_rustprojects_backup.tar.gz --exclude="target" /home/rustdevuser/rustprojects/'  \033[0m\n"
-ssh rustdevuser@crustde_rustdevuser 'tar -czvf crustde_rustprojects_backup.tar.gz --exclude="target" /home/rustdevuser/rustprojects/'
+printf "\033[0;33m    ssh rustdevuser@crustde 'tar -czvf crustde_rustprojects_backup.tar.gz --exclude="target" /home/rustdevuser/rustprojects/'  \033[0m\n"
+ssh rustdevuser@crustde 'tar -czvf crustde_rustprojects_backup.tar.gz --exclude="target" /home/rustdevuser/rustprojects/'
 printf "\033[0;33m    mkdir -p ~/rustprojects/crustde_rustprojects_backup \033[0m\n"
 mkdir -p ~/rustprojects/crustde_rustprojects_backup
-printf "\033[0;33m    MSYS_NO_PATHCONV=1 scp rustdevuser@crustde_rustdevuser:~/crustde_rustprojects_backup.tar.gz ~/rustprojects/crustde_rustprojects_backup/crustde_rustprojects_backup.tar.gz \033[0m\n"
-MSYS_NO_PATHCONV=1 scp rustdevuser@crustde_rustdevuser:~/crustde_rustprojects_backup.tar.gz ~/rustprojects/crustde_rustprojects_backup/crustde_rustprojects_backup.tar.gz
-printf "\033[0;33m    ssh rustdevuser@crustde_rustdevuser 'rm crustde_rustprojects_backup.tar.gz' \033[0m\n"
-ssh rustdevuser@crustde_rustdevuser 'rm crustde_rustprojects_backup.tar.gz'
+printf "\033[0;33m    MSYS_NO_PATHCONV=1 scp rustdevuser@crustde:~/crustde_rustprojects_backup.tar.gz ~/rustprojects/crustde_rustprojects_backup/crustde_rustprojects_backup.tar.gz \033[0m\n"
+MSYS_NO_PATHCONV=1 scp rustdevuser@crustde:~/crustde_rustprojects_backup.tar.gz ~/rustprojects/crustde_rustprojects_backup/crustde_rustprojects_backup.tar.gz
+printf "\033[0;33m    ssh rustdevuser@crustde 'rm crustde_rustprojects_backup.tar.gz' \033[0m\n"
+ssh rustdevuser@crustde 'rm crustde_rustprojects_backup.tar.gz'
 
 printf " \n"
