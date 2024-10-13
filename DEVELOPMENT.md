@@ -878,9 +878,9 @@ A good learning example.
 After reboot, WSL2 can create some network problems for Podman.  
 No problem for Debian on bare metal. But the script is ok to restart the pod and start the sshd server.  
 So use it in both cases.  
-We can simulate the WSL2 reboot in `Powershell in Windows`:
+We can simulate the WSL2 reboot in `git-bash in Windows`:
 
-```powershell
+```bash
 wsl --shutdown 
 ```
 

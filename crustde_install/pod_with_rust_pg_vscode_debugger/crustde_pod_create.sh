@@ -129,7 +129,7 @@ printf "\033[0;32m Ctrl-R, type after, press Esc, press Enter  \033[0m\n"
 
 # this step only for WSL:
 if grep -qi microsoft /proc/version; then
-    printf "\033[0;33m    You can force the WSL reboot in Powershell:  \033[0m\n"
+    printf "\033[0;33m    You can force the WSL reboot in windows git-bash:  \033[0m\n"
     printf "\033[0;32m  wsl --shutdown  \033[0m\n"
 fi
 

@@ -8,7 +8,7 @@ printf "\033[0;33m    Bash script to correctly restart the pod 'sh crustde_pod_a
 # WSL2 have some quirks.
 if grep -qi microsoft /proc/version; then    
     printf " \n"
-    printf "\033[0;33m    You can simulate a WSL Debian reboot in Windows Powershell with: \033[0m\n"
+    printf "\033[0;33m    You can simulate a WSL Debian reboot in Windows git-bash with: \033[0m\n"
     printf "\033[0;32m wsl --shutdown  \033[0m\n"
 
   if findmnt -o PROPAGATION / | grep -qi private ; then  
