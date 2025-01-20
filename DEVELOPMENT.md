@@ -83,7 +83,7 @@ Let's install it. Open the `WSL2 terminal` and type:
 lsb_release -d
 # Description:    Debian GNU/Linux 12 (bookworm)
 cat /etc/debian_version
-# 12.8
+# 12.9
 sudo apt update
 sudo apt-get install -y podman
 podman version
@@ -248,7 +248,7 @@ First let's find the rustc version:
 
 ```bash
 rustc --version
-#  rustc 1.82.0 
+#  rustc 1.84.0 
 ```
 
 Let's create and run a small Rust program:
@@ -289,7 +289,7 @@ and extract only the `mold` binary executable into `~`.
 Copy it as root into `/usr/bin` and adjust ownership and permissions:
 
 ```bash
-podman exec --user=root crustde_vscode_cnt  curl -L https://github.com/rui314/mold/releases/download/v2.34.1/mold-2.34.1-x86_64-linux.tar.gz --output /tmp/mold.tar.gz
+podman exec --user=root crustde_vscode_cnt  curl -L https://github.com/rui314/mold/releases/download/v2.36.0/mold-2.36.0-x86_64-linux.tar.gz --output /tmp/mold.tar.gz
 podman exec --user=root crustde_vscode_cnt  tar --no-same-owner -xzv --strip-components=2 -C /usr/bin -f /tmp/mold.tar.gz --wildcards */bin/mold
 podman exec --user=root crustde_vscode_cnt rm /tmp/mold.tar.gz
 podman exec --user=root crustde_vscode_cnt    chown root:root /usr/bin/mold
@@ -499,14 +499,14 @@ In `host terminal`:
 ```bash
 cd  ~/rustprojects/crustde_cnt_img_pod/create_and_push_container_images
 chmod +x ssh_auth_podman_push
-./ssh_auth_podman_push docker.io/bestiadev/crustde_cargo_img:cargo-1.82.0
+./ssh_auth_podman_push docker.io/bestiadev/crustde_cargo_img:cargo-1.84.0
 ./ssh_auth_podman_push docker.io/bestiadev/crustde_cargo_img:latest
 
-./ssh_auth_podman_push docker.io/bestiadev/crustde_cross_img:cargo-1.82.0
+./ssh_auth_podman_push docker.io/bestiadev/crustde_cross_img:cargo-1.84.0
 ./ssh_auth_podman_push docker.io/bestiadev/crustde_cross_img:latest
 
-./ssh_auth_podman_push docker.io/bestiadev/crustde_vscode_img:vscode-1.95.3
-./ssh_auth_podman_push docker.io/bestiadev/crustde_vscode_img:cargo-1.82.0
+./ssh_auth_podman_push docker.io/bestiadev/crustde_vscode_img:vscode-1.96.4
+./ssh_auth_podman_push docker.io/bestiadev/crustde_vscode_img:cargo-1.84.0
 ./ssh_auth_podman_push docker.io/bestiadev/crustde_vscode_img:latest
 
 ./ssh_auth_podman_push docker.io/bestiadev/crustde_squid_img:squid-3.5.27-2
@@ -541,9 +541,9 @@ Docker Hub stores compressed images, so they are a third of the size to download
 
 | Image                                    | Label          | Size         | compressed  |
 | ---------------------------------------- | -------------- |------------- | ----------- |
-| docker.io/bestiadev/crustde_cargo_img   | cargo-1.82.0   | 1.28 GB      | 0.45 GB     |
-| docker.io/bestiadev/crustde_cross_img   | cargo-1.82.0   | 3.03 GB      | 0.98 GB     |
-| docker.io/bestiadev/crustde_vscode_img  | cargo-1.82.0   | 3.32 GB      | 1.06 GB     |
+| docker.io/bestiadev/crustde_cargo_img   | cargo-1.84.0   | 1.28 GB      | 0.45 GB     |
+| docker.io/bestiadev/crustde_cross_img   | cargo-1.84.0   | 3.03 GB      | 0.98 GB     |
+| docker.io/bestiadev/crustde_vscode_img  | cargo-1.84.0   | 3.32 GB      | 1.06 GB     |
 
 ## User and server keys for SSH
 

@@ -50,7 +50,7 @@ docker pull bestiadev/crustde_vscode_img:vscode-1.83.0
 
 docker pull bestiadev/crustde_cargo_img:cargo-1.72.0  
 docker pull bestiadev/crustde_cross_img:cargo-1.72.0  
-docker pull bestiadev/crustde_vscode_img:vscode-1.82.0  
+docker pull bestiadev/crustde_vscode_img:vscode-1.84.0  
 
 ## 2023-06-27 824ac23
 
