@@ -16,7 +16,7 @@ printf "\033[0;33m    Create pod \033[0m\n"
 # in a "pod" the "publish port" is tied to the pod and not containers.
 # http connection     8001
 # ssh connection      2201
-# sql admin connection  9876  from 80 ??
+# sqladmin connection  9876  from 80 ??
 
 podman pod create \
 -p 127.0.0.1:8001:8001/tcp \
@@ -47,7 +47,7 @@ printf " \n"
 printf "\033[0;33m    Create container postgresql in the pod \033[0m\n"
 
 podman run --name crustde_postgres_cnt --pod=crustde_pod -d \
-  -e POSTGRES_USER=admin \
+  -e POSTGRES_USER=postgres \
   -e POSTGRES_PASSWORD=Passw0rd \
   docker.io/bestiadev/crustde_postgres_img:latest
 

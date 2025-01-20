@@ -55,7 +55,7 @@ printf " \n"
 printf "\033[0;33m    Create container postgresql in the pod \033[0m\n"
 
 podman run --name crustde_postgres_cnt --pod=crustde_pod -d \
-  -e POSTGRES_USER=admin \
+  -e POSTGRES_USER=postgres \
   -e POSTGRES_PASSWORD=Passw0rd \
   docker.io/bestiadev/crustde_postgres_img:latest
 

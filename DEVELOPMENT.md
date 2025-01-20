@@ -1010,7 +1010,7 @@ The same `sh ~/rustprojects/crustde_install/crustde_pod_after_reboot.sh` is used
 
 Some projects need the database PostgreSQL 15. I created a new pod with the command `sh crustde_install\pod_with_rust_pg_vscode\crustde_pod_create.sh`.  
 The same `sh ~/rustprojects/crustde_install/crustde_pod_after_reboot.sh` is used after reboot.  
-I didn't like the pgAdmin administrative tool. I will try DBeaver instead on `localhost:9876`.  
+I didn't like the pgAdmin administrative tool. I will use the VSCode extension <https://marketplace.visualstudio.com/items?itemName=cweijan.vscode-database-client2>.  
 If you want, you can change the user and passwords in the bash script `crustde_pod_create.sh` to something stronger.  
 
 ## Read more
