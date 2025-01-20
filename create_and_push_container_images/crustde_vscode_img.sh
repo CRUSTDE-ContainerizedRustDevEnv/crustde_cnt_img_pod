@@ -77,8 +77,7 @@ buildah run crustde_vscode_img /bin/sh -c '~/.vscode-server/bin/cd4ee3b1c348a13b
 buildah run crustde_vscode_img /bin/sh -c '~/.vscode-server/bin/cd4ee3b1c348a13bafd8f9ad8060705f6d4b9cba/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension dotjoshjohnson.xml'
 buildah run crustde_vscode_img /bin/sh -c '~/.vscode-server/bin/cd4ee3b1c348a13bafd8f9ad8060705f6d4b9cba/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension fill-labs.dependi'
 buildah run crustde_vscode_img /bin/sh -c '~/.vscode-server/bin/cd4ee3b1c348a13bafd8f9ad8060705f6d4b9cba/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension ms-vscode.live-server'
-buildah run crustde_vscode_img /bin/sh -c '~/.vscode-server/bin/cd4ee3b1c348a13bafd8f9ad8060705f6d4b9cba/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension mtxr.sqltools'
-buildah run crustde_vscode_img /bin/sh -c '~/.vscode-server/bin/cd4ee3b1c348a13bafd8f9ad8060705f6d4b9cba/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension mtxr.sqltools-driver-pg'
+buildah run crustde_vscode_img /bin/sh -c '~/.vscode-server/bin/cd4ee3b1c348a13bafd8f9ad8060705f6d4b9cba/bin/code-server --extensions-dir ~/.vscode-server/extensions --install-extension cweijan.vscode-database-client2'
 
 printf " \n"
 printf "\033[0;33m    Remove unwanted files \033[0m\n"

@@ -16,7 +16,7 @@ printf "\033[0;33m    Create pod \033[0m\n"
 # in a "pod" the "publish port" is tied to the pod and not containers.
 # http connection     8001
 # ssh connection      2201
-# sqladmin connection  9876  from 80 ??
+# pgAdmin connection  9876  from 80 ??
 
 podman pod create \
 -p 127.0.0.1:8001:8001/tcp \
