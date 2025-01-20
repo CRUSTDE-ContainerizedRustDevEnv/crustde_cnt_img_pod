@@ -58,8 +58,8 @@ buildah run --user root crustde_cross_img /bin/sh -c 'apt-get install -y musl-to
 buildah run crustde_cross_img /bin/sh -c 'rustup target add x86_64-unknown-linux-musl'
 
 printf " \n"
-printf "\033[0;33m    Add target for compile to wasm32-wasi \033[0m\n"
-buildah run crustde_cross_img /bin/sh -c 'rustup target add wasm32-wasi'
+printf "\033[0;33m    Add target for compile to wasm32-wasip1 \033[0m\n"
+buildah run crustde_cross_img /bin/sh -c 'rustup target add wasm32-wasip1'
 
 printf " \n"
 printf "\033[0;33m    Install wasm pack \033[0m\n"

@@ -445,11 +445,11 @@ You can use this image for distribution of the program to your server. It is onl
 
 ## Cross-compile to Wasi
 
-I added to the image `crustde_cross_img` the target `wasm32-wasi` for cross-compiling to Wasi and the CLI wasmtime to run wasi programs.  
+I added to the image `crustde_cross_img` the target `wasm32-wasip1` for cross-compiling to Wasi and the CLI wasmtime to run wasi programs.  
 
 ```bash
-cargo build --target wasm32-wasi
-wasmtime ./target/wasm32-wasi/debug/crustde_hello.wasm upper world
+cargo build --target wasm32-wasip1
+wasmtime ./target/wasm32-wasip1/debug/crustde_hello.wasm upper world
 ```
 
 We can also run this wasm program in the WASI playground at <https://runno.dev/wasi>.  
