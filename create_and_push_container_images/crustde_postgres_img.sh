@@ -24,7 +24,9 @@ buildah rm crustde_postgres_img || :
 buildah rmi -f docker.io/bestiadev/crustde_postgres_img || :
 
 printf " \n"
-printf "\033[0;33m    Create new 'buildah container' named crustde_postgres_img from sameersbn/postgres:latest \033[0m\n"
+printf "\033[0;33m    Create new 'buildah container' named crustde_postgres_img from official //hub.docker.com/_/postgres \033[0m\n"
+printf "\033[0;33m    Version postgres:15 on Debian 12 bookworm \033[0m\n"
+
 set -o errexit
 buildah from \
 --name crustde_postgres_img \
