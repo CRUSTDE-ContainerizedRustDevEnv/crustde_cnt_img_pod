@@ -53,11 +53,16 @@ docker.io/bestiadev/crustde_vscode_img:latest
 
 printf " \n"
 printf "\033[0;33m    Create container postgresql in the pod \033[0m\n"
+printf "\033[0;33m    The script entrypoint.sh creates the clusters and users and passwords. \033[0m\n"
+printf "\033[0;33m    Change it based on your needs. \033[0m\n"
 
-podman run --name crustde_postgres_cnt --pod=crustde_pod -d \
-  -e POSTGRES_USER=postgres \
-  -e POSTGRES_PASSWORD=Passw0rd \
-  docker.io/bestiadev/crustde_postgres_img:latest
+podman create --name crustde_postgres_cnt --pod=crustde_pod -d \
+  -p 5450:5450 -p 5460:5460 \
+  --entrypoint /usr/bin/entrypoint.sh \
+  docker.io/bestiadev/crustde_postgres_img:latest;
+
+printf "\033[0;33m    Copy entrypoint.sh create \033[0m\n";
+podman cp ./postgres_entrypoint.sh crustde_postgres_cnt:/usr/bin/entrypoint.sh ;
 
 printf "\033[0;33m    Copy SSH server config \033[0m\n"
 podman cp ~/.ssh/crustde_pod_keys/etc_ssh_sshd_config.conf crustde_vscode_cnt:/etc/ssh/sshd_config
