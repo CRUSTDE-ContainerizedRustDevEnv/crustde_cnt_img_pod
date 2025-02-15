@@ -30,7 +30,7 @@ printf "\033[0;33m    Create pod \033[0m\n"
 podman pod create \
 -p 127.0.0.1:8001:8001/tcp \
 -p 127.0.0.1:2201:2201/tcp \
--p 127.0.0.1:5450:5450/tcp \ 
+-p 127.0.0.1:5450:5450/tcp \
 -p 127.0.0.1:5460:5460/tcp \
 --label name=crustde_pod \
 --label version=1.0 \
