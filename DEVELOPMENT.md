@@ -1012,7 +1012,7 @@ Some projects need the database PostgreSQL 15. I created a new pod with the comm
 `cd crustde_install\pod_with_rust_pg_vscode; sh crustde_pod_create.sh`.  
 The same `sh ~/rustprojects/crustde_install/crustde_pod_after_reboot.sh` is used after reboot.  
 I didn't like the pgAdmin administrative tool. I will use the VSCode extension <https://marketplace.visualstudio.com/items?itemName=cweijan.vscode-database-client2>.  
-If you want, you can change the clusters and passwords in the bash script `postgres_entrypoint.sh` depending on your needs. For now there are 2 clusters: dev_01 and test_01.  
+If you want, you can change the clusters and passwords in the bash script `postgres_entrypoint.sh` depending on your needs. For now there are 2 clusters: dev_01 on port 5450 and test_01 on port 5460.  
 
 ## Read more
 
