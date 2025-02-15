@@ -2,12 +2,11 @@
 
 printf " \n"
 printf "\033[0;33m    Bash script to build the docker image for the postgres database server \033[0m\n"
+printf "\033[0;33m    The image is created without clusters. They must be created in the entrypoint bash script. \033[0m\n"
+printf "\033[0;33m    The entrypoint must be set when 'podman create' the container. \033[0m\n"
+printf "\033[0;33m    This is described in 'create_and_push_container_images\postgres_entrypoint.sh' \033[0m\n"
 printf "\033[0;33m    Name of the image: crustde_postgres_img \033[0m\n"
 # repository: https://github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod
-
-printf "\033[0;33m    postgres image on docker hub has 8 layers. \033[0m\n"
-printf "\033[0;33m    I don't know if this is too much and affects performance, \033[0m\n"
-printf "\033[0;33m    but I will squash it to one single layer. \033[0m\n"
 
 printf "\033[0;33m    To build the image, run in bash with: \033[0m\n"
 printf "\033[0;33m sh crustde_postgres_img.sh \033[0m\n"
@@ -24,16 +23,12 @@ buildah rm crustde_postgres_img || :
 buildah rmi -f docker.io/bestiadev/crustde_postgres_img || :
 
 printf " \n"
-printf "\033[0;33m    Create new 'buildah container' named crustde_postgres_img from official //hub.docker.com/_/postgres \033[0m\n"
-printf "\033[0;33m    Version postgres:15 on Debian 12 bookworm \033[0m\n"
-
+printf "\033[0;33m    Create new 'buildah container' named crustde_postgres_img \033[0m\n"
+printf "\033[0;33m    Version postgres 15 on Debian 12 bookworm \033[0m\n"
 set -o errexit
 buildah from \
 --name crustde_postgres_img \
-docker.io/library/postgres:15
-
-printf "\033[0;33m    podman image tree docker.io/library/postgres:15 \033[0m\n"
-podman image tree docker.io/library/postgres:15
+docker.io/library/debian:bookworm-slim
 
 buildah config \
 --author=github.com/bestia-dev \
@@ -43,9 +38,37 @@ buildah config \
 crustde_postgres_img
 
 printf " \n"
+printf "\033[0;33m    Debian apt update and upgrade \033[0m\n"
+buildah run crustde_postgres_img    apt -y update
+buildah run crustde_postgres_img    apt -y full-upgrade
+
+printf " \n"
+printf "\033[0;33m    Install nano, the default easy to use text editor in Debian \033[0m\n"
+buildah run crustde_postgres_img    apt -y install nano
+
+printf " \n"
+printf "\033[0;33m    Create non-root user 'postgres' the database superuser. \033[0m\n"
+buildah run crustde_postgres_img groupadd postgres
+buildah run crustde_postgres_img useradd -g postgres -m postgres
+
+printf " \n"
+printf "\033[0;33m    Install postgresql-common \033[0m\n"
+buildah run crustde_postgres_img    apt -y install postgresql-common
+printf "\033[0;33m    I don't want the default cluster to be installed. \033[0m\n"
+printf "\033[0;33m    Change the line #create_main_cluster = true to false in /etc/postgresql-common/createcluster.conf \033[0m\n"
+buildah run crustde_postgres_img    sed -i 's/#create_main_cluster = true/create_main_cluster = false/g' /etc/postgresql-common/createcluster.conf
+
+printf " \n"
+printf "\033[0;33m    Install postgres 15 in debian 12 \033[0m\n"
+buildah run crustde_postgres_img    apt -y install postgresql
+
+printf " \n"
 printf "\033[0;33m    Remove unwanted files \033[0m\n"
 buildah run --user root crustde_postgres_img    apt -y autoremove
 buildah run --user root crustde_postgres_img    apt -y clean
+
+buildah config --user postgres crustde_postgres_img
+buildah config --workingdir /home/postgres crustde_postgres_img
 
 printf " \n"
 printf "\033[0;33m    Finally save/commit the image named crustde_postgres_img \033[0m\n"
