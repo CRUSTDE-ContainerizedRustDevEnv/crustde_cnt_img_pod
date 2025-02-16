@@ -7,7 +7,7 @@ printf "\033[0;33m    Bash script to create the pod 'crustde_pod': 'sh crustde_p
 printf "\033[0;33m    This 'pod' is made of 3 containers: 'crustde_squid_cnt', 'crustde_vscode_cnt', 'crustde_postgres_cnt' \033[0m\n"
 printf "\033[0;33m    It contains Rust, cargo, rustc, VSCode development environment' and postgreSQL \033[0m\n"
 printf "\033[0;33m    All outbound network traffic from crustde_vscode_cnt goes through the proxy Squid. \033[0m\n"
-printf "\033[0;33m    Published inbound network ports are 8001 and 9876 on 'localhost' \033[0m\n"
+printf "\033[0;33m    Published inbound network ports are 8001 and 2201 on 'localhost' \033[0m\n"
 # repository: https://github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod
 # https://techviewleo.com/how-to-run-postgresql-in-podman-container/
 
@@ -16,12 +16,14 @@ printf "\033[0;33m    Create pod \033[0m\n"
 # in a "pod" the "publish port" is tied to the pod and not containers.
 # http connection     8001
 # ssh connection      2201
-# pgAdmin connection  9876  from 80 ??
+# postgres cluster dev_01 5450
+# postgres cluster test_01 5460
 
 podman pod create \
 -p 127.0.0.1:8001:8001/tcp \
 -p 127.0.0.1:2201:2201/tcp \
--p 127.0.0.1:9876:80/tcp \
+-p 127.0.0.1:5450:5450/tcp \
+-p 127.0.0.1:5460:5460/tcp \
 --label name=crustde_pod \
 --label version=1.0 \
 --label source=github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod \
@@ -31,8 +33,8 @@ podman pod create \
 printf " \n"
 printf "\033[0;33m    Create container crustde_squid_cnt in the pod \033[0m\n"
 podman create --name crustde_squid_cnt \
---pod=crustde_pod -ti \
-docker.io/bestiadev/crustde_squid_img:latest
+  --pod=crustde_pod -ti \
+  docker.io/bestiadev/crustde_squid_img:latest
 
 printf " \n"
 printf "\033[0;33m    Copy squid.conf for customized ACL proxy permissions \033[0m\n"
@@ -47,24 +49,31 @@ podman unshare chown 1000:1000 -R $HOME/rustprojects_volume
 
 printf " \n"
 printf "\033[0;33m    Create container crustde_vscode_cnt in the pod \033[0m\n"
-podman create --name crustde_vscode_cnt --pod=crustde_pod -ti \
---volume $HOME/rustprojects_volume:/mnt/rustprojects_volume:Z \
-docker.io/bestiadev/crustde_vscode_img:latest
+podman create --name crustde_vscode_cnt \
+  --pod=crustde_pod -ti \
+  --volume $HOME/rustprojects_volume:/mnt/rustprojects_volume:Z \
+  docker.io/bestiadev/crustde_vscode_img:latest
 
 printf " \n"
 printf "\033[0;33m    Create container postgresql in the pod \033[0m\n"
+printf "\033[0;33m    The script entrypoint.sh creates the clusters and users and passwords. \033[0m\n"
+printf "\033[0;33m    Change it based on your needs. \033[0m\n"
 
-podman run --name crustde_postgres_cnt --pod=crustde_pod -d \
-  -e POSTGRES_USER=postgres \
-  -e POSTGRES_PASSWORD=Passw0rd \
-  docker.io/bestiadev/crustde_postgres_img:latest
+podman create --name crustde_postgres_cnt \
+  --pod=crustde_pod -ti \
+  --entrypoint /usr/bin/entrypoint.sh \
+  docker.io/bestiadev/crustde_postgres_img:latest;
+
+printf "\033[0;33m    Copy entrypoint.sh create, chmod it before copying \033[0m\n";
+sudo chmod +x ./postgres_entrypoint.sh
+podman cp ./postgres_entrypoint.sh crustde_postgres_cnt:/usr/bin/entrypoint.sh ;
 
 printf "\033[0;33m    Copy SSH server config \033[0m\n"
 podman cp ~/.ssh/crustde_pod_keys/etc_ssh_sshd_config.conf crustde_vscode_cnt:/etc/ssh/sshd_config
 printf "\033[0;33m    Copy the files for host keys ed25519 for SSH server in crustde_pod \033[0m\n"
 podman cp ~/.ssh/crustde_pod_keys/etc/ssh/ssh_host_ed25519_key  crustde_vscode_cnt:/etc/ssh/ssh_host_ed25519_key
 podman cp ~/.ssh/crustde_pod_keys/etc/ssh/ssh_host_ed25519_key.pub  crustde_vscode_cnt:/etc/ssh/ssh_host_ed25519_key.pub
-printf "\033[0;33m    Copy the public key of rustdevuser \033[0m\n"
+printf "\033[0;33m    Copy the public keys of rustdevuser \033[0m\n"
 podman cp ~/.ssh/crustde_rustdevuser_ssh_1.pub crustde_vscode_cnt:/home/rustdevuser/.ssh/crustde_rustdevuser_ssh_1.pub
 
 printf "\033[0;33m    podman pod start \033[0m\n"
@@ -128,10 +137,6 @@ if grep -qi microsoft /proc/version; then
     printf "\033[0;33m    You can force the WSL reboot in windows git-bash:  \033[0m\n"
     printf "\033[0;32m  wsl --shutdown  \033[0m\n"
 fi
-
-printf " \n"
-printf "\033[0;33m    You can administer your postgreSQL in the browser with username info@your_webserver on: \033[0m\n"
-printf "\033[0;32m localhost:9876 \033[0m\n"
 
 printf " \n"
 printf "\033[0;33m    Be sure to push your code to GitHub frequently because sometimes containers just stop to work. \033[0m\n"

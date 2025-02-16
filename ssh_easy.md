@@ -11,7 +11,7 @@ Write the SSH connection details in `~/.ssh/config`:
 Host github.com
     HostName github.com
     User git
-    IdentityFile ~/.ssh/github_com_bestia_dev_git_ssh_1
+    IdentityFile ~/.ssh/your_key_for_github_ssh_1
     IdentitiesOnly yes
 ```
 
@@ -56,12 +56,12 @@ It is even easier if you prepare a little bash script with the ssh keys you ofte
 
 printf "   Bash script to add your private SSH keys to ssh_agent.\n"
 # The ssh-agent is started already on login inside the ~/.bashrc script.
-# Replace the words github_com_bestia_dev_git_ssh_1 and your_key_for_webserver_ssh_1 with your file names.
+# Replace the words your_key_for_github_ssh_1 and your_key_for_webserver_ssh_1 with your file names.
 # The keys are restricted only to explicit servers/hosts in the ~/.ssh/config file.
 # The keys will expire in 1 hour.
 
 # add if key not yet exists
-ssh-add -l |grep -q `ssh-keygen -lf ~/.ssh/github_com_bestia_dev_git_ssh_1 | awk '{print $2}'` || ssh-add -t 1h ~/.ssh/github_com_bestia_dev_git_ssh_1
+ssh-add -l |grep -q `ssh-keygen -lf ~/.ssh/your_key_for_github_ssh_1 | awk '{print $2}'` || ssh-add -t 1h ~/.ssh/your_key_for_github_ssh_1
 
 # add if key not yet exists
 ssh-add -l |grep -q `ssh-keygen -lf ~/.ssh/your_key_for_webserver_ssh_1 | awk '{print $2}'` || ssh-add -t 1h ~/.ssh/your_key_for_webserver_ssh_1

@@ -1,7 +1,7 @@
 Host github.com
     HostName github.com
     User git
-    IdentityFile ~/.ssh/github_com_bestia_dev_git_ssh_1
+    IdentityFile ~/.ssh/your_key_for_github_ssh_1
     IdentitiesOnly yes
 
 Host your_webserver

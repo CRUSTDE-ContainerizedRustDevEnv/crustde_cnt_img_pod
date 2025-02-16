@@ -6,7 +6,7 @@ These version numbers should be replaced with a simple "search and replace all".
 Rustc and cargo version
 <https://github.com/rust-lang/rust/releases>
 old version: 1.84.0
-new version: 1.84.0
+new version: 1.84.1
 
 Rustup version changes rarely:
 <https://github.com/rust-lang/rustup/tags>
