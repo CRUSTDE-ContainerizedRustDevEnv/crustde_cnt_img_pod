@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD041 -->
 [//]: # (auto_md_to_doc_comments segment start A)
 
 # CRUSTDE - Containerized Rust Development Environment
