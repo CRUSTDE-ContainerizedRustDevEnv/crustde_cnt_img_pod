@@ -11,9 +11,9 @@ The TODO section is part of the [README.md](https://github.com/CRUSTDE-Container
 
 ## 2025-02-15
 
-docker pull bestiadev/crustde_vscode_img:vscode-1.96.4
-docker pull bestiadev/crustde_cross_img:cargo-1.84.0
-docker pull bestiadev/crustde_cargo_img:cargo-1.84.0
+docker pull bestiadev/crustde_vscode_img:vscode-1.97.2
+docker pull bestiadev/crustde_cross_img:cargo-1.85.0
+docker pull bestiadev/crustde_cargo_img:cargo-1.85.0
 New image for postgres with 2 clusters:
 docker pull bestiadev/crustde_postgres_img:postgres15
 

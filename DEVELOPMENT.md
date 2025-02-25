@@ -248,7 +248,7 @@ First let's find the rustc version:
 
 ```bash
 rustc --version
-#  rustc 1.84.0 
+#  rustc 1.85.0 
 ```
 
 Let's create and run a small Rust program:
@@ -499,14 +499,14 @@ In `host terminal`:
 ```bash
 cd  ~/rustprojects/crustde_cnt_img_pod/create_and_push_container_images
 chmod +x ssh_auth_podman_push
-./ssh_auth_podman_push docker.io/bestiadev/crustde_cargo_img:cargo-1.84.0
+./ssh_auth_podman_push docker.io/bestiadev/crustde_cargo_img:cargo-1.85.0
 ./ssh_auth_podman_push docker.io/bestiadev/crustde_cargo_img:latest
 
-./ssh_auth_podman_push docker.io/bestiadev/crustde_cross_img:cargo-1.84.0
+./ssh_auth_podman_push docker.io/bestiadev/crustde_cross_img:cargo-1.85.0
 ./ssh_auth_podman_push docker.io/bestiadev/crustde_cross_img:latest
 
-./ssh_auth_podman_push docker.io/bestiadev/crustde_vscode_img:vscode-1.96.4
-./ssh_auth_podman_push docker.io/bestiadev/crustde_vscode_img:cargo-1.84.0
+./ssh_auth_podman_push docker.io/bestiadev/crustde_vscode_img:vscode-1.97.2
+./ssh_auth_podman_push docker.io/bestiadev/crustde_vscode_img:cargo-1.85.0
 ./ssh_auth_podman_push docker.io/bestiadev/crustde_vscode_img:latest
 
 ./ssh_auth_podman_push docker.io/bestiadev/crustde_squid_img:squid-3.5.27-2
@@ -541,9 +541,9 @@ Docker Hub stores compressed images, so they are a third of the size to download
 
 | Image                                    | Label          | Size         | compressed  |
 | ---------------------------------------- | -------------- |------------- | ----------- |
-| docker.io/bestiadev/crustde_cargo_img   | cargo-1.84.0   | 1.28 GB      | 0.45 GB     |
-| docker.io/bestiadev/crustde_cross_img   | cargo-1.84.0   | 3.03 GB      | 0.98 GB     |
-| docker.io/bestiadev/crustde_vscode_img  | cargo-1.84.0   | 3.32 GB      | 1.06 GB     |
+| docker.io/bestiadev/crustde_cargo_img   | cargo-1.85.0   | 1.28 GB      | 0.45 GB     |
+| docker.io/bestiadev/crustde_cross_img   | cargo-1.85.0   | 3.03 GB      | 0.98 GB     |
+| docker.io/bestiadev/crustde_vscode_img  | cargo-1.85.0   | 3.32 GB      | 1.06 GB     |
 
 ## User and server keys for SSH
 
