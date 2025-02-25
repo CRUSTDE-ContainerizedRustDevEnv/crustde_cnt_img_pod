@@ -202,9 +202,8 @@ buildah run crustde_cargo_img /bin/sh -c 'printf "alias ll=\"ls -l\"\n" >> ~/.ba
 
 printf " \n"
 printf "\033[0;33m    Add ssh-agent to .bashrc \033[0m\n"
-buildah run crustde_cargo_img /bin/sh -c 'mkdir /home/rustdevuser/.ssh/crustde_pod_keys'
-buildah copy crustde_cargo_img 'bashrc.conf' '/home/rustdevuser/.ssh/crustde_pod_keys/bashrc.conf'
-buildah run crustde_cargo_img /bin/sh -c 'cat /home/rustdevuser/.ssh/crustde_pod_keys/bashrc.conf >> ~/.bashrc'
+buildah copy crustde_cargo_img 'bashrc.conf' '/home/rustdevuser/.ssh/bashrc.conf'
+buildah run crustde_cargo_img /bin/sh -c 'cat /home/rustdevuser/.ssh/bashrc.conf >> ~/.bashrc'
 
 printf " \n"
 printf "\033[0;33m    Copy file cargo_config.toml because of 'mold linker' and sccache \033[0m\n"
