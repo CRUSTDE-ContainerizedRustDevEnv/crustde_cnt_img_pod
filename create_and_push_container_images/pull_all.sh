@@ -25,7 +25,7 @@ for folder in $(ls -d $cur_dir/.[!.]*/ $cur_dir/*/ 2> /dev/null) ; do
     cd $folder
     printf "\n"
     printf " $COUNTER. "
-    COUNTER=$((COUNTER+1))
+    COUNTER=$((COUNTER+1))  
 
     pwd
     git pull
