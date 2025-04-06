@@ -114,8 +114,9 @@ printf " \n"
 printf "\033[0;33m    Configure rustdevuser things \033[0m\n"
 buildah run crustde_cargo_img /bin/sh -c 'mkdir -vp ~/rustprojects'
 
-# copy files pull_all.sh
+# copy files pull_all.sh and .vscode/settings.json
 buildah copy crustde_cargo_img './pull_all.sh' '/home/rustdevuser/rustprojects/pull_all.sh'
+buildah copy crustde_cargo_img './vscode_settings.json' '/home/rustdevuser/rustprojects/.vscode/settings.json'
 
 buildah run crustde_cargo_img /bin/sh -c 'mkdir -vp ~/.ssh'
 buildah run crustde_cargo_img /bin/sh -c 'chmod 700 ~/.ssh'
