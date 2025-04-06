@@ -8,7 +8,7 @@ printf "\033[0;33m    Name of the image: crustde_cargo_img \033[0m\n"
 # repository: https://github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod
 
 printf " \n"
-printf "\033[0;33m    I want a sandbox that cannot compromise my local system.  
+printf "\033[0;33m    I want a sandbox that cannot compromise my local system. \033[0m\n"
 printf "\033[0;33m    No shared volumes. All the files and folders will be inside the container.  \033[0m\n"
 printf "\033[0;33m    Containers are not perfect sandboxes, but are good enough. \033[0m\n"
 printf "\033[0;33m    Containers images can be recreated easily, coherently and repeatedly with new versions of tools. \033[0m\n"
@@ -66,7 +66,7 @@ crustde_cargo_img
 
 printf " \n"
 printf "\033[0;33m    Set proxy for apt-get to apt-cacher-ng on host for faster apt package download \033[0m\n"
-printf "\033[0;33m    Ip adress for Buildah Gateway/Host: 10.0.2.2 \033[0m\n"
+printf "\033[0;33m    Ip address for Buildah Gateway/Host: 10.0.2.2 \033[0m\n"
 buildah copy crustde_cargo_img './02proxy' '/etc/apt/apt.conf.d/02proxy'
 
 printf " \n"
