@@ -18,12 +18,16 @@ printf "\033[0;33m    mkdir -p ~/.ssh/crustde_ssh_backup \033[0m\n"
 mkdir -p ~/.ssh/crustde_ssh_backup
 cd ~/.ssh/crustde_ssh_backup
 
-printf "\033[0;33m    ssh rustdevuser@crustde 'tar -C /home/rustdevuser/.ssh -czvf crustde_ssh_backup.tar.gz .'  \033[0m\n"
-ssh rustdevuser@crustde 'tar -C /home/rustdevuser/.ssh -czvf crustde_ssh_backup.tar.gz .'
+# put current date as yyyy-mm-dd in $date
+date=$(date '+%Y-%m-%d')
 
-printf "\033[0;33m    MSYS_NO_PATHCONV=1 scp rustdevuser@crustde:~/crustde_ssh_backup.tar.gz ~/.ssh/crustde_ssh_backup/crustde_ssh_backup.tar.gz \033[0m\n"
-MSYS_NO_PATHCONV=1 scp rustdevuser@crustde:~/crustde_ssh_backup.tar.gz ~/.ssh/crustde_ssh_backup/crustde_ssh_backup.tar.gz
-printf "\033[0;33m    ssh rustdevuser@crustde 'rm crustde_ssh_backup.tar.gz' \033[0m\n"
-ssh rustdevuser@crustde 'rm crustde_ssh_backup.tar.gz'
+printf "\033[0;33m    ssh rustdevuser@crustde 'date=$(date '+%Y-%m-%d'); tar -C /home/rustdevuser/.ssh -czvf ${date}_crustde_ssh_backup.tar.gz .'  \033[0m\n"
+ssh rustdevuser@crustde 'date=$(date '+%Y-%m-%d'); tar -C /home/rustdevuser/.ssh -czvf ${date}_crustde_ssh_backup.tar.gz .'
+
+printf "\033[0;33m    MSYS_NO_PATHCONV=1 scp -p rustdevuser@crustde:${date}_crustde_ssh_backup.tar.gz ~/.ssh/crustde_ssh_backup/${date}_crustde_ssh_backup.tar.gz \033[0m\n"
+MSYS_NO_PATHCONV=1 scp -p rustdevuser@crustde:${date}_crustde_ssh_backup.tar.gz ~/.ssh/crustde_ssh_backup/${date}_crustde_ssh_backup.tar.gz
+
+printf "\033[0;33m    ssh rustdevuser@crustde 'date=$(date '+%Y-%m-%d'); rm ${date}_crustde_ssh_backup.tar.gz' \033[0m\n"
+ssh rustdevuser@crustde 'date=$(date '+%Y-%m-%d'); rm ${date}_crustde_ssh_backup.tar.gz'
 
 printf " \n"
