@@ -116,6 +116,7 @@ buildah run crustde_cargo_img /bin/sh -c 'mkdir -vp ~/rustprojects'
 
 # copy files pull_all.sh and .vscode/settings.json
 buildah copy crustde_cargo_img './pull_all.sh' '/home/rustdevuser/rustprojects/pull_all.sh'
+buildah run crustde_cargo_img /bin/sh -c 'mkdir -vp /home/rustdevuser/rustprojects/.vscode'
 buildah copy crustde_cargo_img './vscode_settings.json' '/home/rustdevuser/rustprojects/.vscode/settings.json'
 
 buildah run crustde_cargo_img /bin/sh -c 'mkdir -vp ~/.ssh'
