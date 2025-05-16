@@ -19,8 +19,8 @@ printf " \n"
 printf "\033[0;33m    FIRST !!! \033[0m\n"
 printf "\033[0;33m    Search and replace in this bash script to the newest version: \033[0m\n"
 printf "\033[0;33m    Version of Debian: 12.10 \033[0m\n"
-printf "\033[0;33m    Version of rustup: 1.28.1 \033[0m\n"
-printf "\033[0;33m    Version of rustc: 1.86.0 \033[0m\n"
+printf "\033[0;33m    Version of rustup: 1.28.2 \033[0m\n"
+printf "\033[0;33m    Version of rustc: 1.87.0 \033[0m\n"
 printf "\033[0;33m    Version of sccache: 0.10.0 \033[0m\n"
 
 printf " \n"
@@ -60,7 +60,7 @@ docker.io/library/debian:bookworm-slim
 buildah config \
 --author=github.com/bestia-dev \
 --label name=crustde_cargo_img \
---label version=cargo-1.86.0 \
+--label version=cargo-1.87.0 \
 --label source=github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod \
 crustde_cargo_img
 
@@ -127,7 +127,7 @@ printf "\033[0;33m    Kill auto-completion horrible sound \033[0m\n"
 buildah run crustde_cargo_img /bin/sh -c 'printf "set bell-style none\n" >> ~/.inputrc'
 
 printf " \n"
-printf "\033[0;33m    Install rustup 1.28.1 and default x86_64-unknown-linux-gnu, cargo, std, rustfmt, clippy, docs, rustc,...  \033[0m\n"
+printf "\033[0;33m    Install rustup 1.28.2 and default x86_64-unknown-linux-gnu, cargo, std, rustfmt, clippy, docs, rustc,...  \033[0m\n"
 buildah run crustde_cargo_img /bin/sh -c 'curl https://sh.rustup.rs -sSf | sh -s -- -yq'
 
 printf "\033[0;33m    Rustup wants to add the ~/.cargo/bin to PATH. But it needs to force bash reboot and that does not work in buildah. \033[0m\n"
@@ -145,11 +145,11 @@ buildah run crustde_cargo_img /bin/sh -c 'cat /etc/debian_version'
 
 printf "\033[0;33m    rustup version \033[0m\n"
 buildah run crustde_cargo_img /bin/sh -c 'rustup --version'
-# rustup 1.28.1 
+# rustup 1.28.2 
 
 printf "\033[0;33m    rustc version \033[0m\n"
 buildah run crustde_cargo_img /bin/sh -c '/home/rustdevuser/.cargo/bin/rustc --version'
-# rustc 1.86.0 
+# rustc 1.87.0 
 
 printf "\033[0;33m    psql version \033[0m\n"
 buildah run crustde_cargo_img /bin/sh -c 'psql --version'
@@ -169,8 +169,8 @@ printf "\033[0;33m    Remove the toolchain docs because they are 610MB big \033[
 buildah run crustde_cargo_img /bin/sh -c 'rm -rf /home/rustdevuser/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/share/doc'
 
 printf " \n"
-printf "\033[0;33m    Install 'mold linker' 2.37.1. It is 3x faster. \033[0m\n"
-buildah run crustde_cargo_img /bin/sh -c 'curl -L https://github.com/rui314/mold/releases/download/v2.37.1/mold-2.37.1-x86_64-linux.tar.gz --output /tmp/mold.tar.gz'
+printf "\033[0;33m    Install 'mold linker' 2.39.1. It is 3x faster. \033[0m\n"
+buildah run crustde_cargo_img /bin/sh -c 'curl -L https://github.com/rui314/mold/releases/download/v2.39.1/mold-2.39.1-x86_64-linux.tar.gz --output /tmp/mold.tar.gz'
 buildah run --user root  crustde_cargo_img /bin/sh -c 'tar --no-same-owner -xzv --strip-components=2 -C /usr/bin -f /tmp/mold.tar.gz --wildcards */bin/mold'
 buildah run crustde_cargo_img /bin/sh -c 'rm /tmp/mold.tar.gz'
 
@@ -223,12 +223,12 @@ buildah run --user root crustde_cargo_img /bin/sh -c 'rm /etc/apt/apt.conf.d/02p
 printf " \n"
 printf "\033[0;33m    Finally save/commit the image named crustde_cargo_img \033[0m\n"
 buildah commit crustde_cargo_img docker.io/bestiadev/crustde_cargo_img:latest
-buildah tag docker.io/bestiadev/crustde_cargo_img:latest docker.io/bestiadev/crustde_cargo_img:cargo-1.86.0
+buildah tag docker.io/bestiadev/crustde_cargo_img:latest docker.io/bestiadev/crustde_cargo_img:cargo-1.87.0
 
 printf " \n"
 printf "\033[0;33m    Upload the new image to docker hub. \033[0m\n"
 printf "\033[0;32m chmod +x ./ssh_auth_podman_push \033[0m\n"
-printf "\033[0;32m ./ssh_auth_podman_push docker.io/bestiadev/crustde_cargo_img:cargo-1.86.0 \033[0m\n"
+printf "\033[0;32m ./ssh_auth_podman_push docker.io/bestiadev/crustde_cargo_img:cargo-1.87.0 \033[0m\n"
 printf "\033[0;32m ./ssh_auth_podman_push docker.io/bestiadev/crustde_cargo_img:latest \033[0m\n"
 
 printf " \n"
