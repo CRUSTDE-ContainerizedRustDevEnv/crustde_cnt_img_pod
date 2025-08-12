@@ -54,6 +54,8 @@ printf "\033[32mssh-add -D \033[0m\n"
 printf "\n" 
 printf "\033[33m  List public fingerprints inside ssh-agent: \033[0m\n"
 printf "\033[32mssh-add -l \033[0m\n"
+printf "\n"
+printf "\033[33m  List identities inside ssh-agent:  \033[0m\n"
 for entry in ~/.ssh/*.pub 
 do
   # remove suffix .pub
