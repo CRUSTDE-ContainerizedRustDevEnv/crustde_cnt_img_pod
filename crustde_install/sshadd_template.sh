@@ -16,7 +16,17 @@ printf "\033[33m  If not, ssh-agent will send all the keys to the server and the
 # List the private key files inside ~/.ssh
 printf "\n"
 printf "\033[33m  List identities inside ssh-agent:  \033[0m\n"
-ssh-add -l
+for entry in ~/.ssh/*.pub 
+do
+  # remove suffix .pub
+  full_file_name=${entry%.pub}
+  # echo "$full_file_name"
+  # remove prefix until the last slash (5th segment)
+  file_name=$(echo $full_file_name |  cut -d '/' -f 5 )
+  # echo "$file_name"
+  ssh-add -l | grep -q `ssh-keygen -lf "$full_file_name" | awk '{print $2}'` && printf "$file_name\n"
+done
+
 printf "\n"
 printf "\033[33m  Identities you can add to ssh-agent: \033[0m\n"
 printf "\033[33m  Enter passphrase or press enter to skip. \033[0m\n"
@@ -44,6 +54,15 @@ printf "\033[32mssh-add -D \033[0m\n"
 printf "\n" 
 printf "\033[33m  List public fingerprints inside ssh-agent: \033[0m\n"
 printf "\033[32mssh-add -l \033[0m\n"
-ssh-add -l
+for entry in ~/.ssh/*.pub 
+do
+  # remove suffix .pub
+  full_file_name=${entry%.pub}
+  # echo "$full_file_name"
+  # remove prefix until the last slash (5th segment)
+  file_name=$(echo $full_file_name |  cut -d '/' -f 5 )
+  # echo "$file_name"
+  ssh-add -l | grep -q `ssh-keygen -lf "$full_file_name" | awk '{print $2}'` && printf "$file_name\n"
+done
 
 printf "\n"
