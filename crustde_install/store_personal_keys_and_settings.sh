@@ -32,7 +32,7 @@ printf " \n"
 mkdir -p ~/.ssh/crustde_pod_keys/
 
 cp personal_keys_and_settings_template.sh ~/.ssh/crustde_pod_keys/personal_keys_and_settings.sh
-cp sshadd_template.sh ~/.ssh/crustde_pod_keys/sshadd.sh
+cp sshadd.sh ~/.ssh/crustde_pod_keys/sshadd.sh
 cp ssh_config.ssh_config ~/.ssh/crustde_pod_keys/config
 
 sed -i.bak "s/info@your.mail/$1/g" ~/.ssh/crustde_pod_keys/personal_keys_and_settings.sh
