@@ -45,8 +45,6 @@ podman cp ~/.ssh/crustde_pod_keys/etc_ssh_sshd_config.conf crustde_vscode_cnt:/e
 printf "\033[0;33m    Copy the files for host keys ed25519 for SSH server in crustde_pod \033[0m\n"
 podman cp ~/.ssh/crustde_pod_keys/etc/ssh/ssh_host_ed25519_key  crustde_vscode_cnt:/etc/ssh/ssh_host_ed25519_key
 podman cp ~/.ssh/crustde_pod_keys/etc/ssh/ssh_host_ed25519_key.pub  crustde_vscode_cnt:/etc/ssh/ssh_host_ed25519_key.pub
-printf "\033[0;33m    Copy the public key of rustdevuser \033[0m\n"
-podman cp ~/.ssh/crustde_rustdevuser_ssh_1.pub crustde_vscode_cnt:/home/rustdevuser/.ssh/crustde_rustdevuser_ssh_1.pub
 
 printf "\033[0;33m    podman pod start \033[0m\n"
 podman pod start crustde_pod
