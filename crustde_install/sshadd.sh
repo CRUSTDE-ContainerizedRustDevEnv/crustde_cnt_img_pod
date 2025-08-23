@@ -21,10 +21,20 @@ do
   # remove suffix .pub
   full_file_name=${entry%.pub}
   # echo "$full_file_name"
-  # remove prefix until the last slash (5th segment)
-  file_name=$(echo $full_file_name |  cut -d '/' -f 5 )
-  # echo "$file_name"
-  ssh-add -l | grep -q `ssh-keygen -lf "$full_file_name" | awk '{print $2}'` && printf "$file_name\n"
+  if [ -f $full_file_name ]; then
+    # remove all characters except slash slashes
+    only_slashes="$(echo $full_file_name | sed 's#[^/]##g')"
+    # echo "$only_slashes"
+    # count slashes
+    num_of_slashes=${#only_slashes}
+    # echo $num_of_slashes
+    last_slash=$((num_of_slashes + 1))
+    # echo $last_slash
+    # remove prefix until the last slash
+    file_name=$(echo $full_file_name |  cut -d '/' -f $last_slash )
+    # echo "$file_name"
+    ssh-add -l | grep -q `ssh-keygen -lf "$full_file_name" | awk '{print $2}'` && printf "$file_name\n"
+  fi
 done
 
 printf "\n"
@@ -37,13 +47,23 @@ do
   # remove suffix .pub
   full_file_name=${entry%.pub}
   # echo "$full_file_name"
-  # remove prefix until the last slash (5th segment)
-  file_name=$(echo $full_file_name |  cut -d '/' -f 5 )
-  # echo "$file_name"
-  if  [ $# -eq 0 ] || (echo "$file_name" | grep -q "$1") ; then
-    ssh-add -l | grep -q `ssh-keygen -lf "$full_file_name" | awk '{print $2}'` || (printf "  \033[33m ssh-add -t 1h $full_file_name \033[0m\n" & ssh-add -t 1h $full_file_name)
-  else
-    ssh-add -l | grep -q `ssh-keygen -lf "$full_file_name" | awk '{print $2}'` || printf "Skip by argument: $file_name \n"
+  if [ -f $full_file_name ]; then
+    # remove all characters except slash slashes
+    only_slashes="$(echo $full_file_name | sed 's#[^/]##g')"
+    # echo "$only_slashes"
+    # count slashes
+    num_of_slashes=${#only_slashes}
+    # echo $num_of_slashes
+    last_slash=$((num_of_slashes + 1))
+    # echo $last_slash
+    # remove prefix until the last slash
+    file_name=$(echo $full_file_name |  cut -d '/' -f $last_slash )
+    # echo "$file_name"
+    if  [ $# -eq 0 ] || (echo "$file_name" | grep -q "$1") ; then
+      ssh-add -l | grep -q `ssh-keygen -lf "$full_file_name" | awk '{print $2}'` || (printf "  \033[33m ssh-add -t 1h $full_file_name \033[0m\n" & ssh-add -t 1h $full_file_name)
+    else
+      ssh-add -l | grep -q `ssh-keygen -lf "$full_file_name" | awk '{print $2}'` || printf "Skip by argument: $file_name \n"
+    fi
   fi
 done
 
@@ -61,10 +81,20 @@ do
   # remove suffix .pub
   full_file_name=${entry%.pub}
   # echo "$full_file_name"
-  # remove prefix until the last slash (5th segment)
-  file_name=$(echo $full_file_name |  cut -d '/' -f 5 )
-  # echo "$file_name"
-  ssh-add -l | grep -q `ssh-keygen -lf "$full_file_name" | awk '{print $2}'` && printf "$file_name\n"
+  if [ -f $full_file_name ]; then
+    # remove all characters except slash slashes
+    only_slashes="$(echo $full_file_name | sed 's#[^/]##g')"
+    # echo "$only_slashes"
+    # count slashes
+    num_of_slashes=${#only_slashes}
+    # echo $num_of_slashes
+    last_slash=$((num_of_slashes + 1))
+    # echo $last_slash
+    # remove prefix until the last slash
+    file_name=$(echo $full_file_name |  cut -d '/' -f $last_slash )
+    # echo "$file_name"
+    ssh-add -l | grep -q `ssh-keygen -lf "$full_file_name" | awk '{print $2}'` && printf "$file_name\n"
+  fi
 done
 
 printf "\n"

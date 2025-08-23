@@ -1,9 +1,9 @@
 #!/bin/sh
 # ~/.ssh/crustde_pod_keys/personal_keys_and_settings.sh
 
-printf " \n"
+printf "\n"
 printf "\033[0;33m  Bash script to install personal keys and settings into a new CRUSTDE - Containerized Rust Development Environment. \033[0m\n"
-printf " \n"
+printf "\n"
 
 # repository: https://github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod
 
@@ -27,11 +27,13 @@ printf "\033[0;33m  cp -u ~/.ssh/your_key_for_webserver_ssh_1 ~/.ssh/crustde_pod
 cp -u ~/.ssh/your_key_for_webserver_ssh_1 ~/.ssh/crustde_pod_keys/your_key_for_webserver_ssh_1
 printf "\033[0;33m  cp -u ~/.ssh/your_key_for_webserver_ssh_1.pub ~/.ssh/crustde_pod_keys/your_key_for_webserver_ssh_1.pub \033[0m\n"
 cp -u ~/.ssh/your_key_for_webserver_ssh_1.pub ~/.ssh/crustde_pod_keys/your_key_for_webserver_ssh_1.pub
-printf " \n"
+printf "\033[0;33m  cp -u ~/.ssh/crustde_rustdevuser_ssh_1.pub ~/.ssh/crustde_pod_keys/crustde_rustdevuser_ssh_1.pub \033[0m\n"
+cp -u ~/.ssh/crustde_rustdevuser_ssh_1.pub ~/.ssh/crustde_pod_keys/crustde_rustdevuser_ssh_1.pub
+printf "\n"
 
 printf "\033[0;33m  If there are more private/public keys that you need, you can copy them manually into the folder ~/.ssh/crustde_pod_keys \033[0m\n"
 
-printf " \n"
+printf "\n"
 printf "\033[0;33m  Set git personal information inside the container \033[0m\n"
 printf "\033[0;33m  podman exec --user=rustdevuser crustde_vscode_cnt git config --global user.email 'info@your.mail' \033[0m\n"
 podman exec --user=rustdevuser crustde_vscode_cnt git config --global user.email "info@your.mail"
@@ -40,8 +42,8 @@ podman exec --user=rustdevuser crustde_vscode_cnt git config --global user.name 
 printf "\033[0;33m  podman exec --user=rustdevuser crustde_vscode_cnt git config --global -l \033[0m\n"
 podman exec --user=rustdevuser crustde_vscode_cnt git config --global -l
 
-printf "\033[0;33m  podman exec --user=rustdevuser crustde_vscode_cnt ls -la /home/rustdevuser/.ssh \033[0m\n"
-podman exec --user=rustdevuser crustde_vscode_cnt ls -la /home/rustdevuser/.ssh
+printf "\033[0;33m  podman exec --user=rustdevuser crustde_vscode_cnt ls /home/rustdevuser/.ssh \033[0m\n"
+podman exec --user=rustdevuser crustde_vscode_cnt ls /home/rustdevuser/.ssh
 
 # Loop through the .pub files and copy all the key files into the container.
 printf "\n"
@@ -65,18 +67,21 @@ do
   # echo "$file_name"
 
   printf "\033[0;33m  $file_name \033[0m\n"
-  printf "\033[0;33m  podman cp ~/.ssh/crustde_pod_keys/$file_name crustde_vscode_cnt:/home/rustdevuser/.ssh/$file_name \033[0m\n"
-  podman cp ~/.ssh/crustde_pod_keys/$file_name crustde_vscode_cnt:/home/rustdevuser/.ssh/$file_name
-  printf "\033[0;33m  podman exec --user=rustdevuser crustde_vscode_cnt chmod 600 /home/rustdevuser/.ssh/$file_name \033[0m\n"
-  podman exec --user=rustdevuser crustde_vscode_cnt chmod 600 /home/rustdevuser/.ssh/$file_name
 
   printf "\033[0;33m  podman cp ~/.ssh/crustde_pod_keys/$file_name.pub crustde_vscode_cnt:/home/rustdevuser/.ssh/$file_name.pub \033[0m\n"
   podman cp ~/.ssh/crustde_pod_keys/$file_name.pub crustde_vscode_cnt:/home/rustdevuser/.ssh/$file_name.pub
 
-  # if exist copy the .enc file
-  if [ -f ~/.ssh/crustde_pod_keys/$file_name.enc ]; then
-    printf "\033[0;33m  podman cp ~/.ssh/crustde_pod_keys/$file_name.enc crustde_vscode_cnt:/home/rustdevuser/.ssh/$file_name.enc \033[0m\n"
-    podman cp ~/.ssh/crustde_pod_keys/$file_name.enc crustde_vscode_cnt:/home/rustdevuser/.ssh/$file_name.enc
+  if [ -f $full_file_name ]; then
+    printf "\033[0;33m  podman cp ~/.ssh/crustde_pod_keys/$file_name crustde_vscode_cnt:/home/rustdevuser/.ssh/$file_name \033[0m\n"
+    podman cp ~/.ssh/crustde_pod_keys/$file_name crustde_vscode_cnt:/home/rustdevuser/.ssh/$file_name
+    printf "\033[0;33m  podman exec --user=rustdevuser crustde_vscode_cnt chmod 600 /home/rustdevuser/.ssh/$file_name \033[0m\n"
+    podman exec --user=rustdevuser crustde_vscode_cnt chmod 600 /home/rustdevuser/.ssh/$file_name
+
+    # if exist copy the .enc file
+    if [ -f ~/.ssh/crustde_pod_keys/$file_name.enc ]; then
+      printf "\033[0;33m  podman cp ~/.ssh/crustde_pod_keys/$file_name.enc crustde_vscode_cnt:/home/rustdevuser/.ssh/$file_name.enc \033[0m\n"
+      podman cp ~/.ssh/crustde_pod_keys/$file_name.enc crustde_vscode_cnt:/home/rustdevuser/.ssh/$file_name.enc
+    fi
   fi
   printf "\n"
 done
@@ -92,4 +97,4 @@ printf "\033[0;33m  Copy the '~/.ssh/crustde_pod_keys/config' from Debian into t
 podman cp ~/.ssh/crustde_pod_keys/config crustde_vscode_cnt:/home/rustdevuser/.ssh/config
 podman exec --user=rustdevuser crustde_vscode_cnt chmod 600 /home/rustdevuser/.ssh/config
 
-printf " \n"
+printf "\n"
