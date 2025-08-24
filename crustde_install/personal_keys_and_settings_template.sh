@@ -11,7 +11,7 @@ printf "\n"
 # The script store_personal_keys_and_settings.sh copies it into the Linux folder '~\.ssh\crustde_pod_keys' 
 # and renames it to "personal_keys_and_settings.sh".
 # Then it replace the words: 
-# 'info@your.mail', 'your_git_name', 'your_key_for_github_ssh_1', 'your_webserver', 'your_username', 'your_key_for_webserver_ssh_1', 'your_key_for_github_api_token_ssh_1'
+# 'info@your.mail', 'your_git_name', 'your_key_for_github_ssh_1', 'your_webserver', 'your_username', 'your_key_for_webserver_ssh_1'
 # with you personal data and file_names.
 # Warning: Once modified, don't share this file with anyone and don't push it to GitHub because it will contain your data.
 # Backup the WSL/Debian folder ~/.ssh into the Windows folder "C:\Users\username\.ssh\wsl_ssh_backup". 

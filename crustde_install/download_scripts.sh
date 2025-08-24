@@ -49,7 +49,7 @@ else
         printf " \n" 
         printf "\033[0;33m    3. Inside ~/.ssh you will need 2 keys, one to access Github and the second to access your web server virtual machine. \033[0m\n"
         printf "\033[0;33m    You should already have these keys in your encrypted vault and you just need to copy them into the ~/.ssh folder. \033[0m\n"
-        printf "\033[0;33m    I will call these keys your_key_for_github_ssh_1, your_key_for_webserver_ssh_1 and your_key_for_github_api_token_ssh_1, but you can have other names. \033[0m\n"
+        printf "\033[0;33m    I will call these keys your_key_for_github_ssh_1 and your_key_for_webserver_ssh_1, but you can have other names. \033[0m\n"
         printf "\033[0;33m    Modify accordingly to your locations and run these commands. \033[0m\n"
         printf "\033[0;32m mkdir ~/.ssh; \033[0m\n"
         printf "\033[0;32m chmod 700 ~/.ssh; \033[0m\n"
@@ -60,7 +60,7 @@ else
         printf "\033[0;33m    Change the parameters with your personal data. They are needed for the container.  \033[0m\n"
         printf "\033[0;33m    The files will be stored in ~/.ssh for later use. \033[0m\n"
         printf "\033[0;33m    Then follow the instructions from the next script. \033[0m\n"
-        printf "\033[0;32m sh store_personal_keys_and_settings.sh info@your.mail your_git_name your_key_for_github_ssh_1 your_webserver your_username your_key_for_webserver_ssh_1 your_key_for_github_api_token_ssh_1; \033[0m\n"
+        printf "\033[0;32m sh store_personal_keys_and_settings.sh info@your.mail your_git_name your_key_for_github_ssh_1 your_webserver your_username your_key_for_webserver_ssh_1; \033[0m\n"
     fi
 fi
 printf "\n"
