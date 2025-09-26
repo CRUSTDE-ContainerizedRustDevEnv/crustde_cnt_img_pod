@@ -44,7 +44,7 @@ crustde_cross_img
 
 printf " \n"
 printf "\033[0;33m    Set proxy for apt-get to apt-cacher-ng on host for faster apt package download \033[0m\n"
-printf "\033[0;33m    Ip adress for Buildah Gateway/Host: 10.0.2.2 \033[0m\n"
+printf "\033[0;33m    Ip address for Buildah Gateway/Host: 10.0.2.2 \033[0m\n"
 buildah copy crustde_cargo_img './02proxy' '/etc/apt/apt.conf.d/02proxy'
 
 printf " \n"
@@ -68,6 +68,10 @@ buildah run crustde_cross_img /bin/sh -c 'curl https://rustwasm.github.io/wasm-p
 printf " \n"
 printf "\033[0;33m    Install wasmtime wasi runtime \033[0m\n"
 buildah run crustde_cross_img /bin/sh -c 'curl https://wasmtime.dev/install.sh -sSf | bash'
+
+printf " \n"
+printf "\033[0;33m    Install zip because windows doesn't work with tar.gz \033[0m\n"
+buildah run --user root crustde_cross_img /bin/sh -c 'apt-get install -y zip'
 
 printf "\033[0;33m    Remove proxy for apt-get to apt-cacher-ng on host \033[0m\n"
 buildah run --user root crustde_cargo_img /bin/sh -c 'rm /etc/apt/apt.conf.d/02proxy'
