@@ -64,6 +64,16 @@ Now we can use `CRUSTDE - Containerized Rust Development Environment` from VSCod
 must be set as shown by the installation scripts.  
 Run VSCode to open a folder inside the container.
 
+To remember to initialize the container after a system reboot add these lines to ~/.bashrc in Windows git-bash and WSL/Debian:
+
+```bash
+printf "  \033[33m The container CRUSTDE must be initialized once after reboot and then follow instructions: \033[0m\n"
+printf "\033[32m sshadd crustde \033[33m\n"
+printf "\033[32m podman ps -a \033[33m\n"
+printf "  \033[33m If needed: \033[0m\n"
+printf "\033[32m sh ~/rustprojects/crustde_install/crustde_pod_after_reboot.sh \033[0m\n"
+```
+
 Run in `Windows git-bash` terminal:
 
 ```bash
