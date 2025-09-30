@@ -54,7 +54,7 @@ printf "\033[0;33m    Create new 'buildah container' named crustde_cargo_img \03
 set -o errexit
 buildah from \
 --name crustde_cargo_img \
-docker.io/library/debian:bookworm-slim
+docker.io/library/debian:trixie-slim
 
 
 buildah config \
@@ -139,7 +139,7 @@ buildah run crustde_cargo_img /bin/sh -c 'printf "$PATH\n"'
 printf " \n"
 printf "\033[0;33m    Debian version \033[0m\n"
 buildah run crustde_cargo_img /bin/sh -c 'lsb_release -d'
-# Debian GNU/Linux 12 (bookworm)
+# Debian GNU/Linux 13 (trixie)
 buildah run crustde_cargo_img /bin/sh -c 'cat /etc/debian_version'
 # 12.11
 
@@ -153,8 +153,8 @@ buildah run crustde_cargo_img /bin/sh -c '/home/rustdevuser/.cargo/bin/rustc --v
 
 printf "\033[0;33m    psql version \033[0m\n"
 buildah run crustde_cargo_img /bin/sh -c 'psql --version'
-# The default PostgreSQL 15 is available to install on Debian 12 bookworm Linux.
-# psql (PostgreSQL) 15.7 (Debian 15.7-0+deb12u1)
+# The default PostgreSQL 17 is available to install on Debian 13(trixie) Linux.
+# psql (PostgreSQL) 17 (Debian )
 
 # this probably is not necessary, if rust-analyzer can call rust-lang.org
 # buildah config --env RUST_SRC_PATH=/home/rustdevuser/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library crustde_cargo_img

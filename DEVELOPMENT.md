@@ -1,11 +1,11 @@
 # Development details
 
-## Debian 12 (Bookworm)
+## Debian 13 (trixie)
 
-The project `crustde_cnt_img_pod` is developed on Debian 12 (Bookworm).  
+The project `crustde_cnt_img_pod` is developed on Debian 13 (trixie).  
 Debian can be installed on bare metal or inside Win10+WSL2.  
 I personally develop it on my Win10 laptop, but I tested it once on bare metal Debian and it worked great.  
-I already wrote some information on how to install and use the combination of Win10 + WSL2 + Debian12(Bookworm):
+I already wrote some information on how to install and use the combination of Win10 + WSL2 + Debian13(trixie):
 
 <https://github.com/CRUSTDE-ContainerizedRustDevEnv/win10_wsl2_debian11>
 
@@ -69,11 +69,11 @@ Before running the scripts to create images, run apt-cacher-ng in WSL Debian bas
 sudo apt-cacher-ng
 ```
 
-## Install Podman in Debian 12(Bookworm)
+## Install Podman in Debian 13(trixie)
 
 [Podman](https://podman.io/) is a **daemonless**, open-source, Linux native tool designed to work with Open Containers Initiative (OCI) Containers and Container Images. Containers under the control of Podman can be run by a **non-privileged user**. The CLI commands of the Podman ***"Container Engine"*** are practically identical to the Docker CLI. Podman relies on an OCI-compliant ***"Container Runtime"*** (runc, crun, runv, etc) to interface with the operating system and create the running containers.
 
-Podman is available from the Debian12 package manager.
+Podman is available from the Debian13 package manager.
 
 <https://podman.io/getting-started/installation>
 
@@ -81,9 +81,9 @@ Let's install it. Open the `WSL2 terminal` and type:
 
 ```bash
 lsb_release -d
-# Description:    Debian GNU/Linux 12 (bookworm)
+# Description:    Debian GNU/Linux 13 (trixie)
 cat /etc/debian_version
-# 12.11
+# 13.1
 sudo apt update
 sudo apt-get install -y podman
 podman version
@@ -180,12 +180,12 @@ The Rust official images are on the Docker hub: <https://hub.docker.com/_/rust>
 
 I was surprised by the size of the image. It is big from 500 MB compressed to 1.4 GB uncompressed. But this is the size of Rust development tools.
 
-I don't like that these images have only the `root` user. I will start from the Debian-12 image and install all I need as a non-privileged user `rustdevuser`.
+I don't like that these images have only the `root` user. I will start from the Debian-13 image and install all I need as a non-privileged user `rustdevuser`.
 
 In the bash terminal pull the image from the Docker hub:
 
 ```bash
-podman pull docker.io/library/debian:bookworm-slim
+podman pull docker.io/library/debian:trixie-slim
 ```
 
 I wrote the bash script `crustde_cargo_img.sh`
@@ -349,7 +349,7 @@ I added to the image `crustde_cross_img` the target and needed utilities for cro
 These executables are 100% statically linked and don't need any other dynamic library.  
 Using a container to publish your executable to a server makes distribution and isolation much easier.  
 These executables can run on the empty container `scratch`.  
-Or on the smallest Linux container images like Alpine (7 MB) or distroless static-debian12 (3 MB).  
+Or on the smallest Linux container images like Alpine (7 MB) or distroless static-debian13 (3 MB).  
 Most of the programs will run just fine with musl. Cross-compile with this:  
 
 ```bash
@@ -422,7 +422,7 @@ The commands are similar for distroless static.
 
 buildah from \
 --name distroless_hello_world_img \
-gcr.io/distroless/static-debian12
+gcr.io/distroless/static-debian13
 
 buildah config \
 --author=github.com/bestia-dev \
@@ -1008,7 +1008,7 @@ The same `sh ~/rustprojects/crustde_install/crustde_pod_after_reboot.sh` is used
 
 ## PostgreSQL
 
-Some projects need the database PostgreSQL 15. I created a new pod with the command  
+Some projects need the database PostgreSQL 17. I created a new pod with the command  
 `cd crustde_install\pod_with_rust_pg_vscode; sh crustde_pod_create.sh`.  
 The same `sh ~/rustprojects/crustde_install/crustde_pod_after_reboot.sh` is used after reboot.  
 I didn't like the pgAdmin administrative tool. I will use the VSCode extension <https://marketplace.visualstudio.com/items?itemName=cweijan.vscode-database-client2>.  

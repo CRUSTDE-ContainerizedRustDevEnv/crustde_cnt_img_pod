@@ -24,16 +24,16 @@ buildah rmi -f docker.io/bestiadev/crustde_postgres_img || :
 
 printf " \n"
 printf "\033[0;33m    Create new 'buildah container' named crustde_postgres_img \033[0m\n"
-printf "\033[0;33m    Version postgres 15 on Debian 12 bookworm \033[0m\n"
+printf "\033[0;33m    Version postgres 17 on Debian 13 (trixie) \033[0m\n"
 set -o errexit
 buildah from \
 --name crustde_postgres_img \
-docker.io/library/debian:bookworm-slim
+docker.io/library/debian:trixie-slim
 
 buildah config \
 --author=github.com/bestia-dev \
 --label name=crustde_postgres_img \
---label version=postgres15 \
+--label version=postgres17 \
 --label source=github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod \
 crustde_postgres_img
 
@@ -59,7 +59,7 @@ printf "\033[0;33m    Change the line #create_main_cluster = true to false in /e
 buildah run crustde_postgres_img    sed -i 's/#create_main_cluster = true/create_main_cluster = false/g' /etc/postgresql-common/createcluster.conf
 
 printf " \n"
-printf "\033[0;33m    Install postgres 15 in debian 12 \033[0m\n"
+printf "\033[0;33m    Install postgres 17 in debian 13 \033[0m\n"
 buildah run crustde_postgres_img    apt -y install postgresql
 
 printf " \n"
@@ -74,11 +74,11 @@ printf " \n"
 printf "\033[0;33m    Finally save/commit the image named crustde_postgres_img \033[0m\n"
 buildah commit --squash crustde_postgres_img docker.io/bestiadev/crustde_postgres_img:latest
 
-buildah tag docker.io/bestiadev/crustde_postgres_img:latest docker.io/bestiadev/crustde_postgres_img:postgres15
+buildah tag docker.io/bestiadev/crustde_postgres_img:latest docker.io/bestiadev/crustde_postgres_img:postgres17
 
 printf " \n"
 printf "\033[0;33m    Upload the new image to docker hub. \033[0m\n"
-printf "\033[0;32m ./ssh_auth_podman_push docker.io/bestiadev/crustde_postgres_img:postgres15 \033[0m\n"
+printf "\033[0;32m ./ssh_auth_podman_push docker.io/bestiadev/crustde_postgres_img:postgres17 \033[0m\n"
 printf "\033[0;32m ./ssh_auth_podman_push docker.io/bestiadev/crustde_postgres_img:latest \033[0m\n"
 
 printf " \n"
