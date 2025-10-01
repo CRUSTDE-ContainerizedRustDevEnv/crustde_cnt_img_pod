@@ -26,9 +26,18 @@ printf "\033[0;33m    Version of sccache: 0.10.0 \033[0m\n"
 printf " \n"
 printf "\033[0;33m    Proxy for apt-get ! \033[0m\n"
 printf "\033[0;33m    While creating a new container image there is a lot of apt-get. Really a lot. \033[0m\n"
-printf "\033[0;33m    I like to use 'apt-cacher-ng' to cache the files and eventually repeat the image creation. \033[0m\n"
-printf "\033[0;33m    Create the file '/etc/apt/apt.conf.d/02proxy' with content 'Acquire::http::Proxy "http://10.0.2.2:3142";' \033[0m\n"
-printf "\033[0;33m    Restart the proxy with 'sudo apt-cacher-ng' \033[0m\n"
+printf "\033[0;33m    I like to use 'apt-cacher-ng' to cache the package files and eventually repeat the image creation. \033[0m\n"
+printf "\033[0;33m    On the Debian host install apt-cacher-ng \033[0m\n"
+printf "\033[0;33m    sudo apt-get install apt-cacher-ng -y  \033[0m\n"
+printf "\033[0;33m    There is not need to change any configuration on the host. \033[0m\n"
+printf "\033[0;33m    The installation will automatically run the service. \033[0m\n"
+printf "\033[0;33m    Check if the service is running. \033[0m\n"
+printf "\033[0;33m    /etc/init.d/apt-cacher-ng status \033[0m\n"
+printf "\033[0;33m    If the service is not running, then run it: \033[0m\n"
+printf "\033[0;33m    sudo apt-get install apt-cacher-ng -y  \033[0m\n"
+printf "\033[0;33m    sudo apt-cacher-ng \033[0m\n"
+printf "\033[0;33m    This script will create inside the container the file \033[0m\n"
+printf "\033[0;33m    '/etc/apt/apt.conf.d/02proxy' with content 'Acquire::http::Proxy "http://host.containers.internal:3142";' \033[0m\n"
 
 printf " \n"
 printf "\033[0;33m    To build the image, run in bash with: \033[0m\n"
@@ -66,7 +75,7 @@ crustde_cargo_img
 
 printf " \n"
 printf "\033[0;33m    Set proxy for apt-get to apt-cacher-ng on host for faster apt package download \033[0m\n"
-printf "\033[0;33m    Ip address for Buildah Gateway/Host: 10.0.2.2 \033[0m\n"
+printf "\033[0;33m    Ip address for Buildah Gateway/Host: host.containers.internal \033[0m\n"
 buildah copy crustde_cargo_img './02proxy' '/etc/apt/apt.conf.d/02proxy'
 
 printf " \n"
@@ -154,7 +163,7 @@ buildah run crustde_cargo_img /bin/sh -c '/home/rustdevuser/.cargo/bin/rustc --v
 printf "\033[0;33m    psql version \033[0m\n"
 buildah run crustde_cargo_img /bin/sh -c 'psql --version'
 # The default PostgreSQL 17 is available to install on Debian 13(trixie) Linux.
-# psql (PostgreSQL) 17 (Debian )
+# psql (PostgreSQL) 17.6 (Debian 17.6-0+deb13u1)
 
 # this probably is not necessary, if rust-analyzer can call rust-lang.org
 # buildah config --env RUST_SRC_PATH=/home/rustdevuser/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library crustde_cargo_img
@@ -227,9 +236,10 @@ buildah tag docker.io/bestiadev/crustde_cargo_img:latest docker.io/bestiadev/cru
 
 printf " \n"
 printf "\033[0;33m    Upload the new image to docker hub. \033[0m\n"
-printf "\033[0;32m chmod +x ./ssh_auth_podman_push \033[0m\n"
-printf "\033[0;32m ./ssh_auth_podman_push docker.io/bestiadev/crustde_cargo_img:cargo-1.90.0 \033[0m\n"
-printf "\033[0;32m ./ssh_auth_podman_push docker.io/bestiadev/crustde_cargo_img:latest \033[0m\n"
+printf "\033[0;32m chmod +x ~/rustprojects/ssh_auth_podman_push/ssh_auth_podman_push \033[0m\n"
+printf "\033[0;32m alias ssh_auth_podman_push='~/rustprojects/ssh_auth_podman_push/ssh_auth_podman_push' \033[0m\n"
+printf "\033[0;32m ssh_auth_podman_push docker.io/bestiadev/crustde_cargo_img:cargo-1.90.0 \033[0m\n"
+printf "\033[0;32m ssh_auth_podman_push docker.io/bestiadev/crustde_cargo_img:latest \033[0m\n"
 
 printf " \n"
 printf "\033[0;33m    To create the container 'crustde_cargo_cnt' use: \033[0m\n"

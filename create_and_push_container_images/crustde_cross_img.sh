@@ -44,7 +44,7 @@ crustde_cross_img
 
 printf " \n"
 printf "\033[0;33m    Set proxy for apt-get to apt-cacher-ng on host for faster apt package download \033[0m\n"
-printf "\033[0;33m    Ip address for Buildah Gateway/Host: 10.0.2.2 \033[0m\n"
+printf "\033[0;33m    Ip address for Buildah Gateway/Host: host.containers.internal \033[0m\n"
 buildah copy crustde_cargo_img './02proxy' '/etc/apt/apt.conf.d/02proxy'
 
 printf " \n"
@@ -83,8 +83,10 @@ buildah tag docker.io/bestiadev/crustde_cross_img:latest docker.io/bestiadev/cru
 
 printf " \n"
 printf "\033[0;33m    Upload the new image to docker hub. \033[0m\n"
-printf "\033[0;32m ./ssh_auth_podman_push docker.io/bestiadev/crustde_cross_img:cargo-1.90.0 \033[0m\n"
-printf "\033[0;32m ./ssh_auth_podman_push docker.io/bestiadev/crustde_cross_img:latest \033[0m\n"
+printf "\033[0;32m chmod +x ~/rustprojects/ssh_auth_podman_push/ssh_auth_podman_push \033[0m\n"
+printf "\033[0;32m alias ssh_auth_podman_push='~/rustprojects/ssh_auth_podman_push/ssh_auth_podman_push' \033[0m\n"
+printf "\033[0;32m ssh_auth_podman_push docker.io/bestiadev/crustde_cross_img:cargo-1.90.0 \033[0m\n"
+printf "\033[0;32m ssh_auth_podman_push docker.io/bestiadev/crustde_cross_img:latest \033[0m\n"
 
 printf " \n"
 printf "\033[0;33m    To create the container 'crustde_cross_cnt' use: \033[0m\n"

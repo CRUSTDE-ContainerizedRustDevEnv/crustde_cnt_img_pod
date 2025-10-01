@@ -84,10 +84,12 @@ buildah tag docker.io/bestiadev/rust_ts_dev_vscode_img:latest docker.io/bestiade
 
 printf " \n"
 printf "\033[0;33m    Upload the new image to docker hub. \033[0m\n"
-printf "\033[0;32m ./ssh_auth_podman_push docker.io/bestiadev/rust_ts_dev_vscode_img:typescript-4.7.4 \033[0m\n"
-printf "\033[0;32m ./ssh_auth_podman_push docker.io/bestiadev/rust_ts_dev_vscode_img:vscode-1.104.2 \033[0m\n"
-printf "\033[0;32m ./ssh_auth_podman_push docker.io/bestiadev/crustde_vscode_img:cargo-1.90.0 \033[0m\n"
-printf "\033[0;32m ./ssh_auth_podman_push docker.io/bestiadev/crustde_vscode_img:latest \033[0m\n"
+printf "\033[0;32m chmod +x ~/rustprojects/ssh_auth_podman_push/ssh_auth_podman_push \033[0m\n"
+printf "\033[0;32m alias ssh_auth_podman_push='~/rustprojects/ssh_auth_podman_push/ssh_auth_podman_push' \033[0m\n"
+printf "\033[0;32m ssh_auth_podman_push docker.io/bestiadev/rust_ts_dev_vscode_img:typescript-4.7.4 \033[0m\n"
+printf "\033[0;32m ssh_auth_podman_push docker.io/bestiadev/rust_ts_dev_vscode_img:vscode-1.104.2 \033[0m\n"
+printf "\033[0;32m ssh_auth_podman_push docker.io/bestiadev/crustde_vscode_img:cargo-1.90.0 \033[0m\n"
+printf "\033[0;32m ssh_auth_podman_push docker.io/bestiadev/crustde_vscode_img:latest \033[0m\n"
 
 printf " \n"
 printf "\033[0;33m    This image is used solely inside the pod 'crustde_pod'. \033[0m\n"
