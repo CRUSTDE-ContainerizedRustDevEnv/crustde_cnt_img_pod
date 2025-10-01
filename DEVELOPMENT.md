@@ -45,11 +45,15 @@ In the host/server Debian run:
 
 ```bash
 sudo apt-get install apt-cacher-ng -y
-# there is not need to change the configuration
-sudo nano /etc/apt-cacher-ng/acng.conf
+# there is not need to change any configuration on the host
+# installation will automatically run the service
+# check if the service is running
+/etc/init.d/apt-cacher-ng status
+# if the service is not running, then run the service
+sudo apt-cacher-ng
 ```
 
-In the container/client add the proxy for `apt`:
+Inside the container/client add the proxy for `apt`:
 
 ```bash
 sudo nano /etc/apt/apt.conf.d/02proxy
@@ -58,16 +62,10 @@ sudo nano /etc/apt/apt.conf.d/02proxy
 Add a line like this:
 
 ```bash
-Acquire::http::Proxy "http://10.0.2.2:3142";
+Acquire::http::Proxy "http://host.containers.internal:3142";
 ```
 
-The special ip address `10.0.2.2` is for the Gateway/Host.
-
-Before running the scripts to create images, run apt-cacher-ng in WSL Debian bash:
-
-```bash
-sudo apt-cacher-ng
-```
+The special ip address `host.containers.internal` is for the Gateway/Host.
 
 ## Install Podman in Debian 13(trixie)
 
@@ -498,19 +496,20 @@ In `host terminal`:
 
 ```bash
 cd  ~/rustprojects/crustde_cnt_img_pod/create_and_push_container_images
-chmod +x ssh_auth_podman_push
-./ssh_auth_podman_push docker.io/bestiadev/crustde_cargo_img:cargo-1.90.0
-./ssh_auth_podman_push docker.io/bestiadev/crustde_cargo_img:latest
+chmod +x ~/rustprojects/ssh_auth_podman_push/ssh_auth_podman_push
+alias ssh_auth_podman_push='~/rustprojects/ssh_auth_podman_push/ssh_auth_podman_push'
+ssh_auth_podman_push docker.io/bestiadev/crustde_cargo_img:cargo-1.90.0
+ssh_auth_podman_push docker.io/bestiadev/crustde_cargo_img:latest
 
-./ssh_auth_podman_push docker.io/bestiadev/crustde_cross_img:cargo-1.90.0
-./ssh_auth_podman_push docker.io/bestiadev/crustde_cross_img:latest
+ssh_auth_podman_push docker.io/bestiadev/crustde_cross_img:cargo-1.90.0
+ssh_auth_podman_push docker.io/bestiadev/crustde_cross_img:latest
 
-./ssh_auth_podman_push docker.io/bestiadev/crustde_vscode_img:vscode-1.104.2
-./ssh_auth_podman_push docker.io/bestiadev/crustde_vscode_img:cargo-1.90.0
-./ssh_auth_podman_push docker.io/bestiadev/crustde_vscode_img:latest
+ssh_auth_podman_push docker.io/bestiadev/crustde_vscode_img:vscode-1.104.2
+ssh_auth_podman_push docker.io/bestiadev/crustde_vscode_img:cargo-1.90.0
+ssh_auth_podman_push docker.io/bestiadev/crustde_vscode_img:latest
 
-./ssh_auth_podman_push docker.io/bestiadev/crustde_squid_img:squid-3.5.27-2
-./ssh_auth_podman_push docker.io/bestiadev/crustde_squid_img:latest
+ssh_auth_podman_push docker.io/bestiadev/crustde_squid_img:squid-3.5.27-2
+ssh_auth_podman_push docker.io/bestiadev/crustde_squid_img:latest
 ```
 
 It takes some time to upload more than 3 GB with my slow internet connection.
