@@ -106,6 +106,10 @@ printf "\033[0;33m    Install lsb_release for Debian version \033[0m\n"
 buildah run crustde_cargo_img    apt-get install -y lsb-release
 printf "\033[0;33m    Install tidy HTML - corrects and cleans up HTML and XML \033[0m\n"
 buildah run crustde_cargo_img    apt-get install -y tidy
+printf "\033[0;33m    VSCode remote needs to have the locale en_US.UTF-8 generated. \033[0m\n"
+buildah run crustde_cargo_img    apt-get install -y --no-install-recommends locales
+buildah run crustde_cargo_img /bin/sh -c 'printf "en_US.UTF-8 UTF-8\n" >> /etc/local.gen'
+buildah run crustde_cargo_img    locale-gen
 
 printf " \n"
 printf "\033[0;33m    Create non-root user 'rustdevuser' and home folder. \033[0m\n"
