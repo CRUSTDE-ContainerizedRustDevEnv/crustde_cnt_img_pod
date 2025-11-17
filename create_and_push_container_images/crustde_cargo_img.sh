@@ -18,10 +18,10 @@ printf "\033[0;33m    Open source code MIT: https://github.com/CRUSTDE-Container
 printf " \n"
 printf "\033[0;33m    FIRST !!! \033[0m\n"
 printf "\033[0;33m    Search and replace in this bash script to the newest version: \033[0m\n"
-printf "\033[0;33m    Version of Debian: 13.1 \033[0m\n"
+printf "\033[0;33m    Version of Debian: 13.2 \033[0m\n"
 printf "\033[0;33m    Version of rustup: 1.28.2 \033[0m\n"
-printf "\033[0;33m    Version of rustc: 1.90.0 \033[0m\n"
-printf "\033[0;33m    Version of sccache: 0.10.0 \033[0m\n"
+printf "\033[0;33m    Version of rustc: 1.91.1 \033[0m\n"
+printf "\033[0;33m    Version of sccache: 0.12.0 \033[0m\n"
 
 printf " \n"
 printf "\033[0;33m    Proxy for apt-get ! \033[0m\n"
@@ -69,7 +69,7 @@ docker.io/library/debian:trixie-slim
 buildah config \
 --author=github.com/bestia-dev \
 --label name=crustde_cargo_img \
---label version=cargo-1.90.0 \
+--label version=cargo-1.91.1 \
 --label source=github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod \
 crustde_cargo_img
 
@@ -154,7 +154,7 @@ printf "\033[0;33m    Debian version \033[0m\n"
 buildah run crustde_cargo_img /bin/sh -c 'lsb_release -d'
 # Debian GNU/Linux 13 (trixie)
 buildah run crustde_cargo_img /bin/sh -c 'cat /etc/debian_version'
-# 13.1
+# 13.2
 
 printf "\033[0;33m    rustup version \033[0m\n"
 buildah run crustde_cargo_img /bin/sh -c 'rustup --version'
@@ -162,7 +162,7 @@ buildah run crustde_cargo_img /bin/sh -c 'rustup --version'
 
 printf "\033[0;33m    rustc version \033[0m\n"
 buildah run crustde_cargo_img /bin/sh -c '/home/rustdevuser/.cargo/bin/rustc --version'
-# rustc 1.90.0 
+# rustc 1.91.1 
 
 printf "\033[0;33m    psql version \033[0m\n"
 buildah run crustde_cargo_img /bin/sh -c 'psql --version'
@@ -205,8 +205,8 @@ printf "\033[0;33m    Install basic-http-server to work with WASM. \033[0m\n"
 buildah run crustde_cargo_img /bin/sh -c 'cargo install basic-http-server'
 
 printf " \n"
-printf "\033[0;33m    Install sccache 0.10.0 to cache compiled artifacts. \033[0m\n"
-buildah run crustde_cargo_img /bin/sh -c 'curl -L https://github.com/mozilla/sccache/releases/download/v0.10.0/sccache-v0.10.0-x86_64-unknown-linux-musl.tar.gz --output /tmp/sccache.tar.gz'
+printf "\033[0;33m    Install sccache 0.12.0 to cache compiled artifacts. \033[0m\n"
+buildah run crustde_cargo_img /bin/sh -c 'curl -L https://github.com/mozilla/sccache/releases/download/v0.12.0/sccache-v0.12.0-x86_64-unknown-linux-musl.tar.gz --output /tmp/sccache.tar.gz'
 buildah run crustde_cargo_img /bin/sh -c 'tar --no-same-owner -xzv --strip-components=1 -C ~/.cargo/bin -f /tmp/sccache.tar.gz --wildcards */sccache'
 buildah run crustde_cargo_img /bin/sh -c 'rm /tmp/sccache.tar.gz'
 
@@ -236,13 +236,13 @@ buildah run --user root crustde_cargo_img /bin/sh -c 'rm /etc/apt/apt.conf.d/02p
 printf " \n"
 printf "\033[0;33m    Finally save/commit the image named crustde_cargo_img \033[0m\n"
 buildah commit crustde_cargo_img docker.io/bestiadev/crustde_cargo_img:latest
-buildah tag docker.io/bestiadev/crustde_cargo_img:latest docker.io/bestiadev/crustde_cargo_img:cargo-1.90.0
+buildah tag docker.io/bestiadev/crustde_cargo_img:latest docker.io/bestiadev/crustde_cargo_img:cargo-1.91.1
 
 printf " \n"
 printf "\033[0;33m    Upload the new image to docker hub. \033[0m\n"
 printf "\033[0;32m chmod +x ~/rustprojects/ssh_auth_podman_push/ssh_auth_podman_push \033[0m\n"
 printf "\033[0;32m alias ssh_auth_podman_push='~/rustprojects/ssh_auth_podman_push/ssh_auth_podman_push' \033[0m\n"
-printf "\033[0;32m ssh_auth_podman_push docker.io/bestiadev/crustde_cargo_img:cargo-1.90.0 \033[0m\n"
+printf "\033[0;32m ssh_auth_podman_push docker.io/bestiadev/crustde_cargo_img:cargo-1.91.1 \033[0m\n"
 printf "\033[0;32m ssh_auth_podman_push docker.io/bestiadev/crustde_cargo_img:latest \033[0m\n"
 
 printf " \n"

@@ -81,7 +81,7 @@ Let's install it. Open the `WSL2 terminal` and type:
 lsb_release -d
 # Description:    Debian GNU/Linux 13 (trixie)
 cat /etc/debian_version
-# 13.1
+# 13.2
 sudo apt update
 sudo apt-get install -y podman
 podman version
@@ -246,7 +246,7 @@ First let's find the rustc version:
 
 ```bash
 rustc --version
-#  rustc 1.90.0 
+#  rustc 1.91.1 
 ```
 
 Let's create and run a small Rust program:
@@ -498,14 +498,14 @@ In `host terminal`:
 cd  ~/rustprojects/crustde_cnt_img_pod/create_and_push_container_images
 chmod +x ~/rustprojects/ssh_auth_podman_push/ssh_auth_podman_push
 alias ssh_auth_podman_push='~/rustprojects/ssh_auth_podman_push/ssh_auth_podman_push'
-ssh_auth_podman_push docker.io/bestiadev/crustde_cargo_img:cargo-1.90.0
+ssh_auth_podman_push docker.io/bestiadev/crustde_cargo_img:cargo-1.91.1
 ssh_auth_podman_push docker.io/bestiadev/crustde_cargo_img:latest
 
-ssh_auth_podman_push docker.io/bestiadev/crustde_cross_img:cargo-1.90.0
+ssh_auth_podman_push docker.io/bestiadev/crustde_cross_img:cargo-1.91.1
 ssh_auth_podman_push docker.io/bestiadev/crustde_cross_img:latest
 
-ssh_auth_podman_push docker.io/bestiadev/crustde_vscode_img:vscode-1.104.2
-ssh_auth_podman_push docker.io/bestiadev/crustde_vscode_img:cargo-1.90.0
+ssh_auth_podman_push docker.io/bestiadev/crustde_vscode_img:vscode-1.106.0
+ssh_auth_podman_push docker.io/bestiadev/crustde_vscode_img:cargo-1.91.1
 ssh_auth_podman_push docker.io/bestiadev/crustde_vscode_img:latest
 
 ssh_auth_podman_push docker.io/bestiadev/crustde_squid_img:squid-3.5.27-2
@@ -540,9 +540,9 @@ Docker Hub stores compressed images, so they are a third of the size to download
 
 | Image                                    | Label          | Size         | compressed  |
 | ---------------------------------------- | -------------- |------------- | ----------- |
-| docker.io/bestiadev/crustde_cargo_img   | cargo-1.90.0   | 1.28 GB      | 0.45 GB     |
-| docker.io/bestiadev/crustde_cross_img   | cargo-1.90.0   | 3.03 GB      | 0.98 GB     |
-| docker.io/bestiadev/crustde_vscode_img  | cargo-1.90.0   | 3.32 GB      | 1.06 GB     |
+| docker.io/bestiadev/crustde_cargo_img   | cargo-1.91.1   | 1.28 GB      | 0.45 GB     |
+| docker.io/bestiadev/crustde_cross_img   | cargo-1.91.1   | 3.03 GB      | 0.98 GB     |
+| docker.io/bestiadev/crustde_vscode_img  | cargo-1.91.1   | 3.32 GB      | 1.06 GB     |
 
 ## User and server keys for SSH
 

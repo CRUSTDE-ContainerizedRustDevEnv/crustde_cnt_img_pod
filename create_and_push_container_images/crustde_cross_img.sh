@@ -38,7 +38,7 @@ docker.io/bestiadev/crustde_cargo_img:latest
 buildah config \
 --author=github.com/bestia-dev \
 --label name=crustde_cross_img \
---label version=cargo-1.90.0 \
+--label version=cargo-1.91.1 \
 --label source=github.com/CRUSTDE-ContainerizedRustDevEnv/crustde_cnt_img_pod \
 crustde_cross_img
 
@@ -79,13 +79,13 @@ buildah run --user root crustde_cargo_img /bin/sh -c 'rm /etc/apt/apt.conf.d/02p
 printf " \n"
 printf "\033[0;33m    Finally save/commit the image named crustde_cross_img \033[0m\n"
 buildah commit crustde_cross_img docker.io/bestiadev/crustde_cross_img:latest
-buildah tag docker.io/bestiadev/crustde_cross_img:latest docker.io/bestiadev/crustde_cross_img:cargo-1.90.0
+buildah tag docker.io/bestiadev/crustde_cross_img:latest docker.io/bestiadev/crustde_cross_img:cargo-1.91.1
 
 printf " \n"
 printf "\033[0;33m    Upload the new image to docker hub. \033[0m\n"
 printf "\033[0;32m chmod +x ~/rustprojects/ssh_auth_podman_push/ssh_auth_podman_push \033[0m\n"
 printf "\033[0;32m alias ssh_auth_podman_push='~/rustprojects/ssh_auth_podman_push/ssh_auth_podman_push' \033[0m\n"
-printf "\033[0;32m ssh_auth_podman_push docker.io/bestiadev/crustde_cross_img:cargo-1.90.0 \033[0m\n"
+printf "\033[0;32m ssh_auth_podman_push docker.io/bestiadev/crustde_cross_img:cargo-1.91.1 \033[0m\n"
 printf "\033[0;32m ssh_auth_podman_push docker.io/bestiadev/crustde_cross_img:latest \033[0m\n"
 
 printf " \n"
